@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 	prismgoclient "github.com/nutanix-cloud-native/prism-go-client"
@@ -25,238 +24,191 @@ type MockClientMockRecorder struct {
 }
 
 // NewMockClient creates a new mock instance.
-func NewMockClient(ctrl *gomock.Controller) *MockClient {
-	mock := &MockClient{ctrl: ctrl}
-	mock.recorder = &MockClientMockRecorder{mock}
-	return mock
-}
+func NewMockClient(ctrl *gomock.Controller) *MockClient { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockClient) EXPECT() *MockClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// GetCategoryKey mocks base method.
+	return nil
 }
 
-// GetCategoryKey mocks base method.
 func (m *MockClient) GetCategoryKey(ctx context.Context, name string) (*v3.CategoryKeyStatus, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCategoryKey", ctx, name)
-	ret0, _ := ret[0].(*v3.CategoryKeyStatus)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetCategoryKey indicates an expected call of GetCategoryKey.
 func (mr *MockClientMockRecorder) GetCategoryKey(ctx, name interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCategoryKey", reflect.TypeOf((*MockClient)(nil).GetCategoryKey), ctx, name)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetCategoryQuery mocks base method.
 func (m *MockClient) GetCategoryQuery(ctx context.Context, query *v3.CategoryQueryInput) (*v3.CategoryQueryResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCategoryQuery", ctx, query)
-	ret0, _ := ret[0].(*v3.CategoryQueryResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetCategoryQuery indicates an expected call of GetCategoryQuery.
 func (mr *MockClientMockRecorder) GetCategoryQuery(ctx, query interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCategoryQuery", reflect.TypeOf((*MockClient)(nil).GetCategoryQuery), ctx, query)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetCategoryValue mocks base method.
 func (m *MockClient) GetCategoryValue(ctx context.Context, name, value string) (*v3.CategoryValueStatus, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCategoryValue", ctx, name, value)
-	ret0, _ := ret[0].(*v3.CategoryValueStatus)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetCategoryValue indicates an expected call of GetCategoryValue.
 func (mr *MockClientMockRecorder) GetCategoryValue(ctx, name, value interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCategoryValue", reflect.TypeOf((*MockClient)(nil).GetCategoryValue), ctx, name, value)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetCluster mocks base method.
 func (m *MockClient) GetCluster(ctx context.Context, uuid string) (*v3.ClusterIntentResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCluster", ctx, uuid)
-	ret0, _ := ret[0].(*v3.ClusterIntentResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetCluster indicates an expected call of GetCluster.
 func (mr *MockClientMockRecorder) GetCluster(ctx, uuid interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCluster", reflect.TypeOf((*MockClient)(nil).GetCluster), ctx, uuid)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetCurrentLoggedInUser mocks base method.
 func (m *MockClient) GetCurrentLoggedInUser(ctx context.Context) (*v3.UserIntentResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCurrentLoggedInUser", ctx)
-	ret0, _ := ret[0].(*v3.UserIntentResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetCurrentLoggedInUser indicates an expected call of GetCurrentLoggedInUser.
 func (mr *MockClientMockRecorder) GetCurrentLoggedInUser(ctx interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCurrentLoggedInUser", reflect.TypeOf((*MockClient)(nil).GetCurrentLoggedInUser), ctx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetImage mocks base method.
 func (m *MockClient) GetImage(ctx context.Context, uuid string) (*v3.ImageIntentResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetImage", ctx, uuid)
-	ret0, _ := ret[0].(*v3.ImageIntentResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetImage indicates an expected call of GetImage.
 func (mr *MockClientMockRecorder) GetImage(ctx, uuid interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetImage", reflect.TypeOf((*MockClient)(nil).GetImage), ctx, uuid)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetProject mocks base method.
 func (m *MockClient) GetProject(ctx context.Context, uuid string) (*v3.Project, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetProject", ctx, uuid)
-	ret0, _ := ret[0].(*v3.Project)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetProject indicates an expected call of GetProject.
 func (mr *MockClientMockRecorder) GetProject(ctx, uuid interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProject", reflect.TypeOf((*MockClient)(nil).GetProject), ctx, uuid)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetSubnet mocks base method.
 func (m *MockClient) GetSubnet(ctx context.Context, uuid string) (*v3.SubnetIntentResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetSubnet", ctx, uuid)
-	ret0, _ := ret[0].(*v3.SubnetIntentResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetSubnet indicates an expected call of GetSubnet.
 func (mr *MockClientMockRecorder) GetSubnet(ctx, uuid interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSubnet", reflect.TypeOf((*MockClient)(nil).GetSubnet), ctx, uuid)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ListAllCluster mocks base method.
 func (m *MockClient) ListAllCluster(ctx context.Context, filter string) (*v3.ClusterListIntentResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListAllCluster", ctx, filter)
-	ret0, _ := ret[0].(*v3.ClusterListIntentResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListAllCluster indicates an expected call of ListAllCluster.
 func (mr *MockClientMockRecorder) ListAllCluster(ctx, filter interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAllCluster", reflect.TypeOf((*MockClient)(nil).ListAllCluster), ctx, filter)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ListAllHost mocks base method.
 func (m *MockClient) ListAllHost(ctx context.Context) (*v3.HostListResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListAllHost", ctx)
-	ret0, _ := ret[0].(*v3.HostListResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListAllHost indicates an expected call of ListAllHost.
 func (mr *MockClientMockRecorder) ListAllHost(ctx interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAllHost", reflect.TypeOf((*MockClient)(nil).ListAllHost), ctx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ListAllImage mocks base method.
 func (m *MockClient) ListAllImage(ctx context.Context, filter string) (*v3.ImageListIntentResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListAllImage", ctx, filter)
-	ret0, _ := ret[0].(*v3.ImageListIntentResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListAllImage indicates an expected call of ListAllImage.
 func (mr *MockClientMockRecorder) ListAllImage(ctx, filter interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAllImage", reflect.TypeOf((*MockClient)(nil).ListAllImage), ctx, filter)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ListAllProject mocks base method.
 func (m *MockClient) ListAllProject(ctx context.Context, filter string) (*v3.ProjectListResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListAllProject", ctx, filter)
-	ret0, _ := ret[0].(*v3.ProjectListResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListAllProject indicates an expected call of ListAllProject.
 func (mr *MockClientMockRecorder) ListAllProject(ctx, filter interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAllProject", reflect.TypeOf((*MockClient)(nil).ListAllProject), ctx, filter)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ListAllSubnet mocks base method.
 func (m *MockClient) ListAllSubnet(ctx context.Context, filter string, clientSideFilters []*prismgoclient.AdditionalFilter) (*v3.SubnetListIntentResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListAllSubnet", ctx, filter, clientSideFilters)
-	ret0, _ := ret[0].(*v3.SubnetListIntentResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListAllSubnet indicates an expected call of ListAllSubnet.
 func (mr *MockClientMockRecorder) ListAllSubnet(ctx, filter, clientSideFilters interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAllSubnet", reflect.TypeOf((*MockClient)(nil).ListAllSubnet), ctx, filter, clientSideFilters)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ListCategories mocks base method.
 func (m *MockClient) ListCategories(ctx context.Context, getEntitiesRequest *v3.CategoryListMetadata) (*v3.CategoryKeyListResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListCategories", ctx, getEntitiesRequest)
-	ret0, _ := ret[0].(*v3.CategoryKeyListResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListCategories indicates an expected call of ListCategories.
 func (mr *MockClientMockRecorder) ListCategories(ctx, getEntitiesRequest interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListCategories", reflect.TypeOf((*MockClient)(nil).ListCategories), ctx, getEntitiesRequest)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ListCategoryValues mocks base method.
 func (m *MockClient) ListCategoryValues(ctx context.Context, name string, getEntitiesRequest *v3.CategoryListMetadata) (*v3.CategoryValueListResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListCategoryValues", ctx, name, getEntitiesRequest)
-	ret0, _ := ret[0].(*v3.CategoryValueListResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListCategoryValues indicates an expected call of ListCategoryValues.
 func (mr *MockClientMockRecorder) ListCategoryValues(ctx, name, getEntitiesRequest interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListCategoryValues", reflect.TypeOf((*MockClient)(nil).ListCategoryValues), ctx, name, getEntitiesRequest)
+	_ = "STUB: not implemented"
+	return nil
 }

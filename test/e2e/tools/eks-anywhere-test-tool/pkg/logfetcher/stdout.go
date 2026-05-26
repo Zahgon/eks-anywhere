@@ -1,13 +1,9 @@
 package logfetcher
 
 import (
-	"fmt"
 	"regexp"
-	"strings"
 
 	"github.com/aws/aws-sdk-go/service/cloudwatchlogs"
-
-	"github.com/aws/eks-anywhere/pkg/logger"
 )
 
 const (
@@ -67,44 +63,18 @@ var colorsForRegexp = []struct {
 }
 
 func logTest(testName string, logs []*cloudwatchlogs.OutputLogEvent) error {
-	logger.Info("Test logs", "testName", testName)
-	for _, e := range logs {
-		m := *e.Message
-		for _, line := range strings.Split(m, "\n") {
-			for _, rc := range colorsForRegexp {
-				if rc.regex.Match([]byte(line)) {
-					line = rc.colorer(line)
-					break
-				}
-			}
-
-			fmt.Println(line)
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func color(m, c string) string {
-	return c + m + Reset
-}
+func color(m, c string) string { _ = "STUB: not implemented"; return "" }
 
-func blue(m string) string {
-	return color(m, Blue)
-}
+func blue(m string) string { _ = "STUB: not implemented"; return "" }
 
-func red(m string) string {
-	return color(m, Red)
-}
+func red(m string) string { _ = "STUB: not implemented"; return "" }
 
-func green(m string) string {
-	return color(m, Green)
-}
+func green(m string) string { _ = "STUB: not implemented"; return "" }
 
-func yellow(m string) string {
-	return color(m, Yellow)
-}
+func yellow(m string) string { _ = "STUB: not implemented"; return "" }
 
-func black(m string) string {
-	return color(m, Black)
-}
+func black(m string) string { _ = "STUB: not implemented"; return "" }

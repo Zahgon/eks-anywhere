@@ -30,43 +30,17 @@ type AWSDatacenterConfig struct {
 	Status AWSDatacenterConfigStatus `json:"status,omitempty"`
 }
 
-func (a *AWSDatacenterConfig) Kind() string {
-	return a.TypeMeta.Kind
-}
+func (a *AWSDatacenterConfig) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (a *AWSDatacenterConfig) ExpectedKind() string {
-	return AWSDatacenterKind
-}
+func (a *AWSDatacenterConfig) ExpectedKind() string { _ = "STUB: not implemented"; return "" }
 
-func (a *AWSDatacenterConfig) PauseReconcile() {
-	if a.Annotations == nil {
-		a.Annotations = map[string]string{}
-	}
-	a.Annotations[pausedAnnotation] = "true"
-}
+func (a *AWSDatacenterConfig) PauseReconcile() { _ = "STUB: not implemented"; return }
 
-func (a *AWSDatacenterConfig) ClearPauseAnnotation() {
-	if a.Annotations != nil {
-		delete(a.Annotations, pausedAnnotation)
-	}
-}
+func (a *AWSDatacenterConfig) ClearPauseAnnotation() { _ = "STUB: not implemented"; return }
 
 func (a *AWSDatacenterConfig) ConvertConfigToConfigGenerateStruct() *AWSDatacenterConfigGenerate {
-	namespace := defaultEksaNamespace
-	if a.Namespace != "" {
-		namespace = a.Namespace
-	}
-	config := &AWSDatacenterConfigGenerate{
-		TypeMeta: a.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        a.Name,
-			Annotations: a.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: a.Spec,
-	}
-
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // +kubebuilder:object:generate=false

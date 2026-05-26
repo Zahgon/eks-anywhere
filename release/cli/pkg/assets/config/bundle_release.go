@@ -896,5 +896,6 @@ var bundleReleaseAssetsConfigMap = []assettypes.AssetConfig{
 }
 
 func GetBundleReleaseAssetsConfigMap() []assettypes.AssetConfig {
-	return bundleReleaseAssetsConfigMap
+	_ = "STUB: not implemented"
+	return nil
 }

@@ -7,12 +7,4 @@ const (
 	TestAccount
 )
 
-func (s EksAccount) ProfileName() string {
-	switch s {
-	case BuildAccount:
-		return "eks-a-build-account"
-	case TestAccount:
-		return "eks-a-test-account"
-	}
-	return "unknown"
-}
+func (s EksAccount) ProfileName() string { _ = "STUB: not implemented"; return "" }

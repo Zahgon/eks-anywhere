@@ -1,14 +1,10 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
-	"github.com/spf13/viper"
 
-	"github.com/aws/eks-anywhere/internal/test/cleanup"
 	"github.com/aws/eks-anywhere/pkg/logger"
 )
 
@@ -36,14 +32,7 @@ var cleanUpNutanixCmd = &cobra.Command{
 	},
 }
 
-func preRunCleanUpNutanixSetup(cmd *cobra.Command, _ []string) {
-	cmd.Flags().VisitAll(func(flag *pflag.Flag) {
-		err := viper.BindPFlag(flag.Name, flag)
-		if err != nil {
-			log.Fatalf("Error initializing flags: %v", err)
-		}
-	})
-}
+func preRunCleanUpNutanixSetup(cmd *cobra.Command, _ []string) { _ = "STUB: not implemented"; return }
 
 func init() {
 	cleanUpInstancesCmd.AddCommand(cleanUpNutanixCmd)
@@ -61,12 +50,4 @@ func init() {
 	}
 }
 
-func cleanUpNutanixTestResources() error {
-	clusterName := viper.GetString(clusterNameFlagName)
-	err := cleanup.NutanixTestResources(clusterName, viper.GetString(endpointFlag), viper.GetString(portFlag), viper.IsSet(insecureFlag), viper.IsSet(ignoreErrorsFlag))
-	if err != nil {
-		return fmt.Errorf("running cleanup for Nutanix vms: %v", err)
-	}
-
-	return nil
-}
+func cleanUpNutanixTestResources() error { _ = "STUB: not implemented"; return nil }

@@ -5,13 +5,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/aws/eks-anywhere/pkg/api/v1alpha1"
-	"github.com/aws/eks-anywhere/pkg/certificates"
 	"github.com/aws/eks-anywhere/pkg/constants"
-	"github.com/aws/eks-anywhere/pkg/dependencies"
-	"github.com/aws/eks-anywhere/pkg/kubeconfig"
 	"github.com/aws/eks-anywhere/pkg/logger"
-	"github.com/aws/eks-anywhere/pkg/types"
 )
 
 type renewCertificatesOptions struct {
@@ -41,53 +36,6 @@ func init() {
 }
 
 func (rc *renewCertificatesOptions) renewCertificates(cmd *cobra.Command, _ []string) error {
-	ctx := cmd.Context()
-
-	cfg, err := certificates.ParseConfig(rc.configFile)
-	if err != nil {
-		return err
-	}
-
-	deps, err := dependencies.NewFactory().
-		WithExecutableBuilder().
-		WithKubectl().
-		WithUnAuthKubeClient().
-		Build(ctx)
-	if err != nil {
-		return err
-	}
-
-	kubeCfgPath := kubeconfig.FromClusterName(cfg.ClusterName)
-	if cfg.ManagementClusterName != "" {
-		kubeCfgPath, err = getManagementClusterKubeconfig(cfg.ManagementClusterName)
-		if err != nil {
-			return err
-		}
-	}
-
-	kubeClient := deps.UnAuthKubeClient.KubeconfigClient(kubeCfgPath)
-
-	cluster := &types.Cluster{
-		Name: cfg.ClusterName,
-	}
-
-	if err := certificates.PopulateConfig(ctx, cfg, kubeClient, cluster); err != nil {
-		return err
-	}
-
-	if err := certificates.ValidateConfig(cfg, rc.component); err != nil {
-		return err
-	}
-
-	os := cfg.OS
-	if os == string(v1alpha1.Ubuntu) || os == string(v1alpha1.RedHat) {
-		os = string(certificates.OSTypeLinux)
-	}
-
-	renewer, err := certificates.NewRenewer(kubeClient, os, cfg)
-	if err != nil {
-		return err
-	}
-
-	return renewer.RenewCertificates(ctx, cfg, rc.component)
+	_ = "STUB: not implemented"
+	return nil
 }

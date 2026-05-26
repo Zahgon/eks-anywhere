@@ -31,69 +31,17 @@ type OIDCConfigSpec struct {
 	UsernamePrefix string `json:"usernamePrefix,omitempty"`
 }
 
-func (e *OIDCConfigSpec) Equal(n *OIDCConfigSpec) bool {
-	if e == n {
-		return true
-	}
-	if e == nil || n == nil {
-		return false
-	}
-	if e.ClientId != n.ClientId {
-		return false
-	}
-	if e.GroupsClaim != n.GroupsClaim {
-		return false
-	}
-	if e.GroupsPrefix != n.GroupsPrefix {
-		return false
-	}
-	if e.IssuerUrl != n.IssuerUrl {
-		return false
-	}
-	if e.UsernameClaim != n.UsernameClaim {
-		return false
-	}
-	if e.UsernamePrefix != n.UsernamePrefix {
-		return false
-	}
-	return RequiredClaimsSliceEqual(e.RequiredClaims, n.RequiredClaims)
-}
+func (e *OIDCConfigSpec) Equal(n *OIDCConfigSpec) bool { _ = "STUB: not implemented"; return false }
 
 func RequiredClaimsSliceEqual(a, b []OIDCConfigRequiredClaim) bool {
-	if len(a) != len(b) {
-		return false
-	}
-
-	m := make(map[string]int, len(a))
-	for _, v := range a {
-		m[v.Claim+v.Value]++
-	}
-	for _, v := range b {
-		if _, ok := m[v.Claim+v.Value]; !ok {
-			return false
-		}
-		m[v.Claim+v.Value] -= 1
-		if m[v.Claim+v.Value] == 0 {
-			delete(m, v.Claim+v.Value)
-		}
-	}
-	return len(m) == 0
-}
-
-// IsManaged returns true if the oidcconfig is associated with a workload cluster.
-func (c *OIDCConfig) IsManaged() bool {
-	if s, ok := c.Annotations[managementAnnotation]; ok {
-		return s != ""
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
-func (c *OIDCConfig) SetManagedBy(clusterName string) {
-	if c.Annotations == nil {
-		c.Annotations = map[string]string{}
-	}
-	c.Annotations[managementAnnotation] = clusterName
-}
+// IsManaged returns true if the oidcconfig is associated with a workload cluster.
+func (c *OIDCConfig) IsManaged() bool { _ = "STUB: not implemented"; return false }
+
+func (c *OIDCConfig) SetManagedBy(clusterName string) { _ = "STUB: not implemented"; return }
 
 type OIDCConfigRequiredClaim struct {
 	Claim string `json:"claim,omitempty"`
@@ -133,33 +81,18 @@ type OIDCConfigList struct {
 	Items           []OIDCConfig `json:"items"`
 }
 
-func (c *OIDCConfig) Kind() string {
-	return c.TypeMeta.Kind
-}
+func (c *OIDCConfig) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (c *OIDCConfig) ExpectedKind() string {
-	return OIDCConfigKind
-}
+func (c *OIDCConfig) ExpectedKind() string { _ = "STUB: not implemented"; return "" }
 
 func (c *OIDCConfig) Validate() field.ErrorList {
-	return validateOIDCConfig(c)
+	_ = "STUB: not implemented"
+	return *new(field.ErrorList)
 }
 
 func (c *OIDCConfig) ConvertConfigToConfigGenerateStruct() *OIDCConfigGenerate {
-	namespace := defaultEksaNamespace
-	if c.Namespace != "" {
-		namespace = c.Namespace
-	}
-	config := &OIDCConfigGenerate{
-		TypeMeta: c.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        c.Name,
-			Annotations: c.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: c.Spec,
-	}
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func init() {

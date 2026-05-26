@@ -2,7 +2,6 @@ package aws
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
@@ -27,72 +26,34 @@ type ServiceEndpoint struct {
 type AwsConfigOpt = config.LoadOptionsFunc
 
 func AwsConfigOptSet(opts ...AwsConfigOpt) AwsConfigOpt {
-	return func(conf *config.LoadOptions) error {
-		for _, opt := range opts {
-			if err := opt(conf); err != nil {
-				return err
-			}
-		}
-
-		return nil
-	}
+	_ = "STUB: not implemented"
+	return *new(AwsConfigOpt)
 }
 
 // LoadConfig reads the optional aws configurations, and populates an AWS Config
 // with the values from the configurations.
 func LoadConfig(ctx context.Context, opts ...AwsConfigOpt) (aws.Config, error) {
-	optFns := []func(*config.LoadOptions) error{}
-
-	for _, opt := range opts {
-		optFns = append(optFns, opt)
-	}
-
-	cfg, err := config.LoadDefaultConfig(ctx, optFns...)
-	if err != nil {
-		return aws.Config{}, fmt.Errorf("setting aws config: %v", err)
-	}
-	return cfg, nil
+	_ = "STUB: not implemented"
+	return *new(aws.Config), nil
 }
 
 // ClientOpt updates an aws.Client.
 type ClientOpt func(*Client)
 
 // WithEC2 returns a ClientOpt that sets the ec2 client.
-func WithEC2(ec2 EC2Client) ClientOpt {
-	return func(c *Client) {
-		c.ec2 = ec2
-	}
-}
+func WithEC2(ec2 EC2Client) ClientOpt { _ = "STUB: not implemented"; return *new(ClientOpt) }
 
 // WithIMDS returns a ClientOpt that sets the imds client.
-func WithIMDS(imds IMDSClient) ClientOpt {
-	return func(c *Client) {
-		c.imds = imds
-	}
-}
+func WithIMDS(imds IMDSClient) ClientOpt { _ = "STUB: not implemented"; return *new(ClientOpt) }
 
 // WithSnowballDevice returns a ClientOpt that sets the snowballdevice client.
 func WithSnowballDevice(snowballdevice SnowballDeviceClient) ClientOpt {
-	return func(c *Client) {
-		c.snowballDevice = snowballdevice
-	}
+	_ = "STUB: not implemented"
+	return *new(ClientOpt)
 }
 
 // NewClient builds an aws Client.
-func NewClient(opts ...ClientOpt) *Client {
-	c := &Client{}
-
-	for _, o := range opts {
-		o(c)
-	}
-
-	return c
-}
+func NewClient(opts ...ClientOpt) *Client { _ = "STUB: not implemented"; return nil }
 
 // NewClientFromConfig builds an aws client with ec2 and snowballdevice apis from aws config.
-func NewClientFromConfig(cfg aws.Config) *Client {
-	return NewClient(
-		WithEC2(NewEC2Client(cfg)),
-		WithSnowballDevice(NewSnowballClient(cfg)),
-	)
-}
+func NewClientFromConfig(cfg aws.Config) *Client { _ = "STUB: not implemented"; return nil }

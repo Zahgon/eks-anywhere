@@ -14,8 +14,6 @@
 
 package v1alpha1
 
-import "strings"
-
 // Image represents a container image asset along with metadata such as OS,
 // architecture, and registry information.
 type Image struct {
@@ -47,87 +45,33 @@ type Image struct {
 // VersionedImage returns the full URI of the Image, including registry,
 // repository, and tag or digest.
 func (i Image) VersionedImage() string {
-	return i.URI
+	_ = "STUB: not implemented"
+
+	// Image returns the repository URI of the Image, excluding the tag or digest
+	// if one is present.
+	return ""
 }
 
-// Image returns the repository URI of the Image, excluding the tag or digest
-// if one is present.
-func (i Image) Image() string {
-	lastInd := strings.LastIndex(i.URI, ":")
-	if lastInd == -1 {
-		return i.URI
-	}
-	return i.URI[:lastInd]
-}
+func (i Image) Image() string { _ = "STUB: not implemented"; return "" }
 
 // Tag returns the tag portion of the Image's URI if present, otherwise an empty string.
-func (i Image) Tag() string {
-	lastInd := strings.LastIndex(i.URI, ":")
-	if lastInd == -1 || lastInd == len(i.URI)-1 {
-		return ""
-	}
-	return i.URI[lastInd+1:]
-}
+func (i Image) Tag() string { _ = "STUB: not implemented"; return "" }
 
 // ChartName constructs a typical Helm chart artifact name (with ".tgz")
 // from the Image's name by replacing the last colon with a hyphen.
-func (i Image) ChartName() string {
-	lastInd := strings.LastIndex(i.Image(), "/")
-	if lastInd == -1 {
-		return i.URI
-	}
-	chart := i.URI[lastInd+1:]
-	chart = strings.Replace(chart, ":", "-", 1)
-	chart += ".tgz"
-	return chart
-}
+func (i Image) ChartName() string { _ = "STUB: not implemented"; return "" }
 
 // Registry returns the registry portion of the Image URI (the substring before the first slash).
-func (i *Image) Registry() string {
-	result := strings.Split(i.URI, "/")
-	if len(result) < 1 {
-		return ""
-	}
-	return result[0]
-}
+func (i *Image) Registry() string { _ = "STUB: not implemented"; return "" }
 
 // Repository returns the repository name (between the registry and the tag/digest).
-func (i *Image) Repository() string {
-	rol := strings.TrimPrefix(i.URI, i.Registry()+"/")
-	result := strings.Split(rol, "@")
-	if len(result) < 2 {
-		result = strings.Split(rol, ":")
-		if len(result) < 1 {
-			return ""
-		}
-		return result[0]
-	}
-	return result[0]
-}
+func (i *Image) Repository() string { _ = "STUB: not implemented"; return "" }
 
 // Digest returns the SHA digest portion (after '@') of the Image URI, if present.
-func (i *Image) Digest() string {
-	rol := strings.TrimPrefix(i.URI, i.Registry()+"/")
-	result := strings.Split(rol, "@")
-	if len(result) < 2 {
-		return ""
-	}
-	return result[1]
-}
+func (i *Image) Digest() string { _ = "STUB: not implemented"; return "" }
 
 // Version returns the tag portion (after ':') of the Image URI, if present, or empty if the URI uses digests.
-func (i *Image) Version() string {
-	rol := strings.TrimPrefix(i.URI, i.Registry()+"/")
-	result := strings.Split(rol, "@")
-	if len(result) < 2 {
-		result = strings.Split(rol, ":")
-		if len(result) < 2 {
-			return ""
-		}
-		return result[1]
-	}
-	return ""
-}
+func (i *Image) Version() string { _ = "STUB: not implemented"; return "" }
 
 // Archive represents an archive asset (e.g. tarball) along with its OS/architecture metadata,
 // and checksums for file integrity.

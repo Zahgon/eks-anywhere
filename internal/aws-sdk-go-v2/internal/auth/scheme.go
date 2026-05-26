@@ -2,10 +2,8 @@ package auth
 
 import (
 	"context"
-	"fmt"
 
 	smithy "github.com/aws/smithy-go"
-	"github.com/aws/smithy-go/middleware"
 )
 
 // SigV4 is a constant representing
@@ -47,9 +45,13 @@ type AuthenticationSchemeV4 struct {
 	DisableDoubleEncoding *bool
 }
 
-func (a *AuthenticationSchemeV4) isAuthenticationScheme() {}
+func (a *AuthenticationSchemeV4) isAuthenticationScheme() {
+	_ = "STUB: not implemented"
 
-// AuthenticationSchemeV4A is a AWS SigV4A representation
+	// AuthenticationSchemeV4A is a AWS SigV4A representation
+	return
+}
+
 type AuthenticationSchemeV4A struct {
 	Name                  string
 	SigningName           *string
@@ -57,20 +59,26 @@ type AuthenticationSchemeV4A struct {
 	DisableDoubleEncoding *bool
 }
 
-func (a *AuthenticationSchemeV4A) isAuthenticationScheme() {}
+func (a *AuthenticationSchemeV4A) isAuthenticationScheme() {
+	_ = "STUB: not implemented"
 
-// AuthenticationSchemeNone is a representation for the none auth scheme
+	// AuthenticationSchemeNone is a representation for the none auth scheme
+	return
+}
+
 type AuthenticationSchemeNone struct{}
 
-func (a *AuthenticationSchemeNone) isAuthenticationScheme() {}
+func (a *AuthenticationSchemeNone) isAuthenticationScheme() {
+	_ = "STUB: not implemented"
 
-// NoAuthenticationSchemesFoundError is used in signaling
-// that no authentication schemes have been specified.
+	// NoAuthenticationSchemesFoundError is used in signaling
+	// that no authentication schemes have been specified.
+	return
+}
+
 type NoAuthenticationSchemesFoundError struct{}
 
-func (e *NoAuthenticationSchemesFoundError) Error() string {
-	return fmt.Sprint("No authentication schemes specified.")
-}
+func (e *NoAuthenticationSchemesFoundError) Error() string { _ = "STUB: not implemented"; return "" }
 
 // UnSupportedAuthenticationSchemeSpecifiedError is used in
 // signaling that only unsupported authentication schemes
@@ -80,57 +88,15 @@ type UnSupportedAuthenticationSchemeSpecifiedError struct {
 }
 
 func (e *UnSupportedAuthenticationSchemeSpecifiedError) Error() string {
-	return fmt.Sprint("Unsupported authentication scheme specified.")
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // GetAuthenticationSchemes extracts the relevant authentication scheme data
 // into a custom strongly typed Go data structure.
 func GetAuthenticationSchemes(p *smithy.Properties) ([]AuthenticationScheme, error) {
-	var result []AuthenticationScheme
-	if !p.Has("authSchemes") {
-		return nil, &NoAuthenticationSchemesFoundError{}
-	}
-
-	authSchemes, _ := p.Get("authSchemes").([]interface{})
-
-	var unsupportedSchemes []string
-	for _, scheme := range authSchemes {
-		authScheme, _ := scheme.(map[string]interface{})
-
-		version := authScheme["name"].(string)
-		switch version {
-		case SigV4, SigV4S3Express:
-			v4Scheme := AuthenticationSchemeV4{
-				Name:                  version,
-				SigningName:           getSigningName(authScheme),
-				SigningRegion:         getSigningRegion(authScheme),
-				DisableDoubleEncoding: getDisableDoubleEncoding(authScheme),
-			}
-			result = append(result, AuthenticationScheme(&v4Scheme))
-		case SigV4A:
-			v4aScheme := AuthenticationSchemeV4A{
-				Name:                  SigV4A,
-				SigningName:           getSigningName(authScheme),
-				SigningRegionSet:      getSigningRegionSet(authScheme),
-				DisableDoubleEncoding: getDisableDoubleEncoding(authScheme),
-			}
-			result = append(result, AuthenticationScheme(&v4aScheme))
-		case None:
-			noneScheme := AuthenticationSchemeNone{}
-			result = append(result, AuthenticationScheme(&noneScheme))
-		default:
-			unsupportedSchemes = append(unsupportedSchemes, authScheme["name"].(string))
-			continue
-		}
-	}
-
-	if len(result) == 0 {
-		return nil, &UnSupportedAuthenticationSchemeSpecifiedError{
-			UnsupportedSchemes: unsupportedSchemes,
-		}
-	}
-
-	return result, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type disableDoubleEncoding struct{}
@@ -141,7 +107,8 @@ type disableDoubleEncoding struct{}
 // Scoped to stack values. Use github.com/aws/smithy-go/middleware#ClearStackValues
 // to clear all stack values.
 func SetDisableDoubleEncoding(ctx context.Context, value bool) context.Context {
-	return middleware.WithStackValue(ctx, disableDoubleEncoding{}, value)
+	_ = "STUB: not implemented"
+	return *new(context.Context)
 }
 
 // GetDisableDoubleEncoding retrieves the disable double encoding option
@@ -150,42 +117,26 @@ func SetDisableDoubleEncoding(ctx context.Context, value bool) context.Context {
 // Scoped to stack values. Use github.com/aws/smithy-go/middleware#ClearStackValues
 // to clear all stack values.
 func GetDisableDoubleEncoding(ctx context.Context) (value bool, ok bool) {
-	value, ok = middleware.GetStackValue(ctx, disableDoubleEncoding{}).(bool)
-	return value, ok
+	_ = "STUB: not implemented"
+	return false, false
 }
 
 func getSigningName(authScheme map[string]interface{}) *string {
-	signingName, ok := authScheme["signingName"].(string)
-	if !ok || signingName == "" {
-		return nil
-	}
-	return &signingName
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func getSigningRegionSet(authScheme map[string]interface{}) []string {
-	untypedSigningRegionSet, ok := authScheme["signingRegionSet"].([]interface{})
-	if !ok {
-		return nil
-	}
-	signingRegionSet := []string{}
-	for _, item := range untypedSigningRegionSet {
-		signingRegionSet = append(signingRegionSet, item.(string))
-	}
-	return signingRegionSet
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func getSigningRegion(authScheme map[string]interface{}) *string {
-	signingRegion, ok := authScheme["signingRegion"].(string)
-	if !ok || signingRegion == "" {
-		return nil
-	}
-	return &signingRegion
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func getDisableDoubleEncoding(authScheme map[string]interface{}) *bool {
-	disableDoubleEncoding, ok := authScheme["disableDoubleEncoding"].(bool)
-	if !ok {
-		return nil
-	}
-	return &disableDoubleEncoding
+	_ = "STUB: not implemented"
+	return nil
 }

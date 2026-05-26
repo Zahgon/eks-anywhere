@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	kubernetes "github.com/aws/eks-anywhere/pkg/clients/kubernetes"
 	gomock "github.com/golang/mock/gomock"
@@ -24,27 +23,23 @@ type MockClientMockRecorder struct {
 }
 
 // NewMockClient creates a new mock instance.
-func NewMockClient(ctrl *gomock.Controller) *MockClient {
-	mock := &MockClient{ctrl: ctrl}
-	mock.recorder = &MockClientMockRecorder{mock}
-	return mock
-}
+func NewMockClient(ctrl *gomock.Controller) *MockClient { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockClient) EXPECT() *MockClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Get mocks base method.
+	return nil
 }
 
-// Get mocks base method.
 func (m *MockClient) Get(ctx context.Context, name, namespace string, obj kubernetes.Object) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Get", ctx, name, namespace, obj)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Get indicates an expected call of Get.
 func (mr *MockClientMockRecorder) Get(ctx, name, namespace, obj interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockClient)(nil).Get), ctx, name, namespace, obj)
+	_ = "STUB: not implemented"
+	return nil
 }

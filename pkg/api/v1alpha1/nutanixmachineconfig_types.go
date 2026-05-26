@@ -71,95 +71,54 @@ type NutanixMachineConfigSpec struct {
 }
 
 // SetDefaults sets defaults to NutanixMachineConfig if user has not provided.
-func (in *NutanixMachineConfig) SetDefaults() {
-	setNutanixMachineConfigDefaults(in)
-}
+func (in *NutanixMachineConfig) SetDefaults() { _ = "STUB: not implemented"; return }
 
 // PauseReconcile pauses the reconciliation of the NutanixMachineConfig.
-func (in *NutanixMachineConfig) PauseReconcile() {
-	if in.Annotations == nil {
-		in.Annotations = map[string]string{}
-	}
-	in.Annotations[pausedAnnotation] = "true"
-}
+func (in *NutanixMachineConfig) PauseReconcile() { _ = "STUB: not implemented"; return }
 
 // IsReconcilePaused returns true if the NutanixMachineConfig is paused.
-func (in *NutanixMachineConfig) IsReconcilePaused() bool {
-	if s, ok := in.Annotations[pausedAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (in *NutanixMachineConfig) IsReconcilePaused() bool { _ = "STUB: not implemented"; return false }
 
 // SetControlPlane sets the NutanixMachineConfig as a control plane node.
-func (in *NutanixMachineConfig) SetControlPlane() {
-	if in.Annotations == nil {
-		in.Annotations = map[string]string{}
-	}
-	in.Annotations[controlPlaneAnnotation] = "true"
-}
+func (in *NutanixMachineConfig) SetControlPlane() { _ = "STUB: not implemented"; return }
 
 // IsControlPlane returns true if the NutanixMachineConfig is a control plane node.
-func (in *NutanixMachineConfig) IsControlPlane() bool {
-	if s, ok := in.Annotations[controlPlaneAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (in *NutanixMachineConfig) IsControlPlane() bool { _ = "STUB: not implemented"; return false }
 
 // SetEtcd sets the NutanixMachineConfig as an etcd node.
-func (in *NutanixMachineConfig) SetEtcd() {
-	if in.Annotations == nil {
-		in.Annotations = map[string]string{}
-	}
-	in.Annotations[etcdAnnotation] = "true"
-}
+func (in *NutanixMachineConfig) SetEtcd() { _ = "STUB: not implemented"; return }
 
 // IsEtcd returns true if the NutanixMachineConfig is an etcd node.
-func (in *NutanixMachineConfig) IsEtcd() bool {
-	if s, ok := in.Annotations[etcdAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (in *NutanixMachineConfig) IsEtcd() bool { _ = "STUB: not implemented"; return false }
 
 // SetManagedBy sets the cluster name that manages the NutanixMachineConfig.
-func (in *NutanixMachineConfig) SetManagedBy(clusterName string) {
-	if in.Annotations == nil {
-		in.Annotations = map[string]string{}
-	}
-	in.Annotations[managementAnnotation] = clusterName
-}
+func (in *NutanixMachineConfig) SetManagedBy(clusterName string) { _ = "STUB: not implemented"; return }
 
 // IsManaged returns true if the NutanixMachineConfig is managed by a cluster.
-func (in *NutanixMachineConfig) IsManaged() bool {
-	if s, ok := in.Annotations[managementAnnotation]; ok {
-		return s != ""
-	}
-	return false
-}
+func (in *NutanixMachineConfig) IsManaged() bool { _ = "STUB: not implemented"; return false }
 
 // OSFamily returns the OSFamily of the NutanixMachineConfig.
 func (in *NutanixMachineConfig) OSFamily() OSFamily {
-	return in.Spec.OSFamily
+	_ = "STUB: not implemented"
+	return *
+
+	// Users returns a list of configuration for OS users.
+	new(OSFamily)
 }
 
-// Users returns a list of configuration for OS users.
-func (in *NutanixMachineConfig) Users() []UserConfiguration {
-	return in.Spec.Users
-}
+func (in *NutanixMachineConfig) Users() []UserConfiguration { _ = "STUB: not implemented"; return nil }
 
 // GetNamespace returns the namespace of the NutanixMachineConfig.
-func (in *NutanixMachineConfig) GetNamespace() string {
-	return in.Namespace
-}
+func (in *NutanixMachineConfig) GetNamespace() string { _ = "STUB: not implemented"; return "" }
 
 // GetName returns the name of the NutanixMachineConfig.
 func (in *NutanixMachineConfig) GetName() string {
-	return in.Name
+	_ = "STUB: not implemented"
+
+	// NutanixMachineConfigStatus defines the observed state of NutanixMachineConfig.
+	return ""
 }
 
-// NutanixMachineConfigStatus defines the observed state of NutanixMachineConfig.
 type NutanixMachineConfigStatus struct {
 	// Ready is true when the provider resource is ready.
 	// +optional
@@ -196,32 +155,18 @@ type NutanixMachineConfig struct {
 
 // ConvertConfigToConfigGenerateStruct converts the NutanixMachineConfig to NutanixMachineConfigGenerate.
 func (in *NutanixMachineConfig) ConvertConfigToConfigGenerateStruct() *NutanixMachineConfigGenerate {
-	namespace := defaultEksaNamespace
-	if in.Namespace != "" {
-		namespace = in.Namespace
-	}
-	config := &NutanixMachineConfigGenerate{
-		TypeMeta: in.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        in.Name,
-			Annotations: in.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: in.Spec,
-	}
-
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Marshallable returns a Marshallable version of the NutanixMachineConfig.
 func (in *NutanixMachineConfig) Marshallable() Marshallable {
-	return in.ConvertConfigToConfigGenerateStruct()
+	_ = "STUB: not implemented"
+	return *new(Marshallable)
 }
 
 // Validate validates the NutanixMachineConfig.
-func (in *NutanixMachineConfig) Validate() error {
-	return validateNutanixMachineConfig(in)
-}
+func (in *NutanixMachineConfig) Validate() error { _ = "STUB: not implemented"; return nil }
 
 // NutanixMachineConfigGenerate is same as NutanixMachineConfig except stripped down for generation of yaml file during
 // generate clusterconfig

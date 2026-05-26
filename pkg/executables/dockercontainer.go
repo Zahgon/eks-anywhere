@@ -3,13 +3,8 @@ package executables
 import (
 	"bytes"
 	"context"
-	"fmt"
-	"path/filepath"
-	"strconv"
 	"sync"
-	"time"
 
-	"github.com/aws/eks-anywhere/pkg/logger"
 	"github.com/aws/eks-anywhere/pkg/retrier"
 )
 
@@ -30,74 +25,19 @@ type dockerContainer struct {
 }
 
 func newDockerContainer(image, workingDir string, mountDirs []string, dockerClient DockerClient) *dockerContainer {
-	return &dockerContainer{
-		image:         image,
-		workingDir:    workingDir,
-		mountDirs:     mountDirs,
-		containerName: containerNamePrefix + strconv.FormatInt(time.Now().UnixNano(), 10),
-		dockerClient:  dockerClient,
-		Retrier:       retrier.NewWithMaxRetries(maxRetries, backOffPeriod),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func NewDockerContainerCustomBinary(docker DockerClient) *dockerContainer {
-	return &dockerContainer{
-		dockerClient: docker,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (d *dockerContainer) Init(ctx context.Context) error {
-	var err error
-	d.initOnce.Do(func() {
-		err = d.Retry(func() error {
-			return d.dockerClient.PullImage(ctx, d.image)
-		})
-		if err != nil {
-			return
-		}
+func (d *dockerContainer) Init(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
-		var absWorkingDir string
-		absWorkingDir, err = filepath.Abs(d.workingDir)
-		if err != nil {
-			err = fmt.Errorf("getting abs path for mount dir: %v", err)
-			return
-		}
+// start container and keep it running in the background
 
-		params := []string{"run", "-d", "--name", d.containerName, "--network", "host", "-w", absWorkingDir, "-v", "/var/run/docker.sock:/var/run/docker.sock"}
+func (d *dockerContainer) ContainerName() string { _ = "STUB: not implemented"; return "" }
 
-		for _, m := range d.mountDirs {
-			var absMountDir string
-			absMountDir, err = filepath.Abs(m)
-			if err != nil {
-				err = fmt.Errorf("getting abs path for mount dir: %v", err)
-				return
-			}
-			params = append(params, "-v", fmt.Sprintf("%[1]s:%[1]s", absMountDir))
-		}
-
-		// start container and keep it running in the background
-		logger.V(3).Info("Initializing long running container", "name", d.containerName, "image", d.image)
-		params = append(params, "--entrypoint", "sleep", d.image, "infinity")
-		_, err = d.dockerClient.Execute(ctx, params...)
-	})
-
-	return err
-}
-
-func (d *dockerContainer) ContainerName() string {
-	return d.containerName
-}
-
-func (d *dockerContainer) Close(ctx context.Context) error {
-	if d == nil {
-		return nil
-	}
-
-	var err error
-	d.closeOnce.Do(func() {
-		logger.V(3).Info("Cleaning up long running container", "name", d.containerName)
-		_, err = d.dockerClient.Execute(ctx, "rm", "-f", "-v", d.containerName)
-	})
-
-	return err
-}
+func (d *dockerContainer) Close(ctx context.Context) error { _ = "STUB: not implemented"; return nil }

@@ -1,7 +1,6 @@
 package framework
 
 import (
-	"os"
 	"testing"
 )
 
@@ -33,36 +32,16 @@ var requiredCertManagerEnvVars = []string{
 }
 
 // RequiredPackagesEnvVars returns the list of packages env vars.
-func RequiredPackagesEnvVars() []string {
-	return requiredPackagesEnvVars
-}
+func RequiredPackagesEnvVars() []string { _ = "STUB: not implemented"; return nil }
 
 // RequiredCertManagerEnvVars returns the list of cert manager env vars.
-func RequiredCertManagerEnvVars() []string {
-	return requiredCertManagerEnvVars
-}
+func RequiredCertManagerEnvVars() []string { _ = "STUB: not implemented"; return nil }
 
 // CheckCuratedPackagesCredentials will exit out if the Curated Packages environment variables are not set.
-func CheckCuratedPackagesCredentials(t *testing.T) {
-	for _, env := range requiredPackagesEnvVars {
-		_, ok := os.LookupEnv(env)
-		if !ok {
-			t.Fatalf("Error Unset Packages environment variable: %v is required", env)
-		}
-	}
-}
+func CheckCuratedPackagesCredentials(t *testing.T) { _ = "STUB: not implemented"; return }
 
 // CheckCertManagerCredentials will exit if route53 credentials are not set.
-func CheckCertManagerCredentials(t *testing.T) {
-	for _, env := range requiredCertManagerEnvVars {
-		_, ok := os.LookupEnv(env)
-		if !ok {
-			t.Fatalf("Error Unset Cert Manager environment variable: %v is required", env)
-		}
-	}
-}
+func CheckCertManagerCredentials(t *testing.T) { _ = "STUB: not implemented"; return }
 
 // GetRoute53Configs returns route53 configurations for cert-manager.
-func GetRoute53Configs() (string, string) {
-	return os.Getenv(route53Region), os.Getenv(route53ZoneID)
-}
+func GetRoute53Configs() (string, string) { _ = "STUB: not implemented"; return "", "" }

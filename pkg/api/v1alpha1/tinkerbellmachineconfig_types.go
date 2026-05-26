@@ -1,8 +1,6 @@
 package v1alpha1
 
 import (
-	"encoding/json"
-
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -36,17 +34,9 @@ type TinkerbellMachineConfigSpec struct {
 type HardwareSelector map[string]string
 
 // IsEmpty returns true if s has no key-value pairs.
-func (s HardwareSelector) IsEmpty() bool {
-	return len(s) == 0
-}
+func (s HardwareSelector) IsEmpty() bool { _ = "STUB: not implemented"; return false }
 
-func (s HardwareSelector) ToString() (string, error) {
-	encoded, err := json.Marshal(s)
-	if err != nil {
-		return "", err
-	}
-	return string(encoded), nil
-}
+func (s HardwareSelector) ToString() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // HardwareAffinity defines required and preferred hardware affinities.
 type HardwareAffinity struct {
@@ -78,71 +68,47 @@ type WeightedHardwareAffinityTerm struct {
 	HardwareAffinityTerm HardwareAffinityTerm `json:"hardwareAffinityTerm"`
 }
 
-func (c *TinkerbellMachineConfig) PauseReconcile() {
-	c.Annotations[pausedAnnotation] = "true"
-}
+func (c *TinkerbellMachineConfig) PauseReconcile() { _ = "STUB: not implemented"; return }
 
-func (c *TinkerbellMachineConfig) IsReconcilePaused() bool {
-	if s, ok := c.Annotations[pausedAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (c *TinkerbellMachineConfig) IsReconcilePaused() bool { _ = "STUB: not implemented"; return false }
 
-func (c *TinkerbellMachineConfig) SetControlPlane() {
-	c.Annotations[controlPlaneAnnotation] = "true"
-}
+func (c *TinkerbellMachineConfig) SetControlPlane() { _ = "STUB: not implemented"; return }
 
-func (c *TinkerbellMachineConfig) IsControlPlane() bool {
-	if s, ok := c.Annotations[controlPlaneAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (c *TinkerbellMachineConfig) IsControlPlane() bool { _ = "STUB: not implemented"; return false }
 
-func (c *TinkerbellMachineConfig) SetEtcd() {
-	c.Annotations[etcdAnnotation] = "true"
-}
+func (c *TinkerbellMachineConfig) SetEtcd() { _ = "STUB: not implemented"; return }
 
-func (c *TinkerbellMachineConfig) IsEtcd() bool {
-	if s, ok := c.Annotations[etcdAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (c *TinkerbellMachineConfig) IsEtcd() bool { _ = "STUB: not implemented"; return false }
 
 func (c *TinkerbellMachineConfig) SetManagedBy(clusterName string) {
-	if c.Annotations == nil {
-		c.Annotations = map[string]string{}
-	}
-	c.Annotations[managementAnnotation] = clusterName
+	_ = "STUB: not implemented"
+	return
 }
 
-func (c *TinkerbellMachineConfig) IsManaged() bool {
-	if s, ok := c.Annotations[managementAnnotation]; ok {
-		return s != ""
-	}
-	return false
-}
+func (c *TinkerbellMachineConfig) IsManaged() bool { _ = "STUB: not implemented"; return false }
 
 func (c *TinkerbellMachineConfig) OSFamily() OSFamily {
-	return c.Spec.OSFamily
+	_ = "STUB: not implemented"
+	return *
+
+	// Users returns a list of configuration for OS users.
+	new(OSFamily)
 }
 
-// Users returns a list of configuration for OS users.
 func (c *TinkerbellMachineConfig) Users() []UserConfiguration {
-	return c.Spec.Users
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (c *TinkerbellMachineConfig) GetNamespace() string {
-	return c.Namespace
-}
+func (c *TinkerbellMachineConfig) GetNamespace() string { _ = "STUB: not implemented"; return "" }
 
 func (c *TinkerbellMachineConfig) GetName() string {
-	return c.Name
+	_ = "STUB: not implemented"
+
+	// TinkerbellMachineConfigStatus defines the observed state of TinkerbellMachineConfig.
+	return ""
 }
 
-// TinkerbellMachineConfigStatus defines the observed state of TinkerbellMachineConfig.
 type TinkerbellMachineConfigStatus struct{}
 
 //+kubebuilder:object:root=true
@@ -158,36 +124,20 @@ type TinkerbellMachineConfig struct {
 }
 
 func (c *TinkerbellMachineConfig) ConvertConfigToConfigGenerateStruct() *TinkerbellMachineConfigGenerate {
-	namespace := defaultEksaNamespace
-	if c.Namespace != "" {
-		namespace = c.Namespace
-	}
-	config := &TinkerbellMachineConfigGenerate{
-		TypeMeta: c.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        c.Name,
-			Annotations: c.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: c.Spec,
-	}
-
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (c *TinkerbellMachineConfig) Marshallable() Marshallable {
-	return c.ConvertConfigToConfigGenerateStruct()
+	_ = "STUB: not implemented"
+	return *new(Marshallable)
 }
 
 // Validate performs light and fast Tinkerbell machine config validation.
-func (c *TinkerbellMachineConfig) Validate() error {
-	return validateTinkerbellMachineConfig(c)
-}
+func (c *TinkerbellMachineConfig) Validate() error { _ = "STUB: not implemented"; return nil }
 
 // SetDefaults sets defaults for Tinkerbell machine config.
-func (c *TinkerbellMachineConfig) SetDefaults() {
-	setTinkerbellMachineConfigDefaults(c)
-}
+func (c *TinkerbellMachineConfig) SetDefaults() { _ = "STUB: not implemented"; return }
 
 // +kubebuilder:object:generate=false
 

@@ -1,11 +1,5 @@
 package validations
 
-import (
-	"unicode"
-
-	"github.com/aws/eks-anywhere/pkg/logger"
-)
-
 type ValidationResult struct {
 	Name        string
 	Err         error
@@ -13,26 +7,8 @@ type ValidationResult struct {
 	Silent      bool
 }
 
-func (v *ValidationResult) Report() {
-	if v.Err != nil {
-		logger.MarkFail("Validation failed", "validation", v.Name, "error", v.Err.Error(), "remediation", v.Remediation)
-		return
-	}
-	if !v.Silent {
-		v.LogPass()
-	}
-}
+func (v *ValidationResult) Report() { _ = "STUB: not implemented"; return }
 
-func (v *ValidationResult) LogPass() {
-	logger.MarkPass(capitalize(v.Name))
-}
+func (v *ValidationResult) LogPass() { _ = "STUB: not implemented"; return }
 
-func capitalize(s string) string {
-	if len(s) == 0 {
-		return s
-	}
-	runes := []rune(s)
-	runes[0] = unicode.ToUpper(runes[0])
-
-	return string(runes)
-}
+func capitalize(s string) string { _ = "STUB: not implemented"; return "" }

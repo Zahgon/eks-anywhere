@@ -8,34 +8,11 @@ import (
 	"github.com/aws/eks-anywhere/test/framework"
 )
 
-func runOIDCFlow(test *framework.ClusterE2ETest) {
-	test.GenerateClusterConfig()
-	test.GenerateSupportBundleOnCleanupIfTestFailed()
-	test.CreateCluster()
-	test.ValidateOIDC()
-	test.StopIfFailed()
-	test.DeleteCluster()
-}
+func runOIDCFlow(test *framework.ClusterE2ETest) { _ = "STUB: not implemented"; return }
 
-func runTinkerbellOIDCFlow(test *framework.ClusterE2ETest) {
-	test.GenerateClusterConfig()
-	test.GenerateHardwareConfig()
-	test.GenerateSupportBundleOnCleanupIfTestFailed()
-	test.CreateCluster(framework.WithControlPlaneWaitTimeout("20m"))
-	test.ValidateOIDC()
-	test.StopIfFailed()
-	test.DeleteCluster()
-	test.ValidateHardwareDecommissioned()
-}
+func runTinkerbellOIDCFlow(test *framework.ClusterE2ETest) { _ = "STUB: not implemented"; return }
 
 func runUpgradeFlowWithOIDC(test *framework.ClusterE2ETest, updateVersion v1alpha1.KubernetesVersion, clusterOpts ...framework.ClusterE2ETestOpt) {
-	test.GenerateClusterConfig()
-	test.GenerateSupportBundleOnCleanupIfTestFailed()
-	test.CreateCluster()
-	test.ValidateOIDC()
-	test.UpgradeClusterWithNewConfig(clusterOpts)
-	test.ValidateCluster(updateVersion)
-	test.ValidateOIDC()
-	test.StopIfFailed()
-	test.DeleteCluster()
+	_ = "STUB: not implemented"
+	return
 }

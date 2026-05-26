@@ -121,39 +121,18 @@ type BaseboardManagementSetConditionOption func(*BaseboardManagementCondition)
 // SetCondition applies the cType condition to bm. If the condition already exists,
 // it is updated.
 func (bm *BaseboardManagement) SetCondition(cType BaseboardManagementConditionType, status ConditionStatus, opts ...BaseboardManagementSetConditionOption) {
-	var condition *BaseboardManagementCondition
-
-	// Check if there's an existing condition.
-	for i, c := range bm.Status.Conditions {
-		if c.Type == cType {
-			condition = &bm.Status.Conditions[i]
-			break
-		}
-	}
-
-	// We didn't find an existing condition so create a new one and append it.
-	if condition == nil {
-		bm.Status.Conditions = append(bm.Status.Conditions, BaseboardManagementCondition{
-			Type: cType,
-		})
-		condition = &bm.Status.Conditions[len(bm.Status.Conditions)-1]
-	}
-
-	if condition.Status != status {
-		condition.Status = status
-		condition.LastUpdateTime = metav1.Now()
-	}
-
-	for _, opt := range opts {
-		opt(condition)
-	}
+	_ = "STUB: not implemented"
+	return
 }
+
+// Check if there's an existing condition.
+
+// We didn't find an existing condition so create a new one and append it.
 
 // WithBaseboardManagementConditionMessage sets message m to the BaseboardManagementCondition.
 func WithBaseboardManagementConditionMessage(m string) BaseboardManagementSetConditionOption {
-	return func(c *BaseboardManagementCondition) {
-		c.Message = m
-	}
+	_ = "STUB: not implemented"
+	return *new(BaseboardManagementSetConditionOption)
 }
 
 // BaseboardManagementRef defines the reference information to a BaseboardManagement resource.

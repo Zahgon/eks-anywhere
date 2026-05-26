@@ -2,13 +2,9 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
-
-	"github.com/aws/eks-anywhere/pkg/curatedpackages"
-	"github.com/aws/eks-anywhere/pkg/kubeconfig"
 )
 
 type upgradePackageOptions struct {
@@ -58,21 +54,4 @@ var upgradePackagesCommand = &cobra.Command{
 	Deprecated: "refer to `https://anywhere.eks.amazonaws.com/docs/packages/packagebundles` for upgrading",
 }
 
-func upgradePackages(ctx context.Context) error {
-	kubeConfig, err := kubeconfig.ResolveAndValidateFilename(upo.kubeConfig, "")
-	if err != nil {
-		return err
-	}
-
-	deps, err := NewDependenciesForPackages(ctx, WithMountPaths(kubeConfig), WithBundlesOverride(upo.bundlesOverride))
-	if err != nil {
-		return fmt.Errorf("unable to initialize executables: %v", err)
-	}
-
-	b := curatedpackages.NewBundleReader(kubeConfig, upo.clusterName, deps.Kubectl, nil, nil)
-	activeController, err := b.GetActiveController(ctx)
-	if err != nil {
-		return err
-	}
-	return b.UpgradeBundle(ctx, activeController, upo.bundleVersion)
-}
+func upgradePackages(ctx context.Context) error { _ = "STUB: not implemented"; return nil }

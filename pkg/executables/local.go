@@ -5,17 +5,18 @@ import "context"
 type localExecutableBuilder struct{}
 
 func newLocalExecutableBuilder() localExecutableBuilder {
-	return localExecutableBuilder{}
+	_ = "STUB: not implemented"
+	return *new(localExecutableBuilder)
 }
 
 func (b localExecutableBuilder) Build(binaryPath string) Executable {
-	return NewExecutable(binaryPath)
+	_ = "STUB: not implemented"
+	return *new(Executable)
 }
 
 func (b localExecutableBuilder) Init(_ context.Context) (Closer, error) {
-	return NoOpClose, nil
+	_ = "STUB: not implemented"
+	return *new(Closer), nil
 }
 
-func NoOpClose(ctx context.Context) error {
-	return nil
-}
+func NoOpClose(ctx context.Context) error { _ = "STUB: not implemented"; return nil }

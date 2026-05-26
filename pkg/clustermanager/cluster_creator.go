@@ -23,44 +23,17 @@ type ClusterCreator struct {
 
 // NewClusterCreator creates a ClusterCreator.
 func NewClusterCreator(applier ClusterApplier, kubeconfigWriter kubeconfig.Writer, fs filewriter.FileWriter) *ClusterCreator {
-	return &ClusterCreator{
-		ClusterApplier:   applier,
-		kubeconfigWriter: kubeconfigWriter,
-		fs:               fs,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateSync creates a workload cluster using the EKS-A controller and returns the types.Cluster object for that cluster.
 func (cc ClusterCreator) CreateSync(ctx context.Context, spec *cluster.Spec, managementCluster *types.Cluster) (*types.Cluster, error) {
-	if err := cc.Run(ctx, spec, *managementCluster); err != nil {
-		return nil, err
-	}
-
-	return cc.buildClusterAccess(ctx, spec.Cluster.Name, managementCluster)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (cc ClusterCreator) buildClusterAccess(ctx context.Context, clusterName string, management *types.Cluster) (*types.Cluster, error) {
-	cluster := &types.Cluster{
-		Name: clusterName,
-	}
-
-	fsOptions := []filewriter.FileOptionsFunc{filewriter.PersistentFile, filewriter.Permission0600}
-	fh, path, err := cc.fs.Create(
-		kubeconfig.FormatWorkloadClusterKubeconfigFilename(clusterName),
-		fsOptions...,
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	defer fh.Close()
-
-	err = cc.kubeconfigWriter.WriteKubeconfig(ctx, clusterName, management.KubeconfigFile, fh)
-	if err != nil {
-		return nil, err
-	}
-
-	cluster.KubeconfigFile = path
-
-	return cluster, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

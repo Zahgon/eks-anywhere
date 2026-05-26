@@ -14,47 +14,27 @@
 
 package git
 
-import (
-	"fmt"
-	"os/exec"
-
-	commandutils "github.com/aws/eks-anywhere/release/cli/pkg/util/command"
-)
-
 func CloneRepo(cloneUrl, destination string) (string, error) {
-	cloneRepoCommandSequence := fmt.Sprintf("git clone --depth 1 %s %[2]s; cd %[2]s; git config --unset-all remote.origin.fetch; git config --add remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'; git fetch --unshallow; git pull --all", cloneUrl, destination)
-	cmd := exec.Command("bash", "-c", cloneRepoCommandSequence)
-	return commandutils.ExecCommand(cmd)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func CheckoutRepo(gitRoot, branch string) (string, error) {
-	cmd := exec.Command("git", "-C", gitRoot, "checkout", branch)
-	return commandutils.ExecCommand(cmd)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
-func DescribeTag(gitRoot string) (string, error) {
-	cmd := exec.Command("git", "-C", gitRoot, "describe", "--tag")
-	return commandutils.ExecCommand(cmd)
-}
+func DescribeTag(gitRoot string) (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 // GetRepoTagsDescending retrieves all Git tags in the specified repository root that match the pattern "v*"
 // and returns them as a single string sorted in descending semantic version order (e.g., v3.0.0, v2.1.0, v1.0.0).
 func GetRepoTagsDescending(gitRoot string) (string, error) {
-	cmd := exec.Command("git", "-C", gitRoot, "tag", "-l", "v*", "--sort", "-v:refname")
-	return commandutils.ExecCommand(cmd)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
-func GetHead(gitRoot string) (string, error) {
-	cmd := exec.Command("git", "-C", gitRoot, "rev-parse", "HEAD")
-	return commandutils.ExecCommand(cmd)
-}
+func GetHead(gitRoot string) (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-func GetRepoRoot() (string, error) {
-	cmd := exec.Command("git", "rev-parse", "--show-toplevel")
-	return commandutils.ExecCommand(cmd)
-}
+func GetRepoRoot() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
-func GetCurrentBranch(gitRoot string) (string, error) {
-	cmd := exec.Command("git", "-C", gitRoot, "branch", "--show-current")
-	return commandutils.ExecCommand(cmd)
-}
+func GetCurrentBranch(gitRoot string) (string, error) { _ = "STUB: not implemented"; return "", nil }

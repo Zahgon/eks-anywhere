@@ -1,19 +1,9 @@
 package filewriter
 
-import (
-	"os"
-)
-
 const DefaultTmpFolder = "generated"
 
-func defaultFileOptions() *FileOptions {
-	return &FileOptions{true, os.ModePerm}
-}
+func defaultFileOptions() *FileOptions { _ = "STUB: not implemented"; return nil }
 
-func Permission0600(op *FileOptions) {
-	op.Permissions = 0o600
-}
+func Permission0600(op *FileOptions) { _ = "STUB: not implemented"; return }
 
-func PersistentFile(op *FileOptions) {
-	op.IsTemp = false
-}
+func PersistentFile(op *FileOptions) { _ = "STUB: not implemented"; return }

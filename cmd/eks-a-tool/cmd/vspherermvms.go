@@ -2,14 +2,11 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"github.com/aws/eks-anywhere/pkg/executables"
-	"github.com/aws/eks-anywhere/pkg/filewriter"
 	"github.com/aws/eks-anywhere/pkg/validations"
 )
 
@@ -46,14 +43,6 @@ func init() {
 }
 
 func vsphereRmVms(ctx context.Context, clusterName string, dryRun bool) error {
-	executableBuilder, close, err := executables.InitInDockerExecutablesBuilder(ctx, executables.DefaultEksaImage())
-	if err != nil {
-		return fmt.Errorf("unable to initialize executables: %v", err)
-	}
-	defer close.CheckErr(ctx)
-	tmpWriter, _ := filewriter.NewWriter("rmvms")
-	govc := executableBuilder.BuildGovcExecutable(tmpWriter)
-	defer govc.Close(ctx)
-
-	return govc.CleanupVms(ctx, clusterName, dryRun)
+	_ = "STUB: not implemented"
+	return nil
 }

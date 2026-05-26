@@ -2,7 +2,6 @@ package framework
 
 import (
 	"context"
-	"os"
 	"testing"
 
 	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
@@ -39,52 +38,13 @@ type templateRegistry struct {
 // This is a catch all condition. Mostly for edge cases where the bundle has been updated with a new eks-d version, but the
 // the new template hasn't been imported yet. It also preserves backwards compatibility.
 func (tc *templateRegistry) templateForRelease(t *testing.T, release *releasev1.EksARelease, kubeVersion anywherev1.KubernetesVersion, operatingSystem OS, useBundlesOverride bool) string {
-	t.Helper()
-	versionsBundle := readVersionsBundles(t, release, kubeVersion, useBundlesOverride)
-	eksDName := versionsBundle.EksD.Name
-
-	templateEnvVarName := tc.generator.envVarForTemplate(operatingSystem, eksDName)
-	cacheKey := templateEnvVarName
-	if template, ok := tc.cache[cacheKey]; ok {
-		t.Logf("Template for release found in cache, using %s template.", template)
-		return template
-	}
-
-	template, ok := os.LookupEnv(templateEnvVarName)
-	if ok && template != "" {
-		t.Logf("Env var %s is set, using %s template", templateEnvVarName, template)
-		tc.cache[cacheKey] = template
-		return template
-	}
-	t.Logf("Env var %s is not set, trying default generated template name", templateEnvVarName)
-
-	// Env var is not set, try default template name
-	template = tc.generator.defaultNameForTemplate(operatingSystem, eksDName)
-	if template != "" {
-		foundTemplate, err := tc.generator.searchTemplate(context.Background(), template)
-		if err != nil {
-			t.Logf("Failed checking if default template exists: %v", err)
-		}
-
-		if foundTemplate != "" {
-			t.Logf("Default template for release exists, using %s template.", template)
-			tc.cache[cacheKey] = template
-			return template
-		}
-		t.Logf("Default template %s for release doesn't exit.", template)
-	}
-	// Default template doesn't exist, try legacy generic env var
-	// It is not guaranteed that this template will work for the given release, if they don't match the
-	// same ekd-d release, the test will fail. This is just a catch all last try for cases where the new template
-	// hasn't been imported with its own name but the default one matches the same eks-d release.
-	templateEnvVarName = tc.generator.defaultEnvVarForTemplate(operatingSystem, kubeVersion)
-	template, ok = os.LookupEnv(templateEnvVarName)
-	if !ok || template == "" {
-		t.Fatalf("Env var %s for default template is not set, can't determine which template to use", templateEnvVarName)
-	}
-
-	t.Logf("Env var %s is set, using %s template. There are no guarantees this template will be valid. Cluster validation might fail.", templateEnvVarName, template)
-
-	tc.cache[cacheKey] = template
-	return template
+	_ = "STUB: not implemented"
+	return ""
 }
+
+// Env var is not set, try default template name
+
+// Default template doesn't exist, try legacy generic env var
+// It is not guaranteed that this template will work for the given release, if they don't match the
+// same ekd-d release, the test will fail. This is just a catch all last try for cases where the new template
+// hasn't been imported with its own name but the default one matches the same eks-d release.

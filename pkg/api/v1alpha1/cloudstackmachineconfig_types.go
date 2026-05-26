@@ -15,10 +15,6 @@
 package v1alpha1
 
 import (
-	"regexp"
-	"strings"
-
-	"github.com/pkg/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -75,27 +71,8 @@ type CloudStackResourceDiskOffering struct {
 }
 
 func (r *CloudStackResourceDiskOffering) Equal(o *CloudStackResourceDiskOffering) bool {
-	if r == o {
-		return true
-	}
-	if r.IsEmpty() && o.IsEmpty() {
-		return true
-	}
-	if r.IsEmpty() || o.IsEmpty() {
-		return false
-	}
-	if r.Id != o.Id {
-		return false
-	}
-
-	if r.CustomSize != o.CustomSize ||
-		r.MountPath != o.MountPath ||
-		r.Filesystem != o.Filesystem ||
-		r.Label != o.Label ||
-		r.Device != o.Device {
-		return false
-	}
-	return r.Id == "" && o.Id == "" && r.Name == o.Name
+	_ = "STUB: not implemented"
+	return false
 }
 
 // IsEmpty Introduced for backwards compatibility purposes. When CloudStackResourceDiskOffering
@@ -107,131 +84,51 @@ func (r *CloudStackResourceDiskOffering) Equal(o *CloudStackResourceDiskOffering
 // Functionally, setting DiskOffering=nil is equivalent to a CloudStackResourceDiskOffering with
 // zero values. Introducing this check should help prevent unintended RollingUpgrades when
 // upgrading a cluster which has this "empty" DiskOffering in it.
-func (r *CloudStackResourceDiskOffering) IsEmpty() bool {
-	if r == nil {
-		return true
-	}
-	return r.Id == "" && r.Name == "" && r.Label == "" && r.Device == "" &&
-		r.Filesystem == "" && r.MountPath == "" && r.CustomSize == 0
-}
+func (r *CloudStackResourceDiskOffering) IsEmpty() bool { _ = "STUB: not implemented"; return false }
 
 func (r *CloudStackResourceDiskOffering) Validate() (err error, field string, value string) {
-	if r != nil && (len(r.Id) > 0 || len(r.Name) > 0) {
-		if len(r.MountPath) < 2 || !strings.HasPrefix(r.MountPath, "/") {
-			return errors.New("must be non-empty and start with /"), "mountPath", r.MountPath
-		}
-		if len(r.Filesystem) < 1 {
-			return errors.New("empty filesystem"), "filesystem", r.Filesystem
-		}
-		if len(r.Device) < 1 {
-			return errors.New("empty device"), "device", r.Device
-		}
-		if len(r.Label) < 1 {
-			return errors.New("empty label"), "label", r.Label
-		}
-	} else {
-		if r != nil && len(r.MountPath)+len(r.Filesystem)+len(r.Device)+len(r.Label) > 0 {
-			return errors.New("empty id/name"), "id or name", r.Id
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil, "", ""
 }
 
 func (r SymlinkMaps) Validate() (err error, field string, value string) {
-	isPortableFileNameSet := regexp.MustCompile(`^[a-zA-Z0-9\.\-\_\/]+$`)
-	for key, value := range r {
-		if !strings.HasPrefix(key, "/") || strings.HasSuffix(key, "/") {
-			return errors.New("must start with / and NOT end with /"), "symlinks", key
-		}
-		if !strings.HasPrefix(value, "/") || strings.HasSuffix(value, "/") {
-			return errors.New("must start with / and NOT end with /"), "symlinks", value
-		}
-		match := isPortableFileNameSet.Match([]byte(key))
-		if !match {
-			return errors.New("has char not in portable file name set"), "symlinks", key
-		}
-		match = isPortableFileNameSet.Match([]byte(value))
-		if !match {
-			return errors.New("has char not in portable file name set"), "symlinks", value
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil, "", ""
 }
 
 // ValidateUsers verifies a CloudStackMachineConfig object must have a users with ssh authorized keys.
 // This validation only runs in CloudStackMachineConfig validation webhook, as we support
 // auto-generate and import ssh key when creating a cluster via CLI.
-func (c *CloudStackMachineConfig) ValidateUsers() error {
-	if err := validateMachineConfigUsers(c.Name, CloudStackMachineConfigKind, c.Spec.Users); err != nil {
-		return err
-	}
-	return nil
-}
+func (c *CloudStackMachineConfig) ValidateUsers() error { _ = "STUB: not implemented"; return nil }
 
-func (c *CloudStackMachineConfig) PauseReconcile() {
-	c.Annotations[pausedAnnotation] = "true"
-}
+func (c *CloudStackMachineConfig) PauseReconcile() { _ = "STUB: not implemented"; return }
 
-func (c *CloudStackMachineConfig) IsReconcilePaused() bool {
-	if s, ok := c.Annotations[pausedAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (c *CloudStackMachineConfig) IsReconcilePaused() bool { _ = "STUB: not implemented"; return false }
 
-func (c *CloudStackMachineConfig) SetControlPlane() {
-	c.Annotations[controlPlaneAnnotation] = "true"
-}
+func (c *CloudStackMachineConfig) SetControlPlane() { _ = "STUB: not implemented"; return }
 
-func (c *CloudStackMachineConfig) IsControlPlane() bool {
-	if s, ok := c.Annotations[controlPlaneAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (c *CloudStackMachineConfig) IsControlPlane() bool { _ = "STUB: not implemented"; return false }
 
-func (c *CloudStackMachineConfig) SetEtcd() {
-	c.Annotations[etcdAnnotation] = "true"
-}
+func (c *CloudStackMachineConfig) SetEtcd() { _ = "STUB: not implemented"; return }
 
-func (c *CloudStackMachineConfig) IsEtcd() bool {
-	if s, ok := c.Annotations[etcdAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (c *CloudStackMachineConfig) IsEtcd() bool { _ = "STUB: not implemented"; return false }
 
 func (c *CloudStackMachineConfig) SetManagement(clusterName string) {
-	if c.Annotations == nil {
-		c.Annotations = map[string]string{}
-	}
-	c.Annotations[managementAnnotation] = clusterName
+	_ = "STUB: not implemented"
+	return
 }
 
-func (c *CloudStackMachineConfig) IsManagement() bool {
-	if s, ok := c.Annotations[managementAnnotation]; ok {
-		return s != ""
-	}
-	return false
-}
+func (c *CloudStackMachineConfig) IsManagement() bool { _ = "STUB: not implemented"; return false }
 
-func (c *CloudStackMachineConfig) GetNamespace() string {
-	return c.Namespace
-}
+func (c *CloudStackMachineConfig) GetNamespace() string { _ = "STUB: not implemented"; return "" }
 
-func (c *CloudStackMachineConfig) GetName() string {
-	return c.Name
-}
+func (c *CloudStackMachineConfig) GetName() string { _ = "STUB: not implemented"; return "" }
 
-func (c *CloudStackMachineConfig) Validate() error {
-	return validateCloudStackMachineConfig(c)
-}
+func (c *CloudStackMachineConfig) Validate() error { _ = "STUB: not implemented"; return nil }
 
 // SetUserDefaults initializes Spec.Users for the CloudStackMachineConfig with default values.
 // This only runs in the CLI, as we don't support user defaults through the webhook.
-func (c *CloudStackMachineConfig) SetUserDefaults() {
-	c.Spec.Users = defaultMachineConfigUsers(DefaultCloudStackUser, c.Spec.Users)
-}
+func (c *CloudStackMachineConfig) SetUserDefaults() { _ = "STUB: not implemented"; return }
 
 // CloudStackMachineConfigStatus defines the observed state of CloudStackMachineConfig.
 type CloudStackMachineConfigStatus struct {
@@ -257,75 +154,30 @@ type CloudStackMachineConfig struct {
 }
 
 func (c *CloudStackMachineConfig) OSFamily() OSFamily {
+	_ = "STUB: not implemented"
 	// This method must be defined to implement the providers.MachineConfig interface, but it's not actually used
-	return ""
+	return *new(OSFamily)
 }
 
 // Users returns a list of configuration for OS users.
 func (c *CloudStackMachineConfig) Users() []UserConfiguration {
-	return c.Spec.Users
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (c *CloudStackMachineConfigSpec) Equal(o *CloudStackMachineConfigSpec) bool {
-	if c == o {
-		return true
-	}
-	if c == nil || o == nil {
-		return false
-	}
-	if !c.Template.Equal(&o.Template) ||
-		!c.ComputeOffering.Equal(&o.ComputeOffering) ||
-		!c.DiskOffering.Equal(o.DiskOffering) {
-		return false
-	}
-	if c.Affinity != o.Affinity {
-		return false
-	}
-	if !SliceEqual(c.AffinityGroupIds, o.AffinityGroupIds) {
-		return false
-	}
-	if !UsersSliceEqual(c.Users, o.Users) {
-		return false
-	}
-	if len(c.UserCustomDetails) != len(o.UserCustomDetails) {
-		return false
-	}
-	for detail, value := range c.UserCustomDetails {
-		if value != o.UserCustomDetails[detail] {
-			return false
-		}
-	}
-	if len(c.Symlinks) != len(o.Symlinks) {
-		return false
-	}
-	for detail, value := range c.Symlinks {
-		if value != o.Symlinks[detail] {
-			return false
-		}
-	}
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 func (c *CloudStackMachineConfig) ConvertConfigToConfigGenerateStruct() *CloudStackMachineConfigGenerate {
-	namespace := defaultEksaNamespace
-	if c.Namespace != "" {
-		namespace = c.Namespace
-	}
-	config := &CloudStackMachineConfigGenerate{
-		TypeMeta: c.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        c.Name,
-			Annotations: c.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: c.Spec,
-	}
-
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (c *CloudStackMachineConfig) Marshallable() Marshallable {
-	return c.ConvertConfigToConfigGenerateStruct()
+	_ = "STUB: not implemented"
+	return *new(Marshallable)
 }
 
 // +kubebuilder:object:generate=false

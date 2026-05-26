@@ -2,14 +2,8 @@ package tar
 
 type Packager struct{}
 
-func NewPackager() Packager {
-	return Packager{}
-}
+func NewPackager() Packager { _ = "STUB: not implemented"; return *new(Packager) }
 
-func (Packager) Package(sourceFolder, dstFile string) error {
-	return TarFolder(sourceFolder, dstFile)
-}
+func (Packager) Package(sourceFolder, dstFile string) error { _ = "STUB: not implemented"; return nil }
 
-func (Packager) UnPackage(orgFile, dstFolder string) error {
-	return UntarFile(orgFile, dstFolder)
-}
+func (Packager) UnPackage(orgFile, dstFolder string) error { _ = "STUB: not implemented"; return nil }

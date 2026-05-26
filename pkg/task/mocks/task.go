@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	task "github.com/aws/eks-anywhere/pkg/task"
 	gomock "github.com/golang/mock/gomock"
@@ -24,70 +23,47 @@ type MockTaskMockRecorder struct {
 }
 
 // NewMockTask creates a new mock instance.
-func NewMockTask(ctrl *gomock.Controller) *MockTask {
-	mock := &MockTask{ctrl: ctrl}
-	mock.recorder = &MockTaskMockRecorder{mock}
-	return mock
-}
+func NewMockTask(ctrl *gomock.Controller) *MockTask { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockTask) EXPECT() *MockTaskMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Checkpoint mocks base method.
+	return nil
 }
 
-// Checkpoint mocks base method.
-func (m *MockTask) Checkpoint() *task.CompletedTask {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Checkpoint")
-	ret0, _ := ret[0].(*task.CompletedTask)
-	return ret0
-}
+func (m *MockTask) Checkpoint() *task.CompletedTask { _ = "STUB: not implemented"; return nil }
 
 // Checkpoint indicates an expected call of Checkpoint.
-func (mr *MockTaskMockRecorder) Checkpoint() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Checkpoint", reflect.TypeOf((*MockTask)(nil).Checkpoint))
-}
+func (mr *MockTaskMockRecorder) Checkpoint() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // Name mocks base method.
-func (m *MockTask) Name() string {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Name")
-	ret0, _ := ret[0].(string)
-	return ret0
-}
+func (m *MockTask) Name() string { _ = "STUB: not implemented"; return "" }
 
 // Name indicates an expected call of Name.
-func (mr *MockTaskMockRecorder) Name() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Name", reflect.TypeOf((*MockTask)(nil).Name))
-}
+func (mr *MockTaskMockRecorder) Name() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // Restore mocks base method.
 func (m *MockTask) Restore(arg0 context.Context, arg1 *task.CommandContext, arg2 *task.CompletedTask) (task.Task, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Restore", arg0, arg1, arg2)
-	ret0, _ := ret[0].(task.Task)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(task.Task), nil
 }
 
 // Restore indicates an expected call of Restore.
 func (mr *MockTaskMockRecorder) Restore(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Restore", reflect.TypeOf((*MockTask)(nil).Restore), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Run mocks base method.
 func (m *MockTask) Run(arg0 context.Context, arg1 *task.CommandContext) task.Task {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Run", arg0, arg1)
-	ret0, _ := ret[0].(task.Task)
-	return ret0
+	_ = "STUB: not implemented"
+	return *new(task.Task)
 }
 
 // Run indicates an expected call of Run.
 func (mr *MockTaskMockRecorder) Run(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Run", reflect.TypeOf((*MockTask)(nil).Run), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }

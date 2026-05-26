@@ -6,10 +6,6 @@ import (
 	"log"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
-	"github.com/spf13/viper"
-
-	"github.com/aws/eks-anywhere/pkg/networkutils"
 )
 
 var uniqueIpCmd = &cobra.Command{
@@ -36,17 +32,9 @@ func init() {
 	}
 }
 
-func preRunUniqueIp(cmd *cobra.Command, args []string) {
-	cmd.Flags().VisitAll(func(flag *pflag.Flag) {
-		err := viper.BindPFlag(flag.Name, flag)
-		if err != nil {
-			log.Fatalf("Error initializing flags: %v", err)
-		}
-	})
-}
+func preRunUniqueIp(cmd *cobra.Command, args []string) { _ = "STUB: not implemented"; return }
 
 func generateUniqueIP(ctx context.Context) (string, error) {
-	cidr := viper.GetString("cidr")
-	ipgen := networkutils.NewIPGenerator(&networkutils.DefaultNetClient{})
-	return ipgen.GenerateUniqueIP(cidr, nil)
+	_ = "STUB: not implemented"
+	return "", nil
 }

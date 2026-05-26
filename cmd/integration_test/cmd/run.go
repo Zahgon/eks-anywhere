@@ -1,14 +1,10 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
-	"github.com/spf13/viper"
 
-	"github.com/aws/eks-anywhere/internal/test/e2e"
 	"github.com/aws/eks-anywhere/pkg/logger"
 )
 
@@ -44,14 +40,7 @@ var runE2ECmd = &cobra.Command{
 
 var requiredFlags = []string{instanceConfigFlagName, storageBucketFlagName, jobIdFlagName, instanceProfileFlagName}
 
-func preRunSetup(cmd *cobra.Command, args []string) {
-	cmd.Flags().VisitAll(func(flag *pflag.Flag) {
-		err := viper.BindPFlag(flag.Name, flag)
-		if err != nil {
-			log.Fatalf("Error initializing flags: %v", err)
-		}
-	})
-}
+func preRunSetup(cmd *cobra.Command, args []string) { _ = "STUB: not implemented"; return }
 
 func init() {
 	integrationTestCmd.AddCommand(runE2ECmd)
@@ -75,40 +64,4 @@ func init() {
 	}
 }
 
-func runE2E() error {
-	instanceConfigFile := viper.GetString(instanceConfigFlagName)
-	storageBucket := viper.GetString(storageBucketFlagName)
-	jobId := viper.GetString(jobIdFlagName)
-	instanceProfileName := viper.GetString(instanceProfileFlagName)
-	testRegex := viper.GetString(regexFlagName)
-	maxConcurrentTests := viper.GetInt(maxConcurrentTestsFlagName)
-	testsToSkip := viper.GetStringSlice(skipFlagName)
-	bundlesOverride := viper.GetBool(bundlesOverrideFlagName)
-	cleanupResources := viper.GetBool(cleanupResourcesFlagName)
-	testReportFolder := viper.GetString(testReportFolderFlagName)
-	branchName := viper.GetString(branchNameFlagName)
-	stage := viper.GetString(stageFlagName)
-
-	runConf := e2e.ParallelRunConf{
-		MaxConcurrentTests:     maxConcurrentTests,
-		InstanceProfileName:    instanceProfileName,
-		StorageBucket:          storageBucket,
-		JobId:                  jobId,
-		Regex:                  testRegex,
-		TestsToSkip:            testsToSkip,
-		BundlesOverride:        bundlesOverride,
-		CleanupResources:       cleanupResources,
-		TestReportFolder:       testReportFolder,
-		BranchName:             branchName,
-		TestInstanceConfigFile: instanceConfigFile,
-		Logger:                 logger.Get(),
-		Stage:                  stage,
-	}
-
-	err := e2e.RunTestsInParallel(runConf)
-	if err != nil {
-		return fmt.Errorf("running e2e tests: %v", err)
-	}
-
-	return nil
-}
+func runE2E() error { _ = "STUB: not implemented"; return nil }

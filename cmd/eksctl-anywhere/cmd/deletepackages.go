@@ -2,13 +2,9 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
-
-	"github.com/aws/eks-anywhere/pkg/curatedpackages"
-	"github.com/aws/eks-anywhere/pkg/kubeconfig"
 )
 
 type deletePackageOptions struct {
@@ -50,22 +46,6 @@ var deletePackageCommand = &cobra.Command{
 }
 
 func deleteResources(ctx context.Context, args []string) error {
-	kubeConfig, err := kubeconfig.ResolveAndValidateFilename(delPkgOpts.kubeConfig, "")
-	if err != nil {
-		return err
-	}
-	deps, err := NewDependenciesForPackages(ctx, WithMountPaths(kubeConfig), WithBundlesOverride(delPkgOpts.bundlesOverride))
-	if err != nil {
-		return fmt.Errorf("unable to initialize executables: %v", err)
-	}
-	packages := curatedpackages.NewPackageClient(
-		deps.Kubectl,
-	)
-
-	err = packages.DeletePackages(ctx, args, kubeConfig, delPkgOpts.clusterName)
-	if err != nil {
-		return err
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }

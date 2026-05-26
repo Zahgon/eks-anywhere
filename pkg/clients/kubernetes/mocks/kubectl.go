@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	kubernetes "github.com/aws/eks-anywhere/pkg/clients/kubernetes"
 	gomock "github.com/golang/mock/gomock"
@@ -25,100 +24,73 @@ type MockKubectlMockRecorder struct {
 }
 
 // NewMockKubectl creates a new mock instance.
-func NewMockKubectl(ctrl *gomock.Controller) *MockKubectl {
-	mock := &MockKubectl{ctrl: ctrl}
-	mock.recorder = &MockKubectlMockRecorder{mock}
-	return mock
-}
+func NewMockKubectl(ctrl *gomock.Controller) *MockKubectl { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockKubectl) EXPECT() *MockKubectlMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Apply mocks base method.
+	return nil
 }
 
-// Apply mocks base method.
 func (m *MockKubectl) Apply(ctx context.Context, kubeconfig string, obj runtime.Object, opts ...kubernetes.KubectlApplyOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, kubeconfig, obj}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Apply", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Apply indicates an expected call of Apply.
 func (mr *MockKubectlMockRecorder) Apply(ctx, kubeconfig, obj interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, kubeconfig, obj}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Apply", reflect.TypeOf((*MockKubectl)(nil).Apply), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Create mocks base method.
 func (m *MockKubectl) Create(ctx context.Context, kubeconfig string, obj runtime.Object) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", ctx, kubeconfig, obj)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Create indicates an expected call of Create.
 func (mr *MockKubectlMockRecorder) Create(ctx, kubeconfig, obj interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockKubectl)(nil).Create), ctx, kubeconfig, obj)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Delete mocks base method.
 func (m *MockKubectl) Delete(ctx context.Context, resourceType, kubeconfig string, opts ...kubernetes.KubectlDeleteOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, resourceType, kubeconfig}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Delete", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Delete indicates an expected call of Delete.
 func (mr *MockKubectlMockRecorder) Delete(ctx, resourceType, kubeconfig interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, resourceType, kubeconfig}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockKubectl)(nil).Delete), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Get mocks base method.
 func (m *MockKubectl) Get(ctx context.Context, resourceType, kubeconfig string, obj runtime.Object, opts ...kubernetes.KubectlGetOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, resourceType, kubeconfig, obj}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Get", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Get indicates an expected call of Get.
 func (mr *MockKubectlMockRecorder) Get(ctx, resourceType, kubeconfig, obj interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, resourceType, kubeconfig, obj}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockKubectl)(nil).Get), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Replace mocks base method.
 func (m *MockKubectl) Replace(ctx context.Context, kubeconfig string, obj runtime.Object) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Replace", ctx, kubeconfig, obj)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Replace indicates an expected call of Replace.
 func (mr *MockKubectlMockRecorder) Replace(ctx, kubeconfig, obj interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Replace", reflect.TypeOf((*MockKubectl)(nil).Replace), ctx, kubeconfig, obj)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockKubectlGetOption is a mock of KubectlGetOption interface.
@@ -134,26 +106,27 @@ type MockKubectlGetOptionMockRecorder struct {
 
 // NewMockKubectlGetOption creates a new mock instance.
 func NewMockKubectlGetOption(ctrl *gomock.Controller) *MockKubectlGetOption {
-	mock := &MockKubectlGetOption{ctrl: ctrl}
-	mock.recorder = &MockKubectlGetOptionMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockKubectlGetOption) EXPECT() *MockKubectlGetOptionMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ApplyToGet mocks base method.
+	return nil
 }
 
-// ApplyToGet mocks base method.
 func (m *MockKubectlGetOption) ApplyToGet(arg0 *kubernetes.KubectlGetOptions) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "ApplyToGet", arg0)
+	_ = "STUB: not implemented"
+	return
 }
 
 // ApplyToGet indicates an expected call of ApplyToGet.
 func (mr *MockKubectlGetOptionMockRecorder) ApplyToGet(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ApplyToGet", reflect.TypeOf((*MockKubectlGetOption)(nil).ApplyToGet), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockKubectlApplyOption is a mock of KubectlApplyOption interface.
@@ -169,26 +142,27 @@ type MockKubectlApplyOptionMockRecorder struct {
 
 // NewMockKubectlApplyOption creates a new mock instance.
 func NewMockKubectlApplyOption(ctrl *gomock.Controller) *MockKubectlApplyOption {
-	mock := &MockKubectlApplyOption{ctrl: ctrl}
-	mock.recorder = &MockKubectlApplyOptionMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockKubectlApplyOption) EXPECT() *MockKubectlApplyOptionMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ApplyToApply mocks base method.
+	return nil
 }
 
-// ApplyToApply mocks base method.
 func (m *MockKubectlApplyOption) ApplyToApply(arg0 *kubernetes.KubectlApplyOptions) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "ApplyToApply", arg0)
+	_ = "STUB: not implemented"
+	return
 }
 
 // ApplyToApply indicates an expected call of ApplyToApply.
 func (mr *MockKubectlApplyOptionMockRecorder) ApplyToApply(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ApplyToApply", reflect.TypeOf((*MockKubectlApplyOption)(nil).ApplyToApply), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockKubectlDeleteOption is a mock of KubectlDeleteOption interface.
@@ -204,24 +178,25 @@ type MockKubectlDeleteOptionMockRecorder struct {
 
 // NewMockKubectlDeleteOption creates a new mock instance.
 func NewMockKubectlDeleteOption(ctrl *gomock.Controller) *MockKubectlDeleteOption {
-	mock := &MockKubectlDeleteOption{ctrl: ctrl}
-	mock.recorder = &MockKubectlDeleteOptionMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockKubectlDeleteOption) EXPECT() *MockKubectlDeleteOptionMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ApplyToDelete mocks base method.
+	return nil
 }
 
-// ApplyToDelete mocks base method.
 func (m *MockKubectlDeleteOption) ApplyToDelete(arg0 *kubernetes.KubectlDeleteOptions) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "ApplyToDelete", arg0)
+	_ = "STUB: not implemented"
+	return
 }
 
 // ApplyToDelete indicates an expected call of ApplyToDelete.
 func (mr *MockKubectlDeleteOptionMockRecorder) ApplyToDelete(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ApplyToDelete", reflect.TypeOf((*MockKubectlDeleteOption)(nil).ApplyToDelete), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }

@@ -16,11 +16,7 @@ package v1alpha1
 
 import (
 	"context"
-	"fmt"
-	"regexp"
-	"strings"
 
-	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/validation/field"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -33,11 +29,8 @@ import (
 var cloudstackdatacenterconfiglog = logf.Log.WithName("cloudstackdatacenterconfig-resource")
 
 func (r *CloudStackDatacenterConfig) SetupWebhookWithManager(mgr ctrl.Manager) error {
-	return ctrl.NewWebhookManagedBy(mgr).
-		For(r).
-		WithDefaulter(r).
-		WithValidator(r).
-		Complete()
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -48,14 +41,7 @@ var _ webhook.CustomDefaulter = &CloudStackDatacenterConfig{}
 
 // Default implements webhook.CustomDefaulter so a webhook will be registered for the type.
 func (r *CloudStackDatacenterConfig) Default(_ context.Context, obj runtime.Object) error {
-	cloudstackConfig, ok := obj.(*CloudStackDatacenterConfig)
-	if !ok {
-		return fmt.Errorf("expected a CloudStackDatacenterConfig but got %T", obj)
-	}
-
-	cloudstackdatacenterconfiglog.Info("Setting up CloudStackDatacenterConfig defaults for", "name", cloudstackConfig.Name)
-	cloudstackConfig.SetDefaults()
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -66,115 +52,34 @@ var _ webhook.CustomValidator = &CloudStackDatacenterConfig{}
 
 // ValidateCreate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *CloudStackDatacenterConfig) ValidateCreate(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	cloudstackConfig, ok := obj.(*CloudStackDatacenterConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a CloudStackDatacenterConfig but got %T", obj)
-	}
-
-	cloudstackdatacenterconfiglog.Info("validate create", "name", cloudstackConfig.Name)
-	if cloudstackConfig.IsReconcilePaused() {
-		cloudstackdatacenterconfiglog.Info("CloudStackDatacenterConfig is paused, so allowing create", "name", cloudstackConfig.Name)
-		return nil, nil
-	}
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 // ValidateUpdate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (*CloudStackDatacenterConfig) ValidateUpdate(_ context.Context, old, obj runtime.Object) (admission.Warnings, error) {
-	newDatacenterConfig, ok := obj.(*CloudStackDatacenterConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a CloudStackDatacenterConfig but got %T", obj)
-	}
-
-	cloudstackdatacenterconfiglog.Info("validate update", "name", newDatacenterConfig.Name)
-
-	oldDatacenterConfig, ok := old.(*CloudStackDatacenterConfig)
-	if !ok {
-		return nil, apierrors.NewBadRequest(fmt.Sprintf("expected a CloudStackDataCenterConfig but got a %T", old))
-	}
-
-	if oldDatacenterConfig.IsReconcilePaused() {
-		cloudstackdatacenterconfiglog.Info("Reconciliation is paused")
-		return nil, nil
-	}
-
-	var allErrs field.ErrorList
-
-	allErrs = append(allErrs, validateImmutableFieldsCloudStackCluster(newDatacenterConfig, oldDatacenterConfig)...)
-
-	if len(allErrs) == 0 {
-		return nil, nil
-	}
-
-	return nil, apierrors.NewInvalid(GroupVersion.WithKind(CloudStackDatacenterKind).GroupKind(), newDatacenterConfig.Name, allErrs)
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
-func isValidAzConversionName(uuid string) bool {
-	r := regexp.MustCompile("^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[8|9|aA|bB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}")
-	return r.MatchString(uuid)
-}
+func isValidAzConversionName(uuid string) bool { _ = "STUB: not implemented"; return false }
 
 func isCapcV1beta1ToV1beta2Upgrade(new, old *CloudStackDatacenterConfigSpec) bool {
-	if len(new.AvailabilityZones) != len(old.AvailabilityZones) {
-		return false
-	}
-	for _, az := range old.AvailabilityZones {
-		if !strings.HasPrefix(az.Name, DefaultCloudStackAZPrefix) {
-			return false
-		}
-	}
-	for _, az := range new.AvailabilityZones {
-		if !isValidAzConversionName(az.Name) {
-			return false
-		}
-	}
-
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 func validateImmutableFieldsCloudStackCluster(new, old *CloudStackDatacenterConfig) field.ErrorList {
-	var allErrs field.ErrorList
-	specPath := field.NewPath("spec")
-
-	// Check for CAPC v1beta1 -> CAPC v1beta2 upgrade
-	if isCapcV1beta1ToV1beta2Upgrade(&new.Spec, &old.Spec) {
-		return allErrs
-	}
-	newAzMap := make(map[string]CloudStackAvailabilityZone)
-	for _, az := range new.Spec.AvailabilityZones {
-		newAzMap[az.Name] = az
-	}
-	atLeastOneAzOverlap := false
-	for _, oldAz := range old.Spec.AvailabilityZones {
-		if newAz, ok := newAzMap[oldAz.Name]; ok {
-			atLeastOneAzOverlap = true
-			if !newAz.Equal(&oldAz) {
-				allErrs = append(
-					allErrs,
-					field.Forbidden(specPath.Child("availabilityZone", oldAz.Name), "availabilityZone is immutable"),
-				)
-			}
-		}
-	}
-	if !atLeastOneAzOverlap {
-		allErrs = append(
-			allErrs,
-			field.Invalid(field.NewPath("spec", "availabilityZone"), new.Spec.AvailabilityZones, "at least one AvailabilityZone must be shared between new and old CloudStackDatacenterConfig specs"),
-		)
-	}
-
-	return allErrs
+	_ = "STUB: not implemented"
+	return *new(field.ErrorList)
 }
+
+// Check for CAPC v1beta1 -> CAPC v1beta2 upgrade
 
 // ValidateDelete implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *CloudStackDatacenterConfig) ValidateDelete(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	cloudstackConfig, ok := obj.(*CloudStackDatacenterConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a CloudStackDatacenterConfig but got %T", obj)
-	}
-
-	cloudstackdatacenterconfiglog.Info("validate delete", "name", cloudstackConfig.Name)
-
-	// TODO(user): fill in your validation logic upon object deletion.
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
+
+// TODO(user): fill in your validation logic upon object deletion.

@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 	meta "k8s.io/apimachinery/pkg/api/meta"
@@ -29,250 +28,172 @@ type MockKubeClientMockRecorder struct {
 
 // NewMockKubeClient creates a new mock instance.
 func NewMockKubeClient(ctrl *gomock.Controller) *MockKubeClient {
-	mock := &MockKubeClient{ctrl: ctrl}
-	mock.recorder = &MockKubeClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockKubeClient) EXPECT() *MockKubeClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Apply mocks base method.
+	return nil
 }
 
-// Apply mocks base method.
 func (m *MockKubeClient) Apply(arg0 context.Context, arg1 runtime.ApplyConfiguration, arg2 ...client.ApplyOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1}
-	for _, a := range arg2 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Apply", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Apply indicates an expected call of Apply.
 func (mr *MockKubeClientMockRecorder) Apply(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Apply", reflect.TypeOf((*MockKubeClient)(nil).Apply), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Create mocks base method.
 func (m *MockKubeClient) Create(arg0 context.Context, arg1 client.Object, arg2 ...client.CreateOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1}
-	for _, a := range arg2 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Create", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Create indicates an expected call of Create.
 func (mr *MockKubeClientMockRecorder) Create(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockKubeClient)(nil).Create), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Delete mocks base method.
 func (m *MockKubeClient) Delete(arg0 context.Context, arg1 client.Object, arg2 ...client.DeleteOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1}
-	for _, a := range arg2 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Delete", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Delete indicates an expected call of Delete.
 func (mr *MockKubeClientMockRecorder) Delete(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockKubeClient)(nil).Delete), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteAllOf mocks base method.
 func (m *MockKubeClient) DeleteAllOf(arg0 context.Context, arg1 client.Object, arg2 ...client.DeleteAllOfOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1}
-	for _, a := range arg2 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "DeleteAllOf", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteAllOf indicates an expected call of DeleteAllOf.
 func (mr *MockKubeClientMockRecorder) DeleteAllOf(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteAllOf", reflect.TypeOf((*MockKubeClient)(nil).DeleteAllOf), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Get mocks base method.
 func (m *MockKubeClient) Get(arg0 context.Context, arg1 types.NamespacedName, arg2 client.Object, arg3 ...client.GetOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, arg2}
-	for _, a := range arg3 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Get", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Get indicates an expected call of Get.
 func (mr *MockKubeClientMockRecorder) Get(arg0, arg1, arg2 interface{}, arg3 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, arg2}, arg3...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockKubeClient)(nil).Get), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GroupVersionKindFor mocks base method.
 func (m *MockKubeClient) GroupVersionKindFor(arg0 runtime.Object) (schema.GroupVersionKind, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GroupVersionKindFor", arg0)
-	ret0, _ := ret[0].(schema.GroupVersionKind)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(schema.GroupVersionKind), nil
 }
 
 // GroupVersionKindFor indicates an expected call of GroupVersionKindFor.
 func (mr *MockKubeClientMockRecorder) GroupVersionKindFor(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GroupVersionKindFor", reflect.TypeOf((*MockKubeClient)(nil).GroupVersionKindFor), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // IsObjectNamespaced mocks base method.
 func (m *MockKubeClient) IsObjectNamespaced(arg0 runtime.Object) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "IsObjectNamespaced", arg0)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // IsObjectNamespaced indicates an expected call of IsObjectNamespaced.
 func (mr *MockKubeClientMockRecorder) IsObjectNamespaced(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsObjectNamespaced", reflect.TypeOf((*MockKubeClient)(nil).IsObjectNamespaced), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // List mocks base method.
 func (m *MockKubeClient) List(arg0 context.Context, arg1 client.ObjectList, arg2 ...client.ListOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1}
-	for _, a := range arg2 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "List", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // List indicates an expected call of List.
 func (mr *MockKubeClientMockRecorder) List(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockKubeClient)(nil).List), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Patch mocks base method.
 func (m *MockKubeClient) Patch(arg0 context.Context, arg1 client.Object, arg2 client.Patch, arg3 ...client.PatchOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, arg2}
-	for _, a := range arg3 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Patch", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Patch indicates an expected call of Patch.
 func (mr *MockKubeClientMockRecorder) Patch(arg0, arg1, arg2 interface{}, arg3 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, arg2}, arg3...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Patch", reflect.TypeOf((*MockKubeClient)(nil).Patch), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RESTMapper mocks base method.
 func (m *MockKubeClient) RESTMapper() meta.RESTMapper {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RESTMapper")
-	ret0, _ := ret[0].(meta.RESTMapper)
-	return ret0
+	_ = "STUB: not implemented"
+	return *new(meta.RESTMapper)
 }
 
 // RESTMapper indicates an expected call of RESTMapper.
 func (mr *MockKubeClientMockRecorder) RESTMapper() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RESTMapper", reflect.TypeOf((*MockKubeClient)(nil).RESTMapper))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Scheme mocks base method.
-func (m *MockKubeClient) Scheme() *runtime.Scheme {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Scheme")
-	ret0, _ := ret[0].(*runtime.Scheme)
-	return ret0
-}
+func (m *MockKubeClient) Scheme() *runtime.Scheme { _ = "STUB: not implemented"; return nil }
 
 // Scheme indicates an expected call of Scheme.
-func (mr *MockKubeClientMockRecorder) Scheme() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Scheme", reflect.TypeOf((*MockKubeClient)(nil).Scheme))
-}
+func (mr *MockKubeClientMockRecorder) Scheme() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // Status mocks base method.
 func (m *MockKubeClient) Status() client.SubResourceWriter {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Status")
-	ret0, _ := ret[0].(client.SubResourceWriter)
-	return ret0
+	_ = "STUB: not implemented"
+	return *new(client.SubResourceWriter)
 }
 
 // Status indicates an expected call of Status.
-func (mr *MockKubeClientMockRecorder) Status() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Status", reflect.TypeOf((*MockKubeClient)(nil).Status))
-}
+func (mr *MockKubeClientMockRecorder) Status() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // SubResource mocks base method.
 func (m *MockKubeClient) SubResource(arg0 string) client.SubResourceClient {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SubResource", arg0)
-	ret0, _ := ret[0].(client.SubResourceClient)
-	return ret0
+	_ = "STUB: not implemented"
+	return *new(client.SubResourceClient)
 }
 
 // SubResource indicates an expected call of SubResource.
 func (mr *MockKubeClientMockRecorder) SubResource(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SubResource", reflect.TypeOf((*MockKubeClient)(nil).SubResource), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Update mocks base method.
 func (m *MockKubeClient) Update(arg0 context.Context, arg1 client.Object, arg2 ...client.UpdateOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1}
-	for _, a := range arg2 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Update", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Update indicates an expected call of Update.
 func (mr *MockKubeClientMockRecorder) Update(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockKubeClient)(nil).Update), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }

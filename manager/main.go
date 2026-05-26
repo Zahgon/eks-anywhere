@@ -28,14 +28,11 @@ import (
 	dockerv1beta2 "sigs.k8s.io/cluster-api/test/infrastructure/docker/api/v1beta2"
 	capiflags "sigs.k8s.io/cluster-api/util/flags"
 	ctrl "sigs.k8s.io/controller-runtime"
-	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 
-	"github.com/aws/eks-anywhere/controllers"
 	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	tinkerbellv1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1/thirdparty/tinkerbell/capt/v1beta1"
 	rufiov1alpha1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1/thirdparty/tinkerbell/rufio"
-	"github.com/aws/eks-anywhere/pkg/clusterapi"
 	"github.com/aws/eks-anywhere/pkg/controller/clientutil"
 	"github.com/aws/eks-anywhere/pkg/features"
 	snowv1 "github.com/aws/eks-anywhere/pkg/providers/snow/api/v1beta1"
@@ -76,26 +73,9 @@ type config struct {
 	managerOptions       capiflags.ManagerOptions
 }
 
-func newConfig() *config {
-	c := &config{
-		logging: logsv1.NewLoggingConfiguration(),
-	}
-	c.logging.Format = logsv1.JSONLogFormat
-	c.logging.Verbosity = logsv1.VerbosityLevel(0)
+func newConfig() *config { _ = "STUB: not implemented"; return nil }
 
-	return c
-}
-
-func initFlags(fs *pflag.FlagSet, config *config) {
-	logsv1.AddFlags(config.logging, fs)
-
-	fs.StringVar(&config.probeAddr, "health-probe-bind-address", ":8081", "The address the probe endpoint binds to.")
-	fs.BoolVar(&config.enableLeaderElection, "leader-elect", false,
-		"Enable leader election for controller manager. "+
-			"Enabling this will ensure there is only one active controller manager.")
-	fs.StringSliceVar(&config.gates, "feature-gates", []string{}, "A set of key=value pairs that describe feature gates for alpha/experimental features. ")
-	capiflags.AddManagerOptions(fs, &config.managerOptions)
-}
+func initFlags(fs *pflag.FlagSet, config *config) { _ = "STUB: not implemented"; return }
 
 // +kubebuilder:rbac:groups=authentication.k8s.io,resources=tokenreviews,verbs=create
 // +kubebuilder:rbac:groups=authorization.k8s.io,resources=subjectaccessreviews,verbs=create
@@ -173,201 +153,34 @@ type closable interface {
 }
 
 func setupReconcilers(ctx context.Context, setupLog logr.Logger, mgr ctrl.Manager) closable {
-	setupLog.Info("Reading CAPI providers")
-	providers, err := clusterapi.GetProviders(ctx, mgr.GetAPIReader())
-	if err != nil {
-		setupLog.Error(err, "unable to read installed providers")
-		os.Exit(1)
-	}
-
-	factory := controllers.NewFactory(ctrl.Log, mgr).
-		WithClusterReconciler(
-			providers,
-		).
-		WithVSphereDatacenterReconciler().
-		WithSnowMachineConfigReconciler().
-		WithNutanixDatacenterReconciler().
-		WithCloudStackDatacenterReconciler().
-		WithKubeadmControlPlaneReconciler().
-		WithMachineDeploymentReconciler().
-		WithControlPlaneUpgradeReconciler().
-		WithMachineDeploymentUpgradeReconciler().
-		WithNodeUpgradeReconciler()
-
-	reconcilers, err := factory.Build(ctx)
-	if err != nil {
-		setupLog.Error(err, "unable to build reconcilers")
-		os.Exit(1)
-	}
-
-	failed := false
-	setupLog.Info("Setting up cluster controller")
-	if err := (reconcilers.ClusterReconciler).SetupWithManager(mgr, setupLog); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", anywherev1.ClusterKind)
-		failed = true
-	}
-
-	setupLog.Info("Setting up vspheredatacenter controller")
-	if err := (reconcilers.VSphereDatacenterReconciler).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", anywherev1.VSphereDatacenterKind)
-		failed = true
-	}
-
-	setupLog.Info("Setting up snowmachineconfig controller")
-	if err := (reconcilers.SnowMachineConfigReconciler).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", anywherev1.SnowMachineConfigKind)
-		failed = true
-	}
-
-	setupLog.Info("Setting up nutanixdatacenter controller")
-	if err := (reconcilers.NutanixDatacenterReconciler).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", anywherev1.NutanixDatacenterKind)
-		failed = true
-	}
-
-	setupLog.Info("Setting up cloudstackdatacenter controller")
-	if err := (reconcilers.CloudStackDatacenterReconciler).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", anywherev1.CloudStackDatacenterKind)
-		failed = true
-	}
-
-	setupLog.Info("Setting up kubeadmcontrolplane controller")
-	if err := (reconcilers.KubeadmControlPlaneReconciler).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "KubeadmControlPlane")
-	}
-
-	setupLog.Info("Setting up machinedeployment controller")
-	if err := (reconcilers.MachineDeploymentReconciler).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "MachineDeployment")
-		failed = true
-	}
-
-	setupLog.Info("Setting up controlplaneupgrade controller")
-	if err := (reconcilers.ControlPlaneUpgradeReconciler).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", anywherev1.ControlPlaneUpgradeKind)
-		failed = true
-	}
-
-	setupLog.Info("Setting up machinedeploymentupgrade controller")
-	if err := (reconcilers.MachineDeploymentUpgradeReconciler).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", anywherev1.MachineDeploymentUpgradeKind)
-		failed = true
-	}
-
-	setupLog.Info("Setting up nodeupgrade controller")
-	if err := (reconcilers.NodeUpgradeReconciler).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", anywherev1.NodeUpgradeKind)
-		failed = true
-	}
-
-	if failed {
-		if err := factory.Close(ctx); err != nil {
-			setupLog.Error(err, "Failed closing controller factory")
-		}
-		os.Exit(1)
-	}
-
-	return factory
+	_ = "STUB: not implemented"
+	return *new(closable)
 }
 
-func setupWebhooks(setupLog logr.Logger, mgr ctrl.Manager) {
-	setupCoreWebhooks(setupLog, mgr)
-	setupVSphereWebhooks(setupLog, mgr)
-	setupCloudstackWebhooks(setupLog, mgr)
-	setupSnowWebhooks(setupLog, mgr)
-	setupTinkerbellWebhooks(setupLog, mgr)
-	setupNutanixWebhooks(setupLog, mgr)
-}
+func setupWebhooks(setupLog logr.Logger, mgr ctrl.Manager) { _ = "STUB: not implemented"; return }
 
-func setupCoreWebhooks(setupLog logr.Logger, mgr ctrl.Manager) {
-	if err := (&anywherev1.Cluster{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.ClusterKind)
-		os.Exit(1)
-	}
-	if err := (&anywherev1.GitOpsConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.GitOpsConfigKind)
-		os.Exit(1)
-	}
-	if err := (&anywherev1.FluxConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.FluxConfigKind)
-		os.Exit(1)
-	}
-	if err := (&anywherev1.OIDCConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.OIDCConfigKind)
-		os.Exit(1)
-	}
-	if err := (&anywherev1.AWSIamConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.AWSIamConfigKind)
-		os.Exit(1)
-	}
-}
+func setupCoreWebhooks(setupLog logr.Logger, mgr ctrl.Manager) { _ = "STUB: not implemented"; return }
 
 func setupVSphereWebhooks(setupLog logr.Logger, mgr ctrl.Manager) {
-	if err := (&anywherev1.VSphereDatacenterConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.VSphereDatacenterKind)
-		os.Exit(1)
-	}
-	if err := (&anywherev1.VSphereMachineConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.VSphereMachineConfigKind)
-		os.Exit(1)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func setupCloudstackWebhooks(setupLog logr.Logger, mgr ctrl.Manager) {
-	if err := (&anywherev1.CloudStackDatacenterConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.CloudStackDatacenterKind)
-		os.Exit(1)
-	}
-	if err := (&anywherev1.CloudStackMachineConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.CloudStackMachineConfigKind)
-		os.Exit(1)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
-func setupSnowWebhooks(setupLog logr.Logger, mgr ctrl.Manager) {
-	if err := (&anywherev1.SnowMachineConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.SnowMachineConfigKind)
-		os.Exit(1)
-	}
-	if err := (&anywherev1.SnowDatacenterConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", "webhook", "SnowDatacenterConfig")
-		os.Exit(1)
-	}
-	if err := (&anywherev1.SnowIPPool{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", "webhook", "SnowIPPool")
-		os.Exit(1)
-	}
-}
+func setupSnowWebhooks(setupLog logr.Logger, mgr ctrl.Manager) { _ = "STUB: not implemented"; return }
 
 func setupTinkerbellWebhooks(setupLog logr.Logger, mgr ctrl.Manager) {
-	if err := (&anywherev1.TinkerbellDatacenterConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.TinkerbellDatacenterKind)
-		os.Exit(1)
-	}
-	if err := (&anywherev1.TinkerbellMachineConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.TinkerbellMachineConfigKind)
-		os.Exit(1)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func setupNutanixWebhooks(setupLog logr.Logger, mgr ctrl.Manager) {
-	if err := (&anywherev1.NutanixDatacenterConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.NutanixDatacenterKind)
-		os.Exit(1)
-	}
-	if err := (&anywherev1.NutanixMachineConfig{}).SetupWebhookWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create webhook", WEBHOOK, anywherev1.NutanixMachineConfigKind)
-		os.Exit(1)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
-func setupChecks(setupLog logr.Logger, mgr ctrl.Manager) {
-	if err := mgr.AddHealthzCheck("healthz", healthz.Ping); err != nil {
-		setupLog.Error(err, "unable to set up health check")
-		os.Exit(1)
-	}
-	if err := mgr.AddReadyzCheck("readyz", healthz.Ping); err != nil {
-		setupLog.Error(err, "unable to set up ready check")
-		os.Exit(1)
-	}
-}
+func setupChecks(setupLog logr.Logger, mgr ctrl.Manager) { _ = "STUB: not implemented"; return }

@@ -16,9 +16,7 @@ package v1alpha1
 
 import (
 	"context"
-	"fmt"
 
-	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/validation/field"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -31,11 +29,8 @@ import (
 var vspheredatacenterconfiglog = logf.Log.WithName("vspheredatacenterconfig-resource")
 
 func (r *VSphereDatacenterConfig) SetupWebhookWithManager(mgr ctrl.Manager) error {
-	return ctrl.NewWebhookManagedBy(mgr).
-		For(r).
-		WithDefaulter(r).
-		WithValidator(r).
-		Complete()
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -46,14 +41,7 @@ var _ webhook.CustomDefaulter = &VSphereDatacenterConfig{}
 
 // Default implements webhook.CustomDefaulter so a webhook will be registered for the type.
 func (r *VSphereDatacenterConfig) Default(_ context.Context, obj runtime.Object) error {
-	vsphereConfig, ok := obj.(*VSphereDatacenterConfig)
-	if !ok {
-		return fmt.Errorf("expected a VSphereDatacenterConfig but got %T", obj)
-	}
-
-	vspheredatacenterconfiglog.Info("Setting up VSphere Datacenter Config defaults for", "name", vsphereConfig.Name)
-	vsphereConfig.SetDefaults()
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -64,106 +52,25 @@ var _ webhook.CustomValidator = &VSphereDatacenterConfig{}
 
 // ValidateCreate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *VSphereDatacenterConfig) ValidateCreate(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	vsphereConfig, ok := obj.(*VSphereDatacenterConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a VSphereDatacenterConfig but got %T", obj)
-	}
-
-	vspheredatacenterconfiglog.Info("validate create", "name", vsphereConfig.Name)
-
-	if err := vsphereConfig.Validate(); err != nil {
-		return nil, apierrors.NewInvalid(
-			GroupVersion.WithKind(VSphereDatacenterKind).GroupKind(),
-			vsphereConfig.Name,
-			field.ErrorList{
-				field.Invalid(field.NewPath("spec"), vsphereConfig.Spec, err.Error()),
-			},
-		)
-	}
-
-	if vsphereConfig.IsReconcilePaused() {
-		vspheredatacenterconfiglog.Info("VSphereDatacenterConfig is paused, so allowing create", "name", vsphereConfig.Name)
-		return nil, nil
-	}
-
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 // ValidateUpdate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *VSphereDatacenterConfig) ValidateUpdate(_ context.Context, old, obj runtime.Object) (admission.Warnings, error) {
-	vsphereConfig, ok := obj.(*VSphereDatacenterConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a VSphereDatacenterConfig but got %T", obj)
-	}
-
-	vspheredatacenterconfiglog.Info("validate update", "name", vsphereConfig.Name)
-
-	oldDatacenterConfig, ok := old.(*VSphereDatacenterConfig)
-	if !ok {
-		return nil, apierrors.NewBadRequest(fmt.Sprintf("expected a VSphereDataCenterConfig but got a %T", old))
-	}
-
-	if err := vsphereConfig.Validate(); err != nil {
-		return nil, apierrors.NewInvalid(
-			GroupVersion.WithKind(VSphereDatacenterKind).GroupKind(),
-			vsphereConfig.Name,
-			field.ErrorList{
-				field.Invalid(field.NewPath("spec"), vsphereConfig.Spec, err.Error()),
-			},
-		)
-	}
-
-	if oldDatacenterConfig.IsReconcilePaused() {
-		vspheredatacenterconfiglog.Info("Reconciliation is paused")
-		return nil, nil
-	}
-
-	vsphereConfig.SetDefaults()
-
-	if allErrs := validateImmutableFieldsVSphereCluster(vsphereConfig, oldDatacenterConfig); len(allErrs) != 0 {
-		return nil, apierrors.NewInvalid(GroupVersion.WithKind(VSphereDatacenterKind).GroupKind(), vsphereConfig.Name, allErrs)
-	}
-
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 func validateImmutableFieldsVSphereCluster(new, old *VSphereDatacenterConfig) field.ErrorList {
-	var allErrs field.ErrorList
-	specPath := field.NewPath("spec")
-
-	if old.Spec.Server != new.Spec.Server {
-		allErrs = append(
-			allErrs,
-			field.Forbidden(specPath.Child("server"), "field is immutable"),
-		)
-	}
-
-	if old.Spec.Datacenter != new.Spec.Datacenter {
-		allErrs = append(
-			allErrs,
-			field.Forbidden(specPath.Child("datacenter"), "field is immutable"),
-		)
-	}
-
-	if old.Spec.Network != new.Spec.Network {
-		allErrs = append(
-			allErrs,
-			field.Forbidden(specPath.Child("network"), "field is immutable"),
-		)
-	}
-
-	return allErrs
+	_ = "STUB: not implemented"
+	return *new(field.ErrorList)
 }
 
 // ValidateDelete implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *VSphereDatacenterConfig) ValidateDelete(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	vsphereConfig, ok := obj.(*VSphereDatacenterConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a VSphereDatacenterConfig but got %T", obj)
-	}
-
-	vspheredatacenterconfiglog.Info("validate delete", "name", vsphereConfig.Name)
-
-	// TODO(user): fill in your validation logic upon object deletion.
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
+
+// TODO(user): fill in your validation logic upon object deletion.

@@ -3,7 +3,6 @@
 package types
 
 import (
-	"fmt"
 	smithy "github.com/aws/smithy-go"
 )
 
@@ -15,22 +14,16 @@ type DependencyException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *DependencyException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
+func (e *DependencyException) Error() string { _ = "STUB: not implemented"; return "" }
+
+func (e *DependencyException) ErrorMessage() string { _ = "STUB: not implemented"; return "" }
+
+func (e *DependencyException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *DependencyException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *DependencyException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
-}
-func (e *DependencyException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "DependencyException"
-	}
-	return *e.ErrorCodeOverride
-}
-func (e *DependencyException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type HardwarePlatformNotRecognizedException struct {
 	Message *string
@@ -41,22 +34,23 @@ type HardwarePlatformNotRecognizedException struct {
 }
 
 func (e *HardwarePlatformNotRecognizedException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *HardwarePlatformNotRecognizedException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *HardwarePlatformNotRecognizedException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "HardwarePlatformNotRecognizedException"
-	}
-	return *e.ErrorCodeOverride
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *HardwarePlatformNotRecognizedException) ErrorFault() smithy.ErrorFault {
-	return smithy.FaultClient
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
 
 type IncorrectDeviceManifestException struct {
@@ -67,22 +61,19 @@ type IncorrectDeviceManifestException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *IncorrectDeviceManifestException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
-}
+func (e *IncorrectDeviceManifestException) Error() string { _ = "STUB: not implemented"; return "" }
+
 func (e *IncorrectDeviceManifestException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
-func (e *IncorrectDeviceManifestException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "IncorrectDeviceManifestException"
-	}
-	return *e.ErrorCodeOverride
+
+func (e *IncorrectDeviceManifestException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *IncorrectDeviceManifestException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *IncorrectDeviceManifestException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type IncorrectDeviceStateException struct {
 	Message *string
@@ -92,22 +83,16 @@ type IncorrectDeviceStateException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *IncorrectDeviceStateException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
+func (e *IncorrectDeviceStateException) Error() string { _ = "STUB: not implemented"; return "" }
+
+func (e *IncorrectDeviceStateException) ErrorMessage() string { _ = "STUB: not implemented"; return "" }
+
+func (e *IncorrectDeviceStateException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *IncorrectDeviceStateException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *IncorrectDeviceStateException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
-}
-func (e *IncorrectDeviceStateException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "IncorrectDeviceStateException"
-	}
-	return *e.ErrorCodeOverride
-}
-func (e *IncorrectDeviceStateException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type IncorrectDeviceUpdateStateException struct {
 	Message *string
@@ -117,23 +102,21 @@ type IncorrectDeviceUpdateStateException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *IncorrectDeviceUpdateStateException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
-}
+func (e *IncorrectDeviceUpdateStateException) Error() string { _ = "STUB: not implemented"; return "" }
+
 func (e *IncorrectDeviceUpdateStateException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *IncorrectDeviceUpdateStateException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "IncorrectDeviceUpdateStateException"
-	}
-	return *e.ErrorCodeOverride
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *IncorrectDeviceUpdateStateException) ErrorFault() smithy.ErrorFault {
-	return smithy.FaultClient
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
 
 type InternalFailureException struct {
@@ -144,22 +127,16 @@ type InternalFailureException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *InternalFailureException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
+func (e *InternalFailureException) Error() string { _ = "STUB: not implemented"; return "" }
+
+func (e *InternalFailureException) ErrorMessage() string { _ = "STUB: not implemented"; return "" }
+
+func (e *InternalFailureException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *InternalFailureException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *InternalFailureException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
-}
-func (e *InternalFailureException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "InternalFailureException"
-	}
-	return *e.ErrorCodeOverride
-}
-func (e *InternalFailureException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type InvalidPaginationTokenException struct {
 	Message *string
@@ -169,22 +146,19 @@ type InvalidPaginationTokenException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *InvalidPaginationTokenException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
-}
+func (e *InvalidPaginationTokenException) Error() string { _ = "STUB: not implemented"; return "" }
+
 func (e *InvalidPaginationTokenException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
-func (e *InvalidPaginationTokenException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "InvalidPaginationTokenException"
-	}
-	return *e.ErrorCodeOverride
+
+func (e *InvalidPaginationTokenException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *InvalidPaginationTokenException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *InvalidPaginationTokenException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type InvalidParameterCombinationException struct {
 	Message *string
@@ -194,23 +168,21 @@ type InvalidParameterCombinationException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *InvalidParameterCombinationException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
-}
+func (e *InvalidParameterCombinationException) Error() string { _ = "STUB: not implemented"; return "" }
+
 func (e *InvalidParameterCombinationException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *InvalidParameterCombinationException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "InvalidParameterCombinationException"
-	}
-	return *e.ErrorCodeOverride
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *InvalidParameterCombinationException) ErrorFault() smithy.ErrorFault {
-	return smithy.FaultClient
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
 
 type InvalidParameterValueException struct {
@@ -221,22 +193,19 @@ type InvalidParameterValueException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *InvalidParameterValueException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
-}
+func (e *InvalidParameterValueException) Error() string { _ = "STUB: not implemented"; return "" }
+
 func (e *InvalidParameterValueException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
-func (e *InvalidParameterValueException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "InvalidParameterValueException"
-	}
-	return *e.ErrorCodeOverride
+
+func (e *InvalidParameterValueException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *InvalidParameterValueException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *InvalidParameterValueException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type InvalidRequestException struct {
 	Message *string
@@ -246,22 +215,16 @@ type InvalidRequestException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *InvalidRequestException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
+func (e *InvalidRequestException) Error() string { _ = "STUB: not implemented"; return "" }
+
+func (e *InvalidRequestException) ErrorMessage() string { _ = "STUB: not implemented"; return "" }
+
+func (e *InvalidRequestException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *InvalidRequestException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *InvalidRequestException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
-}
-func (e *InvalidRequestException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "InvalidRequestException"
-	}
-	return *e.ErrorCodeOverride
-}
-func (e *InvalidRequestException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type MacAddressAlreadyInUseException struct {
 	Message *string
@@ -271,22 +234,19 @@ type MacAddressAlreadyInUseException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *MacAddressAlreadyInUseException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
-}
+func (e *MacAddressAlreadyInUseException) Error() string { _ = "STUB: not implemented"; return "" }
+
 func (e *MacAddressAlreadyInUseException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
-func (e *MacAddressAlreadyInUseException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "MacAddressAlreadyInUseException"
-	}
-	return *e.ErrorCodeOverride
+
+func (e *MacAddressAlreadyInUseException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *MacAddressAlreadyInUseException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *MacAddressAlreadyInUseException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type MaxDirectNetworkExceededException struct {
 	Message *string
@@ -296,22 +256,22 @@ type MaxDirectNetworkExceededException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *MaxDirectNetworkExceededException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
-}
+func (e *MaxDirectNetworkExceededException) Error() string { _ = "STUB: not implemented"; return "" }
+
 func (e *MaxDirectNetworkExceededException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *MaxDirectNetworkExceededException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "MaxDirectNetworkExceededException"
-	}
-	return *e.ErrorCodeOverride
+	_ = "STUB: not implemented"
+	return ""
 }
-func (e *MaxDirectNetworkExceededException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
+
+func (e *MaxDirectNetworkExceededException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
+}
 
 type MaxDirectNetworkOnInstanceException struct {
 	Message *string
@@ -321,23 +281,21 @@ type MaxDirectNetworkOnInstanceException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *MaxDirectNetworkOnInstanceException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
-}
+func (e *MaxDirectNetworkOnInstanceException) Error() string { _ = "STUB: not implemented"; return "" }
+
 func (e *MaxDirectNetworkOnInstanceException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *MaxDirectNetworkOnInstanceException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "MaxDirectNetworkOnInstanceException"
-	}
-	return *e.ErrorCodeOverride
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *MaxDirectNetworkOnInstanceException) ErrorFault() smithy.ErrorFault {
-	return smithy.FaultClient
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
 
 type MissingParameterException struct {
@@ -348,22 +306,16 @@ type MissingParameterException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *MissingParameterException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
+func (e *MissingParameterException) Error() string { _ = "STUB: not implemented"; return "" }
+
+func (e *MissingParameterException) ErrorMessage() string { _ = "STUB: not implemented"; return "" }
+
+func (e *MissingParameterException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *MissingParameterException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *MissingParameterException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
-}
-func (e *MissingParameterException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "MissingParameterException"
-	}
-	return *e.ErrorCodeOverride
-}
-func (e *MissingParameterException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type NoCloudConnectionException struct {
 	Message *string
@@ -373,22 +325,16 @@ type NoCloudConnectionException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *NoCloudConnectionException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
+func (e *NoCloudConnectionException) Error() string { _ = "STUB: not implemented"; return "" }
+
+func (e *NoCloudConnectionException) ErrorMessage() string { _ = "STUB: not implemented"; return "" }
+
+func (e *NoCloudConnectionException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *NoCloudConnectionException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *NoCloudConnectionException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
-}
-func (e *NoCloudConnectionException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "NoCloudConnectionException"
-	}
-	return *e.ErrorCodeOverride
-}
-func (e *NoCloudConnectionException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type NoDirectNetworkSupportException struct {
 	Message *string
@@ -398,22 +344,19 @@ type NoDirectNetworkSupportException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *NoDirectNetworkSupportException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
-}
+func (e *NoDirectNetworkSupportException) Error() string { _ = "STUB: not implemented"; return "" }
+
 func (e *NoDirectNetworkSupportException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
-func (e *NoDirectNetworkSupportException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "NoDirectNetworkSupportException"
-	}
-	return *e.ErrorCodeOverride
+
+func (e *NoDirectNetworkSupportException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *NoDirectNetworkSupportException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *NoDirectNetworkSupportException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type PciDeviceAlreadyAttachedException struct {
 	Message *string
@@ -423,22 +366,22 @@ type PciDeviceAlreadyAttachedException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *PciDeviceAlreadyAttachedException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
-}
+func (e *PciDeviceAlreadyAttachedException) Error() string { _ = "STUB: not implemented"; return "" }
+
 func (e *PciDeviceAlreadyAttachedException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *PciDeviceAlreadyAttachedException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "PciDeviceAlreadyAttachedException"
-	}
-	return *e.ErrorCodeOverride
+	_ = "STUB: not implemented"
+	return ""
 }
-func (e *PciDeviceAlreadyAttachedException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
+
+func (e *PciDeviceAlreadyAttachedException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
+}
 
 type PciDeviceMissingDataException struct {
 	Message *string
@@ -448,22 +391,16 @@ type PciDeviceMissingDataException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *PciDeviceMissingDataException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
+func (e *PciDeviceMissingDataException) Error() string { _ = "STUB: not implemented"; return "" }
+
+func (e *PciDeviceMissingDataException) ErrorMessage() string { _ = "STUB: not implemented"; return "" }
+
+func (e *PciDeviceMissingDataException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *PciDeviceMissingDataException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *PciDeviceMissingDataException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
-}
-func (e *PciDeviceMissingDataException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "PciDeviceMissingDataException"
-	}
-	return *e.ErrorCodeOverride
-}
-func (e *PciDeviceMissingDataException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type PciDeviceNotFoundException struct {
 	Message *string
@@ -473,22 +410,16 @@ type PciDeviceNotFoundException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *PciDeviceNotFoundException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
+func (e *PciDeviceNotFoundException) Error() string { _ = "STUB: not implemented"; return "" }
+
+func (e *PciDeviceNotFoundException) ErrorMessage() string { _ = "STUB: not implemented"; return "" }
+
+func (e *PciDeviceNotFoundException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *PciDeviceNotFoundException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *PciDeviceNotFoundException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
-}
-func (e *PciDeviceNotFoundException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "PciDeviceNotFoundException"
-	}
-	return *e.ErrorCodeOverride
-}
-func (e *PciDeviceNotFoundException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type PublicIpAlreadyAssociatedException struct {
 	Message *string
@@ -498,23 +429,21 @@ type PublicIpAlreadyAssociatedException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *PublicIpAlreadyAssociatedException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
-}
+func (e *PublicIpAlreadyAssociatedException) Error() string { _ = "STUB: not implemented"; return "" }
+
 func (e *PublicIpAlreadyAssociatedException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *PublicIpAlreadyAssociatedException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "PublicIpAlreadyAssociatedException"
-	}
-	return *e.ErrorCodeOverride
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *PublicIpAlreadyAssociatedException) ErrorFault() smithy.ErrorFault {
-	return smithy.FaultClient
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
 
 type ResourceNotFoundException struct {
@@ -525,22 +454,16 @@ type ResourceNotFoundException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *ResourceNotFoundException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
+func (e *ResourceNotFoundException) Error() string { _ = "STUB: not implemented"; return "" }
+
+func (e *ResourceNotFoundException) ErrorMessage() string { _ = "STUB: not implemented"; return "" }
+
+func (e *ResourceNotFoundException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *ResourceNotFoundException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *ResourceNotFoundException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
-}
-func (e *ResourceNotFoundException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "ResourceNotFoundException"
-	}
-	return *e.ErrorCodeOverride
-}
-func (e *ResourceNotFoundException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type ServiceAlreadyStartedException struct {
 	Message *string
@@ -550,22 +473,19 @@ type ServiceAlreadyStartedException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *ServiceAlreadyStartedException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
-}
+func (e *ServiceAlreadyStartedException) Error() string { _ = "STUB: not implemented"; return "" }
+
 func (e *ServiceAlreadyStartedException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
-func (e *ServiceAlreadyStartedException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "ServiceAlreadyStartedException"
-	}
-	return *e.ErrorCodeOverride
+
+func (e *ServiceAlreadyStartedException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *ServiceAlreadyStartedException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *ServiceAlreadyStartedException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type TimeServiceSettingPersistenceException struct {
 	Message *string
@@ -576,22 +496,23 @@ type TimeServiceSettingPersistenceException struct {
 }
 
 func (e *TimeServiceSettingPersistenceException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *TimeServiceSettingPersistenceException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *TimeServiceSettingPersistenceException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "TimeServiceSettingPersistenceException"
-	}
-	return *e.ErrorCodeOverride
+	_ = "STUB: not implemented"
+	return ""
 }
+
 func (e *TimeServiceSettingPersistenceException) ErrorFault() smithy.ErrorFault {
-	return smithy.FaultClient
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
 
 type TimeServiceUnavailableException struct {
@@ -602,22 +523,19 @@ type TimeServiceUnavailableException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *TimeServiceUnavailableException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
-}
+func (e *TimeServiceUnavailableException) Error() string { _ = "STUB: not implemented"; return "" }
+
 func (e *TimeServiceUnavailableException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
+	_ = "STUB: not implemented"
+	return ""
 }
-func (e *TimeServiceUnavailableException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "TimeServiceUnavailableException"
-	}
-	return *e.ErrorCodeOverride
+
+func (e *TimeServiceUnavailableException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *TimeServiceUnavailableException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *TimeServiceUnavailableException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type UnsupportedFeatureException struct {
 	Message *string
@@ -627,22 +545,16 @@ type UnsupportedFeatureException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *UnsupportedFeatureException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
+func (e *UnsupportedFeatureException) Error() string { _ = "STUB: not implemented"; return "" }
+
+func (e *UnsupportedFeatureException) ErrorMessage() string { _ = "STUB: not implemented"; return "" }
+
+func (e *UnsupportedFeatureException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *UnsupportedFeatureException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *UnsupportedFeatureException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
-}
-func (e *UnsupportedFeatureException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "UnsupportedFeatureException"
-	}
-	return *e.ErrorCodeOverride
-}
-func (e *UnsupportedFeatureException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }
 
 type UnsupportedOperationException struct {
 	Message *string
@@ -652,19 +564,13 @@ type UnsupportedOperationException struct {
 	noSmithyDocumentSerde
 }
 
-func (e *UnsupportedOperationException) Error() string {
-	return fmt.Sprintf("%s: %s", e.ErrorCode(), e.ErrorMessage())
+func (e *UnsupportedOperationException) Error() string { _ = "STUB: not implemented"; return "" }
+
+func (e *UnsupportedOperationException) ErrorMessage() string { _ = "STUB: not implemented"; return "" }
+
+func (e *UnsupportedOperationException) ErrorCode() string { _ = "STUB: not implemented"; return "" }
+
+func (e *UnsupportedOperationException) ErrorFault() smithy.ErrorFault {
+	_ = "STUB: not implemented"
+	return *new(smithy.ErrorFault)
 }
-func (e *UnsupportedOperationException) ErrorMessage() string {
-	if e.Message == nil {
-		return ""
-	}
-	return *e.Message
-}
-func (e *UnsupportedOperationException) ErrorCode() string {
-	if e == nil || e.ErrorCodeOverride == nil {
-		return "UnsupportedOperationException"
-	}
-	return *e.ErrorCodeOverride
-}
-func (e *UnsupportedOperationException) ErrorFault() smithy.ErrorFault { return smithy.FaultClient }

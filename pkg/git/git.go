@@ -2,7 +2,6 @@ package git
 
 import (
 	"context"
-	"fmt"
 )
 
 type Client interface {
@@ -71,29 +70,21 @@ type RepositoryDoesNotExistError struct {
 	Err        error
 }
 
-func (e *RepositoryDoesNotExistError) Error() string {
-	return fmt.Sprintf("repository %s with owner %s not found: %s", e.repository, e.owner, e.Err)
-}
+func (e *RepositoryDoesNotExistError) Error() string { _ = "STUB: not implemented"; return "" }
 
 type RepositoryIsEmptyError struct {
 	Repository string
 }
 
-func (e *RepositoryIsEmptyError) Error() string {
-	return fmt.Sprintf("repository %s is empty can cannot be cloned", e.Repository)
-}
+func (e *RepositoryIsEmptyError) Error() string { _ = "STUB: not implemented"; return "" }
 
 type RepositoryUpToDateError struct{}
 
-func (e *RepositoryUpToDateError) Error() string {
-	return "error pulling from repository: already up-to-date"
-}
+func (e *RepositoryUpToDateError) Error() string { _ = "STUB: not implemented"; return "" }
 
 type RemoteBranchDoesNotExistError struct {
 	Repository string
 	Branch     string
 }
 
-func (e *RemoteBranchDoesNotExistError) Error() string {
-	return fmt.Sprintf("error pulling from repository %s: remote branch %s does not exist", e.Repository, e.Branch)
-}
+func (e *RemoteBranchDoesNotExistError) Error() string { _ = "STUB: not implemented"; return "" }

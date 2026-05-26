@@ -2,13 +2,9 @@ package executables
 
 import (
 	"context"
-	"fmt"
-	"os"
-	"strings"
 
 	"github.com/aws/eks-anywhere/pkg/filewriter"
 	"github.com/aws/eks-anywhere/pkg/helm"
-	"github.com/aws/eks-anywhere/pkg/logger"
 	"github.com/aws/eks-anywhere/pkg/manifests"
 	"github.com/aws/eks-anywhere/pkg/providers/cloudstack/decoder"
 )
@@ -25,148 +21,112 @@ type ExecutablesBuilder struct {
 }
 
 func NewExecutablesBuilder(executableBuilder ExecutableBuilder) *ExecutablesBuilder {
-	return &ExecutablesBuilder{
-		executableBuilder: executableBuilder,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (b *ExecutablesBuilder) BuildKindExecutable(writer filewriter.FileWriter) *Kind {
-	return NewKind(b.executableBuilder.Build(kindPath), writer)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (b *ExecutablesBuilder) BuildClusterAwsAdmExecutable() *Clusterawsadm {
-	return NewClusterawsadm(b.executableBuilder.Build(clusterAwsAdminPath))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BuildClusterCtlExecutable builds a new Clusterctl executable.
 func (b *ExecutablesBuilder) BuildClusterCtlExecutable(writer filewriter.FileWriter, reader manifests.FileReader) *Clusterctl {
-	return NewClusterctl(b.executableBuilder.Build(clusterCtlPath), writer, reader)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (b *ExecutablesBuilder) BuildKubectlExecutable() *Kubectl {
-	return NewKubectl(b.executableBuilder.Build(kubectlPath))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (b *ExecutablesBuilder) BuildGovcExecutable(writer filewriter.FileWriter, opts ...GovcOpt) *Govc {
-	return NewGovc(b.executableBuilder.Build(govcPath), writer, opts...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BuildCmkExecutable initializes a Cmk object and returns it.
 func (b *ExecutablesBuilder) BuildCmkExecutable(writer filewriter.FileWriter, config *decoder.CloudStackExecConfig) (*Cmk, error) {
-	return NewCmk(b.executableBuilder.Build(cmkPath), writer, config)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (b *ExecutablesBuilder) BuildAwsCli() *AwsCli {
-	return NewAwsCli(b.executableBuilder.Build(awsCliPath))
-}
+func (b *ExecutablesBuilder) BuildAwsCli() *AwsCli { _ = "STUB: not implemented"; return nil }
 
-func (b *ExecutablesBuilder) BuildFluxExecutable() *Flux {
-	return NewFlux(b.executableBuilder.Build(fluxPath))
-}
+func (b *ExecutablesBuilder) BuildFluxExecutable() *Flux { _ = "STUB: not implemented"; return nil }
 
 func (b *ExecutablesBuilder) BuildTroubleshootExecutable() *Troubleshoot {
-	return NewTroubleshoot(b.executableBuilder.Build(troubleshootPath))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BuildHelmExecutable initializes a helm executable and returns it.
 func (b *ExecutablesBuilder) BuildHelmExecutable(opts ...helm.Opt) *Helm {
-	return NewHelm(b.executableBuilder.Build(helmPath), opts...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BuildHelm initializes a helm executable and returns it.
 func (b *ExecutablesBuilder) BuildHelm(opts ...helm.Opt) helm.Client {
-	return b.BuildHelmExecutable(opts...)
+	_ = "STUB: not implemented"
+	return *new(helm.Client)
 }
 
 // BuildDockerExecutable initializes a docker executable and returns it.
-func (b *ExecutablesBuilder) BuildDockerExecutable() *Docker {
-	return NewDocker(b.executableBuilder.Build(dockerPath))
-}
+func (b *ExecutablesBuilder) BuildDockerExecutable() *Docker { _ = "STUB: not implemented"; return nil }
 
 // BuildSSHExecutable initializes a SSH executable and returns it.
-func (b *ExecutablesBuilder) BuildSSHExecutable() *SSH {
-	return NewSSH(b.executableBuilder.Build(sshPath))
-}
+func (b *ExecutablesBuilder) BuildSSHExecutable() *SSH { _ = "STUB: not implemented"; return nil }
 
 // Init initializes the executable builder and returns a Closer
 // that needs to be called once the executables are not in used anymore
 // The closer will cleanup and free all internal resources.
 func (b *ExecutablesBuilder) Init(ctx context.Context) (Closer, error) {
-	return b.executableBuilder.Init(ctx)
+	_ = "STUB: not implemented"
+	return *new(Closer), nil
 }
 
-func BuildSonobuoyExecutable() *Sonobuoy {
-	return NewSonobuoy(&executable{
-		cli: sonobuoyPath,
-	})
-}
+func BuildSonobuoyExecutable() *Sonobuoy { _ = "STUB: not implemented"; return nil }
 
-func BuildDockerExecutable() *Docker {
-	return NewDocker(&executable{
-		cli: dockerPath,
-	})
-}
+func BuildDockerExecutable() *Docker { _ = "STUB: not implemented"; return nil }
 
 // RunExecutablesInDocker determines if binary executables should be ran
 // from a docker container or native binaries from the host path
 // It reads MR_TOOLS_DISABLE variable.
-func ExecutablesInDocker() bool {
-	if env, ok := os.LookupEnv("MR_TOOLS_DISABLE"); ok && strings.EqualFold(env, "true") {
-		logger.Info("Warning: eks-a tools image disabled, using client's executables")
-		return false
-	}
-	return true
-}
+func ExecutablesInDocker() bool { _ = "STUB: not implemented"; return false }
 
 // InitInDockerExecutablesBuilder builds and inits a default ExecutablesBuilder to run executables in a docker container
 // that will make use of a long running docker container.
 func InitInDockerExecutablesBuilder(ctx context.Context, image string, mountDirs ...string) (*ExecutablesBuilder, Closer, error) {
-	b, err := NewInDockerExecutablesBuilder(BuildDockerExecutable(), image, mountDirs...)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	closer, err := b.Init(ctx)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return b, closer, nil
+	_ = "STUB: not implemented"
+	return nil, *new(Closer), nil
 }
 
 // NewInDockerExecutablesBuilder builds an executables builder for docker.
 func NewInDockerExecutablesBuilder(dockerClient DockerClient, image string, mountDirs ...string) (*ExecutablesBuilder, error) {
-	currentDir, err := os.Getwd()
-	if err != nil {
-		return nil, fmt.Errorf("getting current directory: %v", err)
-	}
-	mountDirs = append(mountDirs, currentDir)
-
-	dockerContainer := newDockerContainer(image, currentDir, mountDirs, dockerClient)
-	dockerExecutableBuilder := NewDockerExecutableBuilder(dockerContainer)
-
-	return NewExecutablesBuilder(dockerExecutableBuilder), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func NewLocalExecutablesBuilder() *ExecutablesBuilder {
-	return NewExecutablesBuilder(newLocalExecutableBuilder())
-}
+func NewLocalExecutablesBuilder() *ExecutablesBuilder { _ = "STUB: not implemented"; return nil }
 
-func DefaultEksaImage() string {
-	return defaultEksaImage
-}
+func DefaultEksaImage() string { _ = "STUB: not implemented"; return "" }
 
 type Closer func(ctx context.Context) error
 
 // Close implements interface types.Closer.
 func (c Closer) Close(ctx context.Context) error {
-	return c(ctx)
+	_ = "STUB: not implemented"
+
+	// CheckErr just calls the closer and logs an error if present
+	// It's mostly a helper for defering the close in a oneliner without ignoring the error.
+	return nil
 }
 
-// CheckErr just calls the closer and logs an error if present
-// It's mostly a helper for defering the close in a oneliner without ignoring the error.
-func (c Closer) CheckErr(ctx context.Context) {
-	if err := c(ctx); err != nil {
-		logger.Error(err, "Failed closing container for executables")
-	}
-}
+func (c Closer) CheckErr(ctx context.Context) { _ = "STUB: not implemented"; return }

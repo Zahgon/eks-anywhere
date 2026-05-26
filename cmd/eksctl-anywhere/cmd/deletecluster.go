@@ -2,19 +2,12 @@ package cmd
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
 	"github.com/spf13/cobra"
 
 	"github.com/aws/eks-anywhere/pkg/dependencies"
-	"github.com/aws/eks-anywhere/pkg/kubeconfig"
-	"github.com/aws/eks-anywhere/pkg/logger"
 	"github.com/aws/eks-anywhere/pkg/providers/tinkerbell/hardware"
-	"github.com/aws/eks-anywhere/pkg/types"
-	"github.com/aws/eks-anywhere/pkg/validations"
-	"github.com/aws/eks-anywhere/pkg/workflows/management"
-	"github.com/aws/eks-anywhere/pkg/workflows/workload"
 )
 
 type deleteClusterOptions struct {
@@ -65,99 +58,11 @@ func init() {
 }
 
 func (dc *deleteClusterOptions) validate(ctx context.Context, args []string) error {
-	if dc.forceCleanup {
-		logger.MarkFail(forceCleanupDeprecationMessageForCreateDelete)
-		return errors.New("please remove the --force-cleanup flag")
-	}
-	if dc.fileName == "" {
-		clusterName, err := validations.ValidateClusterNameArg(args)
-		if err != nil {
-			return fmt.Errorf("please provide either a valid <cluster-name> or -f <config-file>")
-		}
-		filename := fmt.Sprintf("%[1]s/%[1]s-eks-a-cluster.yaml", clusterName)
-		if !validations.FileExists(filename) {
-			return fmt.Errorf("clusterconfig file %s for cluster: %s not found, please provide the clusterconfig path manually using -f <config-file>", filename, clusterName)
-		}
-		dc.fileName = filename
-	}
-	clusterConfig, err := commonValidation(ctx, dc.fileName)
-	if err != nil {
-		return err
-	}
-
-	kubeconfigPath := getKubeconfigPath(clusterConfig.Name, dc.wConfig)
-	if err := kubeconfig.ValidateFilename(kubeconfigPath); err != nil {
-		return err
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (dc *deleteClusterOptions) deleteCluster(ctx context.Context) error {
-	clusterSpec, err := newClusterSpec(dc.clusterOptions)
-	if err != nil {
-		return fmt.Errorf("unable to get cluster config from file: %v", err)
-	}
-
-	if err := validations.ValidateAuthenticationForRegistryMirror(clusterSpec); err != nil {
-		return err
-	}
-
-	cliConfig := buildCliConfig(clusterSpec)
-	dirs, err := dc.directoriesToMount(clusterSpec, cliConfig)
-	if err != nil {
-		return err
-	}
-
-	deleteCLIConfig := buildDeleteCliConfig()
-	if err != nil {
-		return err
-	}
-
-	deps, err := dependencies.ForSpec(clusterSpec).WithExecutableMountDirs(dirs...).
-		WithBootstrapper().
-		WithCliConfig(cliConfig).
-		WithClusterManager(clusterSpec.Cluster, nil).
-		WithProvider(dc.fileName, clusterSpec.Cluster, cc.skipIpCheck, dc.hardwareFileName, false, dc.tinkerbellBootstrapIP, map[string]bool{}, dc.providerOptions).
-		WithGitOpsFlux(clusterSpec.Cluster, clusterSpec.FluxConfig, cliConfig).
-		WithWriter().
-		WithDeleteClusterDefaulter(deleteCLIConfig).
-		WithClusterDeleter().
-		WithEksdInstaller().
-		WithEKSAInstaller().
-		WithUnAuthKubeClient().
-		WithClusterMover().
-		Build(ctx)
-	if err != nil {
-		return err
-	}
-	defer close(ctx, deps)
-
-	clusterSpec, err = deps.DeleteClusterDefaulter.Run(ctx, clusterSpec)
-	if err != nil {
-		return err
-	}
-
-	var cluster *types.Cluster
-	if clusterSpec.ManagementCluster == nil {
-		cluster = &types.Cluster{
-			Name:           clusterSpec.Cluster.Name,
-			KubeconfigFile: kubeconfig.FromClusterName(clusterSpec.Cluster.Name),
-		}
-	} else {
-		cluster = &types.Cluster{
-			Name:           clusterSpec.Cluster.Name,
-			KubeconfigFile: clusterSpec.ManagementCluster.KubeconfigFile,
-		}
-	}
-
-	if clusterSpec.Cluster.IsManaged() {
-		deleteWorkload := workload.NewDelete(deps.Provider, deps.Writer, deps.ClusterManager, deps.ClusterDeleter, deps.GitOpsFlux)
-		err = deleteWorkload.Run(ctx, cluster, clusterSpec)
-	} else {
-		deleteManagement := management.NewDelete(deps.Bootstrapper, deps.Provider, deps.Writer, deps.ClusterManager, deps.GitOpsFlux, deps.ClusterDeleter, deps.EksdInstaller, deps.EksaInstaller, deps.UnAuthKubeClient, deps.ClusterMover)
-		err = deleteManagement.Run(ctx, cluster, clusterSpec)
-	}
-	cleanup(deps, &err)
-	return err
+	_ = "STUB: not implemented"
+	return nil
 }

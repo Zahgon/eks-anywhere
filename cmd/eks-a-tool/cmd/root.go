@@ -1,14 +1,10 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
-
-	"github.com/aws/eks-anywhere/pkg/logger"
 )
 
 var rootCmd = &cobra.Command{
@@ -25,31 +21,10 @@ func init() {
 	}
 }
 
-func prerunCmdBindFlags(cmd *cobra.Command, args []string) {
-	cmd.Flags().VisitAll(func(flag *pflag.Flag) {
-		err := viper.BindPFlag(flag.Name, flag)
-		if err != nil {
-			log.Fatalf("Error initializing flags: %v", err)
-		}
-	})
-}
+func prerunCmdBindFlags(cmd *cobra.Command, args []string) { _ = "STUB: not implemented"; return }
 
-func rootPersistentPreRun(cmd *cobra.Command, args []string) {
-	if err := initLogger(); err != nil {
-		log.Fatal(err)
-	}
-}
+func rootPersistentPreRun(cmd *cobra.Command, args []string) { _ = "STUB: not implemented"; return }
 
-func initLogger() error {
-	if err := logger.Init(logger.Options{
-		Level: viper.GetInt("verbosity"),
-	}); err != nil {
-		return fmt.Errorf("failed init zap logger in root command: %v", err)
-	}
+func initLogger() error { _ = "STUB: not implemented"; return nil }
 
-	return nil
-}
-
-func Execute() error {
-	return rootCmd.Execute()
-}
+func Execute() error { _ = "STUB: not implemented"; return nil }

@@ -3,19 +3,8 @@ package cmd
 import (
 	"context"
 	"log"
-	"path/filepath"
-	"strings"
 
 	"github.com/spf13/cobra"
-
-	"github.com/aws/eks-anywhere/cmd/eksctl-anywhere/cmd/internal/commands/artifacts"
-	"github.com/aws/eks-anywhere/pkg/curatedpackages/oras"
-	"github.com/aws/eks-anywhere/pkg/dependencies"
-	"github.com/aws/eks-anywhere/pkg/docker"
-	"github.com/aws/eks-anywhere/pkg/executables"
-	"github.com/aws/eks-anywhere/pkg/helm"
-	"github.com/aws/eks-anywhere/pkg/tar"
-	"github.com/aws/eks-anywhere/pkg/version"
 )
 
 // imagesCmd represents the images command.
@@ -57,48 +46,8 @@ type downloadImagesCommand struct {
 }
 
 func (c downloadImagesCommand) Run(ctx context.Context) error {
-	factory := dependencies.NewFactory()
-	helmOpts := []helm.Opt{}
-	if c.insecure {
-		helmOpts = append(helmOpts, helm.WithInsecure())
-	}
-	deps, err := factory.
-		WithFileReader().
-		WithManifestReader().
-		WithHelm(helmOpts...).
-		WithLogger().
-		Build(ctx)
-	if err != nil {
-		return err
-	}
-	defer deps.Close(ctx)
-
-	dockerClient := executables.BuildDockerExecutable()
-	downloadFolder := "tmp-eks-a-artifacts-download"
-	imagesFile := filepath.Join(downloadFolder, imagesTarFile)
-	eksaToolsImageFile := filepath.Join(downloadFolder, eksaToolsImageTarFile)
-
-	downloadArtifacts := artifacts.Download{
-		Reader:     deps.ManifestReader,
-		FileReader: deps.FileReader,
-		BundlesImagesDownloader: docker.NewImageMover(
-			docker.NewOriginalRegistrySource(dockerClient),
-			docker.NewDiskDestination(dockerClient, imagesFile),
-		),
-		EksaToolsImageDownloader: docker.NewImageMover(
-			docker.NewOriginalRegistrySource(dockerClient),
-			docker.NewDiskDestination(dockerClient, eksaToolsImageFile),
-		),
-		ChartDownloader:    helm.NewChartRegistryDownloader(deps.Helm, downloadFolder),
-		Version:            version.Get(),
-		TmpDowloadFolder:   downloadFolder,
-		DstFile:            c.outputFile,
-		Packager:           packagerForFile(c.outputFile),
-		ManifestDownloader: oras.NewBundleDownloader(deps.Logger, downloadFolder),
-		BundlesOverride:    c.bundlesOverride,
-	}
-
-	return downloadArtifacts.Run(ctx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type packager interface {
@@ -106,10 +55,4 @@ type packager interface {
 	Package(sourceFolder, dstFile string) error
 }
 
-func packagerForFile(file string) packager {
-	if strings.HasSuffix(file, ".tar.gz") {
-		return tar.NewGzipPackager()
-	} else {
-		return tar.NewPackager()
-	}
-}
+func packagerForFile(file string) packager { _ = "STUB: not implemented"; return *new(packager) }

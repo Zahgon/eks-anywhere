@@ -3,15 +3,13 @@
 package snowballdevice
 
 import (
-	"context"
+	"net/http"
+
 	"github.com/aws/aws-sdk-go-v2/aws"
-	awsmiddleware "github.com/aws/aws-sdk-go-v2/aws/middleware"
-	internalauthsmithy "github.com/aws/eks-anywhere/internal/aws-sdk-go-v2/internal/auth/smithy"
 	smithyauth "github.com/aws/smithy-go/auth"
 	"github.com/aws/smithy-go/logging"
 	"github.com/aws/smithy-go/middleware"
 	smithyhttp "github.com/aws/smithy-go/transport/http"
-	"net/http"
 )
 
 type HTTPClient interface {
@@ -114,30 +112,18 @@ type Options struct {
 }
 
 // Copy creates a clone where the APIOptions list is deep copied.
-func (o Options) Copy() Options {
-	to := o
-	to.APIOptions = make([]func(*middleware.Stack) error, len(o.APIOptions))
-	copy(to.APIOptions, o.APIOptions)
-
-	return to
-}
+func (o Options) Copy() Options { _ = "STUB: not implemented"; return *new(Options) }
 
 func (o Options) GetIdentityResolver(schemeID string) smithyauth.IdentityResolver {
-	if schemeID == "aws.auth#sigv4" {
-		return getSigV4IdentityResolver(o)
-	}
-	if schemeID == "smithy.api#noAuth" {
-		return &smithyauth.AnonymousIdentityResolver{}
-	}
-	return nil
+	_ = "STUB: not implemented"
+	return *new(smithyauth.IdentityResolver)
 }
 
 // WithAPIOptions returns a functional option for setting the Client's APIOptions
 // option.
 func WithAPIOptions(optFns ...func(*middleware.Stack) error) func(*Options) {
-	return func(o *Options) {
-		o.APIOptions = append(o.APIOptions, optFns...)
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Deprecated: EndpointResolver and WithEndpointResolver. Providing a value for
@@ -145,25 +131,18 @@ func WithAPIOptions(optFns ...func(*middleware.Stack) error) func(*Options) {
 // features released after the introduction of EndpointResolverV2 and BaseEndpoint.
 // To migrate an EndpointResolver implementation that uses a custom endpoint, set
 // the client option BaseEndpoint instead.
-func WithEndpointResolver(v EndpointResolver) func(*Options) {
-	return func(o *Options) {
-		o.EndpointResolver = v
-	}
-}
+func WithEndpointResolver(v EndpointResolver) func(*Options) { _ = "STUB: not implemented"; return nil }
 
 // WithEndpointResolverV2 returns a functional option for setting the Client's
 // EndpointResolverV2 option.
 func WithEndpointResolverV2(v EndpointResolverV2) func(*Options) {
-	return func(o *Options) {
-		o.EndpointResolverV2 = v
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func getSigV4IdentityResolver(o Options) smithyauth.IdentityResolver {
-	if o.Credentials != nil {
-		return &internalauthsmithy.CredentialsProviderAdapter{Provider: o.Credentials}
-	}
-	return nil
+	_ = "STUB: not implemented"
+	return *new(smithyauth.IdentityResolver)
 }
 
 // WithSigV4SigningName applies an override to the authentication workflow to
@@ -172,21 +151,7 @@ func getSigV4IdentityResolver(o Options) smithyauth.IdentityResolver {
 // This is an advanced setting. The value here is FINAL, taking precedence over
 // the resolved signing name from both auth scheme resolution and endpoint
 // resolution.
-func WithSigV4SigningName(name string) func(*Options) {
-	fn := func(ctx context.Context, in middleware.InitializeInput, next middleware.InitializeHandler) (
-		out middleware.InitializeOutput, metadata middleware.Metadata, err error,
-	) {
-		return next.HandleInitialize(awsmiddleware.SetSigningName(ctx, name), in)
-	}
-	return func(o *Options) {
-		o.APIOptions = append(o.APIOptions, func(s *middleware.Stack) error {
-			return s.Initialize.Add(
-				middleware.InitializeMiddlewareFunc("withSigV4SigningName", fn),
-				middleware.Before,
-			)
-		})
-	}
-}
+func WithSigV4SigningName(name string) func(*Options) { _ = "STUB: not implemented"; return nil }
 
 // WithSigV4SigningRegion applies an override to the authentication workflow to
 // use the given signing region for SigV4-authenticated operations.
@@ -194,24 +159,6 @@ func WithSigV4SigningName(name string) func(*Options) {
 // This is an advanced setting. The value here is FINAL, taking precedence over
 // the resolved signing region from both auth scheme resolution and endpoint
 // resolution.
-func WithSigV4SigningRegion(region string) func(*Options) {
-	fn := func(ctx context.Context, in middleware.InitializeInput, next middleware.InitializeHandler) (
-		out middleware.InitializeOutput, metadata middleware.Metadata, err error,
-	) {
-		return next.HandleInitialize(awsmiddleware.SetSigningRegion(ctx, region), in)
-	}
-	return func(o *Options) {
-		o.APIOptions = append(o.APIOptions, func(s *middleware.Stack) error {
-			return s.Initialize.Add(
-				middleware.InitializeMiddlewareFunc("withSigV4SigningRegion", fn),
-				middleware.Before,
-			)
-		})
-	}
-}
+func WithSigV4SigningRegion(region string) func(*Options) { _ = "STUB: not implemented"; return nil }
 
-func ignoreAnonymousAuth(options *Options) {
-	if aws.IsCredentialsProvider(options.Credentials, (*aws.AnonymousCredentials)(nil)) {
-		options.Credentials = nil
-	}
-}
+func ignoreAnonymousAuth(options *Options) { _ = "STUB: not implemented"; return }

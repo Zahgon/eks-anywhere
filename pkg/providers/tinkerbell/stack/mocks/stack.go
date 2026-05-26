@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	helm "github.com/aws/eks-anywhere/pkg/helm"
 	stack "github.com/aws/eks-anywhere/pkg/providers/tinkerbell/stack"
@@ -26,63 +25,49 @@ type MockDockerMockRecorder struct {
 }
 
 // NewMockDocker creates a new mock instance.
-func NewMockDocker(ctrl *gomock.Controller) *MockDocker {
-	mock := &MockDocker{ctrl: ctrl}
-	mock.recorder = &MockDockerMockRecorder{mock}
-	return mock
-}
+func NewMockDocker(ctrl *gomock.Controller) *MockDocker { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDocker) EXPECT() *MockDockerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// CheckContainerExistence mocks base method.
+	return nil
 }
 
-// CheckContainerExistence mocks base method.
 func (m *MockDocker) CheckContainerExistence(ctx context.Context, name string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CheckContainerExistence", ctx, name)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // CheckContainerExistence indicates an expected call of CheckContainerExistence.
 func (mr *MockDockerMockRecorder) CheckContainerExistence(ctx, name interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CheckContainerExistence", reflect.TypeOf((*MockDocker)(nil).CheckContainerExistence), ctx, name)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ForceRemove mocks base method.
 func (m *MockDocker) ForceRemove(ctx context.Context, name string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ForceRemove", ctx, name)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ForceRemove indicates an expected call of ForceRemove.
 func (mr *MockDockerMockRecorder) ForceRemove(ctx, name interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ForceRemove", reflect.TypeOf((*MockDocker)(nil).ForceRemove), ctx, name)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Run mocks base method.
 func (m *MockDocker) Run(ctx context.Context, image, name string, cmd []string, flags ...string) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, image, name, cmd}
-	for _, a := range flags {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Run", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Run indicates an expected call of Run.
 func (mr *MockDockerMockRecorder) Run(ctx, image, name, cmd interface{}, flags ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, image, name, cmd}, flags...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Run", reflect.TypeOf((*MockDocker)(nil).Run), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockHelm is a mock of Helm interface.
@@ -97,82 +82,61 @@ type MockHelmMockRecorder struct {
 }
 
 // NewMockHelm creates a new mock instance.
-func NewMockHelm(ctrl *gomock.Controller) *MockHelm {
-	mock := &MockHelm{ctrl: ctrl}
-	mock.recorder = &MockHelmMockRecorder{mock}
-	return mock
-}
+func NewMockHelm(ctrl *gomock.Controller) *MockHelm { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockHelm) EXPECT() *MockHelmMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ListCharts mocks base method.
+	return nil
 }
 
-// ListCharts mocks base method.
 func (m *MockHelm) ListCharts(ctx context.Context, kubeconfigFilePath, filter, namespace string) ([]string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListCharts", ctx, kubeconfigFilePath, filter, namespace)
-	ret0, _ := ret[0].([]string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListCharts indicates an expected call of ListCharts.
 func (mr *MockHelmMockRecorder) ListCharts(ctx, kubeconfigFilePath, filter, namespace interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListCharts", reflect.TypeOf((*MockHelm)(nil).ListCharts), ctx, kubeconfigFilePath, filter, namespace)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RegistryLogin mocks base method.
 func (m *MockHelm) RegistryLogin(ctx context.Context, endpoint, username, password string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RegistryLogin", ctx, endpoint, username, password)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RegistryLogin indicates an expected call of RegistryLogin.
 func (mr *MockHelmMockRecorder) RegistryLogin(ctx, endpoint, username, password interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RegistryLogin", reflect.TypeOf((*MockHelm)(nil).RegistryLogin), ctx, endpoint, username, password)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Uninstall mocks base method.
 func (m *MockHelm) Uninstall(ctx context.Context, chart, kubeconfigFilePath, namespace string, opts ...helm.Opt) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, chart, kubeconfigFilePath, namespace}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Uninstall", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Uninstall indicates an expected call of Uninstall.
 func (mr *MockHelmMockRecorder) Uninstall(ctx, chart, kubeconfigFilePath, namespace interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, chart, kubeconfigFilePath, namespace}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Uninstall", reflect.TypeOf((*MockHelm)(nil).Uninstall), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpgradeInstallChartWithValuesFile mocks base method.
 func (m *MockHelm) UpgradeInstallChartWithValuesFile(ctx context.Context, chart, ociURI, version, kubeconfigFilePath, namespace, valuesFilePath string, opts ...helm.Opt) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, chart, ociURI, version, kubeconfigFilePath, namespace, valuesFilePath}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "UpgradeInstallChartWithValuesFile", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpgradeInstallChartWithValuesFile indicates an expected call of UpgradeInstallChartWithValuesFile.
 func (mr *MockHelmMockRecorder) UpgradeInstallChartWithValuesFile(ctx, chart, ociURI, version, kubeconfigFilePath, namespace, valuesFilePath interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, chart, ociURI, version, kubeconfigFilePath, namespace, valuesFilePath}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpgradeInstallChartWithValuesFile", reflect.TypeOf((*MockHelm)(nil).UpgradeInstallChartWithValuesFile), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockStackInstaller is a mock of StackInstaller interface.
@@ -188,171 +152,127 @@ type MockStackInstallerMockRecorder struct {
 
 // NewMockStackInstaller creates a new mock instance.
 func NewMockStackInstaller(ctrl *gomock.Controller) *MockStackInstaller {
-	mock := &MockStackInstaller{ctrl: ctrl}
-	mock.recorder = &MockStackInstallerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockStackInstaller) EXPECT() *MockStackInstallerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AddNoProxyIP mocks base method.
+	return nil
 }
 
-// AddNoProxyIP mocks base method.
-func (m *MockStackInstaller) AddNoProxyIP(IP string) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "AddNoProxyIP", IP)
-}
+func (m *MockStackInstaller) AddNoProxyIP(IP string) { _ = "STUB: not implemented"; return }
 
 // AddNoProxyIP indicates an expected call of AddNoProxyIP.
 func (mr *MockStackInstallerMockRecorder) AddNoProxyIP(IP interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddNoProxyIP", reflect.TypeOf((*MockStackInstaller)(nil).AddNoProxyIP), IP)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CleanupLocalBoots mocks base method.
 func (m *MockStackInstaller) CleanupLocalBoots(ctx context.Context, forceCleanup bool) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CleanupLocalBoots", ctx, forceCleanup)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CleanupLocalBoots indicates an expected call of CleanupLocalBoots.
 func (mr *MockStackInstallerMockRecorder) CleanupLocalBoots(ctx, forceCleanup interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CleanupLocalBoots", reflect.TypeOf((*MockStackInstaller)(nil).CleanupLocalBoots), ctx, forceCleanup)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetNamespace mocks base method.
-func (m *MockStackInstaller) GetNamespace() string {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetNamespace")
-	ret0, _ := ret[0].(string)
-	return ret0
-}
+func (m *MockStackInstaller) GetNamespace() string { _ = "STUB: not implemented"; return "" }
 
 // GetNamespace indicates an expected call of GetNamespace.
 func (mr *MockStackInstallerMockRecorder) GetNamespace() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetNamespace", reflect.TypeOf((*MockStackInstaller)(nil).GetNamespace))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // HasChart mocks base method.
 func (m *MockStackInstaller) HasChart(ctx context.Context, chartName, kubeconfig, namespace string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "HasChart", ctx, chartName, kubeconfig, namespace)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // HasChart indicates an expected call of HasChart.
 func (mr *MockStackInstallerMockRecorder) HasChart(ctx, chartName, kubeconfig, namespace interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasChart", reflect.TypeOf((*MockStackInstaller)(nil).HasChart), ctx, chartName, kubeconfig, namespace)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Install mocks base method.
 func (m *MockStackInstaller) Install(ctx context.Context, bundle v1alpha1.TinkerbellBundle, tinkerbellIP, kubeconfig, hookOverride string, opts ...stack.InstallOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, bundle, tinkerbellIP, kubeconfig, hookOverride}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Install", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Install indicates an expected call of Install.
 func (mr *MockStackInstallerMockRecorder) Install(ctx, bundle, tinkerbellIP, kubeconfig, hookOverride interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, bundle, tinkerbellIP, kubeconfig, hookOverride}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Install", reflect.TypeOf((*MockStackInstaller)(nil).Install), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UninstallChart mocks base method.
 func (m *MockStackInstaller) UninstallChart(ctx context.Context, chartName, kubeconfig, namespace string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UninstallChart", ctx, chartName, kubeconfig, namespace)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UninstallChart indicates an expected call of UninstallChart.
 func (mr *MockStackInstallerMockRecorder) UninstallChart(ctx, chartName, kubeconfig, namespace interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UninstallChart", reflect.TypeOf((*MockStackInstaller)(nil).UninstallChart), ctx, chartName, kubeconfig, namespace)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UninstallLocal mocks base method.
 func (m *MockStackInstaller) UninstallLocal(ctx context.Context) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UninstallLocal", ctx)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UninstallLocal indicates an expected call of UninstallLocal.
 func (mr *MockStackInstallerMockRecorder) UninstallLocal(ctx interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UninstallLocal", reflect.TypeOf((*MockStackInstaller)(nil).UninstallLocal), ctx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Upgrade mocks base method.
 func (m *MockStackInstaller) Upgrade(arg0 context.Context, arg1 v1alpha1.TinkerbellBundle, tinkerbellIP, kubeconfig, hookOverride string, opts ...stack.InstallOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, tinkerbellIP, kubeconfig, hookOverride}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Upgrade", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Upgrade indicates an expected call of Upgrade.
 func (mr *MockStackInstallerMockRecorder) Upgrade(arg0, arg1, tinkerbellIP, kubeconfig, hookOverride interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, tinkerbellIP, kubeconfig, hookOverride}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Upgrade", reflect.TypeOf((*MockStackInstaller)(nil).Upgrade), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpgradeInstallCRDs mocks base method.
 func (m *MockStackInstaller) UpgradeInstallCRDs(ctx context.Context, bundle v1alpha1.TinkerbellBundle, kubeconfig string, opts ...stack.InstallOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, bundle, kubeconfig}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "UpgradeInstallCRDs", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpgradeInstallCRDs indicates an expected call of UpgradeInstallCRDs.
 func (mr *MockStackInstallerMockRecorder) UpgradeInstallCRDs(ctx, bundle, kubeconfig interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, bundle, kubeconfig}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpgradeInstallCRDs", reflect.TypeOf((*MockStackInstaller)(nil).UpgradeInstallCRDs), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpgradeLegacy mocks base method.
 func (m *MockStackInstaller) UpgradeLegacy(ctx context.Context, bundle v1alpha1.TinkerbellBundle, kubeconfig string, opts ...stack.InstallOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, bundle, kubeconfig}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "UpgradeLegacy", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpgradeLegacy indicates an expected call of UpgradeLegacy.
 func (mr *MockStackInstallerMockRecorder) UpgradeLegacy(ctx, bundle, kubeconfig interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, bundle, kubeconfig}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpgradeLegacy", reflect.TypeOf((*MockStackInstaller)(nil).UpgradeLegacy), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }

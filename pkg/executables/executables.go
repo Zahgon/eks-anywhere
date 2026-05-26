@@ -3,15 +3,9 @@ package executables
 import (
 	"bytes"
 	"context"
-	"errors"
-	"fmt"
-	"os"
-	"os/exec"
-	"strings"
 
 	"github.com/aws/eks-anywhere/pkg/config"
 	"github.com/aws/eks-anywhere/pkg/constants"
-	"github.com/aws/eks-anywhere/pkg/logger"
 	"github.com/aws/eks-anywhere/pkg/providers/cloudstack/decoder"
 )
 
@@ -53,83 +47,38 @@ type Executable interface {
 }
 
 // this should only be called through the executables.builder.
-func NewExecutable(cli string) Executable {
-	return &executable{
-		cli: cli,
-	}
-}
+func NewExecutable(cli string) Executable { _ = "STUB: not implemented"; return *new(Executable) }
 
 func (e *executable) Execute(ctx context.Context, args ...string) (stdout bytes.Buffer, err error) {
-	return e.Command(ctx, args...).Run()
+	_ = "STUB: not implemented"
+	return *new(bytes.Buffer), nil
 }
 
 func (e *executable) ExecuteWithStdin(ctx context.Context, in []byte, args ...string) (stdout bytes.Buffer, err error) {
-	return e.Command(ctx, args...).WithStdIn(in).Run()
+	_ = "STUB: not implemented"
+	return *new(bytes.Buffer), nil
 }
 
 func (e *executable) ExecuteWithEnv(ctx context.Context, envs map[string]string, args ...string) (stdout bytes.Buffer, err error) {
-	return e.Command(ctx, args...).WithEnvVars(envs).Run()
+	_ = "STUB: not implemented"
+	return *new(bytes.Buffer), nil
 }
 
 func (e *executable) Command(ctx context.Context, args ...string) *Command {
-	return NewCommand(ctx, e, args...)
-}
-
-func (e *executable) Run(cmd *Command) (stdout bytes.Buffer, err error) {
-	for k, v := range cmd.envVars {
-		os.Setenv(k, v)
-	}
-	return execute(cmd.ctx, e.cli, cmd.stdIn, cmd.envVars, cmd.args...)
-}
-
-func (e *executable) Close(ctx context.Context) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func RedactCreds(cmd string, envMap map[string]string) string {
-	redactedEnvs := []string{}
-	for _, redactedEnvKey := range redactedEnvKeys {
-		if env, found := os.LookupEnv(redactedEnvKey); found && env != "" {
-			redactedEnvs = append(redactedEnvs, env)
-		} else if env, found := envMap[redactedEnvKey]; found && env != "" {
-			redactedEnvs = append(redactedEnvs, env)
-		}
-	}
-
-	for _, redactedEnv := range redactedEnvs {
-		cmd = strings.ReplaceAll(cmd, redactedEnv, redactMask)
-	}
-	return cmd
+func (e *executable) Run(cmd *Command) (stdout bytes.Buffer, err error) {
+	_ = "STUB: not implemented"
+	return *new(bytes.Buffer), nil
 }
 
-func execute(ctx context.Context, cli string, in []byte, envVars map[string]string, args ...string) (stdout bytes.Buffer, err error) {
-	var stderr bytes.Buffer
-	cmd := exec.CommandContext(ctx, cli, args...)
-	logger.V(6).Info("Executing command", "cmd", RedactCreds(cmd.String(), envVars))
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-	if len(in) != 0 {
-		cmd.Stdin = bytes.NewReader(in)
-	}
+func (e *executable) Close(ctx context.Context) error { _ = "STUB: not implemented"; return nil }
 
-	err = cmd.Run()
-	if err != nil {
-		if stderr.Len() > 0 {
-			if logger.MaxLogging() {
-				logger.V(logger.MaxLogLevel).Info(cli, "stderr", stderr.String())
-			}
-			return stdout, errors.New(stderr.String())
-		} else {
-			if !logger.MaxLogging() {
-				logger.V(8).Info(cli, "stdout", stdout.String())
-				logger.V(8).Info(cli, "stderr", stderr.String())
-			}
-			return stdout, errors.New(fmt.Sprint(err))
-		}
-	}
-	if !logger.MaxLogging() {
-		logger.V(8).Info(cli, "stdout", stdout.String())
-		logger.V(8).Info(cli, "stderr", stderr.String())
-	}
-	return stdout, nil
+func RedactCreds(cmd string, envMap map[string]string) string { _ = "STUB: not implemented"; return "" }
+
+func execute(ctx context.Context, cli string, in []byte, envVars map[string]string, args ...string) (stdout bytes.Buffer, err error) {
+	_ = "STUB: not implemented"
+	return *new(bytes.Buffer), nil
 }

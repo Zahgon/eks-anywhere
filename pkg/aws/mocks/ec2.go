@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	ec2 "github.com/aws/aws-sdk-go-v2/service/ec2"
 	gomock "github.com/golang/mock/gomock"
@@ -25,92 +24,61 @@ type MockEC2ClientMockRecorder struct {
 
 // NewMockEC2Client creates a new mock instance.
 func NewMockEC2Client(ctrl *gomock.Controller) *MockEC2Client {
-	mock := &MockEC2Client{ctrl: ctrl}
-	mock.recorder = &MockEC2ClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockEC2Client) EXPECT() *MockEC2ClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// DescribeImages mocks base method.
+	return nil
 }
 
-// DescribeImages mocks base method.
 func (m *MockEC2Client) DescribeImages(ctx context.Context, params *ec2.DescribeImagesInput, optFns ...func(*ec2.Options)) (*ec2.DescribeImagesOutput, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, params}
-	for _, a := range optFns {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "DescribeImages", varargs...)
-	ret0, _ := ret[0].(*ec2.DescribeImagesOutput)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // DescribeImages indicates an expected call of DescribeImages.
 func (mr *MockEC2ClientMockRecorder) DescribeImages(ctx, params interface{}, optFns ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, params}, optFns...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeImages", reflect.TypeOf((*MockEC2Client)(nil).DescribeImages), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DescribeInstanceTypes mocks base method.
 func (m *MockEC2Client) DescribeInstanceTypes(ctx context.Context, params *ec2.DescribeInstanceTypesInput, optFns ...func(*ec2.Options)) (*ec2.DescribeInstanceTypesOutput, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, params}
-	for _, a := range optFns {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "DescribeInstanceTypes", varargs...)
-	ret0, _ := ret[0].(*ec2.DescribeInstanceTypesOutput)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // DescribeInstanceTypes indicates an expected call of DescribeInstanceTypes.
 func (mr *MockEC2ClientMockRecorder) DescribeInstanceTypes(ctx, params interface{}, optFns ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, params}, optFns...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeInstanceTypes", reflect.TypeOf((*MockEC2Client)(nil).DescribeInstanceTypes), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DescribeKeyPairs mocks base method.
 func (m *MockEC2Client) DescribeKeyPairs(ctx context.Context, params *ec2.DescribeKeyPairsInput, optFns ...func(*ec2.Options)) (*ec2.DescribeKeyPairsOutput, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, params}
-	for _, a := range optFns {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "DescribeKeyPairs", varargs...)
-	ret0, _ := ret[0].(*ec2.DescribeKeyPairsOutput)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // DescribeKeyPairs indicates an expected call of DescribeKeyPairs.
 func (mr *MockEC2ClientMockRecorder) DescribeKeyPairs(ctx, params interface{}, optFns ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, params}, optFns...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeKeyPairs", reflect.TypeOf((*MockEC2Client)(nil).DescribeKeyPairs), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ImportKeyPair mocks base method.
 func (m *MockEC2Client) ImportKeyPair(ctx context.Context, params *ec2.ImportKeyPairInput, optFns ...func(*ec2.Options)) (*ec2.ImportKeyPairOutput, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, params}
-	for _, a := range optFns {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "ImportKeyPair", varargs...)
-	ret0, _ := ret[0].(*ec2.ImportKeyPairOutput)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ImportKeyPair indicates an expected call of ImportKeyPair.
 func (mr *MockEC2ClientMockRecorder) ImportKeyPair(ctx, params interface{}, optFns ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, params}, optFns...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ImportKeyPair", reflect.TypeOf((*MockEC2Client)(nil).ImportKeyPair), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }

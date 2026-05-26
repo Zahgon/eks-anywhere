@@ -2,12 +2,10 @@ package cloudstack
 
 import (
 	"context"
-	"fmt"
 
 	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	"github.com/aws/eks-anywhere/pkg/cluster"
 	"github.com/aws/eks-anywhere/pkg/filewriter"
-	"github.com/aws/eks-anywhere/pkg/networkutils"
 	"github.com/aws/eks-anywhere/pkg/providers/cloudstack/decoder"
 	"github.com/aws/eks-anywhere/pkg/types"
 )
@@ -39,19 +37,12 @@ type ProviderValidator interface {
 
 // NewValidatorFactory initializes a factory for the CloudStack provider validator.
 func NewValidatorFactory(builder CmkBuilder, writer filewriter.FileWriter, skipIPCheck bool) ValidatorFactory {
-	return ValidatorFactory{
-		builder:     builder,
-		writer:      writer,
-		skipIPCheck: skipIPCheck,
-	}
+	_ = "STUB: not implemented"
+	return *new(ValidatorFactory)
 }
 
 // Get returns a validator for a particular cloudstack exec config.
 func (r ValidatorFactory) Get(execConfig *decoder.CloudStackExecConfig) (ProviderValidator, error) {
-	cmk, err := r.builder.BuildCloudstackClient(r.writer, execConfig)
-	if err != nil {
-		return nil, fmt.Errorf("building cmk executable: %v", err)
-	}
-
-	return NewValidator(cmk, &networkutils.DefaultNetClient{}, r.skipIPCheck), nil
+	_ = "STUB: not implemented"
+	return *new(ProviderValidator), nil
 }

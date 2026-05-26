@@ -1,13 +1,9 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
-
-	"github.com/aws/eks-anywhere/pkg/dependencies"
-	"github.com/aws/eks-anywhere/pkg/providers/vsphere/setupuser"
 )
 
 type vSphereSetupUserOptions struct {
@@ -40,43 +36,8 @@ func init() {
 }
 
 func (setupUserOptions *vSphereSetupUserOptions) setupUser(cmd *cobra.Command, _ []string) error {
-	ctx := cmd.Context()
-
-	if setupUserOptions.force && setupUserOptions.password != "" {
-		return fmt.Errorf("--password and --force are mutually exclusive. --force may only be run on an existing user")
-	}
-
-	cfg, err := setupuser.GenerateConfig(ctx, setupUserOptions.fileName)
-	if err != nil {
-		return err
-	}
-
-	err = setupuser.SetupGOVCEnv(ctx, cfg)
-	if err != nil {
-		return err
-	}
-	deps, err := dependencies.NewFactory().WithGovc().Build(ctx)
-	if err != nil {
-		return err
-	}
-	defer close(ctx, deps)
-
-	// when using the force flag we assume the user already exists
-	if !setupUserOptions.force {
-		err = deps.Govc.CreateUser(ctx, cfg.Spec.Username, setupUserOptions.password)
-		if err != nil {
-			return err
-		}
-		err = setupuser.ValidateVSphereObjects(ctx, cfg, deps.Govc)
-		if err != nil {
-			return err
-		}
-	}
-
-	err = setupuser.Run(ctx, cfg, deps.Govc)
-	if err != nil {
-		return err
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// when using the force flag we assume the user already exists

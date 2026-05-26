@@ -4,15 +4,8 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"time"
 
 	"github.com/spf13/cobra"
-
-	"github.com/aws/eks-anywhere/pkg/cluster"
-	"github.com/aws/eks-anywhere/pkg/dependencies"
-	"github.com/aws/eks-anywhere/pkg/diagnostics"
-	"github.com/aws/eks-anywhere/pkg/kubeconfig"
-	"github.com/aws/eks-anywhere/pkg/version"
 )
 
 type createSupportBundleOptions struct {
@@ -62,90 +55,18 @@ func init() {
 }
 
 func (csbo *createSupportBundleOptions) validate(ctx context.Context) error {
-	clusterConfig, err := commonValidation(ctx, csbo.fileName)
-	if err != nil {
-		return err
-	}
-
-	kubeconfigPath := kubeconfig.FromClusterName(clusterConfig.Name)
-	if err := kubeconfig.ValidateFilename(kubeconfigPath); err != nil {
-		return err
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (csbo *createSupportBundleOptions) createBundle(ctx context.Context, since, sinceTime, bundleConfig string, bundlesManifest string, auditLogs bool) error {
-	var opts []cluster.FileSpecBuilderOpt
-	if bundlesManifest != "" {
-		opts = append(opts, cluster.WithOverrideBundlesManifest(bundlesManifest))
-	}
-	clusterSpec, err := readAndValidateClusterSpec(csbo.fileName, version.Get(), opts...)
-	if err != nil {
-		return fmt.Errorf("unable to get cluster config from file: %v", err)
-	}
-
-	deps, err := dependencies.ForSpec(clusterSpec).
-		WithProvider(csbo.fileName, clusterSpec.Cluster, cc.skipIpCheck, csbo.hardwareFileName, false, csbo.tinkerbellBootstrapIP, map[string]bool{}, nil).
-		WithDiagnosticBundleFactory().
-		Build(ctx)
-	if err != nil {
-		return err
-	}
-	defer close(ctx, deps)
-
-	supportBundle, err := deps.DignosticCollectorFactory.DiagnosticBundle(clusterSpec, deps.Provider, getKubeconfigPath(clusterSpec.Cluster.Name, csbo.wConfig), bundleConfig, auditLogs)
-	if err != nil {
-		return fmt.Errorf("failed to parse collector: %v", err)
-	}
-
-	var sinceTimeValue *time.Time
-	sinceTimeValue, err = diagnostics.ParseTimeOptions(since, sinceTime)
-	if err != nil {
-		return fmt.Errorf("failed parse since time: %v", err)
-	}
-
-	err = supportBundle.CollectAndAnalyze(ctx, sinceTimeValue)
-	if err != nil {
-		return fmt.Errorf("collecting and analyzing bundle: %v", err)
-	}
-
-	err = supportBundle.PrintAnalysis()
-	if err != nil {
-		return fmt.Errorf("printing analysis")
-	}
-
-	// Also collect management cluster bundle for workload cluster debugging
-	// This provides CAPI resources and controller logs which are essential for debugging
-	if clusterSpec.Cluster.IsSelfManaged() {
-		// This is a self-managed cluster, skip management cluster bundle collection
-		return nil
-	}
-
-	log.Println("Collecting management cluster support bundle for additional debugging information")
-	managementClusterName := clusterSpec.Cluster.ManagedBy()
-
-	managementKubeconfigPath := kubeconfig.FromClusterName(managementClusterName)
-
-	// Check if management cluster kubeconfig exists
-	if err := kubeconfig.ValidateFilename(managementKubeconfigPath); err != nil {
-		log.Printf("Warning: Management cluster kubeconfig not accessible, skipping management cluster bundle collection: %v (managementCluster: %s)\n", err, managementClusterName)
-	} else {
-		managementBundle, err := deps.DignosticCollectorFactory.DiagnosticBundleManagementCluster(clusterSpec, managementKubeconfigPath)
-		if err != nil {
-			log.Printf("Warning: Failed to create management cluster diagnostic bundle: %v (managementCluster: %s)\n", err, managementClusterName)
-		} else {
-			err = managementBundle.CollectAndAnalyze(ctx, sinceTimeValue)
-			if err != nil {
-				log.Printf("Warning: Failed to collect management cluster bundle: %v (managementCluster: %s)\n", err, managementClusterName)
-			} else {
-				err = managementBundle.PrintAnalysis()
-				if err != nil {
-					log.Printf("Warning: Failed to print management cluster analysis: %v (managementCluster: %s)\n", err, managementClusterName)
-				}
-			}
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// Also collect management cluster bundle for workload cluster debugging
+// This provides CAPI resources and controller logs which are essential for debugging
+
+// This is a self-managed cluster, skip management cluster bundle collection
+
+// Check if management cluster kubeconfig exists

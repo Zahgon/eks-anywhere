@@ -18,32 +18,29 @@ var restartContainerdCommands = []string{
 
 // CreateContainerdConfigFileInKubeadmControlPlane adds the prekubeadm command to create containerd config file in kubeadmControlPlane if registry mirror config exists.
 func CreateContainerdConfigFileInKubeadmControlPlane(kcp *controlplanev1beta2.KubeadmControlPlane, cluster *v1alpha1.Cluster) {
-	if cluster.Spec.RegistryMirrorConfiguration != nil {
-		kcp.Spec.KubeadmConfigSpec.PreKubeadmCommands = append(kcp.Spec.KubeadmConfigSpec.PreKubeadmCommands, buildContainerdConfigCommands...)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // CreateContainerdConfigFileInKubeadmConfigTemplate adds the prekubeadm command to create containerd config file in kubeadmConfigTemplate if registry mirror config exists.
 func CreateContainerdConfigFileInKubeadmConfigTemplate(kct *bootstrapv1beta2.KubeadmConfigTemplate, cluster *v1alpha1.Cluster) {
-	if cluster.Spec.RegistryMirrorConfiguration != nil {
-		kct.Spec.Template.Spec.PreKubeadmCommands = append(kct.Spec.Template.Spec.PreKubeadmCommands, buildContainerdConfigCommands...)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // RestartContainerdInKubeadmControlPlane adds the prekubeadm command to restart containerd daemon in kubeadmControlPlane if registry mirror or proxy config exists.
 func RestartContainerdInKubeadmControlPlane(kcp *controlplanev1beta2.KubeadmControlPlane, cluster *v1alpha1.Cluster) {
-	if restartContainerdNeeded(cluster) {
-		kcp.Spec.KubeadmConfigSpec.PreKubeadmCommands = append(kcp.Spec.KubeadmConfigSpec.PreKubeadmCommands, restartContainerdCommands...)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // RestartContainerdInKubeadmConfigTemplate adds the prekubeadm command to restart containerd daemon in kubeadmConfigTemplate if registry mirror or proxy config exists.
 func RestartContainerdInKubeadmConfigTemplate(kct *bootstrapv1beta2.KubeadmConfigTemplate, cluster *v1alpha1.Cluster) {
-	if restartContainerdNeeded(cluster) {
-		kct.Spec.Template.Spec.PreKubeadmCommands = append(kct.Spec.Template.Spec.PreKubeadmCommands, restartContainerdCommands...)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func restartContainerdNeeded(cluster *v1alpha1.Cluster) bool {
-	return cluster.Spec.RegistryMirrorConfiguration != nil || cluster.Spec.ProxyConfiguration != nil
+	_ = "STUB: not implemented"
+	return false
 }

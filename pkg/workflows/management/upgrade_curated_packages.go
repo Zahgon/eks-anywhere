@@ -9,23 +9,18 @@ import (
 type upgradeCuratedPackagesTask struct{}
 
 func (s *upgradeCuratedPackagesTask) Run(ctx context.Context, commandContext *task.CommandContext) task.Task {
-	if commandContext.CurrentClusterSpec.Cluster.Spec.RegistryMirrorConfiguration.Equal(commandContext.ClusterSpec.Cluster.Spec.RegistryMirrorConfiguration) {
-		return nil
-	}
-
-	commandContext.PackageManager.UpgradeCuratedPackages(ctx)
-
-	return nil
+	_ = "STUB: not implemented"
+	return *new(task.Task)
 }
 
-func (s *upgradeCuratedPackagesTask) Name() string {
-	return "upgrade-curated-packages"
-}
+func (s *upgradeCuratedPackagesTask) Name() string { _ = "STUB: not implemented"; return "" }
 
 func (s *upgradeCuratedPackagesTask) Restore(_ context.Context, _ *task.CommandContext, _ *task.CompletedTask) (task.Task, error) {
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(task.Task), nil
 }
 
 func (s *upgradeCuratedPackagesTask) Checkpoint() *task.CompletedTask {
+	_ = "STUB: not implemented"
 	return nil
 }

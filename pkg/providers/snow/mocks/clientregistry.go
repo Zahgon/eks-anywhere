@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	snow "github.com/aws/eks-anywhere/pkg/providers/snow"
 	gomock "github.com/golang/mock/gomock"
@@ -25,27 +24,25 @@ type MockClientRegistryMockRecorder struct {
 
 // NewMockClientRegistry creates a new mock instance.
 func NewMockClientRegistry(ctrl *gomock.Controller) *MockClientRegistry {
-	mock := &MockClientRegistry{ctrl: ctrl}
-	mock.recorder = &MockClientRegistryMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockClientRegistry) EXPECT() *MockClientRegistryMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Get mocks base method.
+	return nil
 }
 
-// Get mocks base method.
 func (m *MockClientRegistry) Get(ctx context.Context) (snow.AwsClientMap, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Get", ctx)
-	ret0, _ := ret[0].(snow.AwsClientMap)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(snow.AwsClientMap), nil
 }
 
 // Get indicates an expected call of Get.
 func (mr *MockClientRegistryMockRecorder) Get(ctx interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockClientRegistry)(nil).Get), ctx)
+	_ = "STUB: not implemented"
+	return nil
 }

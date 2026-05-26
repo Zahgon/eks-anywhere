@@ -14,28 +14,16 @@ type Result struct {
 }
 
 // ToCtrlResult converts Result to a controller-runtime result.
-func (r Result) ToCtrlResult() ctrl.Result {
-	if r.Result == nil {
-		return ctrl.Result{}
-	}
-
-	return *r.Result
-}
+func (r Result) ToCtrlResult() ctrl.Result { _ = "STUB: not implemented"; return *new(ctrl.Result) }
 
 // Return evaluates the intent of a Result to interrupt the reconciliation
 // process or not.
-func (r *Result) Return() bool {
-	return r.Result != nil
-}
+func (r *Result) Return() bool { _ = "STUB: not implemented"; return false }
 
 // ResultWithReturn creates a new Result that interrupts the reconciliation
 // without requeueing.
-func ResultWithReturn() Result {
-	return Result{Result: &ctrl.Result{}}
-}
+func ResultWithReturn() Result { _ = "STUB: not implemented"; return *new(Result) }
 
 // ResultWithReturn creates a new Result that requeues the request after
 // the provided duration.
-func ResultWithRequeue(after time.Duration) Result {
-	return Result{Result: &ctrl.Result{RequeueAfter: after}}
-}
+func ResultWithRequeue(after time.Duration) Result { _ = "STUB: not implemented"; return *new(Result) }

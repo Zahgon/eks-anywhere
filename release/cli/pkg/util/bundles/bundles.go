@@ -15,57 +15,20 @@
 package bundles
 
 import (
-	"fmt"
-	"sort"
-
-	"github.com/pkg/errors"
-
-	assettypes "github.com/aws/eks-anywhere/release/cli/pkg/assets/types"
-	"github.com/aws/eks-anywhere/release/cli/pkg/constants"
-	"github.com/aws/eks-anywhere/release/cli/pkg/filereader"
-	"github.com/aws/eks-anywhere/release/cli/pkg/images"
 	releasetypes "github.com/aws/eks-anywhere/release/cli/pkg/types"
 )
 
 func SortArtifactsMap(m map[string][]releasetypes.Artifact) []string {
-	keys := make([]string, 0, len(m))
-	for k := range m {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-
-	return keys
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func getKubeRbacProxyImageAttributes(r *releasetypes.ReleaseConfig) (string, string, map[string]string, error) {
-	gitTag, err := filereader.ReadGitTag(constants.KubeRbacProxyProjectPath, r.BuildRepoSource, r.BuildRepoBranchName)
-	if err != nil {
-		return "", "", nil, errors.Cause(err)
-	}
-	name := "kube-rbac-proxy"
-	repoName := fmt.Sprintf("brancz/%s", name)
-	tagOptions := map[string]string{
-		"gitTag":      gitTag,
-		"projectPath": constants.KubeRbacProxyProjectPath,
-	}
-
-	return name, repoName, tagOptions, nil
+	_ = "STUB: not implemented"
+	return "", "", nil, nil
 }
 
 func GetKubeRbacProxyImageTagOverride(r *releasetypes.ReleaseConfig) (releasetypes.ImageTagOverride, error) {
-	name, repoName, tagOptions, err := getKubeRbacProxyImageAttributes(r)
-	if err != nil {
-		return releasetypes.ImageTagOverride{}, errors.Cause(err)
-	}
-
-	releaseImageUri, err := images.GetReleaseImageURI(r, name, repoName, tagOptions, assettypes.ImageTagConfiguration{}, false, false)
-	if err != nil {
-		return releasetypes.ImageTagOverride{}, errors.Cause(err)
-	}
-	imageTagOverride := releasetypes.ImageTagOverride{
-		Repository: repoName,
-		ReleaseUri: releaseImageUri,
-	}
-
-	return imageTagOverride, nil
+	_ = "STUB: not implemented"
+	return *new(releasetypes.ImageTagOverride), nil
 }

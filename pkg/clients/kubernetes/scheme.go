@@ -41,11 +41,6 @@ var schemeAdders = []schemeAdder{
 }
 
 func addToScheme(scheme *runtime.Scheme, schemeAdders ...schemeAdder) error {
-	for _, adder := range schemeAdders {
-		if err := adder(scheme); err != nil {
-			return err
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }

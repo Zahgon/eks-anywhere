@@ -2,8 +2,6 @@ package docker
 
 import (
 	"context"
-
-	"github.com/aws/eks-anywhere/pkg/logger"
 )
 
 // ImageDiskSource implements the ImageSource interface, loading images and tags from
@@ -14,16 +12,14 @@ type ImageDiskSource struct {
 }
 
 func NewDiskSource(client ImageDiskLoader, file string) *ImageDiskSource {
-	return &ImageDiskSource{
-		client: client,
-		file:   file,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Load reads images and tags from a tarbal into the local docker cache.
 func (s *ImageDiskSource) Load(ctx context.Context, images ...string) error {
-	logger.Info("Loading images from disk")
-	return s.client.LoadFromFile(ctx, s.file)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ImageDiskDestination implements the ImageDestination interface, writing images and tags from
@@ -34,14 +30,12 @@ type ImageDiskDestination struct {
 }
 
 func NewDiskDestination(client ImageDiskWriter, file string) *ImageDiskDestination {
-	return &ImageDiskDestination{
-		client: client,
-		file:   file,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Write creates a tarball including images and tags from the the local docker cache.
 func (s *ImageDiskDestination) Write(ctx context.Context, images ...string) error {
-	logger.Info("Writing images to disk")
-	return s.client.SaveToFile(ctx, s.file, images...)
+	_ = "STUB: not implemented"
+	return nil
 }

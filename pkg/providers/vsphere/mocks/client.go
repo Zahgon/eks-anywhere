@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	v1alpha1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	executables "github.com/aws/eks-anywhere/pkg/executables"
@@ -32,586 +31,483 @@ type MockProviderGovcClientMockRecorder struct {
 
 // NewMockProviderGovcClient creates a new mock instance.
 func NewMockProviderGovcClient(ctrl *gomock.Controller) *MockProviderGovcClient {
-	mock := &MockProviderGovcClient{ctrl: ctrl}
-	mock.recorder = &MockProviderGovcClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockProviderGovcClient) EXPECT() *MockProviderGovcClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AddTag mocks base method.
+	return nil
 }
 
-// AddTag mocks base method.
 func (m *MockProviderGovcClient) AddTag(arg0 context.Context, arg1, arg2 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AddTag", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AddTag indicates an expected call of AddTag.
 func (mr *MockProviderGovcClientMockRecorder) AddTag(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddTag", reflect.TypeOf((*MockProviderGovcClient)(nil).AddTag), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AddUserToGroup mocks base method.
 func (m *MockProviderGovcClient) AddUserToGroup(arg0 context.Context, arg1, arg2 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AddUserToGroup", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AddUserToGroup indicates an expected call of AddUserToGroup.
 func (mr *MockProviderGovcClientMockRecorder) AddUserToGroup(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddUserToGroup", reflect.TypeOf((*MockProviderGovcClient)(nil).AddUserToGroup), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ConfigureCertThumbprint mocks base method.
 func (m *MockProviderGovcClient) ConfigureCertThumbprint(arg0 context.Context, arg1, arg2 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ConfigureCertThumbprint", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ConfigureCertThumbprint indicates an expected call of ConfigureCertThumbprint.
 func (mr *MockProviderGovcClientMockRecorder) ConfigureCertThumbprint(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ConfigureCertThumbprint", reflect.TypeOf((*MockProviderGovcClient)(nil).ConfigureCertThumbprint), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateCategoryForVM mocks base method.
 func (m *MockProviderGovcClient) CreateCategoryForVM(arg0 context.Context, arg1 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateCategoryForVM", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateCategoryForVM indicates an expected call of CreateCategoryForVM.
 func (mr *MockProviderGovcClientMockRecorder) CreateCategoryForVM(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateCategoryForVM", reflect.TypeOf((*MockProviderGovcClient)(nil).CreateCategoryForVM), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateGroup mocks base method.
 func (m *MockProviderGovcClient) CreateGroup(arg0 context.Context, arg1 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateGroup", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateGroup indicates an expected call of CreateGroup.
 func (mr *MockProviderGovcClientMockRecorder) CreateGroup(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateGroup", reflect.TypeOf((*MockProviderGovcClient)(nil).CreateGroup), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateLibrary mocks base method.
 func (m *MockProviderGovcClient) CreateLibrary(arg0 context.Context, arg1, arg2 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateLibrary", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateLibrary indicates an expected call of CreateLibrary.
 func (mr *MockProviderGovcClientMockRecorder) CreateLibrary(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateLibrary", reflect.TypeOf((*MockProviderGovcClient)(nil).CreateLibrary), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateRole mocks base method.
 func (m *MockProviderGovcClient) CreateRole(arg0 context.Context, arg1 string, arg2 []string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateRole", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateRole indicates an expected call of CreateRole.
 func (mr *MockProviderGovcClientMockRecorder) CreateRole(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateRole", reflect.TypeOf((*MockProviderGovcClient)(nil).CreateRole), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateTag mocks base method.
 func (m *MockProviderGovcClient) CreateTag(arg0 context.Context, arg1, arg2 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateTag", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateTag indicates an expected call of CreateTag.
 func (mr *MockProviderGovcClientMockRecorder) CreateTag(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTag", reflect.TypeOf((*MockProviderGovcClient)(nil).CreateTag), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateUser mocks base method.
 func (m *MockProviderGovcClient) CreateUser(arg0 context.Context, arg1, arg2 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateUser", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateUser indicates an expected call of CreateUser.
 func (mr *MockProviderGovcClientMockRecorder) CreateUser(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUser", reflect.TypeOf((*MockProviderGovcClient)(nil).CreateUser), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DatacenterExists mocks base method.
 func (m *MockProviderGovcClient) DatacenterExists(arg0 context.Context, arg1 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DatacenterExists", arg0, arg1)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // DatacenterExists indicates an expected call of DatacenterExists.
 func (mr *MockProviderGovcClientMockRecorder) DatacenterExists(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DatacenterExists", reflect.TypeOf((*MockProviderGovcClient)(nil).DatacenterExists), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteLibraryElement mocks base method.
 func (m *MockProviderGovcClient) DeleteLibraryElement(arg0 context.Context, arg1 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteLibraryElement", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteLibraryElement indicates an expected call of DeleteLibraryElement.
 func (mr *MockProviderGovcClientMockRecorder) DeleteLibraryElement(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteLibraryElement", reflect.TypeOf((*MockProviderGovcClient)(nil).DeleteLibraryElement), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeployTemplateFromLibrary mocks base method.
 func (m *MockProviderGovcClient) DeployTemplateFromLibrary(arg0 context.Context, arg1, arg2, arg3, arg4, arg5, arg6, arg7 string, arg8 bool) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeployTemplateFromLibrary", arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeployTemplateFromLibrary indicates an expected call of DeployTemplateFromLibrary.
 func (mr *MockProviderGovcClientMockRecorder) DeployTemplateFromLibrary(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeployTemplateFromLibrary", reflect.TypeOf((*MockProviderGovcClient)(nil).DeployTemplateFromLibrary), arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetCertThumbprint mocks base method.
 func (m *MockProviderGovcClient) GetCertThumbprint(arg0 context.Context) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCertThumbprint", arg0)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GetCertThumbprint indicates an expected call of GetCertThumbprint.
 func (mr *MockProviderGovcClientMockRecorder) GetCertThumbprint(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCertThumbprint", reflect.TypeOf((*MockProviderGovcClient)(nil).GetCertThumbprint), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetComputeClusterPath mocks base method.
 func (m *MockProviderGovcClient) GetComputeClusterPath(arg0 context.Context, arg1, arg2 string, arg3 map[string]string) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetComputeClusterPath", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GetComputeClusterPath indicates an expected call of GetComputeClusterPath.
 func (mr *MockProviderGovcClientMockRecorder) GetComputeClusterPath(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetComputeClusterPath", reflect.TypeOf((*MockProviderGovcClient)(nil).GetComputeClusterPath), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetDatastorePath mocks base method.
 func (m *MockProviderGovcClient) GetDatastorePath(arg0 context.Context, arg1, arg2 string, arg3 map[string]string) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetDatastorePath", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GetDatastorePath indicates an expected call of GetDatastorePath.
 func (mr *MockProviderGovcClientMockRecorder) GetDatastorePath(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDatastorePath", reflect.TypeOf((*MockProviderGovcClient)(nil).GetDatastorePath), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetFolderPath mocks base method.
 func (m *MockProviderGovcClient) GetFolderPath(arg0 context.Context, arg1, arg2 string, arg3 map[string]string) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetFolderPath", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GetFolderPath indicates an expected call of GetFolderPath.
 func (mr *MockProviderGovcClientMockRecorder) GetFolderPath(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetFolderPath", reflect.TypeOf((*MockProviderGovcClient)(nil).GetFolderPath), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetHardDiskSize mocks base method.
 func (m *MockProviderGovcClient) GetHardDiskSize(arg0 context.Context, arg1, arg2 string) (map[string]float64, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetHardDiskSize", arg0, arg1, arg2)
-	ret0, _ := ret[0].(map[string]float64)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetHardDiskSize indicates an expected call of GetHardDiskSize.
 func (mr *MockProviderGovcClientMockRecorder) GetHardDiskSize(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetHardDiskSize", reflect.TypeOf((*MockProviderGovcClient)(nil).GetHardDiskSize), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetLibraryElementContentVersion mocks base method.
 func (m *MockProviderGovcClient) GetLibraryElementContentVersion(arg0 context.Context, arg1 string) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetLibraryElementContentVersion", arg0, arg1)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GetLibraryElementContentVersion indicates an expected call of GetLibraryElementContentVersion.
 func (mr *MockProviderGovcClientMockRecorder) GetLibraryElementContentVersion(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLibraryElementContentVersion", reflect.TypeOf((*MockProviderGovcClient)(nil).GetLibraryElementContentVersion), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetResourcePoolInfo mocks base method.
 func (m *MockProviderGovcClient) GetResourcePoolInfo(arg0 context.Context, arg1, arg2 string, arg3 ...string) (map[string]int, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, arg2}
-	for _, a := range arg3 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetResourcePoolInfo", varargs...)
-	ret0, _ := ret[0].(map[string]int)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetResourcePoolInfo indicates an expected call of GetResourcePoolInfo.
 func (mr *MockProviderGovcClientMockRecorder) GetResourcePoolInfo(arg0, arg1, arg2 interface{}, arg3 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, arg2}, arg3...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetResourcePoolInfo", reflect.TypeOf((*MockProviderGovcClient)(nil).GetResourcePoolInfo), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetResourcePoolPath mocks base method.
 func (m *MockProviderGovcClient) GetResourcePoolPath(arg0 context.Context, arg1, arg2 string, arg3 map[string]string) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetResourcePoolPath", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GetResourcePoolPath indicates an expected call of GetResourcePoolPath.
 func (mr *MockProviderGovcClientMockRecorder) GetResourcePoolPath(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetResourcePoolPath", reflect.TypeOf((*MockProviderGovcClient)(nil).GetResourcePoolPath), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetTags mocks base method.
 func (m *MockProviderGovcClient) GetTags(arg0 context.Context, arg1 string) ([]string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetTags", arg0, arg1)
-	ret0, _ := ret[0].([]string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetTags indicates an expected call of GetTags.
 func (mr *MockProviderGovcClientMockRecorder) GetTags(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTags", reflect.TypeOf((*MockProviderGovcClient)(nil).GetTags), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetVMDiskSizeInGB mocks base method.
 func (m *MockProviderGovcClient) GetVMDiskSizeInGB(arg0 context.Context, arg1, arg2 string) (int, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetVMDiskSizeInGB", arg0, arg1, arg2)
-	ret0, _ := ret[0].(int)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // GetVMDiskSizeInGB indicates an expected call of GetVMDiskSizeInGB.
 func (mr *MockProviderGovcClientMockRecorder) GetVMDiskSizeInGB(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetVMDiskSizeInGB", reflect.TypeOf((*MockProviderGovcClient)(nil).GetVMDiskSizeInGB), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetWorkloadAvailableSpace mocks base method.
 func (m *MockProviderGovcClient) GetWorkloadAvailableSpace(arg0 context.Context, arg1 string) (float64, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetWorkloadAvailableSpace", arg0, arg1)
-	ret0, _ := ret[0].(float64)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // GetWorkloadAvailableSpace indicates an expected call of GetWorkloadAvailableSpace.
 func (mr *MockProviderGovcClientMockRecorder) GetWorkloadAvailableSpace(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkloadAvailableSpace", reflect.TypeOf((*MockProviderGovcClient)(nil).GetWorkloadAvailableSpace), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GroupExists mocks base method.
 func (m *MockProviderGovcClient) GroupExists(arg0 context.Context, arg1 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GroupExists", arg0, arg1)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // GroupExists indicates an expected call of GroupExists.
 func (mr *MockProviderGovcClientMockRecorder) GroupExists(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GroupExists", reflect.TypeOf((*MockProviderGovcClient)(nil).GroupExists), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ImportTemplate mocks base method.
 func (m *MockProviderGovcClient) ImportTemplate(arg0 context.Context, arg1, arg2, arg3 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ImportTemplate", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ImportTemplate indicates an expected call of ImportTemplate.
 func (mr *MockProviderGovcClientMockRecorder) ImportTemplate(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ImportTemplate", reflect.TypeOf((*MockProviderGovcClient)(nil).ImportTemplate), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // IsCertSelfSigned mocks base method.
 func (m *MockProviderGovcClient) IsCertSelfSigned(arg0 context.Context) bool {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "IsCertSelfSigned", arg0)
-	ret0, _ := ret[0].(bool)
-	return ret0
+	_ = "STUB: not implemented"
+	return false
 }
 
 // IsCertSelfSigned indicates an expected call of IsCertSelfSigned.
 func (mr *MockProviderGovcClientMockRecorder) IsCertSelfSigned(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsCertSelfSigned", reflect.TypeOf((*MockProviderGovcClient)(nil).IsCertSelfSigned), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // LibraryElementExists mocks base method.
 func (m *MockProviderGovcClient) LibraryElementExists(arg0 context.Context, arg1 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LibraryElementExists", arg0, arg1)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // LibraryElementExists indicates an expected call of LibraryElementExists.
 func (mr *MockProviderGovcClientMockRecorder) LibraryElementExists(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LibraryElementExists", reflect.TypeOf((*MockProviderGovcClient)(nil).LibraryElementExists), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ListCategories mocks base method.
 func (m *MockProviderGovcClient) ListCategories(arg0 context.Context) ([]string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListCategories", arg0)
-	ret0, _ := ret[0].([]string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListCategories indicates an expected call of ListCategories.
 func (mr *MockProviderGovcClientMockRecorder) ListCategories(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListCategories", reflect.TypeOf((*MockProviderGovcClient)(nil).ListCategories), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ListTags mocks base method.
 func (m *MockProviderGovcClient) ListTags(arg0 context.Context) ([]executables.Tag, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListTags", arg0)
-	ret0, _ := ret[0].([]executables.Tag)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListTags indicates an expected call of ListTags.
 func (mr *MockProviderGovcClientMockRecorder) ListTags(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTags", reflect.TypeOf((*MockProviderGovcClient)(nil).ListTags), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NetworkExists mocks base method.
 func (m *MockProviderGovcClient) NetworkExists(arg0 context.Context, arg1 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "NetworkExists", arg0, arg1)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // NetworkExists indicates an expected call of NetworkExists.
 func (mr *MockProviderGovcClientMockRecorder) NetworkExists(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NetworkExists", reflect.TypeOf((*MockProviderGovcClient)(nil).NetworkExists), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RoleExists mocks base method.
 func (m *MockProviderGovcClient) RoleExists(arg0 context.Context, arg1 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RoleExists", arg0, arg1)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // RoleExists indicates an expected call of RoleExists.
 func (mr *MockProviderGovcClientMockRecorder) RoleExists(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RoleExists", reflect.TypeOf((*MockProviderGovcClient)(nil).RoleExists), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SearchTemplate mocks base method.
 func (m *MockProviderGovcClient) SearchTemplate(arg0 context.Context, arg1, arg2 string) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SearchTemplate", arg0, arg1, arg2)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // SearchTemplate indicates an expected call of SearchTemplate.
 func (mr *MockProviderGovcClientMockRecorder) SearchTemplate(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchTemplate", reflect.TypeOf((*MockProviderGovcClient)(nil).SearchTemplate), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetGroupRoleOnObject mocks base method.
 func (m *MockProviderGovcClient) SetGroupRoleOnObject(arg0 context.Context, arg1, arg2, arg3, arg4 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SetGroupRoleOnObject", arg0, arg1, arg2, arg3, arg4)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetGroupRoleOnObject indicates an expected call of SetGroupRoleOnObject.
 func (mr *MockProviderGovcClientMockRecorder) SetGroupRoleOnObject(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetGroupRoleOnObject", reflect.TypeOf((*MockProviderGovcClient)(nil).SetGroupRoleOnObject), arg0, arg1, arg2, arg3, arg4)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // TemplateHasSnapshot mocks base method.
 func (m *MockProviderGovcClient) TemplateHasSnapshot(arg0 context.Context, arg1 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "TemplateHasSnapshot", arg0, arg1)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // TemplateHasSnapshot indicates an expected call of TemplateHasSnapshot.
 func (mr *MockProviderGovcClientMockRecorder) TemplateHasSnapshot(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TemplateHasSnapshot", reflect.TypeOf((*MockProviderGovcClient)(nil).TemplateHasSnapshot), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UserExists mocks base method.
 func (m *MockProviderGovcClient) UserExists(arg0 context.Context, arg1 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UserExists", arg0, arg1)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // UserExists indicates an expected call of UserExists.
 func (mr *MockProviderGovcClientMockRecorder) UserExists(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UserExists", reflect.TypeOf((*MockProviderGovcClient)(nil).UserExists), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateFailureDomainConfig mocks base method.
 func (m *MockProviderGovcClient) ValidateFailureDomainConfig(arg0 context.Context, arg1 *v1alpha1.VSphereDatacenterConfig, arg2 *v1alpha1.FailureDomain) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ValidateFailureDomainConfig", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateFailureDomainConfig indicates an expected call of ValidateFailureDomainConfig.
 func (mr *MockProviderGovcClientMockRecorder) ValidateFailureDomainConfig(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateFailureDomainConfig", reflect.TypeOf((*MockProviderGovcClient)(nil).ValidateFailureDomainConfig), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateVCenterAuthentication mocks base method.
 func (m *MockProviderGovcClient) ValidateVCenterAuthentication(arg0 context.Context) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ValidateVCenterAuthentication", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateVCenterAuthentication indicates an expected call of ValidateVCenterAuthentication.
 func (mr *MockProviderGovcClientMockRecorder) ValidateVCenterAuthentication(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateVCenterAuthentication", reflect.TypeOf((*MockProviderGovcClient)(nil).ValidateVCenterAuthentication), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateVCenterConnection mocks base method.
 func (m *MockProviderGovcClient) ValidateVCenterConnection(arg0 context.Context, arg1 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ValidateVCenterConnection", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateVCenterConnection indicates an expected call of ValidateVCenterConnection.
 func (mr *MockProviderGovcClientMockRecorder) ValidateVCenterConnection(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateVCenterConnection", reflect.TypeOf((*MockProviderGovcClient)(nil).ValidateVCenterConnection), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateVCenterSetupMachineConfig mocks base method.
 func (m *MockProviderGovcClient) ValidateVCenterSetupMachineConfig(arg0 context.Context, arg1 *v1alpha1.VSphereDatacenterConfig, arg2 *v1alpha1.VSphereMachineConfig, arg3 *bool) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ValidateVCenterSetupMachineConfig", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateVCenterSetupMachineConfig indicates an expected call of ValidateVCenterSetupMachineConfig.
 func (mr *MockProviderGovcClientMockRecorder) ValidateVCenterSetupMachineConfig(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateVCenterSetupMachineConfig", reflect.TypeOf((*MockProviderGovcClient)(nil).ValidateVCenterSetupMachineConfig), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockProviderKubectlClient is a mock of ProviderKubectlClient interface.
@@ -627,295 +523,231 @@ type MockProviderKubectlClientMockRecorder struct {
 
 // NewMockProviderKubectlClient creates a new mock instance.
 func NewMockProviderKubectlClient(ctrl *gomock.Controller) *MockProviderKubectlClient {
-	mock := &MockProviderKubectlClient{ctrl: ctrl}
-	mock.recorder = &MockProviderKubectlClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockProviderKubectlClient) EXPECT() *MockProviderKubectlClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ApplyKubeSpecFromBytes mocks base method.
+	return nil
 }
 
-// ApplyKubeSpecFromBytes mocks base method.
 func (m *MockProviderKubectlClient) ApplyKubeSpecFromBytes(arg0 context.Context, arg1 *types.Cluster, arg2 []byte) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ApplyKubeSpecFromBytes", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ApplyKubeSpecFromBytes indicates an expected call of ApplyKubeSpecFromBytes.
 func (mr *MockProviderKubectlClientMockRecorder) ApplyKubeSpecFromBytes(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ApplyKubeSpecFromBytes", reflect.TypeOf((*MockProviderKubectlClient)(nil).ApplyKubeSpecFromBytes), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ApplyTolerationsFromTaintsToDaemonSet mocks base method.
 func (m *MockProviderKubectlClient) ApplyTolerationsFromTaintsToDaemonSet(arg0 context.Context, arg1, arg2 []v1.Taint, arg3, arg4 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ApplyTolerationsFromTaintsToDaemonSet", arg0, arg1, arg2, arg3, arg4)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ApplyTolerationsFromTaintsToDaemonSet indicates an expected call of ApplyTolerationsFromTaintsToDaemonSet.
 func (mr *MockProviderKubectlClientMockRecorder) ApplyTolerationsFromTaintsToDaemonSet(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ApplyTolerationsFromTaintsToDaemonSet", reflect.TypeOf((*MockProviderKubectlClient)(nil).ApplyTolerationsFromTaintsToDaemonSet), arg0, arg1, arg2, arg3, arg4)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateNamespaceIfNotPresent mocks base method.
 func (m *MockProviderKubectlClient) CreateNamespaceIfNotPresent(arg0 context.Context, arg1, arg2 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateNamespaceIfNotPresent", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateNamespaceIfNotPresent indicates an expected call of CreateNamespaceIfNotPresent.
 func (mr *MockProviderKubectlClientMockRecorder) CreateNamespaceIfNotPresent(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateNamespaceIfNotPresent", reflect.TypeOf((*MockProviderKubectlClient)(nil).CreateNamespaceIfNotPresent), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteEksaDatacenterConfig mocks base method.
 func (m *MockProviderKubectlClient) DeleteEksaDatacenterConfig(arg0 context.Context, arg1, arg2, arg3, arg4 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteEksaDatacenterConfig", arg0, arg1, arg2, arg3, arg4)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteEksaDatacenterConfig indicates an expected call of DeleteEksaDatacenterConfig.
 func (mr *MockProviderKubectlClientMockRecorder) DeleteEksaDatacenterConfig(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteEksaDatacenterConfig", reflect.TypeOf((*MockProviderKubectlClient)(nil).DeleteEksaDatacenterConfig), arg0, arg1, arg2, arg3, arg4)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteEksaMachineConfig mocks base method.
 func (m *MockProviderKubectlClient) DeleteEksaMachineConfig(arg0 context.Context, arg1, arg2, arg3, arg4 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteEksaMachineConfig", arg0, arg1, arg2, arg3, arg4)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteEksaMachineConfig indicates an expected call of DeleteEksaMachineConfig.
 func (mr *MockProviderKubectlClientMockRecorder) DeleteEksaMachineConfig(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteEksaMachineConfig", reflect.TypeOf((*MockProviderKubectlClient)(nil).DeleteEksaMachineConfig), arg0, arg1, arg2, arg3, arg4)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetEksaCluster mocks base method.
 func (m *MockProviderKubectlClient) GetEksaCluster(arg0 context.Context, arg1 *types.Cluster, arg2 string) (*v1alpha1.Cluster, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetEksaCluster", arg0, arg1, arg2)
-	ret0, _ := ret[0].(*v1alpha1.Cluster)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetEksaCluster indicates an expected call of GetEksaCluster.
 func (mr *MockProviderKubectlClientMockRecorder) GetEksaCluster(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEksaCluster", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetEksaCluster), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetEksaVSphereDatacenterConfig mocks base method.
 func (m *MockProviderKubectlClient) GetEksaVSphereDatacenterConfig(arg0 context.Context, arg1, arg2, arg3 string) (*v1alpha1.VSphereDatacenterConfig, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetEksaVSphereDatacenterConfig", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(*v1alpha1.VSphereDatacenterConfig)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetEksaVSphereDatacenterConfig indicates an expected call of GetEksaVSphereDatacenterConfig.
 func (mr *MockProviderKubectlClientMockRecorder) GetEksaVSphereDatacenterConfig(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEksaVSphereDatacenterConfig", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetEksaVSphereDatacenterConfig), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetEksaVSphereMachineConfig mocks base method.
 func (m *MockProviderKubectlClient) GetEksaVSphereMachineConfig(arg0 context.Context, arg1, arg2, arg3 string) (*v1alpha1.VSphereMachineConfig, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetEksaVSphereMachineConfig", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(*v1alpha1.VSphereMachineConfig)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetEksaVSphereMachineConfig indicates an expected call of GetEksaVSphereMachineConfig.
 func (mr *MockProviderKubectlClientMockRecorder) GetEksaVSphereMachineConfig(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEksaVSphereMachineConfig", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetEksaVSphereMachineConfig), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetEtcdadmCluster mocks base method.
 func (m *MockProviderKubectlClient) GetEtcdadmCluster(arg0 context.Context, arg1 *types.Cluster, arg2 string, arg3 ...executables.KubectlOpt) (*v1beta1.EtcdadmCluster, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, arg2}
-	for _, a := range arg3 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetEtcdadmCluster", varargs...)
-	ret0, _ := ret[0].(*v1beta1.EtcdadmCluster)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetEtcdadmCluster indicates an expected call of GetEtcdadmCluster.
 func (mr *MockProviderKubectlClientMockRecorder) GetEtcdadmCluster(arg0, arg1, arg2 interface{}, arg3 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, arg2}, arg3...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEtcdadmCluster", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetEtcdadmCluster), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetKubeadmControlPlane mocks base method.
 func (m *MockProviderKubectlClient) GetKubeadmControlPlane(arg0 context.Context, arg1 *types.Cluster, arg2 string, arg3 ...executables.KubectlOpt) (*v1beta2.KubeadmControlPlane, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, arg2}
-	for _, a := range arg3 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetKubeadmControlPlane", varargs...)
-	ret0, _ := ret[0].(*v1beta2.KubeadmControlPlane)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetKubeadmControlPlane indicates an expected call of GetKubeadmControlPlane.
 func (mr *MockProviderKubectlClientMockRecorder) GetKubeadmControlPlane(arg0, arg1, arg2 interface{}, arg3 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, arg2}, arg3...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetKubeadmControlPlane", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetKubeadmControlPlane), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetMachineDeployment mocks base method.
 func (m *MockProviderKubectlClient) GetMachineDeployment(arg0 context.Context, arg1 string, arg2 ...executables.KubectlOpt) (*v1beta20.MachineDeployment, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1}
-	for _, a := range arg2 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetMachineDeployment", varargs...)
-	ret0, _ := ret[0].(*v1beta20.MachineDeployment)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetMachineDeployment indicates an expected call of GetMachineDeployment.
 func (mr *MockProviderKubectlClientMockRecorder) GetMachineDeployment(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMachineDeployment", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetMachineDeployment), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetSecretFromNamespace mocks base method.
 func (m *MockProviderKubectlClient) GetSecretFromNamespace(arg0 context.Context, arg1, arg2, arg3 string) (*v1.Secret, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetSecretFromNamespace", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(*v1.Secret)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetSecretFromNamespace indicates an expected call of GetSecretFromNamespace.
 func (mr *MockProviderKubectlClientMockRecorder) GetSecretFromNamespace(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSecretFromNamespace", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetSecretFromNamespace), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // LoadSecret mocks base method.
 func (m *MockProviderKubectlClient) LoadSecret(arg0 context.Context, arg1, arg2, arg3, arg4 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LoadSecret", arg0, arg1, arg2, arg3, arg4)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // LoadSecret indicates an expected call of LoadSecret.
 func (mr *MockProviderKubectlClientMockRecorder) LoadSecret(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LoadSecret", reflect.TypeOf((*MockProviderKubectlClient)(nil).LoadSecret), arg0, arg1, arg2, arg3, arg4)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RemoveAnnotationInNamespace mocks base method.
 func (m *MockProviderKubectlClient) RemoveAnnotationInNamespace(arg0 context.Context, arg1, arg2, arg3 string, arg4 *types.Cluster, arg5 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RemoveAnnotationInNamespace", arg0, arg1, arg2, arg3, arg4, arg5)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RemoveAnnotationInNamespace indicates an expected call of RemoveAnnotationInNamespace.
 func (mr *MockProviderKubectlClientMockRecorder) RemoveAnnotationInNamespace(arg0, arg1, arg2, arg3, arg4, arg5 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveAnnotationInNamespace", reflect.TypeOf((*MockProviderKubectlClient)(nil).RemoveAnnotationInNamespace), arg0, arg1, arg2, arg3, arg4, arg5)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SearchVsphereDatacenterConfig mocks base method.
 func (m *MockProviderKubectlClient) SearchVsphereDatacenterConfig(arg0 context.Context, arg1, arg2, arg3 string) ([]*v1alpha1.VSphereDatacenterConfig, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SearchVsphereDatacenterConfig", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].([]*v1alpha1.VSphereDatacenterConfig)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SearchVsphereDatacenterConfig indicates an expected call of SearchVsphereDatacenterConfig.
 func (mr *MockProviderKubectlClientMockRecorder) SearchVsphereDatacenterConfig(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchVsphereDatacenterConfig", reflect.TypeOf((*MockProviderKubectlClient)(nil).SearchVsphereDatacenterConfig), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SearchVsphereMachineConfig mocks base method.
 func (m *MockProviderKubectlClient) SearchVsphereMachineConfig(arg0 context.Context, arg1, arg2, arg3 string) ([]*v1alpha1.VSphereMachineConfig, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SearchVsphereMachineConfig", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].([]*v1alpha1.VSphereMachineConfig)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SearchVsphereMachineConfig indicates an expected call of SearchVsphereMachineConfig.
 func (mr *MockProviderKubectlClientMockRecorder) SearchVsphereMachineConfig(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchVsphereMachineConfig", reflect.TypeOf((*MockProviderKubectlClient)(nil).SearchVsphereMachineConfig), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetDaemonSetImage mocks base method.
 func (m *MockProviderKubectlClient) SetDaemonSetImage(arg0 context.Context, arg1, arg2, arg3, arg4, arg5 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SetDaemonSetImage", arg0, arg1, arg2, arg3, arg4, arg5)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetDaemonSetImage indicates an expected call of SetDaemonSetImage.
 func (mr *MockProviderKubectlClientMockRecorder) SetDaemonSetImage(arg0, arg1, arg2, arg3, arg4, arg5 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetDaemonSetImage", reflect.TypeOf((*MockProviderKubectlClient)(nil).SetDaemonSetImage), arg0, arg1, arg2, arg3, arg4, arg5)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpdateAnnotation mocks base method.
 func (m *MockProviderKubectlClient) UpdateAnnotation(arg0 context.Context, arg1, arg2 string, arg3 map[string]string, arg4 ...executables.KubectlOpt) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, arg2, arg3}
-	for _, a := range arg4 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "UpdateAnnotation", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpdateAnnotation indicates an expected call of UpdateAnnotation.
 func (mr *MockProviderKubectlClientMockRecorder) UpdateAnnotation(arg0, arg1, arg2, arg3 interface{}, arg4 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, arg2, arg3}, arg4...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateAnnotation", reflect.TypeOf((*MockProviderKubectlClient)(nil).UpdateAnnotation), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockIPValidator is a mock of IPValidator interface.
@@ -931,28 +763,27 @@ type MockIPValidatorMockRecorder struct {
 
 // NewMockIPValidator creates a new mock instance.
 func NewMockIPValidator(ctrl *gomock.Controller) *MockIPValidator {
-	mock := &MockIPValidator{ctrl: ctrl}
-	mock.recorder = &MockIPValidatorMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockIPValidator) EXPECT() *MockIPValidatorMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ValidateControlPlaneIPUniqueness mocks base method.
+	return nil
 }
 
-// ValidateControlPlaneIPUniqueness mocks base method.
 func (m *MockIPValidator) ValidateControlPlaneIPUniqueness(arg0 *v1alpha1.Cluster) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ValidateControlPlaneIPUniqueness", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateControlPlaneIPUniqueness indicates an expected call of ValidateControlPlaneIPUniqueness.
 func (mr *MockIPValidatorMockRecorder) ValidateControlPlaneIPUniqueness(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateControlPlaneIPUniqueness", reflect.TypeOf((*MockIPValidator)(nil).ValidateControlPlaneIPUniqueness), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockVSphereClientBuilder is a mock of VSphereClientBuilder interface.
@@ -968,27 +799,25 @@ type MockVSphereClientBuilderMockRecorder struct {
 
 // NewMockVSphereClientBuilder creates a new mock instance.
 func NewMockVSphereClientBuilder(ctrl *gomock.Controller) *MockVSphereClientBuilder {
-	mock := &MockVSphereClientBuilder{ctrl: ctrl}
-	mock.recorder = &MockVSphereClientBuilderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockVSphereClientBuilder) EXPECT() *MockVSphereClientBuilderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Build mocks base method.
+	return nil
 }
 
-// Build mocks base method.
 func (m *MockVSphereClientBuilder) Build(arg0 context.Context, arg1, arg2, arg3 string, arg4 bool, arg5 string) (govmomi.VSphereClient, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Build", arg0, arg1, arg2, arg3, arg4, arg5)
-	ret0, _ := ret[0].(govmomi.VSphereClient)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(govmomi.VSphereClient), nil
 }
 
 // Build indicates an expected call of Build.
 func (mr *MockVSphereClientBuilderMockRecorder) Build(arg0, arg1, arg2, arg3, arg4, arg5 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Build", reflect.TypeOf((*MockVSphereClientBuilder)(nil).Build), arg0, arg1, arg2, arg3, arg4, arg5)
+	_ = "STUB: not implemented"
+	return nil
 }

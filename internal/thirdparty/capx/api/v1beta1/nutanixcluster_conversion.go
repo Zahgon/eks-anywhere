@@ -17,7 +17,11 @@ limitations under the License.
 package v1beta1
 
 // Hub marks NutanixCluster as a conversion hub.
-func (*NutanixCluster) Hub() {}
+func (*NutanixCluster) Hub() {
+	_ = "STUB: not implemented"
 
-// Hub marks NutanixClusterList as a conversion hub.
-func (*NutanixClusterList) Hub() {}
+	// Hub marks NutanixClusterList as a conversion hub.
+	return
+}
+
+func (*NutanixClusterList) Hub() { _ = "STUB: not implemented"; return }

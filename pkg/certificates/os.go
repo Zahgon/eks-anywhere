@@ -24,7 +24,8 @@ type OSRenewer interface {
 
 // BuildOSRenewer creates a new OSRenewer based on the OS type.
 func BuildOSRenewer(osType string, backupDir string) OSRenewer {
-	return osRenewerBuilders[osType](backupDir)
+	_ = "STUB: not implemented"
+	return *new(OSRenewer)
 }
 
 // Map of OS type to OSRenewer builder functions.

@@ -4,10 +4,8 @@ import (
 	"context"
 
 	"github.com/aws/eks-anywhere/pkg/cluster"
-	"github.com/aws/eks-anywhere/pkg/features"
 	"github.com/aws/eks-anywhere/pkg/filewriter"
 	"github.com/aws/eks-anywhere/pkg/providers"
-	"github.com/aws/eks-anywhere/pkg/task"
 	"github.com/aws/eks-anywhere/pkg/types"
 	"github.com/aws/eks-anywhere/pkg/workflows/interfaces"
 )
@@ -40,47 +38,12 @@ func NewUpgrade(clientFactory interfaces.ClientFactory, provider providers.Provi
 	packageManager interfaces.PackageManager,
 	iamAuth interfaces.AwsIamAuth,
 ) *Upgrade {
-	upgradeChangeDiff := types.NewChangeDiff()
-	upgradeWorkflow := &Upgrade{
-		clientFactory:     clientFactory,
-		provider:          provider,
-		clusterManager:    clusterManager,
-		gitOpsManager:     gitOpsManager,
-		writer:            writer,
-		capiManager:       capiManager,
-		eksdUpgrader:      eksdUpgrader,
-		eksdInstaller:     eksdInstaller,
-		upgradeChangeDiff: upgradeChangeDiff,
-		clusterUpgrader:   clusterUpgrade,
-		packageManager:    packageManager,
-		iamAuth:           iamAuth,
-	}
-
-	return upgradeWorkflow
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Run Upgrade implements upgrade functionality for management cluster's upgrade operation.
 func (c *Upgrade) Run(ctx context.Context, clusterSpec *cluster.Spec, managementCluster *types.Cluster, validator interfaces.Validator) error {
-	commandContext := &task.CommandContext{
-		ClientFactory:     c.clientFactory,
-		Provider:          c.provider,
-		ClusterManager:    c.clusterManager,
-		GitOpsManager:     c.gitOpsManager,
-		ManagementCluster: managementCluster,
-		ClusterSpec:       clusterSpec,
-		Validations:       validator,
-		Writer:            c.writer,
-		CAPIManager:       c.capiManager,
-		EksdInstaller:     c.eksdInstaller,
-		EksdUpgrader:      c.eksdUpgrader,
-		UpgradeChangeDiff: c.upgradeChangeDiff,
-		ClusterUpgrader:   c.clusterUpgrader,
-		PackageManager:    c.packageManager,
-		IamAuth:           c.iamAuth,
-	}
-	if features.IsActive(features.CheckpointEnabled()) {
-		return task.NewTaskRunner(&setupAndValidateUpgrade{}, c.writer, task.WithCheckpointFile()).RunTask(ctx, commandContext)
-	}
-
-	return task.NewTaskRunner(&setupAndValidateUpgrade{}, c.writer).RunTask(ctx, commandContext)
+	_ = "STUB: not implemented"
+	return nil
 }

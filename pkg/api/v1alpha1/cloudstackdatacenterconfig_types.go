@@ -15,12 +15,7 @@
 package v1alpha1
 
 import (
-	"fmt"
-	"strings"
-
-	"github.com/pkg/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/util/validation"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -65,16 +60,8 @@ type CloudStackResourceIdentifier struct {
 }
 
 func (r *CloudStackResourceIdentifier) Equal(o *CloudStackResourceIdentifier) bool {
-	if r == o {
-		return true
-	}
-	if r == nil || o == nil {
-		return false
-	}
-	if r.Id != o.Id {
-		return false
-	}
-	return r.Id == "" && o.Id == "" && r.Name == o.Name
+	_ = "STUB: not implemented"
+	return false
 }
 
 // CloudStackZone is an organizational construct typically used to represent a single datacenter, and all its physical and virtual resources exist inside that zone. It can either be specified as a UUID or name.
@@ -131,178 +118,43 @@ type CloudStackDatacenterConfig struct {
 	Status CloudStackDatacenterConfigStatus `json:"status,omitempty"`
 }
 
-func (v *CloudStackDatacenterConfig) Kind() string {
-	return v.TypeMeta.Kind
-}
+func (v *CloudStackDatacenterConfig) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (v *CloudStackDatacenterConfig) ExpectedKind() string {
-	return CloudStackDatacenterKind
-}
+func (v *CloudStackDatacenterConfig) ExpectedKind() string { _ = "STUB: not implemented"; return "" }
 
-func (v *CloudStackDatacenterConfig) PauseReconcile() {
-	if v.Annotations == nil {
-		v.Annotations = map[string]string{}
-	}
-	v.Annotations[pausedAnnotation] = "true"
-}
+func (v *CloudStackDatacenterConfig) PauseReconcile() { _ = "STUB: not implemented"; return }
 
 func (v *CloudStackDatacenterConfig) IsReconcilePaused() bool {
-	if s, ok := v.Annotations[pausedAnnotation]; ok {
-		return s == "true"
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
-func (v *CloudStackDatacenterConfig) ClearPauseAnnotation() {
-	if v.Annotations != nil {
-		delete(v.Annotations, pausedAnnotation)
-	}
-}
+func (v *CloudStackDatacenterConfig) ClearPauseAnnotation() { _ = "STUB: not implemented"; return }
 
 func (v *CloudStackDatacenterConfig) ConvertConfigToConfigGenerateStruct() *CloudStackDatacenterConfigGenerate {
-	namespace := defaultEksaNamespace
-	if v.Namespace != "" {
-		namespace = v.Namespace
-	}
-	config := &CloudStackDatacenterConfigGenerate{
-		TypeMeta: v.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        v.Name,
-			Annotations: v.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: v.Spec,
-	}
-
-	return config
-}
-
-func (v *CloudStackDatacenterConfig) Marshallable() Marshallable {
-	return v.ConvertConfigToConfigGenerateStruct()
-}
-
-func (v *CloudStackDatacenterConfig) Validate() error {
-	if v.Spec.Account != "" {
-		return errors.New("account must be empty")
-	}
-	if v.Spec.Domain != "" {
-		return errors.New("domain must be empty")
-	}
-	if v.Spec.ManagementApiEndpoint != "" {
-		return errors.New("managementApiEndpoint must be empty")
-	}
-	if len(v.Spec.Zones) > 0 {
-		return errors.New("zones must be empty")
-	}
-	if len(v.Spec.AvailabilityZones) == 0 {
-		return errors.New("availabilityZones must not be empty")
-	}
-	azSet := make(map[string]bool)
-	for _, az := range v.Spec.AvailabilityZones {
-		errorMessages := validation.IsValidLabelValue(az.Name)
-		if len(errorMessages) > 0 {
-			return fmt.Errorf("availabilityZone names must be a valid label value since it is used to label nodes: %s",
-				strings.Join(errorMessages, ";"))
-		}
-		if exists := azSet[az.Name]; exists {
-			return fmt.Errorf("availabilityZone names must be unique. Duplicate name: %s", az.Name)
-		}
-		azSet[az.Name] = true
-		_, err := GetCloudStackManagementAPIEndpointHostname(az)
-		if err != nil {
-			return fmt.Errorf("checking management api endpoint: %v", err)
-		}
-		if len(az.Zone.Network.Id) == 0 && len(az.Zone.Network.Name) == 0 {
-			return fmt.Errorf("zone network is not set or is empty")
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (v *CloudStackDatacenterConfig) SetDefaults() {
-	if v.Spec.AvailabilityZones == nil || len(v.Spec.AvailabilityZones) == 0 {
-		v.Spec.AvailabilityZones = make([]CloudStackAvailabilityZone, 0, len(v.Spec.Zones))
-		for index, csZone := range v.Spec.Zones {
-			az := CloudStackAvailabilityZone{
-				Name:                  fmt.Sprintf("%s-%d", DefaultCloudStackAZPrefix, index),
-				Zone:                  csZone,
-				Account:               v.Spec.Account,
-				Domain:                v.Spec.Domain,
-				ManagementApiEndpoint: v.Spec.ManagementApiEndpoint,
-				CredentialsRef:        "global",
-			}
-			v.Spec.AvailabilityZones = append(v.Spec.AvailabilityZones, az)
-		}
-	}
-	v.Spec.Zones = nil
-	v.Spec.Domain = ""
-	v.Spec.Account = ""
-	v.Spec.ManagementApiEndpoint = ""
+func (v *CloudStackDatacenterConfig) Marshallable() Marshallable {
+	_ = "STUB: not implemented"
+	return *new(Marshallable)
 }
+
+func (v *CloudStackDatacenterConfig) Validate() error { _ = "STUB: not implemented"; return nil }
+
+func (v *CloudStackDatacenterConfig) SetDefaults() { _ = "STUB: not implemented"; return }
 
 func (s *CloudStackDatacenterConfigSpec) Equal(o *CloudStackDatacenterConfigSpec) bool {
-	if s == o {
-		return true
-	}
-	if s == nil || o == nil {
-		return false
-	}
-	if len(s.Zones) != len(o.Zones) {
-		return false
-	}
-	for i, z := range s.Zones {
-		if !z.Equal(&o.Zones[i]) {
-			return false
-		}
-	}
-	if len(s.AvailabilityZones) != len(o.AvailabilityZones) {
-		return false
-	}
-	oAzsMap := map[string]CloudStackAvailabilityZone{}
-	for _, oAz := range o.AvailabilityZones {
-		oAzsMap[oAz.Name] = oAz
-	}
-	for _, sAz := range s.AvailabilityZones {
-		oAz, found := oAzsMap[sAz.Name]
-		if !found || !sAz.Equal(&oAz) {
-			return false
-		}
-	}
-	return s.ManagementApiEndpoint == o.ManagementApiEndpoint &&
-		s.Domain == o.Domain &&
-		s.Account == o.Account
-}
-
-func (z *CloudStackZone) Equal(o *CloudStackZone) bool {
-	if z == o {
-		return true
-	}
-	if z == nil || o == nil {
-		return false
-	}
-	if z.Id == o.Id &&
-		z.Name == o.Name &&
-		z.Network.Id == o.Network.Id &&
-		z.Network.Name == o.Network.Name {
-		return true
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
+func (z *CloudStackZone) Equal(o *CloudStackZone) bool { _ = "STUB: not implemented"; return false }
+
 func (az *CloudStackAvailabilityZone) Equal(o *CloudStackAvailabilityZone) bool {
-	if az == o {
-		return true
-	}
-	if az == nil || o == nil {
-		return false
-	}
-	return az.Zone.Equal(&o.Zone) &&
-		az.Name == o.Name &&
-		az.CredentialsRef == o.CredentialsRef &&
-		az.Account == o.Account &&
-		az.Domain == o.Domain &&
-		az.ManagementApiEndpoint == o.ManagementApiEndpoint
+	_ = "STUB: not implemented"
+	return false
 }
 
 // +kubebuilder:object:generate=false

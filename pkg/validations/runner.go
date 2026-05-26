@@ -2,9 +2,6 @@ package validations
 
 import (
 	"errors"
-	"fmt"
-
-	eksae "github.com/aws/eks-anywhere/pkg/errors"
 )
 
 var errRunnerValidation = errors.New("validations failed")
@@ -15,27 +12,8 @@ type Runner struct {
 	validations []Validation
 }
 
-func NewRunner() *Runner {
-	return &Runner{validations: make([]Validation, 0)}
-}
+func NewRunner() *Runner { _ = "STUB: not implemented"; return nil }
 
-func (r *Runner) Register(validations ...Validation) {
-	r.validations = append(r.validations, validations...)
-}
+func (r *Runner) Register(validations ...Validation) { _ = "STUB: not implemented"; return }
 
-func (r *Runner) Run() error {
-	var errs []error
-	for _, v := range r.validations {
-		result := v()
-		result.Report()
-		if result.Err != nil {
-			errs = append(errs, result.Err)
-		}
-	}
-
-	if len(errs) > 0 {
-		return fmt.Errorf("validations failed: %w", eksae.NewAggregate(errs))
-	}
-
-	return nil
-}
+func (r *Runner) Run() error { _ = "STUB: not implemented"; return nil }

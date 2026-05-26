@@ -2,13 +2,9 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
-
-	"github.com/aws/eks-anywhere/pkg/curatedpackages"
-	"github.com/aws/eks-anywhere/pkg/kubeconfig"
 )
 
 type applyPackageOptions struct {
@@ -53,25 +49,4 @@ var applyPackagesCommand = &cobra.Command{
 	Deprecated: "use `kubectl apply` instead",
 }
 
-func applyPackages(ctx context.Context) error {
-	kubeConfig, err := kubeconfig.ResolveAndValidateFilename(apo.kubeConfig, "")
-	if err != nil {
-		return err
-	}
-
-	deps, err := NewDependenciesForPackages(ctx, WithMountPaths(kubeConfig), WithBundlesOverride(apo.bundlesOverride))
-	if err != nil {
-		return fmt.Errorf("unable to initialize executables: %v", err)
-	}
-	packages := curatedpackages.NewPackageClient(
-		deps.Kubectl,
-	)
-
-	curatedpackages.PrintLicense()
-	err = packages.ApplyPackages(ctx, apo.fileName, kubeConfig)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
+func applyPackages(ctx context.Context) error { _ = "STUB: not implemented"; return nil }

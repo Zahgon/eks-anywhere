@@ -5,8 +5,6 @@
 package mocks
 
 import (
-	reflect "reflect"
-
 	helm "github.com/aws/eks-anywhere/pkg/helm"
 	gomock "github.com/golang/mock/gomock"
 )
@@ -24,30 +22,25 @@ type MockClientBuilderMockRecorder struct {
 
 // NewMockClientBuilder creates a new mock instance.
 func NewMockClientBuilder(ctrl *gomock.Controller) *MockClientBuilder {
-	mock := &MockClientBuilder{ctrl: ctrl}
-	mock.recorder = &MockClientBuilderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockClientBuilder) EXPECT() *MockClientBuilderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// BuildHelm mocks base method.
+	return nil
 }
 
-// BuildHelm mocks base method.
 func (m *MockClientBuilder) BuildHelm(arg0 ...helm.Opt) helm.Client {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{}
-	for _, a := range arg0 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "BuildHelm", varargs...)
-	ret0, _ := ret[0].(helm.Client)
-	return ret0
+	_ = "STUB: not implemented"
+	return *new(helm.Client)
 }
 
 // BuildHelm indicates an expected call of BuildHelm.
 func (mr *MockClientBuilderMockRecorder) BuildHelm(arg0 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BuildHelm", reflect.TypeOf((*MockClientBuilder)(nil).BuildHelm), arg0...)
+	_ = "STUB: not implemented"
+	return nil
 }

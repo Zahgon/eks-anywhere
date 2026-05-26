@@ -36,21 +36,7 @@ type MapUsers struct {
 	Groups   []string `json:"groups,omitempty"`
 }
 
-func (e *AWSIamConfigSpec) Equal(n *AWSIamConfigSpec) bool {
-	if e == n {
-		return true
-	}
-	if e == nil || n == nil {
-		return false
-	}
-	if e.AWSRegion != n.AWSRegion {
-		return false
-	}
-	if e.Partition != n.Partition {
-		return false
-	}
-	return SliceEqual(e.BackendMode, n.BackendMode)
-}
+func (e *AWSIamConfigSpec) Equal(n *AWSIamConfigSpec) bool { _ = "STUB: not implemented"; return false }
 
 // AWSIamConfigStatus defines the observed state of AWSIamConfig.
 type AWSIamConfigStatus struct{}
@@ -85,39 +71,18 @@ type AWSIamConfigList struct {
 	Items           []AWSIamConfig `json:"items"`
 }
 
-func (c *AWSIamConfig) Kind() string {
-	return c.TypeMeta.Kind
-}
+func (c *AWSIamConfig) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (c *AWSIamConfig) ExpectedKind() string {
-	return AWSIamConfigKind
-}
+func (c *AWSIamConfig) ExpectedKind() string { _ = "STUB: not implemented"; return "" }
 
 func (c *AWSIamConfig) ConvertConfigToConfigGenerateStruct() *AWSIamConfigGenerate {
-	namespace := defaultEksaNamespace
-	if c.Namespace != "" {
-		namespace = c.Namespace
-	}
-	config := &AWSIamConfigGenerate{
-		TypeMeta: c.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        c.Name,
-			Annotations: c.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: c.Spec,
-	}
-
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (c *AWSIamConfig) Validate() error {
-	return validateAWSIamConfig(c)
-}
+func (c *AWSIamConfig) Validate() error { _ = "STUB: not implemented"; return nil }
 
-func (c *AWSIamConfig) SetDefaults() {
-	setDefaultAWSIamPartition(c)
-}
+func (c *AWSIamConfig) SetDefaults() { _ = "STUB: not implemented"; return }
 
 func init() {
 	SchemeBuilder.Register(&AWSIamConfig{}, &AWSIamConfigList{})

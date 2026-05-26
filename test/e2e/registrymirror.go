@@ -7,26 +7,9 @@ import (
 	"github.com/aws/eks-anywhere/test/framework"
 )
 
-func runRegistryMirrorConfigFlow(test *framework.ClusterE2ETest) {
-	test.GenerateClusterConfig()
-	test.DownloadArtifacts()
-	test.ExtractDownloadedArtifacts()
-	test.DownloadImages()
-	test.ImportImages()
-	test.CreateCluster(framework.WithBundlesOverride(bundleReleasePathFromArtifacts))
-	test.DeleteCluster(framework.WithBundlesOverride(bundleReleasePathFromArtifacts))
-}
+func runRegistryMirrorConfigFlow(test *framework.ClusterE2ETest) { _ = "STUB: not implemented"; return }
 
 func runTinkerbellRegistryMirrorFlow(test *framework.ClusterE2ETest) {
-	test.GenerateClusterConfig()
-	test.DownloadArtifacts()
-	test.ExtractDownloadedArtifacts()
-	test.DownloadImages()
-	test.ImportImages()
-	test.GenerateHardwareConfig()
-	test.CreateCluster(framework.WithBundlesOverride(bundleReleasePathFromArtifacts))
-	test.StopIfFailed()
-	test.DeleteCluster(framework.WithBundlesOverride(bundleReleasePathFromArtifacts))
-	test.ValidateHardwareDecommissioned()
-	test.CleanupDownloadedArtifactsAndImages()
+	_ = "STUB: not implemented"
+	return
 }

@@ -1,9 +1,6 @@
 package cmd
 
 import (
-	"bufio"
-	"fmt"
-
 	"github.com/spf13/cobra"
 
 	"github.com/aws/eks-anywhere/pkg/dependencies"
@@ -54,21 +51,6 @@ func init() {
 }
 
 func (hOpts *hardwareOptions) generateHardware(cmd *cobra.Command, args []string) error {
-	hardwareYaml, err := hardware.BuildHardwareYAML(hOpts.csvPath, hOpts.providerOptions.Tinkerbell.BMCOptions)
-	if err != nil {
-		return fmt.Errorf("building hardware yaml from csv: %v", err)
-	}
-
-	fh, err := hardware.CreateOrStdout(hOpts.outputPath)
-	if err != nil {
-		return err
-	}
-	bufferedWriter := bufio.NewWriter(fh)
-	defer bufferedWriter.Flush()
-	_, err = bufferedWriter.Write(hardwareYaml)
-	if err != nil {
-		return fmt.Errorf("writing hardware yaml to output: %v", err)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }

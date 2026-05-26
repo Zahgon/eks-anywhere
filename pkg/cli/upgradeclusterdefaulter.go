@@ -14,17 +14,12 @@ type UpgradeClusterDefaulter struct {
 
 // NewUpgradeClusterDefaulter to instantiate and register defaults.
 func NewUpgradeClusterDefaulter(mhcDefaulter cluster.MachineHealthCheckDefaulter) UpgradeClusterDefaulter {
-	r := defaulting.NewRunner[*cluster.Spec]()
-	r.Register(
-		mhcDefaulter.MachineHealthCheckDefault,
-	)
-
-	return UpgradeClusterDefaulter{
-		runner: r,
-	}
+	_ = "STUB: not implemented"
+	return *new(UpgradeClusterDefaulter)
 }
 
 // Run will run all the defaults registered to the Upgrade Cluster Defaulter.
 func (v UpgradeClusterDefaulter) Run(ctx context.Context, spec *cluster.Spec) (*cluster.Spec, error) {
-	return v.runner.RunAll(ctx, spec)
+	_ = "STUB: not implemented"
+	return nil, nil
 }

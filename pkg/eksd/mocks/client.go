@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	types "github.com/aws/eks-anywhere/pkg/types"
 	gomock "github.com/golang/mock/gomock"
@@ -25,26 +24,25 @@ type MockEksdInstallerClientMockRecorder struct {
 
 // NewMockEksdInstallerClient creates a new mock instance.
 func NewMockEksdInstallerClient(ctrl *gomock.Controller) *MockEksdInstallerClient {
-	mock := &MockEksdInstallerClient{ctrl: ctrl}
-	mock.recorder = &MockEksdInstallerClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockEksdInstallerClient) EXPECT() *MockEksdInstallerClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ApplyKubeSpecFromBytesWithNamespace mocks base method.
+	return nil
 }
 
-// ApplyKubeSpecFromBytesWithNamespace mocks base method.
 func (m *MockEksdInstallerClient) ApplyKubeSpecFromBytesWithNamespace(arg0 context.Context, arg1 *types.Cluster, arg2 []byte, arg3 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ApplyKubeSpecFromBytesWithNamespace", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ApplyKubeSpecFromBytesWithNamespace indicates an expected call of ApplyKubeSpecFromBytesWithNamespace.
 func (mr *MockEksdInstallerClientMockRecorder) ApplyKubeSpecFromBytesWithNamespace(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ApplyKubeSpecFromBytesWithNamespace", reflect.TypeOf((*MockEksdInstallerClient)(nil).ApplyKubeSpecFromBytesWithNamespace), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }

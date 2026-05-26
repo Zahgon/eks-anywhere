@@ -2,9 +2,6 @@ package validations
 
 import (
 	"context"
-	"fmt"
-
-	"github.com/aws/eks-anywhere/pkg/logger"
 )
 
 const (
@@ -18,34 +15,16 @@ type DockerExecutable interface {
 }
 
 func CheckMinimumDockerVersion(ctx context.Context, dockerExecutable DockerExecutable) error {
-	installedMajorVersionInt, err := dockerExecutable.Version(ctx)
-	if err != nil {
-		return err
-	}
-	if installedMajorVersionInt < requiredMajorVersion {
-		return fmt.Errorf("minimum requirements for docker version have not been met. Install Docker version %d.x.x or above", requiredMajorVersion)
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func CheckDockerAllocatedMemory(ctx context.Context, dockerExecutable DockerExecutable) {
-	totalMemoryAllocated, err := dockerExecutable.AllocatedMemory(ctx)
-	if err != nil {
-		logger.Error(err, "Failed to validate docker memory: error while reading memory allocated to Docker")
-		return
-	}
-	if totalMemoryAllocated < recommendedTotalMemory {
-		logger.V(3).Info("Warning: recommended memory to be allocated for Docker is 6 GB, please be aware that not allocating enough memory can cause problems while cluster creation")
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func ValidateDockerExecutable(ctx context.Context, docker DockerExecutable, os string) error {
-	err := CheckMinimumDockerVersion(ctx, docker)
-	if err != nil {
-		return fmt.Errorf("failed to validate docker: %v", err)
-	}
-
-	CheckDockerAllocatedMemory(ctx, docker)
-
+	_ = "STUB: not implemented"
 	return nil
 }

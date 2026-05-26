@@ -14,18 +14,12 @@ type CreateClusterDefaulter struct {
 
 // NewCreateClusterDefaulter to instantiate and register defaults.
 func NewCreateClusterDefaulter(skipIPCheck cluster.ControlPlaneIPCheckAnnotationDefaulter, mhcDefaulter cluster.MachineHealthCheckDefaulter) CreateClusterDefaulter {
-	r := defaulting.NewRunner[*cluster.Spec]()
-	r.Register(
-		skipIPCheck.ControlPlaneIPCheckDefault,
-		mhcDefaulter.MachineHealthCheckDefault,
-	)
-
-	return CreateClusterDefaulter{
-		runner: r,
-	}
+	_ = "STUB: not implemented"
+	return *new(CreateClusterDefaulter)
 }
 
 // Run will run all the defaults registered to the Create Cluster Defaulter.
 func (v CreateClusterDefaulter) Run(ctx context.Context, spec *cluster.Spec) (*cluster.Spec, error) {
-	return v.runner.RunAll(ctx, spec)
+	_ = "STUB: not implemented"
+	return nil, nil
 }

@@ -5,8 +5,6 @@
 package mocks
 
 import (
-	reflect "reflect"
-
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -22,28 +20,23 @@ type MockReaderMockRecorder struct {
 }
 
 // NewMockReader creates a new mock instance.
-func NewMockReader(ctrl *gomock.Controller) *MockReader {
-	mock := &MockReader{ctrl: ctrl}
-	mock.recorder = &MockReaderMockRecorder{mock}
-	return mock
-}
+func NewMockReader(ctrl *gomock.Controller) *MockReader { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockReader) EXPECT() *MockReaderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ReadFile mocks base method.
+	return nil
 }
 
-// ReadFile mocks base method.
 func (m *MockReader) ReadFile(url string) ([]byte, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReadFile", url)
-	ret0, _ := ret[0].([]byte)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ReadFile indicates an expected call of ReadFile.
 func (mr *MockReaderMockRecorder) ReadFile(url interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadFile", reflect.TypeOf((*MockReader)(nil).ReadFile), url)
+	_ = "STUB: not implemented"
+	return nil
 }

@@ -18,8 +18,6 @@ package v1beta1
 
 import (
 	"context"
-	"fmt"
-	"strings"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -39,47 +37,36 @@ var (
 
 // SetupWebhookWithManager sets up and registers the webhook with the manager.
 func (c *TinkerbellCluster) SetupWebhookWithManager(mgr ctrl.Manager) error {
-	return ctrl.NewWebhookManagedBy(mgr).For(c).WithDefaulter(c).
-		WithValidator(c).Complete() //nolint:wrapcheck
+	_ = "STUB: not implemented"
+	return nil
 }
+
+//nolint:wrapcheck
 
 // ValidateCreate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (c *TinkerbellCluster) ValidateCreate(_ context.Context, _ runtime.Object) (admission.Warnings, error) {
-	return nil, nil
+	_ = "STUB: not implemented"
+
+	// ValidateUpdate implements webhook.CustomValidator so a webhook will be registered for the type.
+	return *new(admission.Warnings), nil
 }
 
-// ValidateUpdate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (c *TinkerbellCluster) ValidateUpdate(_ context.Context, _, _ runtime.Object) (admission.Warnings, error) {
-	return nil, nil
+	_ = "STUB: not implemented"
+
+	// ValidateDelete implements webhook.CustomValidator so a webhook will be registered for the type.
+	return *new(admission.Warnings), nil
 }
 
-// ValidateDelete implements webhook.CustomValidator so a webhook will be registered for the type.
 func (c *TinkerbellCluster) ValidateDelete(_ context.Context, _ runtime.Object) (admission.Warnings, error) {
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
-func defaultVersionForOSDistro(distro string) string {
-	if strings.ToLower(distro) == osUbuntu {
-		return defaultUbuntuVersion
-	}
-
-	return ""
-}
+func defaultVersionForOSDistro(distro string) string { _ = "STUB: not implemented"; return "" }
 
 // Default implements webhook.CustomDefaulter so a webhook will be registered for the type.
 func (c *TinkerbellCluster) Default(_ context.Context, obj runtime.Object) error {
-	cluster, ok := obj.(*TinkerbellCluster)
-	if !ok {
-		return fmt.Errorf("expected a TinkerbellCluster but got %T", obj)
-	}
-
-	if cluster.Spec.ImageLookupFormat == "" {
-		cluster.Spec.ImageLookupFormat = "{{.BaseRegistry}}/{{.OSDistro}}-{{.OSVersion}}:{{.KubernetesVersion}}.gz"
-	}
-
-	if cluster.Spec.ImageLookupOSVersion == "" {
-		cluster.Spec.ImageLookupOSVersion = defaultVersionForOSDistro(cluster.Spec.ImageLookupOSDistro)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }

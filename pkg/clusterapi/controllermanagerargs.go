@@ -5,6 +5,6 @@ import (
 )
 
 func ControllerManagerArgs(clusterSpec *cluster.Spec) ExtraArgs {
-	return SecureTlsCipherSuitesExtraArgs().
-		Append(NodeCIDRMaskExtraArgs(&clusterSpec.Cluster.Spec.ClusterNetwork))
+	_ = "STUB: not implemented"
+	return *new(ExtraArgs)
 }

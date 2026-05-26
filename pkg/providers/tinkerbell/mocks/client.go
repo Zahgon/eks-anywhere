@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	v1alpha1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	executables "github.com/aws/eks-anywhere/pkg/executables"
@@ -34,361 +33,279 @@ type MockProviderKubectlClientMockRecorder struct {
 
 // NewMockProviderKubectlClient creates a new mock instance.
 func NewMockProviderKubectlClient(ctrl *gomock.Controller) *MockProviderKubectlClient {
-	mock := &MockProviderKubectlClient{ctrl: ctrl}
-	mock.recorder = &MockProviderKubectlClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockProviderKubectlClient) EXPECT() *MockProviderKubectlClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AllBaseboardManagements mocks base method.
+	return nil
 }
 
-// AllBaseboardManagements mocks base method.
 func (m *MockProviderKubectlClient) AllBaseboardManagements(arg0 context.Context, arg1 string) ([]rufiounreleased.BaseboardManagement, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AllBaseboardManagements", arg0, arg1)
-	ret0, _ := ret[0].([]rufiounreleased.BaseboardManagement)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AllBaseboardManagements indicates an expected call of AllBaseboardManagements.
 func (mr *MockProviderKubectlClientMockRecorder) AllBaseboardManagements(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AllBaseboardManagements", reflect.TypeOf((*MockProviderKubectlClient)(nil).AllBaseboardManagements), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AllTinkerbellHardware mocks base method.
 func (m *MockProviderKubectlClient) AllTinkerbellHardware(arg0 context.Context, arg1 string) ([]v1alpha10.Hardware, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AllTinkerbellHardware", arg0, arg1)
-	ret0, _ := ret[0].([]v1alpha10.Hardware)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AllTinkerbellHardware indicates an expected call of AllTinkerbellHardware.
 func (mr *MockProviderKubectlClientMockRecorder) AllTinkerbellHardware(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AllTinkerbellHardware", reflect.TypeOf((*MockProviderKubectlClient)(nil).AllTinkerbellHardware), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ApplyKubeSpecFromBytesForce mocks base method.
 func (m *MockProviderKubectlClient) ApplyKubeSpecFromBytesForce(arg0 context.Context, arg1 *types.Cluster, arg2 []byte) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ApplyKubeSpecFromBytesForce", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ApplyKubeSpecFromBytesForce indicates an expected call of ApplyKubeSpecFromBytesForce.
 func (mr *MockProviderKubectlClientMockRecorder) ApplyKubeSpecFromBytesForce(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ApplyKubeSpecFromBytesForce", reflect.TypeOf((*MockProviderKubectlClient)(nil).ApplyKubeSpecFromBytesForce), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ApplyKubeSpecFromBytesWithNamespace mocks base method.
 func (m *MockProviderKubectlClient) ApplyKubeSpecFromBytesWithNamespace(arg0 context.Context, arg1 *types.Cluster, arg2 []byte, arg3 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ApplyKubeSpecFromBytesWithNamespace", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ApplyKubeSpecFromBytesWithNamespace indicates an expected call of ApplyKubeSpecFromBytesWithNamespace.
 func (mr *MockProviderKubectlClientMockRecorder) ApplyKubeSpecFromBytesWithNamespace(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ApplyKubeSpecFromBytesWithNamespace", reflect.TypeOf((*MockProviderKubectlClient)(nil).ApplyKubeSpecFromBytesWithNamespace), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteCRD mocks base method.
 func (m *MockProviderKubectlClient) DeleteCRD(arg0 context.Context, arg1, arg2 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteCRD", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteCRD indicates an expected call of DeleteCRD.
 func (mr *MockProviderKubectlClientMockRecorder) DeleteCRD(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCRD", reflect.TypeOf((*MockProviderKubectlClient)(nil).DeleteCRD), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteEksaDatacenterConfig mocks base method.
 func (m *MockProviderKubectlClient) DeleteEksaDatacenterConfig(arg0 context.Context, arg1, arg2, arg3, arg4 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteEksaDatacenterConfig", arg0, arg1, arg2, arg3, arg4)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteEksaDatacenterConfig indicates an expected call of DeleteEksaDatacenterConfig.
 func (mr *MockProviderKubectlClientMockRecorder) DeleteEksaDatacenterConfig(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteEksaDatacenterConfig", reflect.TypeOf((*MockProviderKubectlClient)(nil).DeleteEksaDatacenterConfig), arg0, arg1, arg2, arg3, arg4)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteEksaMachineConfig mocks base method.
 func (m *MockProviderKubectlClient) DeleteEksaMachineConfig(arg0 context.Context, arg1, arg2, arg3, arg4 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteEksaMachineConfig", arg0, arg1, arg2, arg3, arg4)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteEksaMachineConfig indicates an expected call of DeleteEksaMachineConfig.
 func (mr *MockProviderKubectlClientMockRecorder) DeleteEksaMachineConfig(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteEksaMachineConfig", reflect.TypeOf((*MockProviderKubectlClient)(nil).DeleteEksaMachineConfig), arg0, arg1, arg2, arg3, arg4)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetEksaCluster mocks base method.
 func (m *MockProviderKubectlClient) GetEksaCluster(arg0 context.Context, arg1 *types.Cluster, arg2 string) (*v1alpha1.Cluster, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetEksaCluster", arg0, arg1, arg2)
-	ret0, _ := ret[0].(*v1alpha1.Cluster)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetEksaCluster indicates an expected call of GetEksaCluster.
 func (mr *MockProviderKubectlClientMockRecorder) GetEksaCluster(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEksaCluster", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetEksaCluster), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetEksaTinkerbellDatacenterConfig mocks base method.
 func (m *MockProviderKubectlClient) GetEksaTinkerbellDatacenterConfig(arg0 context.Context, arg1, arg2, arg3 string) (*v1alpha1.TinkerbellDatacenterConfig, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetEksaTinkerbellDatacenterConfig", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(*v1alpha1.TinkerbellDatacenterConfig)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetEksaTinkerbellDatacenterConfig indicates an expected call of GetEksaTinkerbellDatacenterConfig.
 func (mr *MockProviderKubectlClientMockRecorder) GetEksaTinkerbellDatacenterConfig(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEksaTinkerbellDatacenterConfig", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetEksaTinkerbellDatacenterConfig), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetEksaTinkerbellMachineConfig mocks base method.
 func (m *MockProviderKubectlClient) GetEksaTinkerbellMachineConfig(arg0 context.Context, arg1, arg2, arg3 string) (*v1alpha1.TinkerbellMachineConfig, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetEksaTinkerbellMachineConfig", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(*v1alpha1.TinkerbellMachineConfig)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetEksaTinkerbellMachineConfig indicates an expected call of GetEksaTinkerbellMachineConfig.
 func (mr *MockProviderKubectlClientMockRecorder) GetEksaTinkerbellMachineConfig(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEksaTinkerbellMachineConfig", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetEksaTinkerbellMachineConfig), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetEtcdadmCluster mocks base method.
 func (m *MockProviderKubectlClient) GetEtcdadmCluster(arg0 context.Context, arg1 *types.Cluster, arg2 string, arg3 ...executables.KubectlOpt) (*v1beta1.EtcdadmCluster, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, arg2}
-	for _, a := range arg3 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetEtcdadmCluster", varargs...)
-	ret0, _ := ret[0].(*v1beta1.EtcdadmCluster)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetEtcdadmCluster indicates an expected call of GetEtcdadmCluster.
 func (mr *MockProviderKubectlClientMockRecorder) GetEtcdadmCluster(arg0, arg1, arg2 interface{}, arg3 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, arg2}, arg3...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEtcdadmCluster", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetEtcdadmCluster), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetKubeadmControlPlane mocks base method.
 func (m *MockProviderKubectlClient) GetKubeadmControlPlane(arg0 context.Context, arg1 *types.Cluster, arg2 string, arg3 ...executables.KubectlOpt) (*v1beta2.KubeadmControlPlane, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, arg2}
-	for _, a := range arg3 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetKubeadmControlPlane", varargs...)
-	ret0, _ := ret[0].(*v1beta2.KubeadmControlPlane)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetKubeadmControlPlane indicates an expected call of GetKubeadmControlPlane.
 func (mr *MockProviderKubectlClientMockRecorder) GetKubeadmControlPlane(arg0, arg1, arg2 interface{}, arg3 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, arg2}, arg3...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetKubeadmControlPlane", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetKubeadmControlPlane), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetMachineDeployment mocks base method.
 func (m *MockProviderKubectlClient) GetMachineDeployment(arg0 context.Context, arg1 string, arg2 ...executables.KubectlOpt) (*v1beta20.MachineDeployment, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1}
-	for _, a := range arg2 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetMachineDeployment", varargs...)
-	ret0, _ := ret[0].(*v1beta20.MachineDeployment)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetMachineDeployment indicates an expected call of GetMachineDeployment.
 func (mr *MockProviderKubectlClientMockRecorder) GetMachineDeployment(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMachineDeployment", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetMachineDeployment), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetProvisionedTinkerbellHardware mocks base method.
 func (m *MockProviderKubectlClient) GetProvisionedTinkerbellHardware(arg0 context.Context, arg1, arg2 string) ([]v1alpha10.Hardware, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetProvisionedTinkerbellHardware", arg0, arg1, arg2)
-	ret0, _ := ret[0].([]v1alpha10.Hardware)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetProvisionedTinkerbellHardware indicates an expected call of GetProvisionedTinkerbellHardware.
 func (mr *MockProviderKubectlClientMockRecorder) GetProvisionedTinkerbellHardware(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProvisionedTinkerbellHardware", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetProvisionedTinkerbellHardware), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetSecret mocks base method.
 func (m *MockProviderKubectlClient) GetSecret(arg0 context.Context, arg1 string, arg2 ...executables.KubectlOpt) (*v1.Secret, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1}
-	for _, a := range arg2 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetSecret", varargs...)
-	ret0, _ := ret[0].(*v1.Secret)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetSecret indicates an expected call of GetSecret.
 func (mr *MockProviderKubectlClientMockRecorder) GetSecret(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSecret", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetSecret), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetUnprovisionedTinkerbellHardware mocks base method.
 func (m *MockProviderKubectlClient) GetUnprovisionedTinkerbellHardware(arg0 context.Context, arg1, arg2 string) ([]v1alpha10.Hardware, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetUnprovisionedTinkerbellHardware", arg0, arg1, arg2)
-	ret0, _ := ret[0].([]v1alpha10.Hardware)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetUnprovisionedTinkerbellHardware indicates an expected call of GetUnprovisionedTinkerbellHardware.
 func (mr *MockProviderKubectlClientMockRecorder) GetUnprovisionedTinkerbellHardware(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUnprovisionedTinkerbellHardware", reflect.TypeOf((*MockProviderKubectlClient)(nil).GetUnprovisionedTinkerbellHardware), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // HasCRD mocks base method.
 func (m *MockProviderKubectlClient) HasCRD(arg0 context.Context, arg1, arg2 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "HasCRD", arg0, arg1, arg2)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // HasCRD indicates an expected call of HasCRD.
 func (mr *MockProviderKubectlClientMockRecorder) HasCRD(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasCRD", reflect.TypeOf((*MockProviderKubectlClient)(nil).HasCRD), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SearchTinkerbellDatacenterConfig mocks base method.
 func (m *MockProviderKubectlClient) SearchTinkerbellDatacenterConfig(arg0 context.Context, arg1, arg2, arg3 string) ([]*v1alpha1.TinkerbellDatacenterConfig, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SearchTinkerbellDatacenterConfig", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].([]*v1alpha1.TinkerbellDatacenterConfig)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SearchTinkerbellDatacenterConfig indicates an expected call of SearchTinkerbellDatacenterConfig.
 func (mr *MockProviderKubectlClientMockRecorder) SearchTinkerbellDatacenterConfig(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchTinkerbellDatacenterConfig", reflect.TypeOf((*MockProviderKubectlClient)(nil).SearchTinkerbellDatacenterConfig), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SearchTinkerbellMachineConfig mocks base method.
 func (m *MockProviderKubectlClient) SearchTinkerbellMachineConfig(arg0 context.Context, arg1, arg2, arg3 string) ([]*v1alpha1.TinkerbellMachineConfig, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SearchTinkerbellMachineConfig", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].([]*v1alpha1.TinkerbellMachineConfig)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // SearchTinkerbellMachineConfig indicates an expected call of SearchTinkerbellMachineConfig.
 func (mr *MockProviderKubectlClientMockRecorder) SearchTinkerbellMachineConfig(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SearchTinkerbellMachineConfig", reflect.TypeOf((*MockProviderKubectlClient)(nil).SearchTinkerbellMachineConfig), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpdateAnnotation mocks base method.
 func (m *MockProviderKubectlClient) UpdateAnnotation(arg0 context.Context, arg1, arg2 string, arg3 map[string]string, arg4 ...executables.KubectlOpt) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, arg2, arg3}
-	for _, a := range arg4 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "UpdateAnnotation", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpdateAnnotation indicates an expected call of UpdateAnnotation.
 func (mr *MockProviderKubectlClientMockRecorder) UpdateAnnotation(arg0, arg1, arg2, arg3 interface{}, arg4 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, arg2, arg3}, arg4...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateAnnotation", reflect.TypeOf((*MockProviderKubectlClient)(nil).UpdateAnnotation), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WaitForDeployment mocks base method.
 func (m *MockProviderKubectlClient) WaitForDeployment(arg0 context.Context, arg1 *types.Cluster, arg2, arg3, arg4, arg5 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WaitForDeployment", arg0, arg1, arg2, arg3, arg4, arg5)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WaitForDeployment indicates an expected call of WaitForDeployment.
 func (mr *MockProviderKubectlClientMockRecorder) WaitForDeployment(arg0, arg1, arg2, arg3, arg4, arg5 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WaitForDeployment", reflect.TypeOf((*MockProviderKubectlClient)(nil).WaitForDeployment), arg0, arg1, arg2, arg3, arg4, arg5)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WaitForRufioMachines mocks base method.
 func (m *MockProviderKubectlClient) WaitForRufioMachines(arg0 context.Context, arg1 *types.Cluster, arg2, arg3, arg4 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WaitForRufioMachines", arg0, arg1, arg2, arg3, arg4)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WaitForRufioMachines indicates an expected call of WaitForRufioMachines.
 func (mr *MockProviderKubectlClientMockRecorder) WaitForRufioMachines(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WaitForRufioMachines", reflect.TypeOf((*MockProviderKubectlClient)(nil).WaitForRufioMachines), arg0, arg1, arg2, arg3, arg4)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockSSHAuthKeyGenerator is a mock of SSHAuthKeyGenerator interface.
@@ -404,27 +321,25 @@ type MockSSHAuthKeyGeneratorMockRecorder struct {
 
 // NewMockSSHAuthKeyGenerator creates a new mock instance.
 func NewMockSSHAuthKeyGenerator(ctrl *gomock.Controller) *MockSSHAuthKeyGenerator {
-	mock := &MockSSHAuthKeyGenerator{ctrl: ctrl}
-	mock.recorder = &MockSSHAuthKeyGeneratorMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockSSHAuthKeyGenerator) EXPECT() *MockSSHAuthKeyGeneratorMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// GenerateSSHAuthKey mocks base method.
+	return nil
 }
 
-// GenerateSSHAuthKey mocks base method.
 func (m *MockSSHAuthKeyGenerator) GenerateSSHAuthKey(arg0 filewriter.FileWriter) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GenerateSSHAuthKey", arg0)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GenerateSSHAuthKey indicates an expected call of GenerateSSHAuthKey.
 func (mr *MockSSHAuthKeyGeneratorMockRecorder) GenerateSSHAuthKey(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateSSHAuthKey", reflect.TypeOf((*MockSSHAuthKeyGenerator)(nil).GenerateSSHAuthKey), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }

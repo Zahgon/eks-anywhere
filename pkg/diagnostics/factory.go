@@ -26,35 +26,31 @@ type eksaDiagnosticBundleFactory struct {
 }
 
 func NewFactory(opts EksaDiagnosticBundleFactoryOpts) *eksaDiagnosticBundleFactory {
-	return &eksaDiagnosticBundleFactory{
-		analyzerFactory:  opts.AnalyzerFactory,
-		client:           opts.Client,
-		collectorFactory: opts.CollectorFactory,
-		kubectl:          opts.Kubectl,
-		writer:           opts.Writer,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (f *eksaDiagnosticBundleFactory) DiagnosticBundle(spec *cluster.Spec, provider providers.Provider, kubeconfig string, bundlePath string, auditLogs bool) (DiagnosticBundle, error) {
-	if bundlePath == "" && spec != nil {
-		b, err := f.DiagnosticBundleWorkloadCluster(spec, provider, kubeconfig, auditLogs)
-		return b, err
-	}
-	return f.DiagnosticBundleCustom(kubeconfig, bundlePath), nil
+	_ = "STUB: not implemented"
+	return *new(DiagnosticBundle), nil
 }
 
 func (f *eksaDiagnosticBundleFactory) DiagnosticBundleManagementCluster(spec *cluster.Spec, kubeconfig string) (DiagnosticBundle, error) {
-	return newDiagnosticBundleManagementCluster(f.analyzerFactory, f.collectorFactory, spec, f.client, f.kubectl, kubeconfig, f.writer)
+	_ = "STUB: not implemented"
+	return *new(DiagnosticBundle), nil
 }
 
 func (f *eksaDiagnosticBundleFactory) DiagnosticBundleWorkloadCluster(spec *cluster.Spec, provider providers.Provider, kubeconfig string, auditLogs bool) (DiagnosticBundle, error) {
-	return newDiagnosticBundleFromSpec(f.analyzerFactory, f.collectorFactory, spec, provider, f.client, f.kubectl, kubeconfig, f.writer, auditLogs)
+	_ = "STUB: not implemented"
+	return *new(DiagnosticBundle), nil
 }
 
 func (f *eksaDiagnosticBundleFactory) DiagnosticBundleDefault() DiagnosticBundle {
-	return newDiagnosticBundleDefault(f.analyzerFactory, f.collectorFactory)
+	_ = "STUB: not implemented"
+	return *new(DiagnosticBundle)
 }
 
 func (f *eksaDiagnosticBundleFactory) DiagnosticBundleCustom(kubeconfig string, bundlePath string) DiagnosticBundle {
-	return newDiagnosticBundleCustom(f.analyzerFactory, f.collectorFactory, f.client, f.kubectl, bundlePath, kubeconfig, f.writer)
+	_ = "STUB: not implemented"
+	return *new(DiagnosticBundle)
 }

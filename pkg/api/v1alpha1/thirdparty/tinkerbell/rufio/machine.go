@@ -76,10 +76,12 @@ type MachineSpec struct {
 type ProviderName string
 
 func (p ProviderName) String() string {
-	return string(p)
+	_ = "STUB: not implemented"
+
+	// ProviderOptions hold provider specific configurable options.
+	return ""
 }
 
-// ProviderOptions hold provider specific configurable options.
 type ProviderOptions struct {
 	// PreferredOrder allows customizing the order that BMC providers are called.
 	// Providers added to this list will be moved to the front of the default order.
@@ -163,39 +165,18 @@ type MachineSetConditionOption func(*MachineCondition)
 // SetCondition applies the cType condition to bm. If the condition already exists,
 // it is updated.
 func (bm *Machine) SetCondition(cType MachineConditionType, status ConditionStatus, opts ...MachineSetConditionOption) {
-	var condition *MachineCondition
-
-	// Check if there's an existing condition.
-	for i, c := range bm.Status.Conditions {
-		if c.Type == cType {
-			condition = &bm.Status.Conditions[i]
-			break
-		}
-	}
-
-	// We didn't find an existing condition so create a new one and append it.
-	if condition == nil {
-		bm.Status.Conditions = append(bm.Status.Conditions, MachineCondition{
-			Type: cType,
-		})
-		condition = &bm.Status.Conditions[len(bm.Status.Conditions)-1]
-	}
-
-	if condition.Status != status {
-		condition.Status = status
-		condition.LastUpdateTime = metav1.Now()
-	}
-
-	for _, opt := range opts {
-		opt(condition)
-	}
+	_ = "STUB: not implemented"
+	return
 }
+
+// Check if there's an existing condition.
+
+// We didn't find an existing condition so create a new one and append it.
 
 // WithMachineConditionMessage sets message m to the MachineCondition.
 func WithMachineConditionMessage(m string) MachineSetConditionOption {
-	return func(c *MachineCondition) {
-		c.Message = m
-	}
+	_ = "STUB: not implemented"
+	return *new(MachineSetConditionOption)
 }
 
 //+kubebuilder:object:root=true

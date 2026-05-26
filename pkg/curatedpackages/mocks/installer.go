@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 	types "k8s.io/apimachinery/pkg/types"
@@ -26,29 +25,27 @@ type MockClientBuilderMockRecorder struct {
 
 // NewMockClientBuilder creates a new mock instance.
 func NewMockClientBuilder(ctrl *gomock.Controller) *MockClientBuilder {
-	mock := &MockClientBuilder{ctrl: ctrl}
-	mock.recorder = &MockClientBuilderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockClientBuilder) EXPECT() *MockClientBuilderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// GetClient mocks base method.
+	return nil
 }
 
-// GetClient mocks base method.
 func (m *MockClientBuilder) GetClient(arg0 context.Context, arg1 types.NamespacedName) (client.Client, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetClient", arg0, arg1)
-	ret0, _ := ret[0].(client.Client)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(client.Client), nil
 }
 
 // GetClient indicates an expected call of GetClient.
 func (mr *MockClientBuilderMockRecorder) GetClient(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClient", reflect.TypeOf((*MockClientBuilder)(nil).GetClient), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockChartInstaller is a mock of ChartInstaller interface.
@@ -64,28 +61,27 @@ type MockChartInstallerMockRecorder struct {
 
 // NewMockChartInstaller creates a new mock instance.
 func NewMockChartInstaller(ctrl *gomock.Controller) *MockChartInstaller {
-	mock := &MockChartInstaller{ctrl: ctrl}
-	mock.recorder = &MockChartInstallerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockChartInstaller) EXPECT() *MockChartInstallerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// InstallChart mocks base method.
+	return nil
 }
 
-// InstallChart mocks base method.
 func (m *MockChartInstaller) InstallChart(ctx context.Context, chart, ociURI, version, kubeconfigFilePath, namespace, valueFilePath string, skipCRDs bool, values []string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "InstallChart", ctx, chart, ociURI, version, kubeconfigFilePath, namespace, valueFilePath, skipCRDs, values)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // InstallChart indicates an expected call of InstallChart.
 func (mr *MockChartInstallerMockRecorder) InstallChart(ctx, chart, ociURI, version, kubeconfigFilePath, namespace, valueFilePath, skipCRDs, values interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InstallChart", reflect.TypeOf((*MockChartInstaller)(nil).InstallChart), ctx, chart, ociURI, version, kubeconfigFilePath, namespace, valueFilePath, skipCRDs, values)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockChartUninstaller is a mock of ChartUninstaller interface.
@@ -101,28 +97,27 @@ type MockChartUninstallerMockRecorder struct {
 
 // NewMockChartUninstaller creates a new mock instance.
 func NewMockChartUninstaller(ctrl *gomock.Controller) *MockChartUninstaller {
-	mock := &MockChartUninstaller{ctrl: ctrl}
-	mock.recorder = &MockChartUninstallerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockChartUninstaller) EXPECT() *MockChartUninstallerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Delete mocks base method.
+	return nil
 }
 
-// Delete mocks base method.
 func (m *MockChartUninstaller) Delete(ctx context.Context, kubeconfigFilePath, installName, namespace string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Delete", ctx, kubeconfigFilePath, installName, namespace)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Delete indicates an expected call of Delete.
 func (mr *MockChartUninstallerMockRecorder) Delete(ctx, kubeconfigFilePath, installName, namespace interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockChartUninstaller)(nil).Delete), ctx, kubeconfigFilePath, installName, namespace)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockChartManager is a mock of ChartManager interface.
@@ -138,56 +133,51 @@ type MockChartManagerMockRecorder struct {
 
 // NewMockChartManager creates a new mock instance.
 func NewMockChartManager(ctrl *gomock.Controller) *MockChartManager {
-	mock := &MockChartManager{ctrl: ctrl}
-	mock.recorder = &MockChartManagerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockChartManager) EXPECT() *MockChartManagerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Delete mocks base method.
+	return nil
 }
 
-// Delete mocks base method.
 func (m *MockChartManager) Delete(ctx context.Context, kubeconfigFilePath, installName, namespace string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Delete", ctx, kubeconfigFilePath, installName, namespace)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Delete indicates an expected call of Delete.
 func (mr *MockChartManagerMockRecorder) Delete(ctx, kubeconfigFilePath, installName, namespace interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockChartManager)(nil).Delete), ctx, kubeconfigFilePath, installName, namespace)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // InstallChart mocks base method.
 func (m *MockChartManager) InstallChart(ctx context.Context, chart, ociURI, version, kubeconfigFilePath, namespace, valueFilePath string, skipCRDs bool, values []string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "InstallChart", ctx, chart, ociURI, version, kubeconfigFilePath, namespace, valueFilePath, skipCRDs, values)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // InstallChart indicates an expected call of InstallChart.
 func (mr *MockChartManagerMockRecorder) InstallChart(ctx, chart, ociURI, version, kubeconfigFilePath, namespace, valueFilePath, skipCRDs, values interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InstallChart", reflect.TypeOf((*MockChartManager)(nil).InstallChart), ctx, chart, ociURI, version, kubeconfigFilePath, namespace, valueFilePath, skipCRDs, values)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RegistryLogin mocks base method.
 func (m *MockChartManager) RegistryLogin(ctx context.Context, registry, username, password string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RegistryLogin", ctx, registry, username, password)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RegistryLogin indicates an expected call of RegistryLogin.
 func (mr *MockChartManagerMockRecorder) RegistryLogin(ctx, registry, username, password interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RegistryLogin", reflect.TypeOf((*MockChartManager)(nil).RegistryLogin), ctx, registry, username, password)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockKubeDeleter is a mock of KubeDeleter interface.
@@ -203,31 +193,25 @@ type MockKubeDeleterMockRecorder struct {
 
 // NewMockKubeDeleter creates a new mock instance.
 func NewMockKubeDeleter(ctrl *gomock.Controller) *MockKubeDeleter {
-	mock := &MockKubeDeleter{ctrl: ctrl}
-	mock.recorder = &MockKubeDeleterMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockKubeDeleter) EXPECT() *MockKubeDeleterMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Delete mocks base method.
+	return nil
 }
 
-// Delete mocks base method.
 func (m *MockKubeDeleter) Delete(arg0 context.Context, arg1 client.Object, arg2 ...client.DeleteOption) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1}
-	for _, a := range arg2 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Delete", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Delete indicates an expected call of Delete.
 func (mr *MockKubeDeleterMockRecorder) Delete(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockKubeDeleter)(nil).Delete), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }

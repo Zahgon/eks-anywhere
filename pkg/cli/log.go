@@ -10,11 +10,7 @@ const (
 )
 
 // ValidationPassed logs a success message for a validation.
-func ValidationPassed(log logr.Logger, msg string) {
-	log.Info(markPass + msg)
-}
+func ValidationPassed(log logr.Logger, msg string) { _ = "STUB: not implemented"; return }
 
 // ValidationFailed logs an error message for a validation.
-func ValidationFailed(log logr.Logger, msg string) {
-	log.Info(markFailed + msg)
-}
+func ValidationFailed(log logr.Logger, msg string) { _ = "STUB: not implemented"; return }

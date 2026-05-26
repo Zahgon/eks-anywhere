@@ -39,17 +39,7 @@ type KubectlGetOptions struct {
 var _ KubectlGetOption = &KubectlGetOptions{}
 
 // ApplyToGet applies this configuration to the given get options.
-func (o *KubectlGetOptions) ApplyToGet(kgo *KubectlGetOptions) {
-	if o.Name != "" {
-		kgo.Name = o.Name
-	}
-	if o.Namespace != "" {
-		kgo.Namespace = o.Namespace
-	}
-	if o.ClusterScoped != nil {
-		kgo.ClusterScoped = o.ClusterScoped
-	}
-}
+func (o *KubectlGetOptions) ApplyToGet(kgo *KubectlGetOptions) { _ = "STUB: not implemented"; return }
 
 // KubectlApplyOption is some configuration that modifies options for an apply command.
 type KubectlApplyOption interface {
@@ -74,17 +64,8 @@ var _ KubectlApplyOption = KubectlApplyOptions{}
 
 // ApplyToApply applies this configuration to the given apply options.
 func (o KubectlApplyOptions) ApplyToApply(kao *KubectlApplyOptions) {
-	if o.ServerSide {
-		kao.ServerSide = true
-	}
-
-	if o.ForceOwnership {
-		kao.ForceOwnership = true
-	}
-
-	if o.FieldManager != "" {
-		kao.FieldManager = o.FieldManager
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // KubectlDeleteOption is some configuration that modifies options for a delete command.
@@ -113,13 +94,6 @@ var _ KubectlDeleteOption = &KubectlDeleteOptions{}
 
 // ApplyToDelete applies this configuration to the given delete options.
 func (o *KubectlDeleteOptions) ApplyToDelete(kdo *KubectlDeleteOptions) {
-	if o.Name != "" {
-		kdo.Name = o.Name
-	}
-	if o.Namespace != "" {
-		kdo.Namespace = o.Namespace
-	}
-	if o.HasLabels != nil {
-		kdo.HasLabels = o.HasLabels
-	}
+	_ = "STUB: not implemented"
+	return
 }

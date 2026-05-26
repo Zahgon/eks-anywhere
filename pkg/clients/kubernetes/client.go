@@ -44,11 +44,7 @@ type ListOptions struct {
 }
 
 // ApplyToList implements ApplyToList.
-func (o ListOptions) ApplyToList(do *ListOptions) {
-	if o.Namespace != "" {
-		do.Namespace = o.Namespace
-	}
-}
+func (o ListOptions) ApplyToList(do *ListOptions) { _ = "STUB: not implemented"; return }
 
 // Writer knows how to create, delete, and update Kubernetes objects.
 type Writer interface {
@@ -95,17 +91,7 @@ type PatchOptions struct {
 var _ PatchOption = &PatchOptions{}
 
 // ApplyToPatch implements PatchOption.
-func (o *PatchOptions) ApplyToPatch(po *PatchOptions) {
-	if o.FieldManager != "" {
-		po.FieldManager = o.FieldManager
-	}
-	if o.Force {
-		po.Force = true
-	}
-	if o.DryRun != nil {
-		po.DryRun = o.DryRun
-	}
-}
+func (o *PatchOptions) ApplyToPatch(po *PatchOptions) { _ = "STUB: not implemented"; return }
 
 // DeleteAllOfOption is some configuration that modifies options for a delete request.
 type DeleteAllOfOption interface {
@@ -128,12 +114,8 @@ var _ DeleteAllOfOption = &DeleteAllOfOptions{}
 
 // ApplyToDeleteAllOf implements DeleteAllOfOption.
 func (o *DeleteAllOfOptions) ApplyToDeleteAllOf(do *DeleteAllOfOptions) {
-	if o.HasLabels != nil {
-		do.HasLabels = o.HasLabels
-	}
-	if o.Namespace != "" {
-		do.Namespace = o.Namespace
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // ApplyServerSideOption is some configuration that modifies options for an apply request.
@@ -152,7 +134,6 @@ var _ ApplyServerSideOption = ApplyServerSideOptions{}
 
 // ApplyToApplyServerSide implements ApplyServerSideOption.
 func (o ApplyServerSideOptions) ApplyToApplyServerSide(do *ApplyServerSideOptions) {
-	if o.ForceOwnership {
-		do.ForceOwnership = true
-	}
+	_ = "STUB: not implemented"
+	return
 }

@@ -22,18 +22,19 @@ type ProviderClusterReconcilerRegistry struct {
 }
 
 func newClusterReconcilerRegistry() ProviderClusterReconcilerRegistry {
-	return ProviderClusterReconcilerRegistry{
-		reconcilers: map[string]ProviderClusterReconciler{},
-	}
+	_ = "STUB: not implemented"
+	return *new(ProviderClusterReconcilerRegistry)
 }
 
 func (r *ProviderClusterReconcilerRegistry) add(datacenterKind string, reconciler ProviderClusterReconciler) {
-	r.reconcilers[datacenterKind] = reconciler
+	_ = "STUB: not implemented"
+	return
 }
 
 // Get returns ProviderClusterReconciler for a particular Datacenter kind.
 func (r *ProviderClusterReconcilerRegistry) Get(datacenterKind string) ProviderClusterReconciler {
-	return r.reconcilers[datacenterKind]
+	_ = "STUB: not implemented"
+	return *new(ProviderClusterReconciler)
 }
 
 // ProviderClusterReconcilerRegistryBuilder builds ProviderClusterReconcilerRegistry's.
@@ -43,20 +44,18 @@ type ProviderClusterReconcilerRegistryBuilder struct {
 
 // NewProviderClusterReconcilerRegistryBuilder returns a new empty ProviderClusterReconcilerRegistryBuilder.
 func NewProviderClusterReconcilerRegistryBuilder() *ProviderClusterReconcilerRegistryBuilder {
-	return &ProviderClusterReconcilerRegistryBuilder{
-		reconciler: newClusterReconcilerRegistry(),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Add accumulates a pair of datacenter kind a reconciler to be included in the final registry.
 func (b *ProviderClusterReconcilerRegistryBuilder) Add(datacenterKind string, reconciler ProviderClusterReconciler) *ProviderClusterReconcilerRegistryBuilder {
-	b.reconciler.add(datacenterKind, reconciler)
-	return b
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Build returns a registry with all the previously added reconcilers.
 func (b *ProviderClusterReconcilerRegistryBuilder) Build() ProviderClusterReconcilerRegistry {
-	r := b.reconciler
-	b.reconciler = newClusterReconcilerRegistry()
-	return r
+	_ = "STUB: not implemented"
+	return *new(ProviderClusterReconcilerRegistry)
 }

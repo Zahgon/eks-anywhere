@@ -4,27 +4,23 @@ import (
 	"context"
 
 	"github.com/aws/eks-anywhere/pkg/task"
-	"github.com/aws/eks-anywhere/pkg/workflows"
 )
 
 type installProviderSpecificResources struct{}
 
 func (s *installProviderSpecificResources) Run(ctx context.Context, commandContext *task.CommandContext) task.Task {
-	if err := commandContext.Provider.PostWorkloadInit(ctx, commandContext.WorkloadCluster, commandContext.ClusterSpec); err != nil {
-		commandContext.SetError(err)
-		return &workflows.CollectDiagnosticsTask{}
-	}
-	return &moveClusterManagementTask{}
+	_ = "STUB: not implemented"
+	return *new(task.Task)
 }
 
-func (s *installProviderSpecificResources) Name() string {
-	return "install-resources-on-management-cluster"
-}
+func (s *installProviderSpecificResources) Name() string { _ = "STUB: not implemented"; return "" }
 
 func (s *installProviderSpecificResources) Restore(ctx context.Context, commandContext *task.CommandContext, completedTask *task.CompletedTask) (task.Task, error) {
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(task.Task), nil
 }
 
 func (s *installProviderSpecificResources) Checkpoint() *task.CompletedTask {
+	_ = "STUB: not implemented"
 	return nil
 }

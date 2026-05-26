@@ -17,42 +17,18 @@ type Runner[O any] struct {
 }
 
 // NewRunner constructs a new Runner.
-func NewRunner[O any]() *Runner[O] {
-	return &Runner[O]{}
-}
+func NewRunner[O any]() *Runner[O] { _ = "STUB: not implemented"; return nil }
 
 // Register adds defaults to the Runner.
-func (r *Runner[O]) Register(defaults ...Default[O]) {
-	r.defaults = append(r.defaults, defaults...)
-}
+func (r *Runner[O]) Register(defaults ...Default[O]) { _ = "STUB: not implemented"; return }
 
 // RunAll runs all defaults sequentially and returns the updated O. When there are errors,
 // it returns the zero value of O and the aggregated errors.
 func (r *Runner[O]) RunAll(ctx context.Context, obj O) (O, errors.Aggregate) {
-	var allErr []error
-	updatedObj := obj
-
-	for _, d := range r.defaults {
-		if newObj, err := d(ctx, updatedObj); err != nil {
-			allErr = append(allErr, flatten(err)...)
-		} else {
-			updatedObj = newObj
-		}
-	}
-
-	if len(allErr) != 0 {
-		return *new(O), errors.NewAggregate(allErr)
-	}
-
-	return updatedObj, nil
+	_ = "STUB: not implemented"
+	return *new(O), *new(errors.Aggregate)
 }
 
 // flatten unfolds and flattens errors inside a errors.Aggregate. If err is not
 // a errors.Aggregate, it just returns a slice with one single error.
-func flatten(err error) []error {
-	if agg, ok := err.(errors.Aggregate); ok {
-		return errors.Flatten(agg).Errors()
-	}
-
-	return []error{err}
-}
+func flatten(err error) []error { _ = "STUB: not implemented"; return nil }

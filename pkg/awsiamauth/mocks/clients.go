@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	types "github.com/aws/eks-anywhere/pkg/types"
 	gomock "github.com/golang/mock/gomock"
@@ -25,56 +24,47 @@ type MockClientMockRecorder struct {
 }
 
 // NewMockClient creates a new mock instance.
-func NewMockClient(ctrl *gomock.Controller) *MockClient {
-	mock := &MockClient{ctrl: ctrl}
-	mock.recorder = &MockClientMockRecorder{mock}
-	return mock
-}
+func NewMockClient(ctrl *gomock.Controller) *MockClient { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockClient) EXPECT() *MockClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ApplyKubeSpecFromBytes mocks base method.
+	return nil
 }
 
-// ApplyKubeSpecFromBytes mocks base method.
 func (m *MockClient) ApplyKubeSpecFromBytes(ctx context.Context, cluster *types.Cluster, data []byte) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ApplyKubeSpecFromBytes", ctx, cluster, data)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ApplyKubeSpecFromBytes indicates an expected call of ApplyKubeSpecFromBytes.
 func (mr *MockClientMockRecorder) ApplyKubeSpecFromBytes(ctx, cluster, data interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ApplyKubeSpecFromBytes", reflect.TypeOf((*MockClient)(nil).ApplyKubeSpecFromBytes), ctx, cluster, data)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetApiServerUrl mocks base method.
 func (m *MockClient) GetApiServerUrl(ctx context.Context, cluster *types.Cluster) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetApiServerUrl", ctx, cluster)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GetApiServerUrl indicates an expected call of GetApiServerUrl.
 func (mr *MockClientMockRecorder) GetApiServerUrl(ctx, cluster interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetApiServerUrl", reflect.TypeOf((*MockClient)(nil).GetApiServerUrl), ctx, cluster)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetObject mocks base method.
 func (m *MockClient) GetObject(ctx context.Context, resourceType, name, namespace, kubeconfig string, obj runtime.Object) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetObject", ctx, resourceType, name, namespace, kubeconfig, obj)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetObject indicates an expected call of GetObject.
 func (mr *MockClientMockRecorder) GetObject(ctx, resourceType, name, namespace, kubeconfig, obj interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetObject", reflect.TypeOf((*MockClient)(nil).GetObject), ctx, resourceType, name, namespace, kubeconfig, obj)
+	_ = "STUB: not implemented"
+	return nil
 }

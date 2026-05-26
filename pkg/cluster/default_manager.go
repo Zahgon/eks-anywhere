@@ -10,28 +10,6 @@ func init() {
 	}
 }
 
-func manager() *ConfigManager {
-	return defaultManager
-}
+func manager() *ConfigManager { _ = "STUB: not implemented"; return nil }
 
-func NewDefaultConfigManager() (*ConfigManager, error) {
-	m := NewConfigManager()
-	err := m.Register(
-		clusterEntry(),
-		oidcEntry(),
-		awsIamEntry(),
-		gitOpsEntry(),
-		fluxEntry(),
-		vsphereEntry(),
-		cloudstackEntry(),
-		dockerEntry(),
-		snowEntry(),
-		tinkerbellEntry(),
-		nutanixEntry(),
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	return m, nil
-}
+func NewDefaultConfigManager() (*ConfigManager, error) { _ = "STUB: not implemented"; return nil, nil }

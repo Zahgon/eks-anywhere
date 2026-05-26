@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/go-logr/logr"
-	"github.com/pkg/errors"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
@@ -25,28 +24,15 @@ type IPValidator struct {
 
 // NewIPValidator returns a new NewIPValidator.
 func NewIPValidator(ipUniquenessValidator IPUniquenessValidator, client client.Client) *IPValidator {
-	return &IPValidator{
-		ipUniquenessValidator: ipUniquenessValidator,
-		client:                client,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateControlPlaneIP only validates IP on cluster creation.
 func (i *IPValidator) ValidateControlPlaneIP(ctx context.Context, log logr.Logger, spec *cluster.Spec) (controller.Result, error) {
-	capiCluster, err := controller.GetCAPICluster(ctx, i.client, spec.Cluster)
-	if err != nil {
-		return controller.Result{}, errors.Wrap(err, "validating control plane IP")
-	}
-	if capiCluster != nil {
-		// If CAPI cluster exists, the control plane IP has already been validated,
-		// and it's possibly already in use so no need to validate it again
-		log.Info("CAPI cluster already exists, skipping control plane IP validation")
-		return controller.Result{}, nil
-	}
-	if err := i.ipUniquenessValidator.ValidateControlPlaneIPUniqueness(spec.Cluster); err != nil {
-		spec.Cluster.SetFailure(anywherev1.UnavailableControlPlaneIPReason, err.Error())
-		log.Error(err, "Unavailable control plane IP")
-		return controller.ResultWithReturn(), nil
-	}
-	return controller.Result{}, nil
+	_ = "STUB: not implemented"
+	return *new(controller.Result), nil
 }
+
+// If CAPI cluster exists, the control plane IP has already been validated,
+// and it's possibly already in use so no need to validate it again

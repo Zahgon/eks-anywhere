@@ -8,14 +8,12 @@ import (
 )
 
 func (p *Provider) SetupAndValidateDeleteCluster(ctx context.Context, cluster *types.Cluster, _ *cluster.Spec) error {
+	_ = "STUB: not implemented"
 	// noop
 	return nil
 }
 
 func (p *Provider) PostClusterDeleteValidate(ctx context.Context, managementCluster *types.Cluster) error {
-	if err := p.stackInstaller.UninstallLocal(ctx); err != nil {
-		return err
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }

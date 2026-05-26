@@ -2,14 +2,10 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
-	"github.com/spf13/viper"
 
-	"github.com/aws/eks-anywhere/internal/test/cleanup"
 	"github.com/aws/eks-anywhere/pkg/logger"
 )
 
@@ -33,14 +29,7 @@ var cleanUpAwsCmd = &cobra.Command{
 	},
 }
 
-func preRunCleanUpAwsSetup(cmd *cobra.Command, args []string) {
-	cmd.Flags().VisitAll(func(flag *pflag.Flag) {
-		err := viper.BindPFlag(flag.Name, flag)
-		if err != nil {
-			log.Fatalf("Error initializing flags: %v", err)
-		}
-	})
-}
+func preRunCleanUpAwsSetup(cmd *cobra.Command, args []string) { _ = "STUB: not implemented"; return }
 
 var requiredAwsCleanUpFlags = []string{storageBucketFlagName, maxAgeFlagName, tagFlagName}
 
@@ -57,15 +46,4 @@ func init() {
 	}
 }
 
-func cleanUpAwsTestResources(ctx context.Context) error {
-	maxAge := viper.GetString(maxAgeFlagName)
-	storageBucket := viper.GetString(storageBucketFlagName)
-	tag := viper.GetString(tagFlagName)
-
-	err := cleanup.CleanUpAwsTestResources(storageBucket, maxAge, tag)
-	if err != nil {
-		return fmt.Errorf("running cleanup for aws test resources: %v", err)
-	}
-
-	return nil
-}
+func cleanUpAwsTestResources(ctx context.Context) error { _ = "STUB: not implemented"; return nil }

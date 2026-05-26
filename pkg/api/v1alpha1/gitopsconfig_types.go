@@ -59,15 +59,7 @@ type GitOpsConfigGenerate struct {
 	Spec GitOpsConfigSpec `json:"spec,omitempty"`
 }
 
-func (e *GitOpsConfigSpec) Equal(n *GitOpsConfigSpec) bool {
-	if e == n {
-		return true
-	}
-	if e == nil || n == nil {
-		return false
-	}
-	return e.Flux == n.Flux
-}
+func (e *GitOpsConfigSpec) Equal(n *GitOpsConfigSpec) bool { _ = "STUB: not implemented"; return false }
 
 //+kubebuilder:object:root=true
 
@@ -78,66 +70,20 @@ type GitOpsConfigList struct {
 	Items           []GitOpsConfig `json:"items"`
 }
 
-func (c *GitOpsConfig) Kind() string {
-	return c.TypeMeta.Kind
-}
+func (c *GitOpsConfig) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (c *GitOpsConfig) ExpectedKind() string {
-	return GitOpsConfigKind
-}
+func (c *GitOpsConfig) ExpectedKind() string { _ = "STUB: not implemented"; return "" }
 
-func (c *GitOpsConfig) ConvertToFluxConfig() *FluxConfig {
-	if c == nil {
-		return nil
-	}
-	config := &FluxConfig{
-		TypeMeta: metav1.TypeMeta{
-			Kind:       FluxConfigKind,
-			APIVersion: c.APIVersion,
-		},
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      c.Name,
-			Namespace: c.Namespace,
-		},
-		Spec: FluxConfigSpec{
-			SystemNamespace:   c.Spec.Flux.Github.FluxSystemNamespace,
-			Branch:            c.Spec.Flux.Github.Branch,
-			ClusterConfigPath: c.Spec.Flux.Github.ClusterConfigPath,
-			Github: &GithubProviderConfig{
-				Owner:      c.Spec.Flux.Github.Owner,
-				Repository: c.Spec.Flux.Github.Repository,
-				Personal:   c.Spec.Flux.Github.Personal,
-			},
-		},
-	}
-	return config
-}
+func (c *GitOpsConfig) ConvertToFluxConfig() *FluxConfig { _ = "STUB: not implemented"; return nil }
 
 func (c *GitOpsConfig) ConvertConfigToConfigGenerateStruct() *GitOpsConfigGenerate {
-	namespace := defaultEksaNamespace
-	if c.Namespace != "" {
-		namespace = c.Namespace
-	}
-	config := &GitOpsConfigGenerate{
-		TypeMeta: c.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        c.Name,
-			Annotations: c.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: c.Spec,
-	}
-
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (c *GitOpsConfig) Validate() error {
-	return validateGitOpsConfig(c)
-}
+func (c *GitOpsConfig) Validate() error { _ = "STUB: not implemented"; return nil }
 
-func (c *GitOpsConfig) SetDefaults() {
-	setGitOpsConfigDefaults(c)
-}
+func (c *GitOpsConfig) SetDefaults() { _ = "STUB: not implemented"; return }
 
 func init() {
 	SchemeBuilder.Register(&GitOpsConfig{}, &GitOpsConfigList{})

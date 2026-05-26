@@ -1,7 +1,6 @@
 package v1alpha1
 
 import (
-	"github.com/pkg/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	snowv1 "github.com/aws/eks-anywhere/pkg/providers/snow/api/v1beta1"
@@ -91,18 +90,16 @@ type SnowDirectNetworkInterface struct {
 	Primary bool `json:"primary,omitempty"`
 }
 
-func (s *SnowMachineConfig) SetManagedBy(clusterName string) {
-	if s.Annotations == nil {
-		s.Annotations = map[string]string{}
-	}
-	s.Annotations[managementAnnotation] = clusterName
-}
+func (s *SnowMachineConfig) SetManagedBy(clusterName string) { _ = "STUB: not implemented"; return }
 
 func (s *SnowMachineConfig) OSFamily() OSFamily {
-	return s.Spec.OSFamily
+	_ = "STUB: not implemented"
+	return *
+
+	// SnowMachineConfigStatus defines the observed state of SnowMachineConfig.
+	new(OSFamily)
 }
 
-// SnowMachineConfigStatus defines the observed state of SnowMachineConfig.
 type SnowMachineConfigStatus struct {
 	// SpecValid is set to true if vspheredatacenterconfig is validated.
 	SpecValid bool `json:"specValid,omitempty"`
@@ -125,50 +122,21 @@ type SnowMachineConfig struct {
 	Status SnowMachineConfigStatus `json:"status,omitempty"`
 }
 
-func (s *SnowMachineConfig) SetDefaults() {
-	setSnowMachineConfigDefaults(s)
-}
+func (s *SnowMachineConfig) SetDefaults() { _ = "STUB: not implemented"; return }
 
-func (s *SnowMachineConfig) Validate() error {
-	return validateSnowMachineConfig(s)
-}
+func (s *SnowMachineConfig) Validate() error { _ = "STUB: not implemented"; return nil }
 
 // ValidateHasSSHKeyName verifies a SnowMachineConfig object must have a SshKeyName.
 // This validation only runs in SnowMachineConfig validation webhook, as we support
 // auto-generate and import ssh key when creating a cluster via CLI.
-func (s *SnowMachineConfig) ValidateHasSSHKeyName() error {
-	if len(s.Spec.SshKeyName) <= 0 {
-		return errors.New("SnowMachineConfig SshKeyName must not be empty")
-	}
-	return nil
-}
+func (s *SnowMachineConfig) ValidateHasSSHKeyName() error { _ = "STUB: not implemented"; return nil }
 
-func (s *SnowMachineConfig) SetControlPlaneAnnotation() {
-	if s.Annotations == nil {
-		s.Annotations = map[string]string{}
-	}
+func (s *SnowMachineConfig) SetControlPlaneAnnotation() { _ = "STUB: not implemented"; return }
 
-	s.Annotations[controlPlaneAnnotation] = "true"
-}
-
-func (s *SnowMachineConfig) SetEtcdAnnotation() {
-	if s.Annotations == nil {
-		s.Annotations = map[string]string{}
-	}
-
-	s.Annotations[etcdAnnotation] = "true"
-}
+func (s *SnowMachineConfig) SetEtcdAnnotation() { _ = "STUB: not implemented"; return }
 
 // IPPoolRefs returns a slice of snow IP pools that belongs to a snowMachineConfig.
-func (s *SnowMachineConfig) IPPoolRefs() []Ref {
-	ipPoolRefMap := make(refSet, 1)
-
-	for _, dni := range s.Spec.Network.DirectNetworkInterfaces {
-		ipPoolRefMap.addIfNotNil(dni.IPPoolRef)
-	}
-
-	return ipPoolRefMap.toSlice()
-}
+func (s *SnowMachineConfig) IPPoolRefs() []Ref { _ = "STUB: not implemented"; return nil }
 
 // +kubebuilder:object:generate=false
 
@@ -181,25 +149,13 @@ type SnowMachineConfigGenerate struct {
 }
 
 func (s *SnowMachineConfig) ConvertConfigToConfigGenerateStruct() *SnowMachineConfigGenerate {
-	namespace := defaultEksaNamespace
-	if s.Namespace != "" {
-		namespace = s.Namespace
-	}
-	config := &SnowMachineConfigGenerate{
-		TypeMeta: s.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        s.Name,
-			Annotations: s.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: s.Spec,
-	}
-
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (s *SnowMachineConfig) Marshallable() Marshallable {
-	return s.ConvertConfigToConfigGenerateStruct()
+	_ = "STUB: not implemented"
+	return *new(Marshallable)
 }
 
 //+kubebuilder:object:root=true

@@ -1,8 +1,6 @@
 package v1alpha1
 
 import (
-	"fmt"
-
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -36,62 +34,24 @@ type SnowDatacenterConfig struct {
 	Status SnowDatacenterConfigStatus `json:"status,omitempty"`
 }
 
-func (s *SnowDatacenterConfig) Kind() string {
-	return s.TypeMeta.Kind
-}
+func (s *SnowDatacenterConfig) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (s *SnowDatacenterConfig) ExpectedKind() string {
-	return SnowDatacenterKind
-}
+func (s *SnowDatacenterConfig) ExpectedKind() string { _ = "STUB: not implemented"; return "" }
 
-func (s *SnowDatacenterConfig) PauseReconcile() {
-	if s.Annotations == nil {
-		s.Annotations = map[string]string{}
-	}
-	s.Annotations[pausedAnnotation] = "true"
-}
+func (s *SnowDatacenterConfig) PauseReconcile() { _ = "STUB: not implemented"; return }
 
-func (s *SnowDatacenterConfig) ClearPauseAnnotation() {
-	if s.Annotations != nil {
-		delete(s.Annotations, pausedAnnotation)
-	}
-}
+func (s *SnowDatacenterConfig) ClearPauseAnnotation() { _ = "STUB: not implemented"; return }
 
-func (s *SnowDatacenterConfig) Validate() error {
-	if len(s.Spec.IdentityRef.Name) == 0 {
-		return fmt.Errorf("SnowDatacenterConfig IdentityRef name must not be empty")
-	}
+func (s *SnowDatacenterConfig) Validate() error { _ = "STUB: not implemented"; return nil }
 
-	if len(s.Spec.IdentityRef.Kind) == 0 {
-		return fmt.Errorf("SnowDatacenterConfig IdentityRef kind must not be empty")
-	}
-
-	if s.Spec.IdentityRef.Kind != SnowIdentityKind {
-		return fmt.Errorf("SnowDatacenterConfig IdentityRef kind %s is invalid, the only supported kind is %s", s.Spec.IdentityRef.Kind, SnowIdentityKind)
-	}
+func (s *SnowDatacenterConfig) ConvertConfigToConfigGenerateStruct() *SnowDatacenterConfigGenerate {
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (s *SnowDatacenterConfig) ConvertConfigToConfigGenerateStruct() *SnowDatacenterConfigGenerate {
-	namespace := defaultEksaNamespace
-	if s.Namespace != "" {
-		namespace = s.Namespace
-	}
-	config := &SnowDatacenterConfigGenerate{
-		TypeMeta: s.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        s.Name,
-			Annotations: s.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: s.Spec,
-	}
-
-	return config
-}
-
 func (s *SnowDatacenterConfig) Marshallable() Marshallable {
-	return s.ConvertConfigToConfigGenerateStruct()
+	_ = "STUB: not implemented"
+	return *new(Marshallable)
 }
 
 // +kubebuilder:object:generate=false

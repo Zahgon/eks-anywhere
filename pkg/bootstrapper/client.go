@@ -2,7 +2,6 @@ package bootstrapper
 
 import (
 	"context"
-	"time"
 
 	"github.com/aws/eks-anywhere/pkg/cluster"
 	"github.com/aws/eks-anywhere/pkg/retrier"
@@ -34,9 +33,8 @@ type RetrierClientOpt func(*RetrierClient)
 
 // WithRetrierClientRetrier allows to use a custom retrier.
 func WithRetrierClientRetrier(retrier retrier.Retrier) RetrierClientOpt {
-	return func(u *RetrierClient) {
-		u.retrier = retrier
-	}
+	_ = "STUB: not implemented"
+	return *new(RetrierClientOpt)
 }
 
 // RetrierClient wraps kind and kubernetes APIs around a retrier.
@@ -48,102 +46,48 @@ type RetrierClient struct {
 
 // NewRetrierClient constructs a new RetrierClient.
 func NewRetrierClient(kind KindClient, k8s KubernetesClient, opts ...RetrierClientOpt) RetrierClient {
-	c := &RetrierClient{
-		k8s:        k8s,
-		KindClient: kind,
-		retrier:    *retrier.NewWithMaxRetries(10, 5*time.Second),
-	}
-
-	for _, opt := range opts {
-		opt(c)
-	}
-
-	return *c
+	_ = "STUB: not implemented"
+	return *new(RetrierClient)
 }
 
 // Apply creates/updates the data objects for a cluster.
 func (c RetrierClient) Apply(ctx context.Context, cluster *types.Cluster, data []byte) error {
-	return c.retrier.Retry(
-		func() error {
-			return c.k8s.ApplyKubeSpecFromBytes(ctx, cluster, data)
-		},
-	)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateNamespace creates a namespace if the namespace does not exist.
 func (c RetrierClient) CreateNamespace(ctx context.Context, kubeconfig, namespace string) error {
-	return c.retrier.Retry(
-		func() error {
-			return c.k8s.CreateNamespaceIfNotPresent(ctx, kubeconfig, namespace)
-		},
-	)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetCAPIClusterCRD gets the capi cluster crd in a K8s cluster.
 func (c RetrierClient) GetCAPIClusterCRD(ctx context.Context, cluster *types.Cluster) error {
-	return c.retrier.Retry(
-		func() error {
-			return c.k8s.ValidateClustersCRD(ctx, cluster)
-		},
-	)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetCAPIClusters gets all the capi clusters in a K8s cluster.
 func (c RetrierClient) GetCAPIClusters(ctx context.Context, cluster *types.Cluster) ([]types.CAPICluster, error) {
-	clusters := []types.CAPICluster{}
-	err := c.retrier.Retry(
-		func() error {
-			var err error
-			clusters, err = c.k8s.GetClusters(ctx, cluster)
-			return err
-		},
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	return clusters, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // KindClusterExists checks whether a kind cluster exists by a cluster name.
 func (c RetrierClient) KindClusterExists(ctx context.Context, clusterName string) (bool, error) {
-	var exists bool
-	err := c.retrier.Retry(
-		func() error {
-			var err error
-			exists, err = c.KindClient.ClusterExists(ctx, clusterName)
-			return err
-		},
-	)
-	if err != nil {
-		return false, err
-	}
-
-	return exists, nil
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // GetKindClusterKubeconfig gets the kubeconfig for a kind cluster by cluster name.
 func (c RetrierClient) GetKindClusterKubeconfig(ctx context.Context, clusterName string) (string, error) {
-	var kubeconfig string
-	err := c.retrier.Retry(
-		func() error {
-			var err error
-			kubeconfig, err = c.KindClient.GetKubeconfig(ctx, clusterName)
-			return err
-		},
-	)
-	if err != nil {
-		return "", err
-	}
-
-	return kubeconfig, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // DeleteKindCluster deletes a kind cluster by cluster name.
 func (c RetrierClient) DeleteKindCluster(ctx context.Context, cluster *types.Cluster) error {
-	return c.retrier.Retry(
-		func() error {
-			return c.KindClient.DeleteBootstrapCluster(ctx, cluster)
-		},
-	)
+	_ = "STUB: not implemented"
+	return nil
 }

@@ -7,7 +7,6 @@ package mocks
 import (
 	bytes "bytes"
 	context "context"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 	runtime "k8s.io/apimachinery/pkg/runtime"
@@ -26,81 +25,61 @@ type MockKubectlRunnerMockRecorder struct {
 
 // NewMockKubectlRunner creates a new mock instance.
 func NewMockKubectlRunner(ctrl *gomock.Controller) *MockKubectlRunner {
-	mock := &MockKubectlRunner{ctrl: ctrl}
-	mock.recorder = &MockKubectlRunnerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockKubectlRunner) EXPECT() *MockKubectlRunnerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ExecuteCommand mocks base method.
+	return nil
 }
 
-// ExecuteCommand mocks base method.
 func (m *MockKubectlRunner) ExecuteCommand(ctx context.Context, opts ...string) (bytes.Buffer, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "ExecuteCommand", varargs...)
-	ret0, _ := ret[0].(bytes.Buffer)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(bytes.Buffer), nil
 }
 
 // ExecuteCommand indicates an expected call of ExecuteCommand.
 func (mr *MockKubectlRunnerMockRecorder) ExecuteCommand(ctx interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExecuteCommand", reflect.TypeOf((*MockKubectlRunner)(nil).ExecuteCommand), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ExecuteFromYaml mocks base method.
 func (m *MockKubectlRunner) ExecuteFromYaml(ctx context.Context, yaml []byte, opts ...string) (bytes.Buffer, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, yaml}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "ExecuteFromYaml", varargs...)
-	ret0, _ := ret[0].(bytes.Buffer)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(bytes.Buffer), nil
 }
 
 // ExecuteFromYaml indicates an expected call of ExecuteFromYaml.
 func (mr *MockKubectlRunnerMockRecorder) ExecuteFromYaml(ctx, yaml interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, yaml}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExecuteFromYaml", reflect.TypeOf((*MockKubectlRunner)(nil).ExecuteFromYaml), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetObject mocks base method.
 func (m *MockKubectlRunner) GetObject(ctx context.Context, resourceType, name, namespece, kubeconfig string, obj runtime.Object) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetObject", ctx, resourceType, name, namespece, kubeconfig, obj)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetObject indicates an expected call of GetObject.
 func (mr *MockKubectlRunnerMockRecorder) GetObject(ctx, resourceType, name, namespece, kubeconfig, obj interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetObject", reflect.TypeOf((*MockKubectlRunner)(nil).GetObject), ctx, resourceType, name, namespece, kubeconfig, obj)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // HasResource mocks base method.
 func (m *MockKubectlRunner) HasResource(ctx context.Context, resourceType, name, kubeconfig, namespace string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "HasResource", ctx, resourceType, name, kubeconfig, namespace)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // HasResource indicates an expected call of HasResource.
 func (mr *MockKubectlRunnerMockRecorder) HasResource(ctx, resourceType, name, kubeconfig, namespace interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasResource", reflect.TypeOf((*MockKubectlRunner)(nil).HasResource), ctx, resourceType, name, kubeconfig, namespace)
+	_ = "STUB: not implemented"
+	return nil
 }

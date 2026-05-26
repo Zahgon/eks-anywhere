@@ -3,10 +3,11 @@
 package endpoints
 
 import (
+	"regexp"
+
 	"github.com/aws/aws-sdk-go-v2/aws"
 	endpoints "github.com/aws/eks-anywhere/internal/aws-sdk-go-v2/internal/endpoints/v2"
 	"github.com/aws/smithy-go/logging"
-	"regexp"
 )
 
 // Options is the endpoint resolver configuration options
@@ -35,31 +36,23 @@ type Options struct {
 	UseFIPSEndpoint aws.FIPSEndpointState
 }
 
-func (o Options) GetResolvedRegion() string {
-	return o.ResolvedRegion
-}
+func (o Options) GetResolvedRegion() string { _ = "STUB: not implemented"; return "" }
 
-func (o Options) GetDisableHTTPS() bool {
-	return o.DisableHTTPS
-}
+func (o Options) GetDisableHTTPS() bool { _ = "STUB: not implemented"; return false }
 
 func (o Options) GetUseDualStackEndpoint() aws.DualStackEndpointState {
-	return o.UseDualStackEndpoint
+	_ = "STUB: not implemented"
+	return *new(aws.DualStackEndpointState)
 }
 
 func (o Options) GetUseFIPSEndpoint() aws.FIPSEndpointState {
-	return o.UseFIPSEndpoint
+	_ = "STUB: not implemented"
+	return *new(aws.FIPSEndpointState)
 }
 
 func transformToSharedOptions(options Options) endpoints.Options {
-	return endpoints.Options{
-		Logger:               options.Logger,
-		LogDeprecated:        options.LogDeprecated,
-		ResolvedRegion:       options.ResolvedRegion,
-		DisableHTTPS:         options.DisableHTTPS,
-		UseDualStackEndpoint: options.UseDualStackEndpoint,
-		UseFIPSEndpoint:      options.UseFIPSEndpoint,
-	}
+	_ = "STUB: not implemented"
+	return *new(endpoints.Options)
 }
 
 // Resolver Snowball Device endpoint resolver
@@ -69,20 +62,12 @@ type Resolver struct {
 
 // ResolveEndpoint resolves the service endpoint for the given region and options
 func (r *Resolver) ResolveEndpoint(region string, options Options) (endpoint aws.Endpoint, err error) {
-	if len(region) == 0 {
-		return endpoint, &aws.MissingRegionError{}
-	}
-
-	opt := transformToSharedOptions(options)
-	return r.partitions.ResolveEndpoint(region, opt)
+	_ = "STUB: not implemented"
+	return *new(aws.Endpoint), nil
 }
 
 // New returns a new Resolver
-func New() *Resolver {
-	return &Resolver{
-		partitions: defaultPartitions,
-	}
-}
+func New() *Resolver { _ = "STUB: not implemented"; return nil }
 
 var partitionRegexp = struct {
 	Aws      *regexp.Regexp

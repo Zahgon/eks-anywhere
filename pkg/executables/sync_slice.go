@@ -7,29 +7,8 @@ type syncSlice struct {
 	sync.RWMutex
 }
 
-func newSyncSlice() *syncSlice {
-	return &syncSlice{
-		internal: []string{},
-	}
-}
+func newSyncSlice() *syncSlice { _ = "STUB: not implemented"; return nil }
 
-func (s *syncSlice) append(v ...string) {
-	s.Lock()
-	defer s.Unlock()
-	s.internal = append(s.internal, v...)
-}
+func (s *syncSlice) append(v ...string) { _ = "STUB: not implemented"; return }
 
-func (s *syncSlice) iterate() <-chan string {
-	c := make(chan string)
-
-	go func() {
-		s.RLock()
-		defer s.RUnlock()
-		defer close(c)
-		for _, v := range s.internal {
-			c <- v
-		}
-	}()
-
-	return c
-}
+func (s *syncSlice) iterate() <-chan string { _ = "STUB: not implemented"; return nil }

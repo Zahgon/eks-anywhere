@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	executables "github.com/aws/eks-anywhere/pkg/executables"
 	gomock "github.com/golang/mock/gomock"
@@ -25,84 +24,73 @@ type MockGovcClientMockRecorder struct {
 
 // NewMockGovcClient creates a new mock instance.
 func NewMockGovcClient(ctrl *gomock.Controller) *MockGovcClient {
-	mock := &MockGovcClient{ctrl: ctrl}
-	mock.recorder = &MockGovcClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockGovcClient) EXPECT() *MockGovcClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AddTag mocks base method.
+	return nil
 }
 
-// AddTag mocks base method.
 func (m *MockGovcClient) AddTag(ctx context.Context, path, tag string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AddTag", ctx, path, tag)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AddTag indicates an expected call of AddTag.
 func (mr *MockGovcClientMockRecorder) AddTag(ctx, path, tag interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddTag", reflect.TypeOf((*MockGovcClient)(nil).AddTag), ctx, path, tag)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateCategoryForVM mocks base method.
 func (m *MockGovcClient) CreateCategoryForVM(ctx context.Context, name string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateCategoryForVM", ctx, name)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateCategoryForVM indicates an expected call of CreateCategoryForVM.
 func (mr *MockGovcClientMockRecorder) CreateCategoryForVM(ctx, name interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateCategoryForVM", reflect.TypeOf((*MockGovcClient)(nil).CreateCategoryForVM), ctx, name)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateTag mocks base method.
 func (m *MockGovcClient) CreateTag(ctx context.Context, tag, category string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateTag", ctx, tag, category)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateTag indicates an expected call of CreateTag.
 func (mr *MockGovcClientMockRecorder) CreateTag(ctx, tag, category interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTag", reflect.TypeOf((*MockGovcClient)(nil).CreateTag), ctx, tag, category)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ListCategories mocks base method.
 func (m *MockGovcClient) ListCategories(ctx context.Context) ([]string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListCategories", ctx)
-	ret0, _ := ret[0].([]string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListCategories indicates an expected call of ListCategories.
 func (mr *MockGovcClientMockRecorder) ListCategories(ctx interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListCategories", reflect.TypeOf((*MockGovcClient)(nil).ListCategories), ctx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ListTags mocks base method.
 func (m *MockGovcClient) ListTags(ctx context.Context) ([]executables.Tag, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListTags", ctx)
-	ret0, _ := ret[0].([]executables.Tag)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ListTags indicates an expected call of ListTags.
 func (mr *MockGovcClientMockRecorder) ListTags(ctx interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTags", reflect.TypeOf((*MockGovcClient)(nil).ListTags), ctx)
+	_ = "STUB: not implemented"
+	return nil
 }

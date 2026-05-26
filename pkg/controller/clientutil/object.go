@@ -5,10 +5,6 @@ import (
 )
 
 func ObjectsToClientObjects[T client.Object](objs []T) []client.Object {
-	runtimeObjs := make([]client.Object, 0, len(objs))
-	for _, o := range objs {
-		runtimeObjs = append(runtimeObjs, o)
-	}
-
-	return runtimeObjs
+	_ = "STUB: not implemented"
+	return nil
 }

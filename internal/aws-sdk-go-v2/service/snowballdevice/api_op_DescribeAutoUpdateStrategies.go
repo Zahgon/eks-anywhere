@@ -4,27 +4,15 @@ package snowballdevice
 
 import (
 	"context"
-	"fmt"
+
 	awsmiddleware "github.com/aws/aws-sdk-go-v2/aws/middleware"
-	"github.com/aws/aws-sdk-go-v2/aws/signer/v4"
 	"github.com/aws/eks-anywhere/internal/aws-sdk-go-v2/service/snowballdevice/types"
 	"github.com/aws/smithy-go/middleware"
-	smithyhttp "github.com/aws/smithy-go/transport/http"
 )
 
 func (c *Client) DescribeAutoUpdateStrategies(ctx context.Context, params *DescribeAutoUpdateStrategiesInput, optFns ...func(*Options)) (*DescribeAutoUpdateStrategiesOutput, error) {
-	if params == nil {
-		params = &DescribeAutoUpdateStrategiesInput{}
-	}
-
-	result, metadata, err := c.invokeOperation(ctx, "DescribeAutoUpdateStrategies", params, optFns, c.addOperationDescribeAutoUpdateStrategiesMiddlewares)
-	if err != nil {
-		return nil, err
-	}
-
-	out := result.(*DescribeAutoUpdateStrategiesOutput)
-	out.ResultMetadata = metadata
-	return out, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type DescribeAutoUpdateStrategiesInput struct {
@@ -45,78 +33,7 @@ type DescribeAutoUpdateStrategiesOutput struct {
 }
 
 func (c *Client) addOperationDescribeAutoUpdateStrategiesMiddlewares(stack *middleware.Stack, options Options) (err error) {
-	if err := stack.Serialize.Add(&setOperationInputMiddleware{}, middleware.After); err != nil {
-		return err
-	}
-	err = stack.Serialize.Add(&awsAwsjson11_serializeOpDescribeAutoUpdateStrategies{}, middleware.After)
-	if err != nil {
-		return err
-	}
-	err = stack.Deserialize.Add(&awsAwsjson11_deserializeOpDescribeAutoUpdateStrategies{}, middleware.After)
-	if err != nil {
-		return err
-	}
-	if err := addProtocolFinalizerMiddlewares(stack, options, "DescribeAutoUpdateStrategies"); err != nil {
-		return fmt.Errorf("add protocol finalizers: %v", err)
-	}
-
-	if err = addlegacyEndpointContextSetter(stack, options); err != nil {
-		return err
-	}
-	if err = addSetLoggerMiddleware(stack, options); err != nil {
-		return err
-	}
-	if err = awsmiddleware.AddClientRequestIDMiddleware(stack); err != nil {
-		return err
-	}
-	if err = smithyhttp.AddComputeContentLengthMiddleware(stack); err != nil {
-		return err
-	}
-	if err = addResolveEndpointMiddleware(stack, options); err != nil {
-		return err
-	}
-	if err = v4.AddComputePayloadSHA256Middleware(stack); err != nil {
-		return err
-	}
-	if err = addRetryMiddlewares(stack, options); err != nil {
-		return err
-	}
-	if err = awsmiddleware.AddRawResponseToMetadata(stack); err != nil {
-		return err
-	}
-	if err = awsmiddleware.AddRecordResponseTiming(stack); err != nil {
-		return err
-	}
-	if err = addClientUserAgent(stack, options); err != nil {
-		return err
-	}
-	if err = smithyhttp.AddErrorCloseResponseBodyMiddleware(stack); err != nil {
-		return err
-	}
-	if err = smithyhttp.AddCloseResponseBodyMiddleware(stack); err != nil {
-		return err
-	}
-	if err = addSetLegacyContextSigningOptionsMiddleware(stack); err != nil {
-		return err
-	}
-	if err = stack.Initialize.Add(newServiceMetadataMiddleware_opDescribeAutoUpdateStrategies(options.Region), middleware.Before); err != nil {
-		return err
-	}
-	if err = awsmiddleware.AddRecursionDetection(stack); err != nil {
-		return err
-	}
-	if err = addRequestIDRetrieverMiddleware(stack); err != nil {
-		return err
-	}
-	if err = addResponseErrorMiddleware(stack); err != nil {
-		return err
-	}
-	if err = addRequestResponseLogging(stack, options); err != nil {
-		return err
-	}
-	if err = addDisableHTTPSMiddleware(stack, options); err != nil {
-		return err
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -149,62 +66,23 @@ type DescribeAutoUpdateStrategiesPaginator struct {
 // NewDescribeAutoUpdateStrategiesPaginator returns a new
 // DescribeAutoUpdateStrategiesPaginator
 func NewDescribeAutoUpdateStrategiesPaginator(client DescribeAutoUpdateStrategiesAPIClient, params *DescribeAutoUpdateStrategiesInput, optFns ...func(*DescribeAutoUpdateStrategiesPaginatorOptions)) *DescribeAutoUpdateStrategiesPaginator {
-	if params == nil {
-		params = &DescribeAutoUpdateStrategiesInput{}
-	}
-
-	options := DescribeAutoUpdateStrategiesPaginatorOptions{}
-
-	for _, fn := range optFns {
-		fn(&options)
-	}
-
-	return &DescribeAutoUpdateStrategiesPaginator{
-		options:   options,
-		client:    client,
-		params:    params,
-		firstPage: true,
-		nextToken: params.NextToken,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // HasMorePages returns a boolean indicating whether more pages are available
 func (p *DescribeAutoUpdateStrategiesPaginator) HasMorePages() bool {
-	return p.firstPage || (p.nextToken != nil && len(*p.nextToken) != 0)
+	_ = "STUB: not implemented"
+	return false
 }
 
 // NextPage retrieves the next DescribeAutoUpdateStrategies page.
 func (p *DescribeAutoUpdateStrategiesPaginator) NextPage(ctx context.Context, optFns ...func(*Options)) (*DescribeAutoUpdateStrategiesOutput, error) {
-	if !p.HasMorePages() {
-		return nil, fmt.Errorf("no more pages available")
-	}
-
-	params := *p.params
-	params.NextToken = p.nextToken
-
-	result, err := p.client.DescribeAutoUpdateStrategies(ctx, &params, optFns...)
-	if err != nil {
-		return nil, err
-	}
-	p.firstPage = false
-
-	prevToken := p.nextToken
-	p.nextToken = result.NextToken
-
-	if p.options.StopOnDuplicateToken &&
-		prevToken != nil &&
-		p.nextToken != nil &&
-		*prevToken == *p.nextToken {
-		p.nextToken = nil
-	}
-
-	return result, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func newServiceMetadataMiddleware_opDescribeAutoUpdateStrategies(region string) *awsmiddleware.RegisterServiceMetadata {
-	return &awsmiddleware.RegisterServiceMetadata{
-		Region:        region,
-		ServiceID:     ServiceID,
-		OperationName: "DescribeAutoUpdateStrategies",
-	}
+	_ = "STUB: not implemented"
+	return nil
 }

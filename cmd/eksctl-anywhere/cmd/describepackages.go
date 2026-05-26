@@ -2,13 +2,9 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
-
-	"github.com/aws/eks-anywhere/pkg/curatedpackages"
-	"github.com/aws/eks-anywhere/pkg/kubeconfig"
 )
 
 type describePackagesOption struct {
@@ -51,22 +47,6 @@ var describePackagesCommand = &cobra.Command{
 }
 
 func describeResources(ctx context.Context, args []string) error {
-	kubeConfig, err := kubeconfig.ResolveAndValidateFilename(dpo.kubeConfig, "")
-	if err != nil {
-		return err
-	}
-	deps, err := NewDependenciesForPackages(ctx, WithMountPaths(kubeConfig), WithBundlesOverride(dpo.bundlesOverride))
-	if err != nil {
-		return fmt.Errorf("unable to initialize executables: %v", err)
-	}
-	packages := curatedpackages.NewPackageClient(
-		deps.Kubectl,
-	)
-
-	err = packages.DescribePackages(ctx, args, kubeConfig, dpo.clusterName)
-	if err != nil {
-		return err
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }

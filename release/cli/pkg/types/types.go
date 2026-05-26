@@ -15,7 +15,6 @@
 package types
 
 import (
-	"fmt"
 	"sync"
 	"time"
 
@@ -124,67 +123,28 @@ type ImageDigestsTable struct {
 }
 
 // BundlesManifestFilepath returns the filepath for the bundles manifest.
-func (r *ReleaseConfig) BundlesManifestFilepath() string {
-	if !r.DevRelease {
-		return fmt.Sprintf("releases/bundles/%d/manifest.yaml", r.BundleNumber)
-	}
-
-	if r.BuildRepoBranchName != "main" {
-		return fmt.Sprintf("%s/%s/bundles.yaml", r.BuildRepoBranchName, r.DevReleaseUriVersion)
-	}
-
-	if r.Weekly {
-		return fmt.Sprintf("weekly-releases/%s/bundle-release.yaml", r.ReleaseDate)
-	}
-
-	return fmt.Sprintf("%s/bundles.yaml", r.DevReleaseUriVersion)
-}
+func (r *ReleaseConfig) BundlesManifestFilepath() string { _ = "STUB: not implemented"; return "" }
 
 // ReleaseManifestFilepath returns the filepath for the release manifest.
-func (r *ReleaseConfig) ReleaseManifestFilepath() string {
-	if !r.DevRelease {
-		return "releases/eks-a/manifest.yaml"
-	}
-
-	if r.BuildRepoBranchName != "main" {
-		return fmt.Sprintf("%s/eks-a-release.yaml", r.BuildRepoBranchName)
-	}
-
-	if r.Weekly {
-		return fmt.Sprintf("weekly-releases/%s/eks-a-release.yaml", r.ReleaseDate)
-	}
-
-	return "eks-a-release.yaml"
-}
+func (r *ReleaseConfig) ReleaseManifestFilepath() string { _ = "STUB: not implemented"; return "" }
 
 func (a *ArtifactsTable) Load(projectName string) ([]Artifact, error) {
-	artifacts, ok := a.artifactsMap.Load(projectName)
-	if !ok {
-		return nil, fmt.Errorf("artifacts for project %s not present in artifacts table", projectName)
-	}
-	return artifacts.([]Artifact), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (a *ArtifactsTable) Store(projectName string, artifacts []Artifact) {
-	a.artifactsMap.Store(projectName, artifacts)
+	_ = "STUB: not implemented"
+	return
 }
 
-func (a *ArtifactsTable) Range(f func(key, value any) bool) {
-	a.artifactsMap.Range(f)
-}
+func (a *ArtifactsTable) Range(f func(key, value any) bool) { _ = "STUB: not implemented"; return }
 
 func (i *ImageDigestsTable) Load(imageURI string) (string, error) {
-	imageDigest, ok := i.imageDigestsMap.Load(imageURI)
-	if !ok {
-		return "", fmt.Errorf("digest for image %s not present in image digests table", imageURI)
-	}
-	return imageDigest.(string), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
-func (i *ImageDigestsTable) Store(imageURI, imageDigest string) {
-	i.imageDigestsMap.Store(imageURI, imageDigest)
-}
+func (i *ImageDigestsTable) Store(imageURI, imageDigest string) { _ = "STUB: not implemented"; return }
 
-func (i *ImageDigestsTable) Range(f func(key, value any) bool) {
-	i.imageDigestsMap.Range(f)
-}
+func (i *ImageDigestsTable) Range(f func(key, value any) bool) { _ = "STUB: not implemented"; return }

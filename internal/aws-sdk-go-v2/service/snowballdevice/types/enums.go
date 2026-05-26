@@ -15,14 +15,7 @@ const (
 // Values returns all known values for AlertLevel. Note that this can be expanded
 // in the future, and so it is only as up to date as the client. The ordering of
 // this slice is not guaranteed to be stable across updates.
-func (AlertLevel) Values() []AlertLevel {
-	return []AlertLevel{
-		"INFO",
-		"WARNING",
-		"ERROR",
-		"CRITICAL",
-	}
-}
+func (AlertLevel) Values() []AlertLevel { _ = "STUB: not implemented"; return nil }
 
 type AlertNotificationStatus string
 
@@ -37,11 +30,8 @@ const (
 // be expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
 func (AlertNotificationStatus) Values() []AlertNotificationStatus {
-	return []AlertNotificationStatus{
-		"SENT",
-		"NOT_SENT",
-		"FAILED",
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type AlertState string
@@ -55,12 +45,7 @@ const (
 // Values returns all known values for AlertState. Note that this can be expanded
 // in the future, and so it is only as up to date as the client. The ordering of
 // this slice is not guaranteed to be stable across updates.
-func (AlertState) Values() []AlertState {
-	return []AlertState{
-		"ACTIVE",
-		"INACTIVE",
-	}
-}
+func (AlertState) Values() []AlertState { _ = "STUB: not implemented"; return nil }
 
 type AlertSubscriptionChannel string
 
@@ -73,9 +58,8 @@ const (
 // can be expanded in the future, and so it is only as up to date as the client.
 // The ordering of this slice is not guaranteed to be stable across updates.
 func (AlertSubscriptionChannel) Values() []AlertSubscriptionChannel {
-	return []AlertSubscriptionChannel{
-		"SMTP",
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type AlertSubscriptionState string
@@ -90,10 +74,8 @@ const (
 // be expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
 func (AlertSubscriptionState) Values() []AlertSubscriptionState {
-	return []AlertSubscriptionState{
-		"SUBSCRIBED",
-		"UNSUBSCRIBED",
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type ClusterAssociationState string
@@ -110,12 +92,8 @@ const (
 // be expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
 func (ClusterAssociationState) Values() []ClusterAssociationState {
-	return []ClusterAssociationState{
-		"ASSOCIATED",
-		"ASSOCIATING",
-		"DISASSOCIATED",
-		"DISASSOCIATING",
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type DirectNetworkDriver string
@@ -129,12 +107,7 @@ const (
 // Values returns all known values for DirectNetworkDriver. Note that this can be
 // expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
-func (DirectNetworkDriver) Values() []DirectNetworkDriver {
-	return []DirectNetworkDriver{
-		"ixgbevf",
-		"mlx5_core",
-	}
-}
+func (DirectNetworkDriver) Values() []DirectNetworkDriver { _ = "STUB: not implemented"; return nil }
 
 type FeatureState string
 
@@ -148,13 +121,7 @@ const (
 // Values returns all known values for FeatureState. Note that this can be
 // expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
-func (FeatureState) Values() []FeatureState {
-	return []FeatureState{
-		"INSTALLED_AUTOSTART",
-		"INSTALLED_ONLY",
-		"NOT_INSTALLED",
-	}
-}
+func (FeatureState) Values() []FeatureState { _ = "STUB: not implemented"; return nil }
 
 type FeatureStateInput string
 
@@ -167,12 +134,7 @@ const (
 // Values returns all known values for FeatureStateInput. Note that this can be
 // expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
-func (FeatureStateInput) Values() []FeatureStateInput {
-	return []FeatureStateInput{
-		"INSTALLED_AUTOSTART",
-		"INSTALLED_ONLY",
-	}
-}
+func (FeatureStateInput) Values() []FeatureStateInput { _ = "STUB: not implemented"; return nil }
 
 type InstallState string
 
@@ -192,19 +154,7 @@ const (
 // Values returns all known values for InstallState. Note that this can be
 // expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
-func (InstallState) Values() []InstallState {
-	return []InstallState{
-		"NA",
-		"DECRYPTING",
-		"DECRYPT_FAILED",
-		"DOWNLOADING",
-		"DOWNLOAD_FAILED",
-		"DOWNLOADED",
-		"INSTALLING",
-		"REQUIRE_REBOOT",
-		"INSTALL_FAILED",
-	}
-}
+func (InstallState) Values() []InstallState { _ = "STUB: not implemented"; return nil }
 
 type IpAddressAssignment string
 
@@ -217,12 +167,7 @@ const (
 // Values returns all known values for IpAddressAssignment. Note that this can be
 // expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
-func (IpAddressAssignment) Values() []IpAddressAssignment {
-	return []IpAddressAssignment{
-		"DHCP",
-		"STATIC",
-	}
-}
+func (IpAddressAssignment) Values() []IpAddressAssignment { _ = "STUB: not implemented"; return nil }
 
 type NetworkReachabilityState string
 
@@ -236,10 +181,8 @@ const (
 // can be expanded in the future, and so it is only as up to date as the client.
 // The ordering of this slice is not guaranteed to be stable across updates.
 func (NetworkReachabilityState) Values() []NetworkReachabilityState {
-	return []NetworkReachabilityState{
-		"REACHABLE",
-		"UNREACHABLE",
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type NotificationType string
@@ -252,11 +195,7 @@ const (
 // Values returns all known values for NotificationType. Note that this can be
 // expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
-func (NotificationType) Values() []NotificationType {
-	return []NotificationType{
-		"smtp",
-	}
-}
+func (NotificationType) Values() []NotificationType { _ = "STUB: not implemented"; return nil }
 
 type PciDeviceStatus string
 
@@ -270,13 +209,7 @@ const (
 // Values returns all known values for PciDeviceStatus. Note that this can be
 // expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
-func (PciDeviceStatus) Values() []PciDeviceStatus {
-	return []PciDeviceStatus{
-		"ATTACHED",
-		"AVAILABLE",
-		"FAILED",
-	}
-}
+func (PciDeviceStatus) Values() []PciDeviceStatus { _ = "STUB: not implemented"; return nil }
 
 type PhysicalConnectorType string
 
@@ -293,13 +226,8 @@ const (
 // be expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
 func (PhysicalConnectorType) Values() []PhysicalConnectorType {
-	return []PhysicalConnectorType{
-		"RJ45",
-		"RJ45_2",
-		"SFP_PLUS",
-		"QSFP",
-		"WIFI",
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type ServiceStatusState string
@@ -319,18 +247,7 @@ const (
 // Values returns all known values for ServiceStatusState. Note that this can be
 // expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
-func (ServiceStatusState) Values() []ServiceStatusState {
-	return []ServiceStatusState{
-		"INACTIVE",
-		"DEACTIVATING",
-		"DEACTIVATED",
-		"ACTIVATING",
-		"ACTIVE",
-		"DEGRADED",
-		"UPGRADING",
-		"UNHEALTHY",
-	}
-}
+func (ServiceStatusState) Values() []ServiceStatusState { _ = "STUB: not implemented"; return nil }
 
 type ShippingLabelUpdateStatus string
 
@@ -354,20 +271,8 @@ const (
 // can be expanded in the future, and so it is only as up to date as the client.
 // The ordering of this slice is not guaranteed to be stable across updates.
 func (ShippingLabelUpdateStatus) Values() []ShippingLabelUpdateStatus {
-	return []ShippingLabelUpdateStatus{
-		"LABEL_STATE_UNAVAILABLE",
-		"LABEL_FOUND",
-		"LABEL_DOWNLOADED",
-		"LABEL_DOWNLOAD_FAILED",
-		"LABEL_DECRYPTED",
-		"LABEL_DECRYPTED_FAILED",
-		"LABEL_COPY_FAILED",
-		"LABEL_READY_FOR_DISPLAY",
-		"DISPLAY_REBOOTING",
-		"LABEL_DISPLAY_TIMEOUT",
-		"LABEL_DISPLAY_IGNORED",
-		"LABEL_ON_DISPLAY",
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type TimeSourceState string
@@ -384,15 +289,7 @@ const (
 // Values returns all known values for TimeSourceState. Note that this can be
 // expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
-func (TimeSourceState) Values() []TimeSourceState {
-	return []TimeSourceState{
-		"CURRENT",
-		"COMBINED",
-		"EXCLUDED",
-		"LOST",
-		"UNACCEPTABLE",
-	}
-}
+func (TimeSourceState) Values() []TimeSourceState { _ = "STUB: not implemented"; return nil }
 
 type TimeSourceType string
 
@@ -405,12 +302,7 @@ const (
 // Values returns all known values for TimeSourceType. Note that this can be
 // expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
-func (TimeSourceType) Values() []TimeSourceType {
-	return []TimeSourceType{
-		"SERVER",
-		"PEER",
-	}
-}
+func (TimeSourceType) Values() []TimeSourceType { _ = "STUB: not implemented"; return nil }
 
 type UnlockStatusState string
 
@@ -424,10 +316,4 @@ const (
 // Values returns all known values for UnlockStatusState. Note that this can be
 // expanded in the future, and so it is only as up to date as the client. The
 // ordering of this slice is not guaranteed to be stable across updates.
-func (UnlockStatusState) Values() []UnlockStatusState {
-	return []UnlockStatusState{
-		"LOCKED",
-		"UNLOCKED",
-		"UNLOCKING",
-	}
-}
+func (UnlockStatusState) Values() []UnlockStatusState { _ = "STUB: not implemented"; return nil }

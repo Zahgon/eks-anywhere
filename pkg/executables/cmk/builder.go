@@ -14,10 +14,12 @@ type Builder struct {
 
 // NewCmkBuilder initializes the cmk executable builder.
 func NewCmkBuilder(builder *executables.ExecutablesBuilder) *Builder {
-	return &Builder{builder: builder}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BuildCloudstackClient exposes a single method to consumers to abstract away executableBuilder's other operations and business logic.
 func (b *Builder) BuildCloudstackClient(writer filewriter.FileWriter, config *decoder.CloudStackExecConfig) (cloudstack.ProviderCmkClient, error) {
-	return b.builder.BuildCmkExecutable(writer, config)
+	_ = "STUB: not implemented"
+	return *new(cloudstack.ProviderCmkClient), nil
 }

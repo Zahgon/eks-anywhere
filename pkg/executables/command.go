@@ -18,23 +18,18 @@ type Command struct {
 }
 
 func NewCommand(ctx context.Context, commandRunner commandRunner, args ...string) *Command {
-	return &Command{
-		commandRunner: commandRunner,
-		ctx:           ctx,
-		args:          args,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (c *Command) WithEnvVars(envVars map[string]string) *Command {
-	c.envVars = envVars
-	return c
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (c *Command) WithStdIn(stdIn []byte) *Command {
-	c.stdIn = stdIn
-	return c
-}
+func (c *Command) WithStdIn(stdIn []byte) *Command { _ = "STUB: not implemented"; return nil }
 
 func (c *Command) Run() (out bytes.Buffer, err error) {
-	return c.commandRunner.Run(c)
+	_ = "STUB: not implemented"
+	return *new(bytes.Buffer), nil
 }

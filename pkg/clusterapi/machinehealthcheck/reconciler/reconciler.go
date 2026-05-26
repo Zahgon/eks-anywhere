@@ -2,20 +2,13 @@ package reconciler
 
 import (
 	"context"
-	"fmt"
-	"time"
 
 	"github.com/go-logr/logr"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	clusterv1beta2 "sigs.k8s.io/cluster-api/api/core/v1beta2"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	anywhereCluster "github.com/aws/eks-anywhere/pkg/cluster"
-	"github.com/aws/eks-anywhere/pkg/clusterapi"
-	"github.com/aws/eks-anywhere/pkg/clusterapi/machinehealthcheck"
-	"github.com/aws/eks-anywhere/pkg/controller/clientutil"
-	"github.com/aws/eks-anywhere/pkg/controller/serverside"
 )
 
 // Reconciler allows to reconcile machine health checks.
@@ -26,61 +19,22 @@ type Reconciler struct {
 
 // New returns a new Reconciler.
 func New(client client.Client, defaulter anywhereCluster.MachineHealthCheckDefaulter) *Reconciler {
-	return &Reconciler{
-		client:    client,
-		defaulter: defaulter,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Reconcile installs machine health checks for a given cluster.
 func (r *Reconciler) Reconcile(ctx context.Context, log logr.Logger, cluster *anywherev1.Cluster) error {
-	log.Info("Configuring machine health checks for workload", "cluster", cluster.Name)
-	clusterSpec, err := anywhereCluster.BuildSpec(ctx, clientutil.NewKubeClient(r.client), cluster)
-	if err != nil {
-		return err
-	}
-
-	if clusterSpec.Cluster.Spec.MachineHealthCheck == nil {
-		clusterSpec.Cluster.Spec.MachineHealthCheck = &anywherev1.MachineHealthCheck{}
-		mhc, err := machinehealthcheck.GetControlPlaneMachineHealthCheck(ctx, r.client, clusterSpec.Cluster)
-		if err != nil {
-			return err
-		}
-		if mhc != nil {
-			copyNodeStartupTimeoutToCluster(clusterSpec.Cluster, mhc)
-			copyUnhealthyMachineTimeoutToCluster(clusterSpec.Cluster, mhc)
-		}
-	}
-
-	clusterSpec, err = r.defaulter.MachineHealthCheckDefault(ctx, clusterSpec)
-	if err != nil {
-		return err
-	}
-
-	mhcObject := clusterapi.MachineHealthCheckObjects(clusterSpec.Cluster)
-
-	err = serverside.ReconcileObjects(ctx, r.client, clientutil.ObjectsToClientObjects(mhcObject))
-	if err != nil {
-		return fmt.Errorf("applying machine health checks: %v", err)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func copyNodeStartupTimeoutToCluster(cluster *anywherev1.Cluster, capiMHC *clusterv1beta2.MachineHealthCheck) {
-	if capiMHC.Spec.Checks.NodeStartupTimeoutSeconds != nil {
-		seconds := *capiMHC.Spec.Checks.NodeStartupTimeoutSeconds
-		cluster.Spec.MachineHealthCheck.NodeStartupTimeout = &metav1.Duration{
-			Duration: time.Duration(seconds) * time.Second,
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func copyUnhealthyMachineTimeoutToCluster(cluster *anywherev1.Cluster, capiMHC *clusterv1beta2.MachineHealthCheck) {
-	if len(capiMHC.Spec.Checks.UnhealthyNodeConditions) > 0 && capiMHC.Spec.Checks.UnhealthyNodeConditions[0].TimeoutSeconds != nil {
-		seconds := *capiMHC.Spec.Checks.UnhealthyNodeConditions[0].TimeoutSeconds
-		cluster.Spec.MachineHealthCheck.UnhealthyMachineTimeout = &metav1.Duration{
-			Duration: time.Duration(seconds) * time.Second,
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }

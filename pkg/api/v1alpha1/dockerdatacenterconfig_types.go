@@ -28,54 +28,30 @@ type DockerDatacenterConfig struct {
 	Status DockerDatacenterConfigStatus `json:"status,omitempty"`
 }
 
-func (d *DockerDatacenterConfig) Kind() string {
-	return d.TypeMeta.Kind
-}
+func (d *DockerDatacenterConfig) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (d *DockerDatacenterConfig) ExpectedKind() string {
-	return DockerDatacenterKind
-}
+func (d *DockerDatacenterConfig) ExpectedKind() string { _ = "STUB: not implemented"; return "" }
 
-func (d *DockerDatacenterConfig) PauseReconcile() {
-	if d.Annotations == nil {
-		d.Annotations = map[string]string{}
-	}
-	d.Annotations[pausedAnnotation] = "true"
-}
+func (d *DockerDatacenterConfig) PauseReconcile() { _ = "STUB: not implemented"; return }
 
-func (d *DockerDatacenterConfig) ClearPauseAnnotation() {
-	if d.Annotations != nil {
-		delete(d.Annotations, pausedAnnotation)
-	}
-}
+func (d *DockerDatacenterConfig) ClearPauseAnnotation() { _ = "STUB: not implemented"; return }
 
 func (d *DockerDatacenterConfig) ConvertConfigToConfigGenerateStruct() *DockerDatacenterConfigGenerate {
-	namespace := defaultEksaNamespace
-	if d.Namespace != "" {
-		namespace = d.Namespace
-	}
-	config := &DockerDatacenterConfigGenerate{
-		TypeMeta: d.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        d.Name,
-			Annotations: d.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: d.Spec,
-	}
-
-	return config
-}
-
-func (d *DockerDatacenterConfig) Marshallable() Marshallable {
-	return d.ConvertConfigToConfigGenerateStruct()
-}
-
-func (d *DockerDatacenterConfig) Validate() error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
-// +kubebuilder:object:generate=false
+func (d *DockerDatacenterConfig) Marshallable() Marshallable {
+	_ = "STUB: not implemented"
+	return *new(Marshallable)
+}
+
+func (d *DockerDatacenterConfig) Validate() error {
+	_ = "STUB: not implemented"
+
+	// +kubebuilder:object:generate=false
+	return nil
+}
 
 // Same as DockerDatacenterConfig except stripped down for generation of yaml file during generate clusterconfig.
 type DockerDatacenterConfigGenerate struct {

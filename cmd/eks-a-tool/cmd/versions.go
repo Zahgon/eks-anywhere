@@ -2,12 +2,9 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
-
-	"github.com/aws/eks-anywhere/pkg/executables"
 )
 
 var versionsCmd = &cobra.Command{
@@ -27,13 +24,4 @@ func init() {
 	rootCmd.AddCommand(versionsCmd)
 }
 
-func versions(ctx context.Context) error {
-	executableBuilder, close, err := executables.InitInDockerExecutablesBuilder(ctx, executables.DefaultEksaImage())
-	if err != nil {
-		return fmt.Errorf("unable to initialize executables: %v", err)
-	}
-	defer close.CheckErr(ctx)
-	kubectl := executableBuilder.BuildKubectlExecutable()
-
-	return kubectl.ListCluster(ctx)
-}
+func versions(ctx context.Context) error { _ = "STUB: not implemented"; return nil }

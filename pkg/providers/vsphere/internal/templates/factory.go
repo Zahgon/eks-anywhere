@@ -2,13 +2,9 @@ package templates
 
 import (
 	"context"
-	"fmt"
-	"path/filepath"
-	"strings"
 
 	"github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	"github.com/aws/eks-anywhere/pkg/executables"
-	"github.com/aws/eks-anywhere/pkg/logger"
 	"github.com/aws/eks-anywhere/pkg/providers/vsphere/internal/tags"
 )
 
@@ -51,101 +47,30 @@ type GovcClient interface {
 }
 
 func NewFactory(client GovcClient, datacenter, datastore, network, resourcePool, templateLibrary string) *Factory {
-	return &Factory{
-		client:          client,
-		datacenter:      datacenter,
-		datastore:       datastore,
-		network:         network,
-		resourcePool:    resourcePool,
-		templateLibrary: templateLibrary,
-		tagsFactory:     tags.NewFactory(client),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (f *Factory) CreateIfMissing(ctx context.Context, datacenter string, machineConfig *v1alpha1.VSphereMachineConfig, ovaURL string, tagsByCategory map[string][]string) error {
-	templateFullPath, err := f.client.SearchTemplate(ctx, datacenter, machineConfig.Spec.Template)
-	if err != nil {
-		return fmt.Errorf("checking for template: %v", err)
-	}
-	if err == nil && len(templateFullPath) > 0 {
-		machineConfig.Spec.Template = templateFullPath // TODO: move this out of the factory into the defaulter, it's a side effect
-		logger.V(2).Info("Template already exists. Skipping creation", "template", machineConfig.Spec.Template)
-		return nil
-	}
-
-	logger.V(2).Info("Template not available. Creating", "template", machineConfig.Spec.Template)
-
-	osFamily := machineConfig.Spec.OSFamily
-	if err = f.createTemplate(ctx, machineConfig.Spec.Template, ovaURL, string(osFamily)); err != nil {
-		return err
-	}
-
-	if err = f.tagsFactory.TagTemplate(ctx, machineConfig.Spec.Template, tagsByCategory); err != nil {
-		return err
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// TODO: move this out of the factory into the defaulter, it's a side effect
 
 func (f *Factory) createTemplate(ctx context.Context, templatePath, ovaURL, osFamily string) error {
-	if err := f.createLibraryIfMissing(ctx); err != nil {
-		return err
-	}
-
-	logger.Info("Creating template. This might take a while.") // TODO: add rough estimate timing?
-	templateName := filepath.Base(templatePath)
-	templateDir := filepath.Dir(templatePath)
-
-	if err := f.importOVAIfMissing(ctx, templateName, ovaURL); err != nil {
-		return err
-	}
-
-	var resizeBRDisk bool
-	if strings.EqualFold(osFamily, string(v1alpha1.Bottlerocket)) {
-		resizeBRDisk = true
-	}
-	if err := f.client.DeployTemplateFromLibrary(ctx, templateDir, templateName, f.templateLibrary, f.datacenter, f.datastore, f.network, f.resourcePool, resizeBRDisk); err != nil {
-		return fmt.Errorf("failed deploying template: %v", err)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
+// TODO: add rough estimate timing?
+
 func (f *Factory) createLibraryIfMissing(ctx context.Context) error {
-	libraryExists, err := f.client.LibraryElementExists(ctx, f.templateLibrary)
-	if err != nil {
-		return fmt.Errorf("failed to validate library for new template: %v", err)
-	}
-
-	if !libraryExists {
-		logger.V(2).Info("Creating library", "library", f.templateLibrary)
-		if err = f.client.CreateLibrary(ctx, f.datastore, f.templateLibrary); err != nil {
-			return fmt.Errorf("failed creating library for new template: %v", err)
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (f *Factory) importOVAIfMissing(ctx context.Context, templateName, ovaURL string) error {
-	contentVersion, err := f.client.GetLibraryElementContentVersion(ctx, filepath.Join(f.templateLibrary, templateName))
-	if err != nil {
-		return fmt.Errorf("failed to validate template in library for new template: %v", err)
-	}
-
-	if contentVersion == libraryContentCorrupted {
-		err := f.client.DeleteLibraryElement(ctx, filepath.Join(f.templateLibrary, templateName))
-		if err != nil {
-			return fmt.Errorf("failed to delete old template in library: %v", err)
-		}
-		contentVersion = libraryContentDoesNotExist
-	}
-
-	if contentVersion == libraryContentDoesNotExist {
-		logger.V(2).Info("Importing template from ova url", "ova", ovaURL)
-		if err = f.client.ImportTemplate(ctx, f.templateLibrary, ovaURL, templateName); err != nil {
-			return fmt.Errorf("failed importing template into library: %v", err)
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }

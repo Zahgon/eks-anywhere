@@ -16,7 +16,6 @@ package v1alpha1
 
 import (
 	"context"
-	"fmt"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -29,10 +28,8 @@ import (
 var snowdatacenterconfiglog = logf.Log.WithName("snowdatacenterconfig-resource")
 
 func (r *SnowDatacenterConfig) SetupWebhookWithManager(mgr ctrl.Manager) error {
-	return ctrl.NewWebhookManagedBy(mgr).
-		For(r).
-		WithValidator(r).
-		Complete()
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // TODO(user): change verbs to "verbs=create;update;delete" if you want to enable deletion validation.
@@ -42,36 +39,18 @@ var _ webhook.CustomValidator = &SnowDatacenterConfig{}
 
 // ValidateCreate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *SnowDatacenterConfig) ValidateCreate(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	snowConfig, ok := obj.(*SnowDatacenterConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a SnowDatacenterConfig but got %T", obj)
-	}
-
-	snowdatacenterconfiglog.Info("validate create", "name", snowConfig.Name)
-
-	return nil, snowConfig.Validate()
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 // ValidateUpdate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *SnowDatacenterConfig) ValidateUpdate(_ context.Context, _, obj runtime.Object) (admission.Warnings, error) {
-	snowConfig, ok := obj.(*SnowDatacenterConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a SnowDatacenterConfig but got %T", obj)
-	}
-
-	snowdatacenterconfiglog.Info("validate update", "name", snowConfig.Name)
-
-	return nil, snowConfig.Validate()
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 // ValidateDelete implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *SnowDatacenterConfig) ValidateDelete(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	snowConfig, ok := obj.(*SnowDatacenterConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a SnowDatacenterConfig but got %T", obj)
-	}
-
-	snowdatacenterconfiglog.Info("validate delete", "name", snowConfig.Name)
-
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }

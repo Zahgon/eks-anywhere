@@ -137,12 +137,14 @@ type NutanixFailureDomain struct {
 
 // GetConditions returns the set of conditions for this object.
 func (ncl *NutanixCluster) GetConditions() capiv1.Conditions {
-	return ncl.Status.Conditions
+	_ = "STUB: not implemented"
+	return *new(capiv1.Conditions)
 }
 
 // SetConditions sets the conditions on this object.
 func (ncl *NutanixCluster) SetConditions(conditions capiv1.Conditions) {
-	ncl.Status.Conditions = conditions
+	_ = "STUB: not implemented"
+	return
 }
 
 //+kubebuilder:object:root=true

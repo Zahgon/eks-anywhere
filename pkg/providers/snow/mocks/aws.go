@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	aws "github.com/aws/eks-anywhere/pkg/aws"
 	gomock "github.com/golang/mock/gomock"
@@ -25,103 +24,87 @@ type MockAwsClientMockRecorder struct {
 
 // NewMockAwsClient creates a new mock instance.
 func NewMockAwsClient(ctrl *gomock.Controller) *MockAwsClient {
-	mock := &MockAwsClient{ctrl: ctrl}
-	mock.recorder = &MockAwsClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockAwsClient) EXPECT() *MockAwsClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// EC2ImageExists mocks base method.
+	return nil
 }
 
-// EC2ImageExists mocks base method.
 func (m *MockAwsClient) EC2ImageExists(ctx context.Context, imageID string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EC2ImageExists", ctx, imageID)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // EC2ImageExists indicates an expected call of EC2ImageExists.
 func (mr *MockAwsClientMockRecorder) EC2ImageExists(ctx, imageID interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EC2ImageExists", reflect.TypeOf((*MockAwsClient)(nil).EC2ImageExists), ctx, imageID)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EC2ImportKeyPair mocks base method.
 func (m *MockAwsClient) EC2ImportKeyPair(ctx context.Context, keyName string, keyMaterial []byte) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EC2ImportKeyPair", ctx, keyName, keyMaterial)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EC2ImportKeyPair indicates an expected call of EC2ImportKeyPair.
 func (mr *MockAwsClientMockRecorder) EC2ImportKeyPair(ctx, keyName, keyMaterial interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EC2ImportKeyPair", reflect.TypeOf((*MockAwsClient)(nil).EC2ImportKeyPair), ctx, keyName, keyMaterial)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EC2InstanceTypes mocks base method.
 func (m *MockAwsClient) EC2InstanceTypes(ctx context.Context) ([]aws.EC2InstanceType, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EC2InstanceTypes", ctx)
-	ret0, _ := ret[0].([]aws.EC2InstanceType)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // EC2InstanceTypes indicates an expected call of EC2InstanceTypes.
 func (mr *MockAwsClientMockRecorder) EC2InstanceTypes(ctx interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EC2InstanceTypes", reflect.TypeOf((*MockAwsClient)(nil).EC2InstanceTypes), ctx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EC2KeyNameExists mocks base method.
 func (m *MockAwsClient) EC2KeyNameExists(ctx context.Context, keyName string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EC2KeyNameExists", ctx, keyName)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // EC2KeyNameExists indicates an expected call of EC2KeyNameExists.
 func (mr *MockAwsClientMockRecorder) EC2KeyNameExists(ctx, keyName interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EC2KeyNameExists", reflect.TypeOf((*MockAwsClient)(nil).EC2KeyNameExists), ctx, keyName)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // IsSnowballDeviceUnlocked mocks base method.
 func (m *MockAwsClient) IsSnowballDeviceUnlocked(ctx context.Context) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "IsSnowballDeviceUnlocked", ctx)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // IsSnowballDeviceUnlocked indicates an expected call of IsSnowballDeviceUnlocked.
 func (mr *MockAwsClientMockRecorder) IsSnowballDeviceUnlocked(ctx interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsSnowballDeviceUnlocked", reflect.TypeOf((*MockAwsClient)(nil).IsSnowballDeviceUnlocked), ctx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SnowballDeviceSoftwareVersion mocks base method.
 func (m *MockAwsClient) SnowballDeviceSoftwareVersion(ctx context.Context) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SnowballDeviceSoftwareVersion", ctx)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // SnowballDeviceSoftwareVersion indicates an expected call of SnowballDeviceSoftwareVersion.
 func (mr *MockAwsClientMockRecorder) SnowballDeviceSoftwareVersion(ctx interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SnowballDeviceSoftwareVersion", reflect.TypeOf((*MockAwsClient)(nil).SnowballDeviceSoftwareVersion), ctx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockLocalIMDSClient is a mock of LocalIMDSClient interface.
@@ -137,27 +120,25 @@ type MockLocalIMDSClientMockRecorder struct {
 
 // NewMockLocalIMDSClient creates a new mock instance.
 func NewMockLocalIMDSClient(ctrl *gomock.Controller) *MockLocalIMDSClient {
-	mock := &MockLocalIMDSClient{ctrl: ctrl}
-	mock.recorder = &MockLocalIMDSClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockLocalIMDSClient) EXPECT() *MockLocalIMDSClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// EC2InstanceIP mocks base method.
+	return nil
 }
 
-// EC2InstanceIP mocks base method.
 func (m *MockLocalIMDSClient) EC2InstanceIP(ctx context.Context) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EC2InstanceIP", ctx)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // EC2InstanceIP indicates an expected call of EC2InstanceIP.
 func (mr *MockLocalIMDSClientMockRecorder) EC2InstanceIP(ctx interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EC2InstanceIP", reflect.TypeOf((*MockLocalIMDSClient)(nil).EC2InstanceIP), ctx)
+	_ = "STUB: not implemented"
+	return nil
 }

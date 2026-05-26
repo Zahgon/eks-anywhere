@@ -9,43 +9,31 @@ import (
 type WorkerNodeGroupFiller func(w *anywherev1.WorkerNodeGroupConfiguration)
 
 func FillWorkerNodeGroup(w *anywherev1.WorkerNodeGroupConfiguration, fillers ...WorkerNodeGroupFiller) {
-	for _, f := range fillers {
-		f(w)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func WithTaint(taint corev1.Taint) WorkerNodeGroupFiller {
-	return func(w *anywherev1.WorkerNodeGroupConfiguration) {
-		w.Taints = append(w.Taints, taint)
-	}
+	_ = "STUB: not implemented"
+	return *new(WorkerNodeGroupFiller)
 }
 
 func WithNoTaints() WorkerNodeGroupFiller {
-	return func(w *anywherev1.WorkerNodeGroupConfiguration) {
-		w.Taints = nil
-	}
+	_ = "STUB: not implemented"
+	return *new(WorkerNodeGroupFiller)
 }
 
 func WithLabel(key, value string) WorkerNodeGroupFiller {
-	return func(w *anywherev1.WorkerNodeGroupConfiguration) {
-		if w.Labels == nil {
-			w.Labels = map[string]string{}
-		}
-		w.Labels[key] = value
-	}
+	_ = "STUB: not implemented"
+	return *new(WorkerNodeGroupFiller)
 }
 
 func WithCount(count int) WorkerNodeGroupFiller {
-	return func(w *anywherev1.WorkerNodeGroupConfiguration) {
-		w.Count = &count
-	}
+	_ = "STUB: not implemented"
+	return *new(WorkerNodeGroupFiller)
 }
 
 func WithMachineGroupRef(name, kind string) WorkerNodeGroupFiller {
-	return func(w *anywherev1.WorkerNodeGroupConfiguration) {
-		w.MachineGroupRef = &anywherev1.Ref{
-			Name: name,
-			Kind: kind,
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(WorkerNodeGroupFiller)
 }

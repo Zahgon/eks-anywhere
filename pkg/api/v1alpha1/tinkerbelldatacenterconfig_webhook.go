@@ -16,10 +16,7 @@ package v1alpha1
 
 import (
 	"context"
-	"fmt"
 
-	apierrors "k8s.io/apimachinery/pkg/api/errors"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/validation/field"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -33,10 +30,8 @@ var tinkerbelldatacenterconfiglog = logf.Log.WithName("tinkerbelldatacenterconfi
 
 // SetupWebhookWithManager sets up TinkerbellDatacenterConfig webhook to controller manager.
 func (r *TinkerbellDatacenterConfig) SetupWebhookWithManager(mgr ctrl.Manager) error {
-	return ctrl.NewWebhookManagedBy(mgr).
-		For(r).
-		WithValidator(r).
-		Complete()
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -48,101 +43,25 @@ var _ webhook.CustomValidator = &TinkerbellDatacenterConfig{}
 
 // ValidateCreate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *TinkerbellDatacenterConfig) ValidateCreate(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	tinkerbellConfig, ok := obj.(*TinkerbellDatacenterConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a TinkerbellDatacenterConfig but got %T", obj)
-	}
-
-	tinkerbelldatacenterconfiglog.Info("validate create", "name", tinkerbellConfig.Name)
-
-	if err := tinkerbellConfig.Validate(); err != nil {
-		return nil, apierrors.NewInvalid(
-			GroupVersion.WithKind(TinkerbellDatacenterKind).GroupKind(),
-			tinkerbellConfig.Name,
-			field.ErrorList{
-				field.Invalid(field.NewPath("spec"), tinkerbellConfig.Spec, err.Error()),
-			},
-		)
-	}
-
-	if tinkerbellConfig.IsReconcilePaused() {
-		tinkerbelldatacenterconfiglog.Info("TinkerbellDatacenterConfig is paused, so allowing create", "name", tinkerbellConfig.Name)
-		return nil, nil
-	}
-
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 // ValidateUpdate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *TinkerbellDatacenterConfig) ValidateUpdate(_ context.Context, old, obj runtime.Object) (admission.Warnings, error) {
-	tinkerbellConfig, ok := obj.(*TinkerbellDatacenterConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a TinkerbellDatacenterConfig but got %T", obj)
-	}
-
-	tinkerbelldatacenterconfiglog.Info("validate update", "name", tinkerbellConfig.Name)
-
-	oldTinkerbellDatacenterConfig, ok := old.(*TinkerbellDatacenterConfig)
-	if !ok {
-		return nil, apierrors.NewBadRequest(fmt.Sprintf("expected a TinkerbellDatacenterConfig but got a %T", old))
-	}
-
-	var allErrs field.ErrorList
-
-	allErrs = append(allErrs, validateImmutableFieldsTinkerbellDatacenterConfig(tinkerbellConfig, oldTinkerbellDatacenterConfig)...)
-
-	if len(allErrs) != 0 {
-		return nil, apierrors.NewInvalid(GroupVersion.WithKind(TinkerbellDatacenterKind).GroupKind(), tinkerbellConfig.Name, allErrs)
-	}
-
-	if err := tinkerbellConfig.Validate(); err != nil {
-		allErrs = append(allErrs, field.Invalid(field.NewPath("spec"), tinkerbellConfig.Spec, err.Error()))
-	}
-
-	if len(allErrs) != 0 {
-		return nil, apierrors.NewInvalid(GroupVersion.WithKind(TinkerbellDatacenterKind).GroupKind(), tinkerbellConfig.Name, allErrs)
-	}
-
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 // ValidateDelete implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *TinkerbellDatacenterConfig) ValidateDelete(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	tinkerbellConfig, ok := obj.(*TinkerbellDatacenterConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a TinkerbellDatacenterConfig but got %T", obj)
-	}
-
-	tinkerbelldatacenterconfiglog.Info("validate delete", "name", tinkerbellConfig.Name)
-
-	// TODO(user): fill in your validation logic upon object deletion.
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
+// TODO(user): fill in your validation logic upon object deletion.
+
 func validateImmutableFieldsTinkerbellDatacenterConfig(new, old *TinkerbellDatacenterConfig) field.ErrorList {
-	var allErrs field.ErrorList
-	specPath := field.NewPath("spec")
-
-	if new.Spec.TinkerbellIP != old.Spec.TinkerbellIP {
-		allErrs = append(
-			allErrs,
-			field.Forbidden(specPath.Child("tinkerbellIP"), "field is immutable"),
-		)
-	}
-
-	if new.Spec.HookImagesURLPath != old.Spec.HookImagesURLPath && !metav1.HasAnnotation(new.ObjectMeta, ManagedByCLIAnnotation) {
-		allErrs = append(
-			allErrs,
-			field.Forbidden(specPath.Child("hookImagesURLPath"), "field is immutable"),
-		)
-	}
-
-	if new.Spec.SkipLoadBalancerDeployment != old.Spec.SkipLoadBalancerDeployment && !metav1.HasAnnotation(new.ObjectMeta, ManagedByCLIAnnotation) {
-		allErrs = append(
-			allErrs,
-			field.Forbidden(specPath.Child("skipLoadBalancerDeployment"), "field is immutable"),
-		)
-	}
-
-	return allErrs
+	_ = "STUB: not implemented"
+	return *new(field.ErrorList)
 }

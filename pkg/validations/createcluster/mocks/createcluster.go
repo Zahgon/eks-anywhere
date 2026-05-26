@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	validations "github.com/aws/eks-anywhere/pkg/validations"
 	gomock "github.com/golang/mock/gomock"
@@ -25,26 +24,25 @@ type MockValidatorMockRecorder struct {
 
 // NewMockValidator creates a new mock instance.
 func NewMockValidator(ctrl *gomock.Controller) *MockValidator {
-	mock := &MockValidator{ctrl: ctrl}
-	mock.recorder = &MockValidatorMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockValidator) EXPECT() *MockValidatorMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// PreflightValidations mocks base method.
+	return nil
 }
 
-// PreflightValidations mocks base method.
 func (m *MockValidator) PreflightValidations(ctx context.Context) []validations.Validation {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PreflightValidations", ctx)
-	ret0, _ := ret[0].([]validations.Validation)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PreflightValidations indicates an expected call of PreflightValidations.
 func (mr *MockValidatorMockRecorder) PreflightValidations(ctx interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PreflightValidations", reflect.TypeOf((*MockValidator)(nil).PreflightValidations), ctx)
+	_ = "STUB: not implemented"
+	return nil
 }

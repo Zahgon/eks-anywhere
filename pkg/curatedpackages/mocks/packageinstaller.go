@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 )
@@ -24,42 +23,39 @@ type MockPackageControllerMockRecorder struct {
 
 // NewMockPackageController creates a new mock instance.
 func NewMockPackageController(ctrl *gomock.Controller) *MockPackageController {
-	mock := &MockPackageController{ctrl: ctrl}
-	mock.recorder = &MockPackageControllerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockPackageController) EXPECT() *MockPackageControllerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Enable mocks base method.
+	return nil
 }
 
-// Enable mocks base method.
 func (m *MockPackageController) Enable(ctx context.Context) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Enable", ctx)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Enable indicates an expected call of Enable.
 func (mr *MockPackageControllerMockRecorder) Enable(ctx interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Enable", reflect.TypeOf((*MockPackageController)(nil).Enable), ctx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // IsInstalled mocks base method.
 func (m *MockPackageController) IsInstalled(ctx context.Context) bool {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "IsInstalled", ctx)
-	ret0, _ := ret[0].(bool)
-	return ret0
+	_ = "STUB: not implemented"
+	return false
 }
 
 // IsInstalled indicates an expected call of IsInstalled.
 func (mr *MockPackageControllerMockRecorder) IsInstalled(ctx interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsInstalled", reflect.TypeOf((*MockPackageController)(nil).IsInstalled), ctx)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockPackageHandler is a mock of PackageHandler interface.
@@ -75,26 +71,25 @@ type MockPackageHandlerMockRecorder struct {
 
 // NewMockPackageHandler creates a new mock instance.
 func NewMockPackageHandler(ctrl *gomock.Controller) *MockPackageHandler {
-	mock := &MockPackageHandler{ctrl: ctrl}
-	mock.recorder = &MockPackageHandlerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockPackageHandler) EXPECT() *MockPackageHandlerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// CreatePackages mocks base method.
+	return nil
 }
 
-// CreatePackages mocks base method.
 func (m *MockPackageHandler) CreatePackages(ctx context.Context, fileName, kubeConfig string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreatePackages", ctx, fileName, kubeConfig)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreatePackages indicates an expected call of CreatePackages.
 func (mr *MockPackageHandlerMockRecorder) CreatePackages(ctx, fileName, kubeConfig interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePackages", reflect.TypeOf((*MockPackageHandler)(nil).CreatePackages), ctx, fileName, kubeConfig)
+	_ = "STUB: not implemented"
+	return nil
 }

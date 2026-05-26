@@ -14,17 +14,12 @@ type DeleteClusterDefaulter struct {
 
 // NewDeleteClusterDefaulter to instantiate and register defaults.
 func NewDeleteClusterDefaulter(nsDefaulter cluster.NamespaceDefaulter) DeleteClusterDefaulter {
-	r := defaulting.NewRunner[*cluster.Spec]()
-	r.Register(
-		nsDefaulter.NamespaceDefault,
-	)
-
-	return DeleteClusterDefaulter{
-		runner: r,
-	}
+	_ = "STUB: not implemented"
+	return *new(DeleteClusterDefaulter)
 }
 
 // Run will run all the defaults registered to the Delete Cluster Defaulter.
 func (v DeleteClusterDefaulter) Run(ctx context.Context, spec *cluster.Spec) (*cluster.Spec, error) {
-	return v.runner.RunAll(ctx, spec)
+	_ = "STUB: not implemented"
+	return nil, nil
 }

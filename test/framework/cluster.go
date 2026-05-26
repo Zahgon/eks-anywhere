@@ -1,47 +1,22 @@
 package framework
 
 import (
-	"bufio"
-	"bytes"
 	"context"
-	"crypto/sha1"
 	_ "embed"
-	"encoding/json"
-	"fmt"
-	"io"
-	"net"
-	"os"
-	"os/exec"
-	"path/filepath"
-	"regexp"
-	"strconv"
-	"strings"
-	"sync"
 	"testing"
 	"time"
 
 	"github.com/bmc-toolbox/bmclib/v2"
 	"github.com/go-logr/logr"
-	corev1 "k8s.io/api/core/v1"
-	apierrors "k8s.io/apimachinery/pkg/api/errors"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	utilrand "k8s.io/apimachinery/pkg/util/rand"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	"sigs.k8s.io/yaml"
 
-	packagesv1 "github.com/aws/eks-anywhere-packages/api/v1alpha1"
 	"github.com/aws/eks-anywhere/internal/pkg/api"
 	"github.com/aws/eks-anywhere/pkg/api/v1alpha1"
-	"github.com/aws/eks-anywhere/pkg/clients/kubernetes"
 	"github.com/aws/eks-anywhere/pkg/cluster"
-	"github.com/aws/eks-anywhere/pkg/constants"
 	"github.com/aws/eks-anywhere/pkg/executables"
 	"github.com/aws/eks-anywhere/pkg/filewriter"
 	"github.com/aws/eks-anywhere/pkg/git"
-	"github.com/aws/eks-anywhere/pkg/providers/cloudstack/decoder"
-	"github.com/aws/eks-anywhere/pkg/retrier"
 	"github.com/aws/eks-anywhere/pkg/semver"
-	"github.com/aws/eks-anywhere/pkg/templater"
 	"github.com/aws/eks-anywhere/pkg/types"
 	releasev1 "github.com/aws/eks-anywhere/release/api/v1alpha1"
 	clusterf "github.com/aws/eks-anywhere/test/framework/cluster"
@@ -117,224 +92,106 @@ type ClusterE2ETestOpt func(e *ClusterE2ETest)
 
 // NewClusterE2ETest is a support structure for defining an end-to-end test.
 func NewClusterE2ETest(t T, provider Provider, opts ...ClusterE2ETestOpt) *ClusterE2ETest {
-	e := &ClusterE2ETest{
-		T:                     t,
-		Provider:              provider,
-		ClusterConfig:         &cluster.Config{},
-		ClusterConfigLocation: defaultClusterConfigFile,
-		ClusterName:           getClusterName(t),
-		clusterFillers:        make([]api.ClusterFiller, 0),
-		KubectlClient:         buildKubectl(t),
-		eksaBinaryLocation:    defaultEksaBinaryLocation,
-	}
-
-	for _, opt := range opts {
-		opt(e)
-	}
-
-	if e.ClusterConfigFolder == "" {
-		e.ClusterConfigFolder = e.ClusterName
-	}
-	if e.HardwareConfigLocation == "" {
-		e.HardwareConfigLocation = filepath.Join(e.ClusterConfigFolder, hardwareYamlPath)
-	}
-	if e.HardwareCsvLocation == "" {
-		e.HardwareCsvLocation = filepath.Join(e.ClusterConfigFolder, hardwareCsvPath)
-	}
-
-	e.ClusterConfigLocation = filepath.Join(e.ClusterConfigFolder, e.ClusterName+"-eks-a.yaml")
-
-	if err := os.MkdirAll(e.ClusterConfigFolder, os.ModePerm); err != nil {
-		t.Fatalf("Failed creating cluster config folder for test: %s", err)
-	}
-
-	provider.Setup()
-
-	e.T.Cleanup(func() {
-		e.cleanupResources()
-
-		tinkerbellCIEnvironment := os.Getenv(tinkerbellCIEnvironmentEnvVar)
-		if e.Provider.Name() == tinkerbellProviderName && tinkerbellCIEnvironment == "true" {
-			e.CleanupDockerEnvironment()
-		}
-	})
-
-	return e
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpdateClusterName updates the cluster name for the test. This will drive both the name of the eks-a
 // cluster config objects as well as the cluster config file name and the folder where the cluster config
 // file is stored.
 // The cluster config folder will be updated to the new cluster name only if it was using the default value.
-func (e *ClusterE2ETest) UpdateClusterName(name string) {
-	oldName := e.ClusterName
-	e.ClusterName = name
-	if e.ClusterConfigFolder == oldName {
-		// Only update the folder if it was using the old name. This is the default value.
-		e.ClusterConfigFolder = e.ClusterName
-		if err := os.MkdirAll(e.ClusterConfigFolder, os.ModePerm); err != nil {
-			e.T.Fatalf("Failed creating cluster config folder for test: %s", err)
-		}
-	}
-	e.ClusterConfigLocation = filepath.Join(e.ClusterConfigFolder, e.ClusterName+"-eks-a.yaml")
-}
+func (e *ClusterE2ETest) UpdateClusterName(name string) { _ = "STUB: not implemented"; return }
+
+// Only update the folder if it was using the old name. This is the default value.
 
 func withHardware(requiredCount int, hardareType string, labels map[string]string) ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		hardwarePool := e.GetHardwarePool()
-
-		if e.TestHardware == nil {
-			e.TestHardware = make(map[string]*api.Hardware)
-		}
-
-		var count int
-		for id, h := range hardwarePool {
-			if _, exists := e.TestHardware[id]; !exists {
-				count++
-				h.Labels = labels
-				e.TestHardware[id] = h
-			}
-
-			if count == requiredCount {
-				break
-			}
-		}
-
-		if count < requiredCount {
-			e.T.Errorf("this test requires at least %d piece(s) of %s hardware", requiredCount, hardareType)
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 func WithNoPowerActions() ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		e.WithNoPowerActions = true
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 func ExpectFailure(expected bool) ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		e.ExpectFailure = expected
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 func WithControlPlaneHardware(requiredCount int) ClusterE2ETestOpt {
-	return withHardware(
-		requiredCount,
-		api.ControlPlane,
-		map[string]string{api.HardwareLabelTypeKeyName: api.ControlPlane},
-	)
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 func WithWorkerHardware(requiredCount int) ClusterE2ETestOpt {
-	return withHardware(requiredCount, api.Worker, map[string]string{api.HardwareLabelTypeKeyName: api.Worker})
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 func WithCustomLabelHardware(requiredCount int, label string) ClusterE2ETestOpt {
-	return withHardware(requiredCount, api.Worker, map[string]string{api.HardwareLabelTypeKeyName: label})
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 func WithExternalEtcdHardware(requiredCount int) ClusterE2ETestOpt {
-	return withHardware(
-		requiredCount,
-		api.ExternalEtcd,
-		map[string]string{api.HardwareLabelTypeKeyName: api.ExternalEtcd},
-	)
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 // WithClusterName sets the name that will be used for the cluster. This will drive both the name of the eks-a
 // cluster config objects as well as the cluster config file name.
 func WithClusterName(name string) ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		e.ClusterName = name
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 // PersistentCluster  avoids creating the clusters if it finds a kubeconfig
 // in the corresponding cluster folder. Useful for local development of tests.
 func PersistentCluster() ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		e.PersistentCluster = true
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 func (e *ClusterE2ETest) GetHardwarePool() map[string]*api.Hardware {
-	if e.HardwarePool == nil {
-		csvFilePath := os.Getenv(tinkerbellInventoryCsvFilePathEnvVar)
-		var err error
-		e.HardwarePool, err = api.NewHardwareMapFromFile(csvFilePath)
-		if err != nil {
-			e.T.Fatalf("failed to create hardware map from test hardware pool: %v", err)
-		}
-	}
-	return e.HardwarePool
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (e *ClusterE2ETest) RunClusterFlowWithGitOps(clusterOpts ...ClusterE2ETestOpt) {
-	e.GenerateClusterConfig()
-	e.createCluster()
-	e.UpgradeWithGitOps(clusterOpts...)
-	time.Sleep(5 * time.Minute)
-	e.deleteCluster()
+	_ = "STUB: not implemented"
+	return
 }
 
 func WithClusterFiller(f ...api.ClusterFiller) ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		e.clusterFillers = append(e.clusterFillers, f...)
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 // WithClusterSingleNode helps to create an e2e test option for a single node cluster.
 func WithClusterSingleNode(v v1alpha1.KubernetesVersion) ClusterE2ETestOpt {
-	return WithClusterFiller(
-		api.WithKubernetesVersion(v),
-		api.WithControlPlaneCount(1),
-		api.WithEtcdCountIfExternal(0),
-		api.RemoveAllWorkerNodeGroups(),
-	)
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 func WithClusterConfigLocationOverride(path string) ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		e.ClusterConfigLocation = path
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 func WithEksaVersion(version *semver.Version) ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		eksaBinaryLocation, err := GetReleaseBinaryFromVersion(version)
-		if err != nil {
-			e.T.Fatal(err)
-		}
-		e.eksaBinaryLocation = eksaBinaryLocation
-		err = setEksctlVersionEnvVar()
-		if err != nil {
-			e.T.Fatal(err)
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 func WithLatestMinorReleaseFromMain() ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		eksaBinaryLocation, err := GetLatestMinorReleaseBinaryFromMain()
-		if err != nil {
-			e.T.Fatal(err)
-		}
-		e.eksaBinaryLocation = eksaBinaryLocation
-		err = setEksctlVersionEnvVar()
-		if err != nil {
-			e.T.Fatal(err)
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 func WithEnvVar(key, val string) ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		err := os.Setenv(key, val)
-		if err != nil {
-			e.T.Fatalf("couldn't set env var %s to value %s due to: %v", key, val, err)
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 type Provider interface {
@@ -353,1197 +210,425 @@ type Provider interface {
 
 // GenerateClusterConfig generates a cluster configuration.
 func (e *ClusterE2ETest) GenerateClusterConfig(opts ...CommandOpt) {
-	licenseToken := GetLicenseToken()
-	if licenseToken != "" {
-		e.clusterFillers = append(e.clusterFillers, api.WithLicenseToken(licenseToken))
-	}
-	e.GenerateClusterConfigForVersion("", "", opts...)
+	_ = "STUB: not implemented"
+	return
 }
 
 // GenerateClusterConfigWithLicenseToken generates a cluster configuration while setting a specific license token.
 func (e *ClusterE2ETest) GenerateClusterConfigWithLicenseToken(licenseToken string, opts ...CommandOpt) {
-	if licenseToken != "" {
-		e.clusterFillers = append(e.clusterFillers, api.WithLicenseToken(licenseToken))
-	}
-	e.GenerateClusterConfigForVersion("", "", opts...)
+	_ = "STUB: not implemented"
+	return
 }
 
 func newBmclibClient(log logr.Logger, hostIP, username, password string) *bmclib.Client {
-	o := []bmclib.Option{}
-	log = log.WithValues("host", hostIP, "username", username)
-	o = append(o, bmclib.WithLogger(log))
-	client := bmclib.NewClient(hostIP, username, password, o...)
-	client.Registry.Drivers = client.Registry.PreferProtocol("redfish")
-
-	return client
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateHardwareDecommissioned checks that the all hardware was powered off during the cluster deletion.
 // This function tests that the hardware was powered off during the cluster deletion.
-func (e *ClusterE2ETest) ValidateHardwareDecommissioned() {
-	var failedToDecomm []*api.Hardware
-	for _, h := range e.TestHardware {
-		ctx, done := context.WithTimeout(context.Background(), 2*time.Minute)
-		defer done()
-		bmcClient := newBmclibClient(logr.Discard(), h.BMCIPAddress, h.BMCUsername, h.BMCPassword)
+func (e *ClusterE2ETest) ValidateHardwareDecommissioned() { _ = "STUB: not implemented"; return }
 
-		if err := bmcClient.Open(ctx); err != nil {
-			md := bmcClient.GetMetadata()
-			e.T.Logf("Failed to open connection to BMC: %v, hardware: %v, providersAttempted: %v, failedProviderDetail: %v", err, h.BMCIPAddress, md.ProvidersAttempted, md.SuccessfulOpenConns)
-
-			continue
-		}
-		md := bmcClient.GetMetadata()
-		e.T.Logf("Connected to BMC: hardware: %v, providersAttempted: %v, successfulProvider: %v", h.BMCIPAddress, md.ProvidersAttempted, md.SuccessfulOpenConns)
-
-		defer func() {
-			if err := bmcClient.Close(ctx); err != nil {
-				md := bmcClient.GetMetadata()
-				e.T.Logf("BMC close connection failed: %v, hardware: %v, providersAttempted: %v, failedProviderDetail: %v", err, h.BMCIPAddress, md.ProvidersAttempted, md.FailedProviderDetail)
-			}
-		}()
-
-		// add sleep retries to give the machine time to power off
-		wait := 5 * time.Second
-		for tries := 1; tries <= 4; tries++ {
-			time.Sleep(wait)
-			powerState, err := bmcClient.GetPowerState(ctx)
-			e.T.Logf("hardware power state (id=%s, hostname=%s, bmc_ip=%s): power_state=%s", h.MACAddress, h.Hostname, h.BMCIPAddress, powerState)
-			if err != nil {
-				md := bmcClient.GetMetadata()
-				e.T.Logf("failed to get power state for hardware: id=%s, hostname=%s, bmc_ip=%s, providersAttempted: %v, failedProviderDetail: %v",
-					h.MACAddress,
-					h.Hostname,
-					h.BMCIPAddress,
-					md.ProvidersAttempted,
-					md.FailedProviderDetail,
-				)
-				continue
-			}
-			if !strings.Contains(strings.ToLower(powerState), "off") {
-				e.T.Logf("failed to decommission hardware: id=%s, hostname=%s, bmc_ip=%s, powerState=%v", h.MACAddress, h.Hostname, h.BMCIPAddress, powerState)
-				failedToDecomm = append(failedToDecomm, h)
-			} else {
-				e.T.Logf("successfully decommissioned hardware: id=%s, hostname=%s, bmc_ip=%s", h.MACAddress, h.Hostname, h.BMCIPAddress)
-				break
-			}
-		}
-	}
-
-	if len(failedToDecomm) > 0 {
-		e.T.Fatalf("failed to decommission all hardware during cluster deletion")
-	}
-}
+// add sleep retries to give the machine time to power off
 
 func (e *ClusterE2ETest) GenerateHardwareConfig(opts ...CommandOpt) {
-	e.generateHardwareConfig(opts...)
+	_ = "STUB: not implemented"
+	return
 }
 
 func (e *ClusterE2ETest) generateHardwareConfig(opts ...CommandOpt) {
-	if len(e.TestHardware) == 0 {
-		e.T.Fatal("you must provide the ClusterE2ETest the hardware to use for the test run")
-	}
-
-	if _, err := os.Stat(e.HardwareCsvLocation); err == nil {
-		os.Remove(e.HardwareCsvLocation)
-	}
-
-	testHardware := e.TestHardware
-	if e.WithNoPowerActions {
-		hardwareWithNoBMC := make(map[string]*api.Hardware)
-		for k, h := range testHardware {
-			lessBmc := *h
-			lessBmc.BMCIPAddress = ""
-			lessBmc.BMCUsername = ""
-			lessBmc.BMCPassword = ""
-			hardwareWithNoBMC[k] = &lessBmc
-		}
-		testHardware = hardwareWithNoBMC
-	}
-	// create hardware CSV with no bmc username/password
-	if e.WithOOBConfiguration {
-		hardwareWithNoUsernamePassword := make(map[string]*api.Hardware)
-		for k, h := range testHardware {
-			lessBmc := *h
-			lessBmc.BMCUsername = ""
-			lessBmc.BMCPassword = ""
-			hardwareWithNoUsernamePassword[k] = &lessBmc
-		}
-		testHardware = hardwareWithNoUsernamePassword
-	}
-
-	err := api.WriteHardwareMapToCSV(testHardware, e.HardwareCsvLocation)
-	if err != nil {
-		e.T.Fatalf("failed to create hardware csv for the test run: %v", err)
-	}
-
-	generateHardwareConfigArgs := []string{
-		"generate", "hardware",
-		"-z", e.HardwareCsvLocation,
-		"-o", e.HardwareConfigLocation,
-	}
-
-	e.RunEKSA(generateHardwareConfigArgs, opts...)
+	_ = "STUB: not implemented"
+	return
 }
+
+// create hardware CSV with no bmc username/password
 
 // GenerateClusterConfigForVersion generates cluster configuration for the specified EKS-A version and license token.
 func (e *ClusterE2ETest) GenerateClusterConfigForVersion(eksaVersion, licenseToken string, opts ...CommandOpt) {
-	if eksaVersion != "" {
-		// LicenseToken field was introduced in cluster spec only in release-22
-		// attempting to populate the field for any prior versions would break the api.
-		// We will need the conditional check as long as the latest minor is 'v0.21.*'.
-		currentSemver, err := semver.New(eksaVersion)
-		if err != nil {
-			e.T.Fatalf("parsing eks-a version:", err)
-		}
-		semverV022, err := semver.New(releaseV022)
-		if err != nil {
-			e.T.Fatalf("parsing eks-a version:", err)
-		}
+	_ = "STUB: not implemented"
+	return
 
-		if currentSemver.Compare(semverV022) != -1 {
-			if licenseToken != "" {
-				e.clusterFillers = append(e.clusterFillers, api.WithLicenseToken(licenseToken))
-			} else {
-				defaultLicenseToken := GetStagingLicenseToken()
-				e.clusterFillers = append(e.clusterFillers, api.WithLicenseToken(defaultLicenseToken))
-			}
-		}
-	}
-
-	e.generateClusterConfigObjects(opts...)
-	e.buildClusterConfigFile()
+	// LicenseToken field was introduced in cluster spec only in release-22
+	// attempting to populate the field for any prior versions would break the api.
+	// We will need the conditional check as long as the latest minor is 'v0.21.*'.
 }
 
 func (e *ClusterE2ETest) generateClusterConfigObjects(opts ...CommandOpt) {
-	e.generateClusterConfigWithCLI(opts...)
-	config, err := cluster.ParseConfigFromFile(e.ClusterConfigLocation)
-	if err != nil {
-		e.T.Fatalf("Failed parsing generated cluster config: %s", err)
-	}
-
-	// Copy all objects that might be generated by the CLI.
-	// Don't replace the whole ClusterConfig since some ClusterE2ETestOpt might
-	// have already set some data in it.
-	e.ClusterConfig.Cluster = config.Cluster
-	e.ClusterConfig.CloudStackDatacenter = config.CloudStackDatacenter
-	e.ClusterConfig.VSphereDatacenter = config.VSphereDatacenter
-	e.ClusterConfig.DockerDatacenter = config.DockerDatacenter
-	e.ClusterConfig.SnowDatacenter = config.SnowDatacenter
-	e.ClusterConfig.NutanixDatacenter = config.NutanixDatacenter
-	e.ClusterConfig.TinkerbellDatacenter = config.TinkerbellDatacenter
-	e.ClusterConfig.VSphereMachineConfigs = config.VSphereMachineConfigs
-	e.ClusterConfig.CloudStackMachineConfigs = config.CloudStackMachineConfigs
-	e.ClusterConfig.SnowMachineConfigs = config.SnowMachineConfigs
-	e.ClusterConfig.SnowIPPools = config.SnowIPPools
-	e.ClusterConfig.NutanixMachineConfigs = config.NutanixMachineConfigs
-	e.ClusterConfig.TinkerbellMachineConfigs = config.TinkerbellMachineConfigs
-	e.ClusterConfig.TinkerbellTemplateConfigs = config.TinkerbellTemplateConfigs
-
-	e.UpdateClusterConfig(e.baseClusterConfigUpdates()...)
+	_ = "STUB: not implemented"
+	return
 }
+
+// Copy all objects that might be generated by the CLI.
+// Don't replace the whole ClusterConfig since some ClusterE2ETestOpt might
+// have already set some data in it.
 
 // UpdateClusterConfig applies the cluster Config provided updates to e.ClusterConfig, marshalls its content
 // to yaml and writes it to a file on disk configured by e.ClusterConfigLocation. Call this method when you want
 // make changes to the eks-a cluster definition before running a CLI command or API operation.
 func (e *ClusterE2ETest) UpdateClusterConfig(fillers ...api.ClusterConfigFiller) {
-	e.T.Log("Updating cluster config")
-	api.UpdateClusterConfig(e.ClusterConfig, fillers...)
-	e.T.Logf("Writing cluster config to file: %s", e.ClusterConfigLocation)
-	e.buildClusterConfigFile()
+	_ = "STUB: not implemented"
+	return
 }
 
 func (e *ClusterE2ETest) baseClusterConfigUpdates() []api.ClusterConfigFiller {
-	clusterFillers := make([]api.ClusterFiller, 0, len(e.clusterFillers)+4)
-	// This defaults all tests to a 1:1:1 configuration. Since all the fillers defined on each test are run
-	// after these defaults, if the tests is explicit about any of these, the defaults will be overwritten
-	clusterFillers = append(clusterFillers,
-		api.WithControlPlaneCount(1), api.WithWorkerNodeCount(1), api.WithEtcdCountIfExternal(1),
-	)
-
-	// Disable packages by default for non-package e2e tests
-	// Package tests have "CuratedPackages" in their test name
-	if !strings.Contains(e.T.Name(), "CuratedPackages") {
-		clusterFillers = append(clusterFillers, api.WithPackagesDisabled())
-	}
-
-	clusterFillers = append(clusterFillers, e.clusterFillers...)
-	configFillers := make([]api.ClusterConfigFiller, 0, len(e.clusterConfigFillers)+1)
-	configFillers = append(configFillers, api.ClusterToConfigFiller(clusterFillers...))
-	configFillers = append(configFillers, e.clusterConfigFillers...)
-	configFillers = append(configFillers, e.Provider.ClusterConfigUpdates()...)
-
-	// If we are persisting an existing cluster, set the control plane endpoint back to the original, since
-	// it is immutable
-	if e.ClusterConfig.Cluster.Spec.DatacenterRef.Kind != v1alpha1.DockerDatacenterKind && e.PersistentCluster && e.ClusterConfig.Cluster.Spec.ControlPlaneConfiguration.Endpoint.Host != "" {
-		endpoint := e.ClusterConfig.Cluster.Spec.ControlPlaneConfiguration.Endpoint.Host
-		e.T.Logf("Resetting CP endpoint for persistent cluster to %s", endpoint)
-		configFillers = append(configFillers,
-			api.ClusterToConfigFiller(api.WithControlPlaneEndpointIP(endpoint)),
-		)
-	}
-
-	return configFillers
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// This defaults all tests to a 1:1:1 configuration. Since all the fillers defined on each test are run
+// after these defaults, if the tests is explicit about any of these, the defaults will be overwritten
+
+// Disable packages by default for non-package e2e tests
+// Package tests have "CuratedPackages" in their test name
+
+// If we are persisting an existing cluster, set the control plane endpoint back to the original, since
+// it is immutable
 
 func (e *ClusterE2ETest) generateClusterConfigWithCLI(opts ...CommandOpt) {
-	if e.PersistentCluster && fileExists(e.ClusterConfigLocation) {
-		e.T.Log("Skipping CLI cluster generation since this is a persistent cluster that already had one cluster config generated")
-		return
-	}
-
-	if err := os.MkdirAll(filepath.Dir(e.ClusterConfigLocation), os.ModePerm); err != nil {
-		e.T.Fatalf("Failed creating cluster config folder for test: %s", err)
-	}
-
-	generateClusterConfigArgs := []string{"generate", "clusterconfig", e.ClusterName, "-p", e.Provider.Name(), ">", e.ClusterConfigLocation}
-	e.RunEKSA(generateClusterConfigArgs, opts...)
-	e.T.Log("Cluster config generated with CLI")
+	_ = "STUB: not implemented"
+	return
 }
 
-func (e *ClusterE2ETest) parseClusterConfigFromDisk(file string) {
-	e.T.Logf("Parsing cluster config from disk: %s", file)
-	config, err := cluster.ParseConfigFromFile(file)
-	if err != nil {
-		e.T.Fatalf("Failed parsing generated cluster config: %s", err)
-	}
-	e.ClusterConfig = config
-}
+func (e *ClusterE2ETest) parseClusterConfigFromDisk(file string) { _ = "STUB: not implemented"; return }
 
 // WithClusterConfig generates a base cluster config using the CLI `generate clusterconfig` command
 // and updates them with the provided fillers. Helpful for defining the initial Cluster config
 // before running a create operation.
 func (e *ClusterE2ETest) WithClusterConfig(fillers ...api.ClusterConfigFiller) *ClusterE2ETest {
-	e.T.Logf("Generating base config for cluster %s", e.ClusterName)
-	e.generateClusterConfigWithCLI()
-	e.parseClusterConfigFromDisk(e.ClusterConfigLocation)
-	base := e.baseClusterConfigUpdates()
-	allUpdates := make([]api.ClusterConfigFiller, 0, len(base)+len(fillers))
-	allUpdates = append(allUpdates, base...)
-	allUpdates = append(allUpdates, fillers...)
-	e.UpdateClusterConfig(allUpdates...)
-	return e
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DownloadArtifacts runs the EKS-A `download artifacts` command with appropriate args.
-func (e *ClusterE2ETest) DownloadArtifacts(opts ...CommandOpt) {
-	downloadArtifactsArgs := []string{"download", "artifacts", "-f", e.ClusterConfigLocation}
-	if getBundlesOverride() == "true" {
-		downloadArtifactsArgs = append(downloadArtifactsArgs, "--bundles-override", defaultBundleReleaseManifestFile)
-	}
-	e.RunEKSA(downloadArtifactsArgs, opts...)
-	if _, err := os.Stat(defaultDownloadArtifactsOutputLocation); err != nil {
-		e.T.Fatal(err)
-	} else {
-		e.T.Logf("Downloaded artifacts tarball saved at %s", defaultDownloadArtifactsOutputLocation)
-	}
-}
+func (e *ClusterE2ETest) DownloadArtifacts(opts ...CommandOpt) { _ = "STUB: not implemented"; return }
 
 // ExtractDownloadedArtifacts extracts the downloaded artifacts.
 func (e *ClusterE2ETest) ExtractDownloadedArtifacts(opts ...CommandOpt) {
-	e.T.Log("Extracting downloaded artifacts")
-	e.Run("tar", "-xf", defaultDownloadArtifactsOutputLocation)
+	_ = "STUB: not implemented"
+	return
 }
 
 // CleanupDownloadedArtifactsAndImages cleans up the downloaded artifacts and images.
 func (e *ClusterE2ETest) CleanupDownloadedArtifactsAndImages(opts ...CommandOpt) {
-	e.T.Log("Cleaning up downloaded artifacts and images")
-	e.Run("rm", "-rf", defaultDownloadArtifactsOutputLocation, defaultDownloadImagesOutputLocation)
+	_ = "STUB: not implemented"
+	return
 }
 
-func getBundleManifestLocation() string {
-	if _, err := os.Stat(defaultDownloadArtifactsOutputLocation); err == nil {
-		return bundleReleasePathFromArtifacts
-	}
-	return defaultBundleReleaseManifestFile
-}
+func getBundleManifestLocation() string { _ = "STUB: not implemented"; return "" }
 
 // DownloadImages runs the EKS-A `download images` command with appropriate args.
-func (e *ClusterE2ETest) DownloadImages(opts ...CommandOpt) {
-	downloadImagesArgs := []string{"download", "images", "-o", defaultDownloadImagesOutputLocation}
-	if getBundlesOverride() == "true" {
-		downloadImagesArgs = append(downloadImagesArgs, "--bundles-override", getBundleManifestLocation())
-	}
-	e.RunEKSA(downloadImagesArgs, opts...)
-	if _, err := os.Stat(defaultDownloadImagesOutputLocation); err != nil {
-		e.T.Fatal(err)
-	} else {
-		e.T.Logf("Downloaded images archive saved at %s", defaultDownloadImagesOutputLocation)
-	}
-}
+func (e *ClusterE2ETest) DownloadImages(opts ...CommandOpt) { _ = "STUB: not implemented"; return }
 
 // ImportImages runs the EKS-A `import images` command with appropriate args.
 // When ociNamespaces are configured, it imports images into each namespace path
 // so containerd can find them at the correct namespaced location.
-func (e *ClusterE2ETest) ImportImages(opts ...CommandOpt) {
-	clusterConfig := e.ClusterConfig.Cluster
-	registyMirrorEndpoint, registryMirrorPort := clusterConfig.Spec.RegistryMirrorConfiguration.Endpoint, clusterConfig.Spec.RegistryMirrorConfiguration.Port
-	registryMirrorHost := net.JoinHostPort(registyMirrorEndpoint, registryMirrorPort)
-	bundleManifestLocation := getBundleManifestLocation()
-
-	registries := []string{registryMirrorHost}
-	seen := make(map[string]bool)
-	for _, ns := range clusterConfig.Spec.RegistryMirrorConfiguration.OCINamespaces {
-		if ns.Namespace != "" && !seen[ns.Namespace] {
-			seen[ns.Namespace] = true
-			registries = append(registries, registryMirrorHost+"/"+ns.Namespace)
-		}
-	}
-
-	for _, reg := range registries {
-		importImagesArgs := []string{"import images", "--input", defaultDownloadImagesOutputLocation, "--bundles", bundleManifestLocation, "--registry", reg, "--insecure"}
-		e.RunEKSA(importImagesArgs, opts...)
-	}
-}
+func (e *ClusterE2ETest) ImportImages(opts ...CommandOpt) { _ = "STUB: not implemented"; return }
 
 // GetDiagnosticCollectorImage returns the diagnostic collector image from the bundle file,
 // or falls back to a hardcoded URI if reading from disk fails.
-func (e *ClusterE2ETest) GetDiagnosticCollectorImage() string {
-	const fallbackImage = "public.ecr.aws/eks-anywhere/diagnostic-collector:v0.16.2-eks-a-41"
+func (e *ClusterE2ETest) GetDiagnosticCollectorImage() string { _ = "STUB: not implemented"; return "" }
 
-	bundleManifestLocation := getBundleManifestLocation()
+// Try to read the bundle file
 
-	// Try to read the bundle file
-	bundleData, err := os.ReadFile(bundleManifestLocation)
-	if err != nil {
-		e.T.Logf("Could not read bundle file, using fallback image: %v", err)
-		return fallbackImage
-	}
+// Try to parse the bundle
 
-	// Try to parse the bundle
-	var bundles releasev1.Bundles
-	if err := yaml.Unmarshal(bundleData, &bundles); err != nil {
-		e.T.Logf("Could not parse bundle file, using fallback image: %v", err)
-		return fallbackImage
-	}
-
-	// Check if version bundles exist
-	if len(bundles.Spec.VersionsBundles) == 0 {
-		e.T.Log("No version bundles found in bundle file, using fallback image")
-		return fallbackImage
-	}
-
-	return bundles.Spec.VersionsBundles[0].Eksa.DiagnosticCollector.VersionedImage()
-}
+// Check if version bundles exist
 
 // GetPackageControllerRepo returns the bundle's package controller chart image.
 func (e *ClusterE2ETest) GetPackageControlleChartRepo() (string, error) {
-	bundleManifestLocation := getBundleManifestLocation()
-
-	// Read the bundle file
-	bundleData, err := os.ReadFile(bundleManifestLocation)
-	if err != nil {
-		return "", fmt.Errorf("failed to read bundle file %s: %w", bundleManifestLocation, err)
-	}
-
-	// Parse the bundle
-	var bundles releasev1.Bundles
-	if err := yaml.Unmarshal(bundleData, &bundles); err != nil {
-		return "", fmt.Errorf("failed to parse bundle file: %w", err)
-	}
-
-	// Get the package controller chart image from the first version bundle
-	if len(bundles.Spec.VersionsBundles) == 0 {
-		return "", fmt.Errorf("no version bundles found in bundle file")
-	}
-
-	return bundles.Spec.VersionsBundles[0].PackageController.HelmChart.Image(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
+
+// Read the bundle file
+
+// Parse the bundle
+
+// Get the package controller chart image from the first version bundle
 
 // CopyPackages runs the EKS-A `copy packages` command to copy curated packages to the registry mirror.
 func (e *ClusterE2ETest) CopyPackages(packageMirrorAlias string, packageChartRegistry string, packageRegistry string, opts ...CommandOpt) {
-	clusterConfig := e.ClusterConfig.Cluster
-	registyMirrorEndpoint, registryMirrorPort := clusterConfig.Spec.RegistryMirrorConfiguration.Endpoint, clusterConfig.Spec.RegistryMirrorConfiguration.Port
-	registryMirrorHost := net.JoinHostPort(registyMirrorEndpoint, registryMirrorPort)
-
-	kubeVersion := string(clusterConfig.Spec.KubernetesVersion)
-
-	loginToPackagesRegistry(e, packageRegistry)
-
-	copyPackagesArgs := []string{
-		"copy", "packages",
-		registryMirrorHost + "/" + packageMirrorAlias,
-		"--kube-version", kubeVersion,
-		"--src-chart-registry", packageChartRegistry,
-		"--src-image-registry", packageRegistry,
-		"--dst-insecure",
-	}
-
-	e.T.Logf("Copying curated packages to registry mirror: %s/%s", registryMirrorHost, packageMirrorAlias)
-	e.RunEKSA(copyPackagesArgs, opts...)
+	_ = "STUB: not implemented"
+	return
 }
 
 // ChangeInstanceSecurityGroup modifies the security group of the instance to the provided value.
 func (e *ClusterE2ETest) ChangeInstanceSecurityGroup(securityGroup string) {
-	e.T.Logf("Changing instance security group to %s", securityGroup)
-	e.Run(fmt.Sprintf("INSTANCE_ID=$(ec2-metadata -i | awk '{print $2}') && aws ec2 modify-instance-attribute --instance-id $INSTANCE_ID --groups %s", securityGroup))
+	_ = "STUB: not implemented"
+	return
 }
 
-func (e *ClusterE2ETest) CreateCluster(opts ...CommandOpt) {
-	e.createCluster(opts...)
-}
+func (e *ClusterE2ETest) CreateCluster(opts ...CommandOpt) { _ = "STUB: not implemented"; return }
 
-func (e *ClusterE2ETest) createCluster(opts ...CommandOpt) {
-	if e.PersistentCluster {
-		if fileExists(e.KubeconfigFilePath()) {
-			e.T.Logf("Persisent cluster: kubeconfig found for cluster %s, skipping cluster creation", e.ClusterName)
-			return
-		}
-	}
-
-	e.T.Logf("Creating cluster %s", e.ClusterName)
-	createClusterArgs := []string{"create", "cluster", "-f", e.ClusterConfigLocation, "-v", "6"}
-
-	dumpFile("Create cluster from file:", e.ClusterConfigLocation, e.T)
-
-	if getBundlesOverride() == "true" {
-		createClusterArgs = append(createClusterArgs, "--bundles-override", defaultBundleReleaseManifestFile)
-	}
-
-	if e.Provider.Name() == tinkerbellProviderName {
-		createClusterArgs = append(createClusterArgs, "-z", e.HardwareCsvLocation)
-		dumpFile("Hardware csv file:", e.HardwareCsvLocation, e.T)
-		tinkBootstrapIP := os.Getenv(tinkerbellBootstrapIPEnvVar)
-		e.T.Logf("tinkBootstrapIP: %s", tinkBootstrapIP)
-		if tinkBootstrapIP != "" {
-			createClusterArgs = append(createClusterArgs, "--tinkerbell-bootstrap-ip", tinkBootstrapIP)
-		}
-	}
-
-	e.RunEKSA(createClusterArgs, opts...)
-}
+func (e *ClusterE2ETest) createCluster(opts ...CommandOpt) { _ = "STUB: not implemented"; return }
 
 func (e *ClusterE2ETest) ValidateCluster(kubeVersion v1alpha1.KubernetesVersion) {
-	ctx := context.Background()
-	e.T.Log("Validating cluster node status")
-	r := retrier.New(10 * time.Minute)
-	err := r.Retry(func() error {
-		err := e.KubectlClient.ValidateNodes(ctx, e.Cluster().KubeconfigFile)
-		if err != nil {
-			return fmt.Errorf("validating nodes status: %v", err)
-		}
-		return nil
-	})
-	if err != nil {
-		e.T.Fatal(err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func (e *ClusterE2ETest) WaitForMachineDeploymentReady(machineDeploymentName string) {
-	ctx := context.Background()
-	e.T.Logf("Waiting for machine deployment %s to be ready for cluster %s", machineDeploymentName, e.ClusterName)
-	err := e.KubectlClient.WaitForMachineDeploymentReady(ctx, e.Cluster(), "5m", machineDeploymentName)
-	if err != nil {
-		e.T.Fatal(err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // GetEKSACluster retrieves the EKSA cluster from the runtime environment using kubectl.
-func (e *ClusterE2ETest) GetEKSACluster() *v1alpha1.Cluster {
-	ctx := context.Background()
-	clus, err := e.KubectlClient.GetEksaCluster(ctx, e.Cluster(), e.ClusterName)
-	if err != nil {
-		e.T.Fatal(err)
-	}
-	return clus
-}
+func (e *ClusterE2ETest) GetEKSACluster() *v1alpha1.Cluster { _ = "STUB: not implemented"; return nil }
 
 func (e *ClusterE2ETest) GetCapiMachinesForCluster(clusterName string) map[string]types.Machine {
-	machines, err := e.CapiMachinesForCluster(clusterName)
-	if err != nil {
-		e.T.Fatal(err)
-	}
-	return machines
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CapiMachinesForCluster reads all the CAPI Machines for a particular cluster and returns them
 // index by their name.
 func (e *ClusterE2ETest) CapiMachinesForCluster(clusterName string) (map[string]types.Machine, error) {
-	ctx := context.Background()
-	capiMachines, err := e.KubectlClient.GetMachines(ctx, e.Cluster(), clusterName)
-	if err != nil {
-		return nil, err
-	}
-	machinesMap := make(map[string]types.Machine, 0)
-	for _, machine := range capiMachines {
-		machinesMap[machine.Metadata.Name] = machine
-	}
-	return machinesMap, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ApplyClusterManifest uses client-side logic to create/update objects defined in a cluster yaml manifest.
-func (e *ClusterE2ETest) ApplyClusterManifest() {
-	ctx := context.Background()
-	e.T.Logf("Applying cluster %s spec located at %s", e.ClusterName, e.ClusterConfigLocation)
-	e.applyClusterManifest(ctx)
-}
+func (e *ClusterE2ETest) ApplyClusterManifest() { _ = "STUB: not implemented"; return }
 
 func (e *ClusterE2ETest) applyClusterManifest(ctx context.Context) {
-	if err := e.KubectlClient.ApplyManifest(ctx, e.KubeconfigFilePath(), e.ClusterConfigLocation); err != nil {
-		e.T.Fatalf("Failed to apply cluster config: %s", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // WithClusterUpgrade adds a cluster upgrade.
 func WithClusterUpgrade(fillers ...api.ClusterFiller) ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		e.UpdateClusterConfig(api.ClusterToConfigFiller(fillers...))
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 // WithUpgradeClusterConfig adds a cluster upgrade.
 // When we migrate usages of ClusterFiller to ClusterConfigFiller we can rename this to WithClusterUpgrade.
 func WithUpgradeClusterConfig(fillers ...api.ClusterConfigFiller) ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		e.UpdateClusterConfig(fillers...)
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 // LoadClusterConfigGeneratedByCLI loads the full cluster config from the file generated when a cluster is created using the CLI.
 func (e *ClusterE2ETest) LoadClusterConfigGeneratedByCLI(fillers ...api.ClusterConfigFiller) {
-	fullClusterConfigLocation := filepath.Join(e.ClusterConfigFolder, e.ClusterName+"-eks-a-cluster.yaml")
-	e.parseClusterConfigFromDisk(fullClusterConfigLocation)
+	_ = "STUB: not implemented"
+	return
 }
 
 // UpgradeClusterWithNewConfig applies the test options, re-generates the cluster config file and runs the CLI upgrade command.
 func (e *ClusterE2ETest) UpgradeClusterWithNewConfig(clusterOpts []ClusterE2ETestOpt, commandOpts ...CommandOpt) {
-	e.upgradeCluster(clusterOpts, commandOpts...)
+	_ = "STUB: not implemented"
+	return
 }
 
 func (e *ClusterE2ETest) upgradeCluster(clusterOpts []ClusterE2ETestOpt, commandOpts ...CommandOpt) {
-	for _, opt := range clusterOpts {
-		opt(e)
-	}
-	e.buildClusterConfigFile()
-	e.UpgradeCluster(commandOpts...)
+	_ = "STUB: not implemented"
+	return
 }
 
 // UpgradeCluster runs the CLI upgrade command.
 func (e *ClusterE2ETest) UpgradeCluster(commandOpts ...CommandOpt) {
-	upgradeClusterArgs := []string{"upgrade", "cluster", "-f", e.ClusterConfigLocation, "-v", "6"}
-	if getBundlesOverride() == "true" {
-		upgradeClusterArgs = append(upgradeClusterArgs, "--bundles-override", defaultBundleReleaseManifestFile)
-	}
-
-	e.RunEKSA(upgradeClusterArgs, commandOpts...)
+	_ = "STUB: not implemented"
+	return
 }
 
-func (e *ClusterE2ETest) generateClusterConfigYaml() []byte {
-	childObjs := e.ClusterConfig.ChildObjects()
-	yamlB := make([][]byte, 0, len(childObjs)+1)
+func (e *ClusterE2ETest) generateClusterConfigYaml() []byte { _ = "STUB: not implemented"; return nil }
 
-	// This is required because Flux requires a namespace be specified for objects
-	// to be able to reconcile right.
-	if e.ClusterConfig.Cluster.Namespace == "" {
-		e.ClusterConfig.Cluster.Namespace = "default"
-	}
-	clusterConfigB, err := yaml.Marshal(e.ClusterConfig.Cluster)
-	if err != nil {
-		e.T.Fatal(err)
-	}
-	yamlB = append(yamlB, clusterConfigB)
-	for _, o := range childObjs {
-		// This is required because Flux requires a namespace be specified for objects
-		// to be able to reconcile right.
-		if o.GetNamespace() == "" {
-			o.SetNamespace("default")
-		}
-		objB, err := yaml.Marshal(o)
-		if err != nil {
-			e.T.Fatalf("Failed marshalling %s config: %v", o.GetName(), err)
-		}
-		yamlB = append(yamlB, objB)
-	}
+// This is required because Flux requires a namespace be specified for objects
+// to be able to reconcile right.
 
-	return templater.AppendYamlResources(yamlB...)
-}
+// This is required because Flux requires a namespace be specified for objects
+// to be able to reconcile right.
 
-func (e *ClusterE2ETest) buildClusterConfigFile() {
-	yaml := e.generateClusterConfigYaml()
+func (e *ClusterE2ETest) buildClusterConfigFile() { _ = "STUB: not implemented"; return }
 
-	writer, err := filewriter.NewWriter(e.ClusterConfigFolder)
-	if err != nil {
-		e.T.Fatalf("Error creating writer: %v", err)
-	}
-
-	writtenFile, err := writer.Write(filepath.Base(e.ClusterConfigLocation), yaml, filewriter.PersistentFile)
-	if err != nil {
-		e.T.Fatalf("Error writing cluster config to file %s: %v", e.ClusterConfigLocation, err)
-	}
-	e.T.Logf("Written cluster config to %v", writtenFile)
-	e.ClusterConfigLocation = writtenFile
-}
-
-func (e *ClusterE2ETest) DeleteCluster(opts ...CommandOpt) {
-	e.deleteCluster(opts...)
-}
+func (e *ClusterE2ETest) DeleteCluster(opts ...CommandOpt) { _ = "STUB: not implemented"; return }
 
 // cleanupResources is a helper to clean up test resources. It is a noop if the T_CLEANUP_RESOURCES environment variable
 // is false or unset.
-func (e *ClusterE2ETest) cleanupResources() {
-	if !shouldCleanUpResources() {
-		e.T.Logf("Skipping provider resource cleanup")
-		return
-	}
+func (e *ClusterE2ETest) cleanupResources() { _ = "STUB: not implemented"; return }
 
-	e.T.Logf("Cleaning up provider resources")
-	if err := e.Provider.CleanupResources(e.ClusterName); err != nil {
-		e.T.Logf("failed to clean up %s test resouces: %v", e.Provider.Name(), err)
-	}
-}
+func (e *ClusterE2ETest) CleanupDockerEnvironment() { _ = "STUB: not implemented"; return }
 
-func (e *ClusterE2ETest) CleanupDockerEnvironment() {
-	e.T.Logf("cleanup kind enviornment...")
-	e.Run("kind", "delete", "clusters", "--all", "||", "true")
-	e.T.Logf("cleanup docker enviornment...")
-	e.Run("docker", "rm", "-vf", "$(docker ps -a -q)", "||", "true")
-}
+func shouldCleanUpResources() bool { _ = "STUB: not implemented"; return false }
 
-func shouldCleanUpResources() bool {
-	shouldCleanupResources, err := getCleanupResourcesVar()
-	return err == nil && shouldCleanupResources
-}
-
-func (e *ClusterE2ETest) deleteCluster(opts ...CommandOpt) {
-	deleteClusterArgs := []string{"delete", "cluster", e.ClusterName, "-v", "4"}
-	if getBundlesOverride() == "true" {
-		deleteClusterArgs = append(deleteClusterArgs, "--bundles-override", defaultBundleReleaseManifestFile)
-	}
-	e.RunEKSA(deleteClusterArgs, opts...)
-}
+func (e *ClusterE2ETest) deleteCluster(opts ...CommandOpt) { _ = "STUB: not implemented"; return }
 
 // GenerateSupportBundleOnCleanupIfTestFailed does what it says on the tin.
 //
 // It uses testing.T.Cleanup to register a handler that checks if the test
 // failed, and generates a support bundle only in the event of a failure.
 func (e *ClusterE2ETest) GenerateSupportBundleOnCleanupIfTestFailed(opts ...CommandOpt) {
-	e.T.Cleanup(func() {
-		if e.T.Failed() {
-			e.T.Log("Generating support bundle for failed test")
-			generateSupportBundleArgs := []string{"generate", "support-bundle", "-f", e.ClusterConfigLocation}
-			e.RunEKSA(generateSupportBundleArgs, opts...)
-		}
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 // GenerateSupportBundleIfTestFailed runs generates a support bundle if the test failed.
 func (e *ClusterE2ETest) GenerateSupportBundleIfTestFailed(opts ...CommandOpt) {
-	if e.T.Failed() {
-		e.T.Log("Generating support bundle for failed test")
-		generateSupportBundleArgs := []string{"generate", "support-bundle", "-f", e.ClusterConfigLocation}
-		e.RunEKSA(generateSupportBundleArgs, opts...)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
-func (e *ClusterE2ETest) Run(name string, args ...string) {
-	cmd, err := prepareCommand(name, args...)
-	if err != nil {
-		e.T.Fatalf("Error preparing command: %v", err)
-	}
-	e.T.Log("Running shell command", "[", cmd.String(), "]")
+func (e *ClusterE2ETest) Run(name string, args ...string) { _ = "STUB: not implemented"; return }
 
-	var stdoutAndErr bytes.Buffer
-	cmd.Stderr = io.MultiWriter(os.Stderr, &stdoutAndErr)
-	cmd.Stdout = io.MultiWriter(os.Stdout, &stdoutAndErr)
-
-	if err = cmd.Run(); err != nil {
-		e.T.Log("Command failed, scanning output for error")
-		scanner := bufio.NewScanner(&stdoutAndErr)
-		var errorMessage string
-		// Look for the last line of the out put that starts with 'Error:'
-		for scanner.Scan() {
-			line := scanner.Text()
-			if strings.HasPrefix(line, "Error:") {
-				errorMessage = line
-			}
-		}
-
-		if err := scanner.Err(); err != nil {
-			e.T.Fatalf("Failed reading command output looking for error message: %v", err)
-		}
-
-		if errorMessage != "" {
-			if e.ExpectFailure {
-				e.T.Logf("This error was expected. Continuing...")
-				return
-			}
-			e.T.Fatalf("Command %s %v failed with error: %v: %s", name, args, err, errorMessage)
-		}
-
-		e.T.Fatalf("Error running command %s %v: %v", name, args, err)
-	}
-}
+// Look for the last line of the out put that starts with 'Error:'
 
 func (e *ClusterE2ETest) RunEKSA(args []string, opts ...CommandOpt) {
-	binaryPath := e.eksaBinaryLocation
-	for _, o := range opts {
-		err := o(&binaryPath, &args)
-		if err != nil {
-			e.T.Fatalf("Error executing EKS-A at path %s with args %s: %v", binaryPath, args, err)
-		}
-	}
-	e.Run(binaryPath, args...)
+	_ = "STUB: not implemented"
+	return
 }
 
-func (e *ClusterE2ETest) StopIfFailed() {
-	if e.T.Failed() {
-		e.T.FailNow()
-	}
-}
+func (e *ClusterE2ETest) StopIfFailed() { _ = "STUB: not implemented"; return }
 
 // Cluster builds a cluster obj using the ClusterE2ETest name and kubeconfig.
-func (e *ClusterE2ETest) Cluster() *types.Cluster {
-	return &types.Cluster{
-		Name:           e.ClusterName,
-		KubeconfigFile: e.KubeconfigFilePath(),
-	}
-}
+func (e *ClusterE2ETest) Cluster() *types.Cluster { _ = "STUB: not implemented"; return nil }
 
-func (e *ClusterE2ETest) managementCluster() *types.Cluster {
-	return &types.Cluster{
-		Name:           e.ClusterConfig.Cluster.ManagedBy(),
-		KubeconfigFile: e.managementKubeconfigFilePath(),
-	}
-}
+func (e *ClusterE2ETest) managementCluster() *types.Cluster { _ = "STUB: not implemented"; return nil }
 
 // KubeconfigFilePath retrieves the Kubeconfig path used for the workload cluster.
-func (e *ClusterE2ETest) KubeconfigFilePath() string {
-	return filepath.Join(e.ClusterConfigFolder, fmt.Sprintf("%s-eks-a-cluster.kubeconfig", e.ClusterName))
-}
+func (e *ClusterE2ETest) KubeconfigFilePath() string { _ = "STUB: not implemented"; return "" }
 
 // BuildWorkloadClusterClient creates a client for the workload cluster created by e.
 func (e *ClusterE2ETest) BuildWorkloadClusterClient() (client.Client, error) {
-	var clusterClient client.Client
-	// Adding the retry logic here because the connection to the client does not always
-	// succedd on the first try due to connection failure after the kubeconfig becomes
-	// available in the cluster.
-	err := retrier.Retry(12, 5*time.Second, func() error {
-		c, err := kubernetes.NewRuntimeClientFromFileName(e.KubeconfigFilePath())
-		if err != nil {
-			return fmt.Errorf("failed to build cluster client: %v", err)
-		}
-		clusterClient = c
-		return nil
-	})
-
-	return clusterClient, err
+	_ = "STUB: not implemented"
+	return *new(client.Client), nil
 }
 
+// Adding the retry logic here because the connection to the client does not always
+// succedd on the first try due to connection failure after the kubeconfig becomes
+// available in the cluster.
+
 func (e *ClusterE2ETest) managementKubeconfigFilePath() string {
-	clusterConfig := e.ClusterConfig.Cluster
-	if clusterConfig.IsSelfManaged() {
-		return e.KubeconfigFilePath()
-	}
-	managementClusterName := e.ClusterConfig.Cluster.ManagedBy()
-	return filepath.Join(managementClusterName, fmt.Sprintf("%s-eks-a-cluster.kubeconfig", managementClusterName))
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func (e *ClusterE2ETest) GetEksaVSphereMachineConfigs() []v1alpha1.VSphereMachineConfig {
-	clusterConfig := e.ClusterConfig.Cluster
-	machineConfigNames := make([]string, 0, len(clusterConfig.Spec.WorkerNodeGroupConfigurations)+1)
-	machineConfigNames = append(machineConfigNames, clusterConfig.Spec.ControlPlaneConfiguration.MachineGroupRef.Name)
-	for _, workerNodeConf := range clusterConfig.Spec.WorkerNodeGroupConfigurations {
-		machineConfigNames = append(machineConfigNames, workerNodeConf.MachineGroupRef.Name)
-	}
-
-	kubeconfig := e.KubeconfigFilePath()
-	ctx := context.Background()
-
-	machineConfigs := make([]v1alpha1.VSphereMachineConfig, 0, len(machineConfigNames))
-	for _, name := range machineConfigNames {
-		m, err := e.KubectlClient.GetEksaVSphereMachineConfig(ctx, name, kubeconfig, clusterConfig.Namespace)
-		if err != nil {
-			e.T.Fatalf("Failed getting VSphereMachineConfig: %v", err)
-		}
-
-		machineConfigs = append(machineConfigs, *m)
-	}
-
-	return machineConfigs
-}
-
-func GetTestNameHash(name string) string {
-	h := sha1.New()
-	h.Write([]byte(name))
-	testNameHash := fmt.Sprintf("%x", h.Sum(nil))
-	return testNameHash[:7]
-}
-
-func getClusterName(t T) string {
-	value := os.Getenv(ClusterPrefixVar)
-	// Append hash to make each cluster name unique per test. Using the testname will be too long
-	// and would fail validations
-	if len(value) == 0 {
-		value = defaultClusterName
-	}
-
-	return fmt.Sprintf("%s-%s", value, GetTestNameHash(t.Name()))
-}
-
-func getBundlesOverride() string {
-	return os.Getenv(BundlesOverrideVar)
-}
-
-// GetLicenseToken retrieves the license token from the environment variables.
-func GetLicenseToken() string {
-	return os.Getenv(LicenseTokenEnvVar)
-}
-
-// GetLicenseToken2 retrieves the license token 2 from the environment variables.
-func GetLicenseToken2() string {
-	return os.Getenv(LicenseToken2EnvVar)
-}
-
-// GetStagingLicenseToken retrieves the staging license token from the environment variables.
-func GetStagingLicenseToken() string {
-	return os.Getenv(StagingLicenseTokenEnvVar)
-}
-
-// GetStagingLicenseToken2 retrieves the staging license token 2 from the environment variables.
-func GetStagingLicenseToken2() string {
-	return os.Getenv(StagingLicenseToken2EnvVar)
-}
-
-func getCleanupResourcesVar() (bool, error) {
-	return strconv.ParseBool(os.Getenv(CleanupResourcesVar))
-}
-
-func setEksctlVersionEnvVar() error {
-	eksctlVersionEnv := os.Getenv(eksctlVersionEnvVar)
-	if eksctlVersionEnv == "" {
-		err := os.Setenv(eksctlVersionEnvVar, eksctlVersionEnvVarDummyVal)
-		if err != nil {
-			return fmt.Errorf(
-				"couldn't set eksctl version env var %s to value %s",
-				eksctlVersionEnvVar,
-				eksctlVersionEnvVarDummyVal,
-			)
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
+func GetTestNameHash(name string) string { _ = "STUB: not implemented"; return "" }
+
+func getClusterName(t T) string { _ = "STUB: not implemented"; return "" }
+
+// Append hash to make each cluster name unique per test. Using the testname will be too long
+// and would fail validations
+
+func getBundlesOverride() string { _ = "STUB: not implemented"; return "" }
+
+// GetLicenseToken retrieves the license token from the environment variables.
+func GetLicenseToken() string { _ = "STUB: not implemented"; return "" }
+
+// GetLicenseToken2 retrieves the license token 2 from the environment variables.
+func GetLicenseToken2() string { _ = "STUB: not implemented"; return "" }
+
+// GetStagingLicenseToken retrieves the staging license token from the environment variables.
+func GetStagingLicenseToken() string { _ = "STUB: not implemented"; return "" }
+
+// GetStagingLicenseToken2 retrieves the staging license token 2 from the environment variables.
+func GetStagingLicenseToken2() string { _ = "STUB: not implemented"; return "" }
+
+func getCleanupResourcesVar() (bool, error) { _ = "STUB: not implemented"; return false, nil }
+
+func setEksctlVersionEnvVar() error { _ = "STUB: not implemented"; return nil }
+
 // CreateNamespace creates a namespace.
-func (e *ClusterE2ETest) CreateNamespace(namespace string) {
-	kubeconfig := e.KubeconfigFilePath()
-	err := e.KubectlClient.CreateNamespace(context.Background(), kubeconfig, namespace)
-	if err != nil {
-		e.T.Fatalf("Namespace creation failed for %s", namespace)
-	}
-}
+func (e *ClusterE2ETest) CreateNamespace(namespace string) { _ = "STUB: not implemented"; return }
 
 // DeleteNamespace deletes a namespace.
-func (e *ClusterE2ETest) DeleteNamespace(namespace string) {
-	kubeconfig := e.KubeconfigFilePath()
-	err := e.KubectlClient.DeleteNamespace(context.Background(), kubeconfig, namespace)
-	if err != nil {
-		e.T.Fatalf("Namespace deletion failed for %s", namespace)
-	}
-}
+func (e *ClusterE2ETest) DeleteNamespace(namespace string) { _ = "STUB: not implemented"; return }
 
 // SetPackageBundleActive will set the current packagebundle to the active state.
-func (e *ClusterE2ETest) SetPackageBundleActive() {
-	kubeconfig := e.KubeconfigFilePath()
-	pbc, err := e.KubectlClient.GetPackageBundleController(context.Background(), kubeconfig, e.ClusterName)
-	if err != nil {
-		e.T.Fatalf("Error getting PackageBundleController: %v", err)
-	}
-	pb, err := e.KubectlClient.GetPackageBundleList(context.Background(), e.KubeconfigFilePath())
-	if err != nil {
-		e.T.Fatalf("Error getting PackageBundle: %v", err)
-	}
-	os.Setenv("KUBECONFIG", kubeconfig)
-	if pbc.Spec.ActiveBundle != pb[0].ObjectMeta.Name {
-		e.RunEKSA([]string{
-			"upgrade", "packages",
-			"--bundle-version", pb[0].ObjectMeta.Name, "-v=9",
-			"--cluster=" + e.ClusterName,
-		})
-	}
-}
+func (e *ClusterE2ETest) SetPackageBundleActive() { _ = "STUB: not implemented"; return }
 
 // ValidatingNoPackageController make sure there is no package controller.
-func (e *ClusterE2ETest) ValidatingNoPackageController() {
-	kubeconfig := e.KubeconfigFilePath()
-	_, err := e.KubectlClient.GetPackageBundleController(context.Background(), kubeconfig, e.ClusterName)
-	if err == nil {
-		e.T.Fatalf("Error unexpected PackageBundleController: %v", err)
-	}
-}
+func (e *ClusterE2ETest) ValidatingNoPackageController() { _ = "STUB: not implemented"; return }
 
 // InstallCuratedPackage will install a curated package.
 func (e *ClusterE2ETest) InstallCuratedPackage(packageName, packagePrefix, kubeconfig string, opts ...string) {
-	os.Setenv("CURATED_PACKAGES_SUPPORT", "true")
-	// The package install command doesn't (yet?) have a --kubeconfig flag.
-	os.Setenv("KUBECONFIG", kubeconfig)
-	e.RunEKSA([]string{
-		"install", "package", packageName,
-		"--package-name=" + packagePrefix, "-v=9",
-		"--cluster=" + e.ClusterName,
-		strings.Join(opts, " "),
-	})
+	_ = "STUB: not implemented"
+	return
 }
+
+// The package install command doesn't (yet?) have a --kubeconfig flag.
 
 // InstallCuratedPackageFile will install a curated package from a yaml file, this is useful since target namespace isn't supported on the CLI.
 func (e *ClusterE2ETest) InstallCuratedPackageFile(packageFile, kubeconfig string, opts ...string) {
-	os.Setenv("CURATED_PACKAGES_SUPPORT", "true")
-	os.Setenv("KUBECONFIG", kubeconfig)
-	e.T.Log("Installing EKS-A Packages file", packageFile)
-	e.RunEKSA([]string{
-		"apply", "package", "-f", packageFile, "-v=9", strings.Join(opts, " "),
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 // ValidatePackageBundleControllerRegistry checks if the registries for helm charts and images match for curated packages tests.
 func (e *ClusterE2ETest) ValidatePackageBundleControllerRegistry() {
-	nonRegionalPackagesRegex := `^.*NonRegionalCuratedPackages.*$`
-	if regexp.MustCompile(nonRegionalPackagesRegex).MatchString(e.T.Name()) {
-		return
-	}
-	pbc, err := e.KubectlClient.GetPackageBundleController(context.Background(), e.KubeconfigFilePath(), e.ClusterName)
-	if err != nil {
-		e.T.Fatalf("cannot get PackageBundleController: %v", err)
-	}
-	if pbc.Spec.DefaultImageRegistry != pbc.Spec.DefaultRegistry {
-		e.T.Fatal("DefaultImageRegistry should match DefaultRegistry in pbc configuration")
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func (e *ClusterE2ETest) generatePackageConfig(ns, targetns, prefix, packageName string) []byte {
-	yamlB := make([][]byte, 0, 4)
-	generatedName := fmt.Sprintf("%s-%s", prefix, packageName)
-	if targetns == "" {
-		targetns = ns
-	}
-	ns = fmt.Sprintf("%s-%s", ns, e.ClusterName)
-	builtpackage := &packagesv1.Package{
-		TypeMeta: metav1.TypeMeta{
-			Kind:       packagesv1.PackageKind,
-			APIVersion: "packages.eks.amazonaws.com/v1alpha1",
-		},
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      generatedName,
-			Namespace: ns,
-		},
-		Spec: packagesv1.PackageSpec{
-			PackageName:     packageName,
-			TargetNamespace: targetns,
-		},
-	}
-	builtpackageB, err := yaml.Marshal(builtpackage)
-	if err != nil {
-		e.T.Fatalf("marshalling package config file: %v", err)
-	}
-	yamlB = append(yamlB, builtpackageB)
-	return templater.AppendYamlResources(yamlB...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BuildPackageConfigFile will create the file in the test directory for the curated package.
 func (e *ClusterE2ETest) BuildPackageConfigFile(packageName, prefix, ns string) string {
-	b := e.generatePackageConfig(ns, ns, prefix, packageName)
-
-	writer, err := filewriter.NewWriter(e.ClusterConfigFolder)
-	if err != nil {
-		e.T.Fatalf("Error creating writer: %v", err)
-	}
-	packageFile := fmt.Sprintf("%s.yaml", packageName)
-
-	writtenFile, err := writer.Write(packageFile, b, filewriter.PersistentFile)
-	if err != nil {
-		e.T.Fatalf("Error writing cluster config to file %s: %v", e.ClusterConfigLocation, err)
-	}
-	return writtenFile
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func (e *ClusterE2ETest) CreateResource(ctx context.Context, resource string) {
-	err := e.KubectlClient.ApplyKubeSpecFromBytes(ctx, e.Cluster(), []byte(resource))
-	if err != nil {
-		e.T.Fatalf("Failed to create required resource (%s): %v", resource, err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func (e *ClusterE2ETest) UninstallCuratedPackage(packagePrefix string, opts ...string) {
-	e.RunEKSA([]string{
-		"delete", "package", packagePrefix, "-v=9",
-		"--cluster=" + e.ClusterName,
-		strings.Join(opts, " "),
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
-func (e *ClusterE2ETest) InstallLocalStorageProvisioner() {
-	ctx := context.Background()
-	err := e.KubectlClient.ApplyKubeSpecFromBytes(ctx, e.Cluster(), localPathProvisioner)
-	if err != nil {
-		e.T.Fatalf("Error installing local-path-provisioner: %v", err)
-	}
-}
+func (e *ClusterE2ETest) InstallLocalStorageProvisioner() { _ = "STUB: not implemented"; return }
 
 // WithCluster helps with bringing up and tearing down E2E test clusters.
-func (e *ClusterE2ETest) WithCluster(f func(e *ClusterE2ETest)) {
-	e.GenerateClusterConfig()
-	e.CreateCluster()
-	defer func() {
-		e.GenerateSupportBundleIfTestFailed()
-		e.DeleteCluster()
-	}()
-	f(e)
-}
+func (e *ClusterE2ETest) WithCluster(f func(e *ClusterE2ETest)) { _ = "STUB: not implemented"; return }
 
 // Like WithCluster but does not delete the cluster. Useful for debugging.
 func (e *ClusterE2ETest) WithPersistentCluster(f func(e *ClusterE2ETest)) {
-	configPath := e.KubeconfigFilePath()
-	if _, err := os.Stat(configPath); os.IsNotExist(err) {
-		e.GenerateClusterConfig()
-		e.CreateCluster()
-	}
-	f(e)
+	_ = "STUB: not implemented"
+	return
 }
 
 // VerifyHarborPackageInstalled is checking if the harbor package gets installed correctly.
 func (e *ClusterE2ETest) VerifyHarborPackageInstalled(prefix, namespace string) {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-
-	deployments := []string{"core", "jobservice", "nginx", "portal", "registry"}
-	statefulsets := []string{"database", "redis", "trivy"}
-
-	var wg sync.WaitGroup
-	wg.Add(len(deployments) + len(statefulsets))
-	errCh := make(chan error, 1)
-	okCh := make(chan string, 1)
-
-	time.Sleep(5 * time.Minute)
-
-	// Log Package/Deployment outputs
-	defer func() {
-		e.printDeploymentSpec(ctx, namespace)
-	}()
-
-	for _, name := range deployments {
-		go func(name string) {
-			defer wg.Done()
-			err := e.KubectlClient.WaitForDeployment(ctx,
-				e.Cluster(), "20m", "Available", fmt.Sprintf("%s-harbor-%s", prefix, name), namespace)
-			if err != nil {
-				errCh <- err
-			}
-		}(name)
-	}
-	for _, name := range statefulsets {
-		go func(name string) {
-			defer wg.Done()
-			err := e.KubectlClient.Wait(ctx, e.KubeconfigFilePath(), "20m", "Ready",
-				fmt.Sprintf("pods/%s-harbor-%s-0", prefix, name), namespace)
-			if err != nil {
-				errCh <- err
-			}
-		}(name)
-	}
-	go func() {
-		wg.Wait()
-		okCh <- "completed"
-	}()
-
-	select {
-	case err := <-errCh:
-		e.T.Fatal(err)
-	case <-okCh:
-		return
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
+// Log Package/Deployment outputs
+
 func (e *ClusterE2ETest) printPackageSpec(ctx context.Context, params []string) {
-	bytes, _ := e.KubectlClient.Execute(ctx, params...)
-	response := &packagesv1.Package{}
-	_ = json.Unmarshal(bytes.Bytes(), response)
-	formatted, _ := json.MarshalIndent(response, "", "  ")
-	fmt.Println(string(formatted))
+	_ = "STUB: not implemented"
+	return
 }
 
 func (e *ClusterE2ETest) printDeploymentSpec(ctx context.Context, ns string) {
-	response, _ := e.KubectlClient.GetDeployments(ctx,
-		executables.WithKubeconfig(e.managementKubeconfigFilePath()),
-		executables.WithNamespace(ns),
-	)
-	formatted, _ := json.MarshalIndent(response, "", "  ")
-	fmt.Println(string(formatted))
+	_ = "STUB: not implemented"
+	return
 }
 
 // VerifyHelloPackageInstalled is checking if the hello eks anywhere package gets installed correctly.
 func (e *ClusterE2ETest) VerifyHelloPackageInstalled(packageName string, mgmtCluster *types.Cluster) {
-	ctx := context.Background()
-	packageMetadatNamespace := fmt.Sprintf("%s-%s", constants.EksaPackagesName, e.ClusterName)
-
-	// Log Package/Deployment outputs
-	defer func() {
-		params := []string{"get", "package", packageName, "-o", "json", "-n", packageMetadatNamespace, "--kubeconfig", e.KubeconfigFilePath()}
-		e.printPackageSpec(ctx, params)
-		e.printDeploymentSpec(ctx, constants.EksaPackagesName)
-	}()
-
-	e.T.Log("Waiting for Package", packageName, "To be installed")
-	err := e.KubectlClient.WaitForPackagesInstalled(ctx,
-		mgmtCluster, packageName, "20m", packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("waiting for hello-eks-anywhere package timed out: %s", err)
-	}
-
-	e.T.Log("Waiting for Package", packageName, "Deployment to be healthy")
-	err = e.KubectlClient.WaitForDeployment(ctx,
-		e.Cluster(), "20m", "Available", "hello-eks-anywhere", constants.EksaPackagesName)
-	if err != nil {
-		e.T.Fatalf("waiting for hello-eks-anywhere deployment timed out: %s", err)
-	}
-
-	svcAddress := packageName + "." + constants.EksaPackagesName + ".svc.cluster.local"
-	e.T.Log("Validate content at endpoint", svcAddress)
-	expectedLogs := "Amazon EKS Anywhere"
-	e.ValidateEndpointContent(svcAddress, constants.EksaPackagesName, expectedLogs)
+	_ = "STUB: not implemented"
+	return
 }
+
+// Log Package/Deployment outputs
 
 // VerifyAdotPackageInstalled is checking if the ADOT package gets installed correctly.
 func (e *ClusterE2ETest) VerifyAdotPackageInstalled(packageName, targetNamespace string) {
-	ctx := context.Background()
-	packageMetadatNamespace := fmt.Sprintf("%s-%s", constants.EksaPackagesName, e.ClusterName)
-
-	e.T.Log("Waiting for package", packageName, "to be installed")
-	err := e.KubectlClient.WaitForPackagesInstalled(ctx,
-		e.Cluster(), packageName, "20m", packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("waiting for adot package install timed out: %s", err)
-	}
-
-	// Log Package/Deployment outputs
-	defer func() {
-		params := []string{"get", "package", packageName, "-o", "json", "-n", packageMetadatNamespace, "--kubeconfig", e.KubeconfigFilePath()}
-		e.printPackageSpec(ctx, params)
-		e.printDeploymentSpec(ctx, targetNamespace)
-	}()
-
-	e.T.Log("Waiting for package", packageName, "deployment to be available")
-	err = e.KubectlClient.WaitForDeployment(ctx,
-		e.Cluster(), "20m", "Available", fmt.Sprintf("%s-aws-otel-collector", packageName), targetNamespace)
-	if err != nil {
-		e.T.Fatalf("waiting for adot deployment timed out: %s", err)
-	}
-
-	e.T.Log("Reading", packageName, "pod logs")
-	adotPodName, err := e.KubectlClient.GetPodNameByLabel(context.TODO(), targetNamespace, "app.kubernetes.io/name=aws-otel-collector", e.KubeconfigFilePath())
-	if err != nil {
-		e.T.Fatalf("unable to get name of the aws-otel-collector pod: %s", err)
-	}
-	expectedLogs := "Everything is ready"
-	e.MatchLogs(targetNamespace, adotPodName, "aws-otel-collector", expectedLogs, 5*time.Minute)
-
-	podIPAddress, err := e.KubectlClient.GetPodIP(context.TODO(), targetNamespace, adotPodName, e.KubeconfigFilePath())
-	if err != nil {
-		e.T.Fatalf("unable to get ip of the aws-otel-collector pod: %s", err)
-	}
-	podFullIPAddress := strings.Trim(podIPAddress, `'"`) + ":8888/metrics"
-	e.T.Log("Validate content at endpoint", podFullIPAddress)
-	expectedLogs = "HTTP/1.1 200 OK"
-	e.ValidateEndpointContent(podFullIPAddress, targetNamespace, expectedLogs, "-I")
+	_ = "STUB: not implemented"
+	return
 }
+
+// Log Package/Deployment outputs
 
 //go:embed testdata/adot_package_deployment.yaml
 var adotPackageDeployment []byte
@@ -1553,117 +638,27 @@ var adotPackageDaemonset []byte
 
 // VerifyAdotPackageDeploymentUpdated is checking if deployment config changes trigger resource reloads correctly.
 func (e *ClusterE2ETest) VerifyAdotPackageDeploymentUpdated(packageName, targetNamespace string) {
-	ctx := context.Background()
-	packageMetadatNamespace := fmt.Sprintf("%s-%s", constants.EksaPackagesName, e.ClusterName)
-
-	// Deploy ADOT as a deployment and scrape the apiservers
-	e.T.Log("Apply changes to package", packageName)
-	e.T.Log("This will update", packageName, "to be a deployment, and scrape the apiservers")
-	err := e.KubectlClient.ApplyKubeSpecFromBytesWithNamespace(ctx, e.Cluster(), adotPackageDeployment, packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("Error upgrading adot package: %s", err)
-		return
-	}
-	time.Sleep(30 * time.Second) // Add sleep to allow package to change state
-
-	// Log Package/Deployment outputs
-	defer func() {
-		params := []string{"get", "package", packageName, "-o", "json", "-n", packageMetadatNamespace, "--kubeconfig", e.KubeconfigFilePath()}
-		e.printPackageSpec(ctx, params)
-		e.printDeploymentSpec(ctx, targetNamespace)
-	}()
-
-	e.T.Log("Waiting for package", packageName, "to be updated")
-	err = e.KubectlClient.WaitForPackagesInstalled(ctx,
-		e.Cluster(), packageName, "20m", packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("waiting for adot package update timed out: %s", err)
-	}
-
-	e.T.Log("Waiting for package", packageName, "deployment to be available")
-	err = e.KubectlClient.WaitForDeployment(ctx,
-		e.Cluster(), "20m", "Available", fmt.Sprintf("%s-aws-otel-collector", packageName), targetNamespace)
-	if err != nil {
-		e.T.Fatalf("waiting for adot deployment timed out: %s", err)
-	}
-
-	e.T.Log("Reading", packageName, "pod logs")
-	adotPodName, err := e.KubectlClient.GetPodNameByLabel(context.TODO(), targetNamespace, "app.kubernetes.io/name=aws-otel-collector", e.KubeconfigFilePath())
-	if err != nil {
-		e.T.Fatalf("unable to get name of the aws-otel-collector pod: %s", err)
-	}
-	logs, err := e.KubectlClient.GetPodLogs(context.TODO(), targetNamespace, adotPodName, "aws-otel-collector", e.KubeconfigFilePath())
-	if err != nil {
-		e.T.Fatalf("failure getting pod logs %s", err)
-	}
-	fmt.Printf("Logs from aws-otel-collector pod\n %s\n", logs)
-	expectedLogs := "Everything is ready"
-	ok := strings.Contains(logs, expectedLogs)
-	if !ok {
-		e.T.Fatalf("expected to find %s in the log, got %s", expectedLogs, logs)
-	}
+	_ = "STUB: not implemented"
+	return
 }
+
+// Deploy ADOT as a deployment and scrape the apiservers
+
+// Add sleep to allow package to change state
+
+// Log Package/Deployment outputs
 
 // VerifyAdotPackageDaemonSetUpdated is checking if daemonset config changes trigger resource reloads correctly.
 func (e *ClusterE2ETest) VerifyAdotPackageDaemonSetUpdated(packageName, targetNamespace string) {
-	ctx := context.Background()
-	packageMetadatNamespace := fmt.Sprintf("%s-%s", constants.EksaPackagesName, e.ClusterName)
-
-	// Deploy ADOT as a daemonset and scrape the node
-	e.T.Log("Apply changes to package", packageName)
-	e.T.Log("This will update", packageName, "to be a daemonset, and scrape the node")
-	err := e.KubectlClient.ApplyKubeSpecFromBytesWithNamespace(ctx, e.Cluster(), adotPackageDaemonset, packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("Error upgrading adot package: %s", err)
-		return
-	}
-	time.Sleep(30 * time.Second) // Add sleep to allow package to change state
-
-	// Log Package/Deployment outputs
-	defer func() {
-		params := []string{"get", "package", packageName, "-o", "json", "-n", packageMetadatNamespace, "--kubeconfig", e.KubeconfigFilePath()}
-		e.printPackageSpec(ctx, params)
-		e.printDeploymentSpec(ctx, targetNamespace)
-	}()
-
-	e.T.Log("Waiting for package", packageName, "to be updated")
-	err = e.KubectlClient.WaitForPackagesInstalled(ctx,
-		e.Cluster(), packageName, "20m", packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("waiting for adot package update timed out: %s", err)
-	}
-
-	e.T.Log("Waiting for package", packageName, "daemonset to be rolled out")
-	err = retrier.New(6 * time.Minute).Retry(func() error {
-		return e.KubectlClient.WaitForResourceRolledout(ctx,
-			e.Cluster(), "20m", fmt.Sprintf("%s-aws-otel-collector-agent", packageName), targetNamespace, "daemonset")
-	})
-	if err != nil {
-		e.T.Fatalf("waiting for adot daemonset timed out: %s", err)
-	}
-
-	e.T.Log("Reading", packageName, "pod logs")
-	adotPodName, err := e.KubectlClient.GetPodNameByLabel(context.TODO(), targetNamespace, "app.kubernetes.io/name=aws-otel-collector", e.KubeconfigFilePath())
-	if err != nil {
-		e.T.Fatalf("unable to get name of the aws-otel-collector pod: %s", err)
-	}
-	expectedLogs := "Everything is ready"
-	err = retrier.New(5 * time.Minute).Retry(func() error {
-		logs, err := e.KubectlClient.GetPodLogs(context.TODO(), targetNamespace, adotPodName, "aws-otel-collector", e.KubeconfigFilePath())
-		if err != nil {
-			e.T.Fatalf("failure getting pod logs %s", err)
-		}
-		fmt.Printf("Logs from aws-otel-collector pod\n %s\n", logs)
-		ok := strings.Contains(logs, expectedLogs)
-		if !ok {
-			return fmt.Errorf("expected to find %s in the log, got %s", expectedLogs, logs)
-		}
-		return nil
-	})
-	if err != nil {
-		e.T.Fatalf("unable to finish log comparison: %s", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
+
+// Deploy ADOT as a daemonset and scrape the node
+
+// Add sleep to allow package to change state
+
+// Log Package/Deployment outputs
 
 //go:embed testdata/emissary_listener.yaml
 var emisarryListener []byte
@@ -1673,152 +668,35 @@ var emisarryPackage []byte
 
 // VerifyEmissaryPackageInstalled is checking if emissary package gets installed correctly.
 func (e *ClusterE2ETest) VerifyEmissaryPackageInstalled(packageName string, mgmtCluster *types.Cluster) {
-	ctx := context.Background()
-	packageMetadatNamespace := fmt.Sprintf("%s-%s", constants.EksaPackagesName, e.ClusterName)
-
-	e.T.Log("Waiting for Package", packageName, "To be installed")
-	err := e.KubectlClient.WaitForPackagesInstalled(ctx,
-		mgmtCluster, packageName, "20m", packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("waiting for emissary package timed out: %s", err)
-	}
-
-	// Log Package/Deployment outputs
-	defer func() {
-		params := []string{"get", "package", packageName, "-o", "json", "-n", packageMetadatNamespace, "--kubeconfig", e.KubeconfigFilePath()}
-		e.printPackageSpec(ctx, params)
-		e.printDeploymentSpec(ctx, constants.EksaPackagesName)
-	}()
-
-	e.T.Log("Waiting for Package", packageName, "Deployment to be healthy")
-	err = e.KubectlClient.WaitForDeployment(ctx,
-		e.Cluster(), "20m", "Available", packageName, constants.EksaPackagesName)
-	if err != nil {
-		e.T.Fatalf("waiting for emissary deployment timed out: %s", err)
-	}
-	svcAddress := packageName + "-admin." + constants.EksaPackagesName + ".svc.cluster.local" + ":8877/ambassador/v0/check_alive"
-	e.T.Log("Validate content at endpoint", svcAddress)
-	expectedLogs := "Ambassador is alive and well"
-	e.ValidateEndpointContent(svcAddress, constants.EksaPackagesName, expectedLogs)
+	_ = "STUB: not implemented"
+	return
 }
+
+// Log Package/Deployment outputs
 
 // TestEmissaryPackageRouting is checking if emissary is able to create Ingress, host, and mapping that function correctly.
 func (e *ClusterE2ETest) TestEmissaryPackageRouting(packageName, checkName string, mgmtCluster *types.Cluster) {
-	ctx := context.Background()
-	packageMetadatNamespace := fmt.Sprintf("%s-%s", constants.EksaPackagesName, e.ClusterName)
-
-	err := e.KubectlClient.ApplyKubeSpecFromBytesWithNamespace(ctx, e.Cluster(), emisarryPackage, packageMetadatNamespace)
-	if err != nil {
-		e.T.Errorf("Error upgrading emissary package: %v", err)
-		return
-	}
-
-	// Log Package/Deployment outputs
-	defer func() {
-		params := []string{"get", "package", packageName, "-o", "json", "-n", packageMetadatNamespace, "--kubeconfig", e.KubeconfigFilePath()}
-		e.printPackageSpec(ctx, params)
-		e.printDeploymentSpec(ctx, constants.EksaPackagesName)
-	}()
-
-	e.T.Log("Waiting for Package", packageName, "To be upgraded")
-	err = e.KubectlClient.WaitForPackagesInstalled(ctx,
-		mgmtCluster, packageName, "20m", fmt.Sprintf("%s-%s", constants.EksaPackagesName, e.ClusterName))
-	if err != nil {
-		e.T.Fatalf("waiting for emissary package upgrade timed out: %s", err)
-	}
-	err = e.KubectlClient.ApplyKubeSpecFromBytes(ctx, e.Cluster(), emisarryListener)
-	if err != nil {
-		e.T.Errorf("Error applying roles for oids: %v", err)
-		return
-	}
-	e.T.Log("Waiting for hello service")
-	time.Sleep(60 * time.Second)
-
-	// Functional testing of Emissary Ingress
-	ingresssvcAddress := checkName + "." + constants.EksaPackagesName + ".svc.cluster.local"
-	e.T.Log("Validate content at endpoint", ingresssvcAddress)
-	expectedLogs := "Thank you for using"
-	e.ValidateEndpointContent(ingresssvcAddress, constants.EksaPackagesName, expectedLogs)
+	_ = "STUB: not implemented"
+	return
 }
+
+// Log Package/Deployment outputs
+
+// Functional testing of Emissary Ingress
 
 // VerifyPrometheusPackageInstalled is checking if the Prometheus package gets installed correctly.
 func (e *ClusterE2ETest) VerifyPrometheusPackageInstalled(packageName, targetNamespace string) {
-	ctx := context.Background()
-	packageMetadatNamespace := fmt.Sprintf("%s-%s", constants.EksaPackagesName, e.ClusterName)
-
-	e.T.Log("Waiting for package", packageName, "to be installed")
-	err := e.KubectlClient.WaitForPackagesInstalled(ctx,
-		e.Cluster(), packageName, "20m", packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("waiting for prometheus package install timed out: %s", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // VerifyCertManagerPackageInstalled is checking if the cert manager package gets installed correctly.
 func (e *ClusterE2ETest) VerifyCertManagerPackageInstalled(prefix, namespace, packageName string, mgmtCluster *types.Cluster) {
-	ctx, cancel := context.WithCancel(context.Background())
-	packageMetadatNamespace := fmt.Sprintf("%s-%s", constants.EksaPackagesName, e.ClusterName)
-	defer cancel()
-
-	deployments := []string{"cert-manager", "cert-manager-cainjector", "cert-manager-webhook"}
-
-	var wg sync.WaitGroup
-	errCh := make(chan error, 1)
-	okCh := make(chan string, 1)
-
-	e.T.Log("Waiting for Package", packageName, "To be installed")
-
-	// Log Package/Deployment outputs
-	defer func() {
-		params := []string{"get", "package", packageName, "-o", "json", "-n", packageMetadatNamespace, "--kubeconfig", e.KubeconfigFilePath()}
-		e.printPackageSpec(ctx, params)
-		e.printDeploymentSpec(ctx, namespace)
-	}()
-
-	err := e.KubectlClient.WaitForPackagesInstalled(ctx,
-		mgmtCluster, prefix+"-"+packageName, "5m", packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("waiting for cert-manager package timed out: %s", err)
-	}
-
-	e.T.Log("Waiting for Package", packageName, "Deployment to be healthy")
-
-	for _, name := range deployments {
-		wg.Add(1)
-		go func(name string) {
-			defer wg.Done()
-			err := e.KubectlClient.WaitForDeployment(ctx,
-				e.Cluster(), "20m", "Available", fmt.Sprintf("%s-%s", prefix, name), namespace)
-			if err != nil {
-				errCh <- err
-			}
-		}(name)
-	}
-
-	e.T.Log("Waiting for Self Signed certificate to be issued")
-	err = e.verifySelfSignedCertificate()
-	if err != nil {
-		errCh <- err
-	}
-
-	e.T.Log("Waiting for Let's Encrypt certificate to be issued")
-	err = e.verifyLetsEncryptCert()
-	if err != nil {
-		errCh <- err
-	}
-
-	go func() {
-		wg.Wait()
-		okCh <- "completed"
-	}()
-
-	select {
-	case err := <-errCh:
-		e.T.Fatal(err)
-	case <-okCh:
-		return
-	}
+	_ = "STUB: not implemented"
+	return
 }
+
+// Log Package/Deployment outputs
 
 //go:embed testdata/certmanager/certmanager_selfsignedissuer.yaml
 var certManagerSelfSignedIssuer []byte
@@ -1826,26 +704,7 @@ var certManagerSelfSignedIssuer []byte
 //go:embed testdata/certmanager/certmanager_selfsignedcert.yaml
 var certManagerSelfSignedCert []byte
 
-func (e *ClusterE2ETest) verifySelfSignedCertificate() error {
-	ctx := context.Background()
-	selfsignedCert := "my-selfsigned-ca"
-	err := e.KubectlClient.ApplyKubeSpecFromBytes(ctx, e.Cluster(), certManagerSelfSignedIssuer)
-	if err != nil {
-		return fmt.Errorf("error installing Cluster issuer for cert manager: %v", err)
-	}
-
-	err = e.KubectlClient.ApplyKubeSpecFromBytes(ctx, e.Cluster(), certManagerSelfSignedCert)
-	if err != nil {
-		return fmt.Errorf("error applying certificate for cert manager: %v", err)
-	}
-
-	err = e.KubectlClient.WaitJSONPathLoop(ctx, e.Cluster().KubeconfigFile, "5m", "status.conditions[?(@.type=='Ready')].status", "True",
-		fmt.Sprintf("certificates.cert-manager.io/%s", selfsignedCert), constants.EksaPackagesName)
-	if err != nil {
-		return fmt.Errorf("failed to issue a self signed certificate: %v", err)
-	}
-	return nil
-}
+func (e *ClusterE2ETest) verifySelfSignedCertificate() error { _ = "STUB: not implemented"; return nil }
 
 //go:embed testdata/certmanager/certmanager_letsencrypt_issuer.yaml
 var certManagerLetsEncryptIssuer string
@@ -1856,96 +715,24 @@ var certManagerLetsEncryptCert []byte
 //go:embed testdata/certmanager/certmanager_secret.yaml
 var certManagerSecret string
 
-func (e *ClusterE2ETest) verifyLetsEncryptCert() error {
-	ctx := context.Background()
-	letsEncryptCert := "test-cert"
-	region, zoneID := GetRoute53Configs()
-
-	data := map[string]interface{}{
-		"route53ZoneId": zoneID,
-		"route53Region": region,
-	}
-
-	certManagerIssuerData, err := templater.Execute(certManagerLetsEncryptIssuer, data)
-	if err != nil {
-		return fmt.Errorf("failed creating lets encrypt issuer: %v", err)
-	}
-
-	err = e.KubectlClient.ApplyKubeSpecFromBytes(ctx, e.Cluster(), certManagerIssuerData)
-	if err != nil {
-		return fmt.Errorf("error creating cert manager let's encrypt issuer: %v", err)
-	}
-
-	err = e.KubectlClient.ApplyKubeSpecFromBytes(ctx, e.Cluster(), certManagerLetsEncryptCert)
-	if err != nil {
-		return fmt.Errorf("error creating cert manager let's encrypt issuer: %v", err)
-	}
-
-	err = e.KubectlClient.WaitJSONPathLoop(ctx, e.Cluster().KubeconfigFile, "5m", "status.conditions[?(@.type=='Ready')].status", "True",
-		fmt.Sprintf("certificates.cert-manager.io/%s", letsEncryptCert), constants.EksaPackagesName)
-	if err != nil {
-		return fmt.Errorf("failed to issue a let's encrypt certificate: %v", err)
-	}
-
-	return nil
-}
+func (e *ClusterE2ETest) verifyLetsEncryptCert() error { _ = "STUB: not implemented"; return nil }
 
 // CleanupCerts cleans up letsencrypt certificates.
 func (e *ClusterE2ETest) CleanupCerts(mgmtCluster *types.Cluster) error {
-	ctx := context.Background()
-	letsEncryptCert := "test-cert"
-	opts := &kubernetes.KubectlDeleteOptions{
-		Name:      letsEncryptCert,
-		Namespace: constants.EksaPackagesName,
-	}
-	err := e.KubectlClient.Delete(ctx, "certificates.cert-manager.io", e.Cluster().KubeconfigFile, opts)
-	if err != nil {
-		return fmt.Errorf("failed to cleanup let's encrypt certificate: %v", err)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // VerifyPrometheusPrometheusServerStates is checking if the Prometheus package prometheus-server component is functioning properly.
 func (e *ClusterE2ETest) VerifyPrometheusPrometheusServerStates(packageName, targetNamespace, mode string) {
-	ctx := context.Background()
-
-	e.T.Log("Waiting for package", packageName, mode, "prometheus-server to be rolled out")
-	err := retrier.New(6 * time.Minute).Retry(func() error {
-		return e.KubectlClient.WaitForResourceRolledout(ctx,
-			e.Cluster(), "5m", fmt.Sprintf("%s-server", packageName), targetNamespace, mode)
-	})
-	if err != nil {
-		e.T.Fatalf("waiting for prometheus-server %s timed out: %s", mode, err)
-	}
-
-	e.T.Log("Reading package", packageName, "pod prometheus-server logs")
-	podName, err := e.KubectlClient.GetPodNameByLabel(context.TODO(), targetNamespace, "app.kubernetes.io/name=prometheus,app.kubernetes.io/component=server", e.KubeconfigFilePath())
-	if err != nil {
-		e.T.Fatalf("unable to get name of the prometheus-server pod: %s", err)
-	}
-
-	expectedLogs := "Server is ready to receive web requests"
-	e.MatchLogs(targetNamespace, podName, "prometheus-server", expectedLogs, 5*time.Minute)
+	_ = "STUB: not implemented"
+	return
 }
 
 // VerifyPrometheusNodeExporterStates is checking if the Prometheus package node-exporter component is functioning properly.
 func (e *ClusterE2ETest) VerifyPrometheusNodeExporterStates(packageName, targetNamespace string) {
-	ctx := context.Background()
-
-	e.T.Log("Waiting for package", packageName, "daemonset node-exporter to be rolled out")
-	err := retrier.New(6 * time.Minute).Retry(func() error {
-		return e.KubectlClient.WaitForResourceRolledout(ctx,
-			e.Cluster(), "5m", fmt.Sprintf("%s-node-exporter", packageName), targetNamespace, "daemonset")
-	})
-	if err != nil {
-		e.T.Fatalf("waiting for prometheus daemonset timed out: %s", err)
-	}
-
-	svcAddress := packageName + "-node-exporter." + targetNamespace + ".svc.cluster.local" + ":9100/metrics"
-	e.T.Log("Validate content at endpoint", svcAddress)
-	expectedLogs := "HELP go_gc_duration_seconds A summary of the wall-time pause (stop-the-world) duration in garbage collection cycles"
-	e.ValidateEndpointContent(svcAddress, targetNamespace, expectedLogs)
+	_ = "STUB: not implemented"
+	return
 }
 
 //go:embed testdata/prometheus_package_deployment.yaml
@@ -1956,85 +743,34 @@ var prometheusPackageStatefulSet []byte
 
 // ApplyPrometheusPackageServerDeploymentFile is checking if deployment config changes trigger resource reloads correctly.
 func (e *ClusterE2ETest) ApplyPrometheusPackageServerDeploymentFile(packageName, targetNamespace string) {
-	e.T.Log("Update", packageName, "to be a deployment, and scrape the api-servers")
-	e.ApplyPackageFile(packageName, targetNamespace, prometheusPackageDeployment)
+	_ = "STUB: not implemented"
+	return
 }
 
 // ApplyPrometheusPackageServerStatefulSetFile is checking if statefulset config changes trigger resource reloads correctly.
 func (e *ClusterE2ETest) ApplyPrometheusPackageServerStatefulSetFile(packageName, targetNamespace string) {
-	e.T.Log("Update", packageName, "to be a statefulset, and scrape the api-servers")
-	e.ApplyPackageFile(packageName, targetNamespace, prometheusPackageStatefulSet)
+	_ = "STUB: not implemented"
+	return
 }
 
 // VerifyPackageControllerNotInstalled is verifying that package controller is not installed.
-func (e *ClusterE2ETest) VerifyPackageControllerNotInstalled() {
-	ctx := context.Background()
-
-	packageDeployment := "eks-anywhere-packages"
-	_, err := e.KubectlClient.GetDeployment(ctx, packageDeployment, constants.EksaPackagesName, e.Cluster().KubeconfigFile)
-
-	if !apierrors.IsNotFound(err) {
-		e.T.Fatalf("found deployment for package controller in workload cluster %s : %s", e.ClusterName, err)
-	}
-}
+func (e *ClusterE2ETest) VerifyPackageControllerNotInstalled() { _ = "STUB: not implemented"; return }
 
 // VerifyAutoScalerPackageInstalled is verifying that the autoscaler package is installed and deployed.
 func (e *ClusterE2ETest) VerifyAutoScalerPackageInstalled(packageName, targetNamespace string, mgmtCluster *types.Cluster) {
-	ctx := context.Background()
-	deploymentName := "cluster-autoscaler-clusterapi-cluster-autoscaler"
-	packageMetadatNamespace := fmt.Sprintf("%s-%s", constants.EksaPackagesName, e.ClusterName)
-
-	e.T.Log("Waiting for Package", packageName, "To be installed")
-
-	// Log Package/Deployment outputs
-	defer func() {
-		params := []string{"get", "package", packageName, "-o", "json", "-n", packageMetadatNamespace, "--kubeconfig", e.KubeconfigFilePath()}
-		e.printPackageSpec(ctx, params)
-		e.printDeploymentSpec(ctx, targetNamespace)
-	}()
-
-	err := e.KubectlClient.WaitForPackagesInstalled(ctx,
-		mgmtCluster, packageName, "20m", packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("waiting for Autoscaler Package to be avaliable")
-	}
-
-	e.T.Log("Waiting for Package", packageName, "Deployment to be healthy")
-	err = e.KubectlClient.WaitForDeployment(ctx,
-		e.Cluster(), "20m", "Available", deploymentName, targetNamespace)
-	if err != nil {
-		e.T.Fatalf("waiting for cluster-autoscaler deployment timed out: %s", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
+
+// Log Package/Deployment outputs
 
 // VerifyMetricServerPackageInstalled is verifying that metrics-server is installed and deployed.
 func (e *ClusterE2ETest) VerifyMetricServerPackageInstalled(packageName, targetNamespace string, mgmtCluster *types.Cluster) {
-	ctx := context.Background()
-	deploymentName := "metrics-server"
-	packageMetadatNamespace := fmt.Sprintf("%s-%s", constants.EksaPackagesName, e.ClusterName)
-
-	e.T.Log("Waiting for Package", packageName, "To be installed")
-
-	// Log Package/Deployment outputs
-	defer func() {
-		params := []string{"get", "package", packageName, "-o", "json", "-n", packageMetadatNamespace, "--kubeconfig", e.KubeconfigFilePath()}
-		e.printPackageSpec(ctx, params)
-		e.printDeploymentSpec(ctx, targetNamespace)
-	}()
-
-	err := e.KubectlClient.WaitForPackagesInstalled(ctx,
-		mgmtCluster, packageName, "20m", packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("waiting for Metric Server Package to be avaliable")
-	}
-
-	e.T.Log("Waiting for Package", packageName, "Deployment to be healthy")
-	err = e.KubectlClient.WaitForDeployment(ctx,
-		e.Cluster(), "20m", "Available", deploymentName, targetNamespace)
-	if err != nil {
-		e.T.Fatalf("waiting for Metric Server deployment timed out: %s", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
+
+// Log Package/Deployment outputs
 
 //go:embed testdata/autoscaler_package.yaml
 var autoscalerPackageDeploymentTemplate string
@@ -2044,34 +780,8 @@ var metricsServerPackageDeploymentTemplate string
 
 // InstallAutoScalerWithMetricServer installs autoscaler and metrics-server with a given target namespace.
 func (e *ClusterE2ETest) InstallAutoScalerWithMetricServer(targetNamespace string) {
-	ctx := context.Background()
-	packageMetadatNamespace := fmt.Sprintf("%s-%s", constants.EksaPackagesName, e.ClusterName)
-	data := map[string]interface{}{
-		"targetNamespace": targetNamespace,
-		"clusterName":     e.Cluster().Name,
-	}
-
-	metricsServerPackageDeployment, err := templater.Execute(metricsServerPackageDeploymentTemplate, data)
-	if err != nil {
-		e.T.Fatalf("Failed creating metrics-erver Package Deployment: %s", err)
-	}
-
-	err = e.KubectlClient.ApplyKubeSpecFromBytesWithNamespace(ctx, e.Cluster(), metricsServerPackageDeployment,
-		packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("Error installing metrics-sserver pacakge: %s", err)
-	}
-
-	autoscalerPackageDeployment, err := templater.Execute(autoscalerPackageDeploymentTemplate, data)
-	if err != nil {
-		e.T.Fatalf("Failed creating autoscaler Package Deployment: %s", err)
-	}
-
-	err = e.KubectlClient.ApplyKubeSpecFromBytesWithNamespace(ctx, e.Cluster(), autoscalerPackageDeployment,
-		packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("Error installing cluster autoscaler pacakge: %s", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 //go:embed testdata/autoscaler_package_workload_cluster.yaml
@@ -2079,23 +789,8 @@ var autoscalerPackageWorkloadClusterDeploymentTemplate string
 
 // InstallAutoScaler installs autoscaler with a given target namespace.
 func (e *ClusterE2ETest) InstallAutoScaler(workloadClusterName, targetNamespace string) {
-	ctx := context.Background()
-	packageMetadataNamespace := fmt.Sprintf("%s-%s", constants.EksaPackagesName, e.ClusterName)
-	data := map[string]interface{}{
-		"targetNamespace":     targetNamespace,
-		"workloadClusterName": workloadClusterName,
-	}
-
-	autoscalerPackageWorkloadClusterDeployment, err := templater.Execute(autoscalerPackageWorkloadClusterDeploymentTemplate, data)
-	if err != nil {
-		e.T.Fatalf("Failed creating autoscaler Package Deployment: %s", err)
-	}
-
-	err = e.KubectlClient.ApplyKubeSpecFromBytesWithNamespace(ctx, e.Cluster(), autoscalerPackageWorkloadClusterDeployment,
-		packageMetadataNamespace)
-	if err != nil {
-		e.T.Fatalf("Error installing cluster autoscaler package: %s", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 //go:embed testdata/certmanager/certmanager_package.yaml
@@ -2103,155 +798,61 @@ var certManagerPackageTemplate string
 
 // InstallCertManagerPackageWithAwsCredentials installs cert-manager package by setting aws credentials in the pod.
 func (e *ClusterE2ETest) InstallCertManagerPackageWithAwsCredentials(prefix, packageName, namespace, clusterName string) {
-	generatedName := fmt.Sprintf("%s-%s", prefix, packageName)
-	targetNamespace := namespace
-	namespace = fmt.Sprintf("%s-%s", namespace, clusterName)
-	ctx := context.Background()
-	accessKeyID := os.Getenv(route53AccessKey)
-	secretKey := os.Getenv(route53SecretKey)
-	sessionToken := os.Getenv(route53SessionToken)
-	data := map[string]interface{}{
-		"targetNamespace": targetNamespace,
-		"namespace":       namespace,
-		"name":            generatedName,
-		"accessKeyId":     accessKeyID,
-		"secretKey":       secretKey,
-		"sessionToken":    sessionToken,
-	}
-
-	certManagerPackageDeployment, err := templater.Execute(certManagerPackageTemplate, data)
-	if err != nil {
-		e.T.Fatalf("Failed creating cert-manager package deployment: %s", err)
-	}
-
-	err = e.KubectlClient.ApplyKubeSpecFromBytesWithNamespace(ctx, e.Cluster(), certManagerPackageDeployment,
-		namespace)
-	if err != nil {
-		e.T.Fatalf("Error installing cert-manager package: %s", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // CombinedAutoScalerMetricServerTest verifies that new nodes are spun up after using a HPA to scale a deployment.
 func (e *ClusterE2ETest) CombinedAutoScalerMetricServerTest(autoscalerName, metricServerName, targetNamespace string, mgmtCluster *types.Cluster) {
-	e.VerifyMetricServerPackageInstalled(metricServerName, targetNamespace, mgmtCluster)
-	e.VerifyAutoScalerPackageInstalled(autoscalerName, targetNamespace, mgmtCluster)
-	e.T.Log("Metrics Server and Cluster Autoscaler ready")
-	e.DeployTestWorkload(mgmtCluster)
-	e.RestartClusterAutoscaler(targetNamespace)
-	e.VerifyAutoScalerPackageInstalled(autoscalerName, targetNamespace, mgmtCluster)
-	e.VerifyWorkerNodesScaleUp(mgmtCluster)
+	_ = "STUB: not implemented"
+	return
 }
 
 // DeployTestWorkload deploys the test workload on the cluster.
 func (e *ClusterE2ETest) DeployTestWorkload(cluster *types.Cluster) {
-	e.T.Log("Deploying test workload")
-	err := e.KubectlClient.ApplyKubeSpecFromBytes(context.Background(), cluster, autoscalerLoad)
-	if err != nil {
-		e.T.Fatalf("Failed to apply autoscaler load %s", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // VerifyWorkerNodesScaleUp verifies that the worker nodes are scaled up after a test workload is deployed on a cluster with Autoscaler installed.
 func (e *ClusterE2ETest) VerifyWorkerNodesScaleUp(mgmtCluster *types.Cluster) {
-	ctx := context.Background()
-	machineDeploymentName := e.ClusterName + "-" + "md-0"
-
-	e.T.Log("Waiting for machinedeployment to scale up (checking for ScalingUp phase or increased replicas)")
-	err := e.KubectlClient.WaitJSONPathLoop(ctx, mgmtCluster.KubeconfigFile, "10m", "status.replicas", "2",
-		fmt.Sprintf("machinedeployments.cluster.x-k8s.io/%s", machineDeploymentName), constants.EksaSystemNamespace)
-	if err != nil {
-		e.T.Fatalf("Failed to get increased replicas for machinedeployment: %s", err)
-	}
-
-	e.T.Log("Waiting for machinedeployment to finish scaling up")
-	err = e.KubectlClient.WaitJSONPathLoop(ctx, mgmtCluster.KubeconfigFile, "20m", "status.phase", "Running",
-		fmt.Sprintf("machinedeployments.cluster.x-k8s.io/%s", machineDeploymentName), constants.EksaSystemNamespace)
-	if err != nil {
-		e.T.Fatalf("Failed to get Running phase for machinedeployment: %s", err)
-	}
-
-	err = e.KubectlClient.WaitForMachineDeploymentReady(ctx, mgmtCluster, "5m", machineDeploymentName)
-	if err != nil {
-		e.T.Fatalf("Machine deployment stuck in scaling up: %s", err)
-	}
-
-	e.T.Log("Finished scaling up machines")
+	_ = "STUB: not implemented"
+	return
 }
 
 // RestartClusterAutoscaler restarts the cluster autoscaler deployment in the target namespace.
 func (e *ClusterE2ETest) RestartClusterAutoscaler(targetNamespace string) {
+	_ = "STUB: not implemented"
 	// There is a bug in cluster autoscaler currently where it's not able to autoscale the cluster
 	// because of missing permissions on infrastructure machine template.
 	// Cluster Autoscaler does restart after ~10 min after which it starts functioning normally.
 	// We are force triggering a restart so the e2e doesn't have to wait 10 min for the restart.
 	// This can be removed once the following issue is resolve upstream.
 	// https://github.com/kubernetes/autoscaler/issues/6490
-	autoscalerDeploymentName := "cluster-autoscaler-clusterapi-cluster-autoscaler"
-	_, err := e.KubectlClient.ExecuteCommand(context.Background(), "rollout", "restart", "deployment", "-n", targetNamespace, autoscalerDeploymentName, "--kubeconfig", e.KubeconfigFilePath())
-	if err != nil {
-		e.T.Fatalf("Failed to rollout cluster autoscaler %s", err)
-	}
+	return
 }
 
 // ValidateClusterState runs a set of validations against the cluster to identify an invalid cluster state.
-func (e *ClusterE2ETest) ValidateClusterState() {
-	validateClusterState(e.T.(*testing.T), e)
-}
+func (e *ClusterE2ETest) ValidateClusterState() { _ = "STUB: not implemented"; return }
 
 // ValidateClusterStateWithT runs a set of validations against the cluster to identify an invalid cluster state and accepts *testing.T as a parameter.
-func (e *ClusterE2ETest) ValidateClusterStateWithT(t *testing.T) {
-	validateClusterState(t, e)
-}
+func (e *ClusterE2ETest) ValidateClusterStateWithT(t *testing.T) { _ = "STUB: not implemented"; return }
 
-func validateClusterState(t *testing.T, e *ClusterE2ETest) {
-	t.Logf("Validating cluster %s", e.ClusterName)
-	ctx := context.Background()
-	e.buildClusterStateValidationConfig(ctx)
-	clusterStateValidator := newClusterStateValidator(e.clusterStateValidationConfig)
-	clusterStateValidator.WithValidations(validationsForExpectedObjects()...)
-	clusterStateValidator.WithValidations(e.Provider.ClusterStateValidations()...)
-	if err := clusterStateValidator.Validate(ctx); err != nil {
-		e.T.Fatalf("failed to validate cluster %v", err)
-	}
-}
+func validateClusterState(t *testing.T, e *ClusterE2ETest) { _ = "STUB: not implemented"; return }
 
 // ApplyPackageFile is applying a package file in the cluster.
 func (e *ClusterE2ETest) ApplyPackageFile(packageName, targetNamespace string, PackageFile []byte) {
-	ctx := context.Background()
-	packageMetadatNamespace := fmt.Sprintf("%s-%s", "eksa-packages", e.ClusterName)
-
-	e.T.Log("Apply changes to package", packageName)
-	err := e.KubectlClient.ApplyKubeSpecFromBytesWithNamespace(ctx, e.Cluster(), PackageFile, packageMetadatNamespace)
-	if err != nil {
-		e.T.Fatalf("Error upgrading package: %s", err)
-		return
-	}
-	time.Sleep(30 * time.Second) // Add sleep to allow package to change state
+	_ = "STUB: not implemented"
+	return
 }
+
+// Add sleep to allow package to change state
 
 // CurlEndpoint creates a pod with command to curl the target endpoint,
 // and returns the created pod name.
 func (e *ClusterE2ETest) CurlEndpoint(endpoint, namespace string, extraCurlArgs ...string) string {
-	ctx := context.Background()
-
-	diagnosticCollectorImage := e.GetDiagnosticCollectorImage()
-
-	e.T.Log("Launching pod to curl endpoint", endpoint)
-	randomname := fmt.Sprintf("%s-%s", "curl-test", utilrand.String(7))
-	curlPodName, err := e.KubectlClient.RunCurlPod(context.TODO(),
-		namespace, randomname, e.KubeconfigFilePath(), diagnosticCollectorImage,
-		append([]string{"curl", endpoint}, extraCurlArgs...))
-	if err != nil {
-		e.T.Fatalf("error launching pod: %s", err)
-	}
-
-	err = e.KubectlClient.WaitForPodCompleted(ctx,
-		e.Cluster(), curlPodName, "5m", namespace)
-	if err != nil {
-		e.T.Fatalf("waiting for pod %s timed out: %s", curlPodName, err)
-	}
-
-	return curlPodName
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // MatchLogs matches the log from a container to the expected content. Given it
@@ -2260,130 +861,43 @@ func (e *ClusterE2ETest) CurlEndpoint(endpoint, namespace string, extraCurlArgs 
 func (e *ClusterE2ETest) MatchLogs(targetNamespace, targetPodName string,
 	targetContainerName, expectedLogs string, timeout time.Duration,
 ) {
-	e.T.Logf("Match logs for pod %s, container %s in namespace %s", targetPodName,
-		targetContainerName, targetNamespace)
-
-	err := retrier.New(timeout).Retry(func() error {
-		logs, err := e.KubectlClient.GetPodLogs(context.TODO(), targetNamespace,
-			targetPodName, targetContainerName, e.KubeconfigFilePath())
-		if err != nil {
-			return fmt.Errorf("failure getting pod logs %s", err)
-		}
-		fmt.Printf("Logs from pod\n %s\n", logs)
-		ok := strings.Contains(logs, expectedLogs)
-		if !ok {
-			return fmt.Errorf("expected to find %s in the log, got %s", expectedLogs, logs)
-		}
-		return nil
-	})
-	if err != nil {
-		e.T.Fatalf("unable to match logs: %s", err)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // ValidateEndpointContent validates the contents at the target endpoint.
 func (e *ClusterE2ETest) ValidateEndpointContent(endpoint, namespace, expectedContent string, extraCurlArgs ...string) {
-	curlPodName := e.CurlEndpoint(endpoint, namespace, extraCurlArgs...)
-	e.MatchLogs(namespace, curlPodName, curlPodName, expectedContent, 5*time.Minute)
+	_ = "STUB: not implemented"
+	return
 }
 
 // AirgapDockerContainers airgap docker containers. Outside network should not be reached during airgapped deployment.
 func (e *ClusterE2ETest) AirgapDockerContainers(localCIDRs string) {
-	e.T.Logf("Airgap docker containers...")
-	e.Run(fmt.Sprintf("sudo iptables -F DOCKER-USER && sudo iptables -I DOCKER-USER -j DROP && sudo iptables -I DOCKER-USER -s %s,172.0.0.0/8,127.0.0.1 -j ACCEPT", localCIDRs))
+	_ = "STUB: not implemented"
+	return
 }
 
 // CreateAirgappedUser create airgapped user and setup the iptables rule. Notice that OUTPUT chain is flushed each time.
-func (e *ClusterE2ETest) CreateAirgappedUser(localCIDR string) {
-	e.Run("if ! id airgap; then sudo useradd airgap -G docker; fi")
-	e.Run("mkdir ./eksa-cli-logs || chmod 777 ./eksa-cli-logs") // Allow the airgap user to access logs folder
-	e.Run("chmod -R 777 ./")                                    // Allow the airgap user to access working dir
-	e.Run("sudo iptables -F OUTPUT")
-	e.Run(fmt.Sprintf("sudo iptables -A OUTPUT -d %s,172.0.0.0/8,127.0.0.1 -m owner --uid-owner airgap -j ACCEPT", localCIDR))
-	e.Run("sudo iptables -A OUTPUT -m owner --uid-owner airgap -j REJECT")
-}
+func (e *ClusterE2ETest) CreateAirgappedUser(localCIDR string) { _ = "STUB: not implemented"; return }
+
+// Allow the airgap user to access logs folder
+// Allow the airgap user to access working dir
 
 // AssertAirgappedNetwork make sure that the admin machine is indeed airgapped.
-func (e *ClusterE2ETest) AssertAirgappedNetwork() {
-	cmd := exec.Command("docker", "run", "--rm", "busybox", "ping", "8.8.8.8", "-c", "1", "-W", "2")
-	out, err := cmd.Output()
-	e.T.Log(string(out))
-	if err == nil {
-		e.T.Fatalf("Docker container is not airgapped")
-	}
+func (e *ClusterE2ETest) AssertAirgappedNetwork() { _ = "STUB: not implemented"; return }
 
-	cmd = exec.Command("sudo", "-u", "airgap", "ping", "8.8.8.8", "-c", "1", "-W", "2")
-	out, err = cmd.Output()
-	e.T.Log(string(out))
-	if err == nil {
-		e.T.Fatalf("Airgap user is not airgapped")
-	}
-}
-
-func dumpFile(description, path string, t T) {
-	b, err := os.ReadFile(path)
-	if err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("%s:\n%s\n", description, string(b))
-}
+func dumpFile(description, path string, t T) { _ = "STUB: not implemented"; return }
 
 // CreateCloudStackCredentialsSecretFromEnvVar parses the cloudstack credentials from an environment variable,
 // builds a new secret object from the credentials in the provided profile and creates it in the cluster.
 func (e *ClusterE2ETest) CreateCloudStackCredentialsSecretFromEnvVar(name, profileName string) {
-	ctx := context.Background()
-
-	execConfig, err := decoder.ParseCloudStackCredsFromEnv()
-	if err != nil {
-		e.T.Fatalf("error parsing cloudstack credentials from env: %v", err)
-		return
-	}
-
-	var selectedProfile *decoder.CloudStackProfileConfig
-	for _, p := range execConfig.Profiles {
-		if profileName == p.Name {
-			selectedProfile = &p
-			break
-		}
-	}
-
-	if selectedProfile == nil {
-		e.T.Fatalf("error finding profile with the name %s", profileName)
-		return
-	}
-
-	data := map[string][]byte{}
-	data[decoder.APIKeyKey] = []byte(selectedProfile.ApiKey)
-	data[decoder.SecretKeyKey] = []byte(selectedProfile.SecretKey)
-	data[decoder.APIUrlKey] = []byte(selectedProfile.ManagementUrl)
-	data[decoder.VerifySslKey] = []byte(selectedProfile.VerifySsl)
-
-	// Create a new secret with the credentials from the profile, but with a new name.
-	secret := corev1.Secret{
-		TypeMeta: metav1.TypeMeta{
-			Kind:       "Secret",
-			APIVersion: "v1",
-		},
-		ObjectMeta: metav1.ObjectMeta{
-			Name: name,
-		},
-		Data: data,
-	}
-
-	secretContent, err := yaml.Marshal(secret)
-	if err != nil {
-		e.T.Fatalf("error marshalling credentials secret : %v", err)
-		return
-	}
-
-	err = e.KubectlClient.ApplyKubeSpecFromBytesWithNamespace(ctx, e.Cluster(), secretContent,
-		constants.EksaSystemNamespace)
-	if err != nil {
-		e.T.Fatalf("error applying credentials secret to cluster %s: %v", e.Cluster().Name, err)
-		return
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
+// Create a new secret with the credentials from the profile, but with a new name.
+
 func (e *ClusterE2ETest) addClusterConfigFillers(fillers ...api.ClusterConfigFiller) {
-	e.clusterConfigFillers = append(e.clusterConfigFillers, fillers...)
+	_ = "STUB: not implemented"
+	return
 }

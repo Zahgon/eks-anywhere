@@ -1,13 +1,9 @@
 package framework
 
 import (
-	"fmt"
-	"os"
-	"strings"
 	"testing"
 
 	"github.com/aws/eks-anywhere/internal/pkg/api"
-	"github.com/aws/eks-anywhere/internal/test/cleanup"
 	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	releasev1 "github.com/aws/eks-anywhere/release/api/v1alpha1"
 	clusterf "github.com/aws/eks-anywhere/test/framework/cluster"
@@ -120,9 +116,7 @@ var requiredTinkerbellEnvVars = []string{
 	tinkerbellHookIsoURLEnvVar,
 }
 
-func RequiredTinkerbellEnvVars() []string {
-	return requiredTinkerbellEnvVars
-}
+func RequiredTinkerbellEnvVars() []string { _ = "STUB: not implemented"; return nil }
 
 type TinkerbellOpt func(*Tinkerbell)
 
@@ -137,541 +131,486 @@ type Tinkerbell struct {
 
 // UpdateTinkerbellMachineSSHAuthorizedKey updates a tinkerbell machine configs SSHAuthorizedKey.
 func UpdateTinkerbellMachineSSHAuthorizedKey() api.TinkerbellMachineFiller {
-	return api.WithStringFromEnvVarTinkerbellMachineFiller(tinkerbellSSHAuthorizedKey, api.WithSSHAuthorizedKeyForTinkerbellMachineConfig)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellMachineFiller)
 }
 
 func NewTinkerbell(t *testing.T, opts ...TinkerbellOpt) *Tinkerbell {
-	checkRequiredEnvVars(t, requiredTinkerbellEnvVars)
-	cidr := os.Getenv(tinkerbellControlPlaneNetworkCidrEnvVar)
-
-	serverIP, err := GetIP(cidr, ClusterIPPoolEnvVar)
-	if err != nil {
-		t.Fatalf("failed to get tinkerbell ip for test environment: %v", err)
-	}
-
-	tink := &Tinkerbell{
-		t: t,
-		fillers: []api.TinkerbellFiller{
-			api.WithTinkerbellServer(serverIP),
-			api.WithStringFromEnvVarTinkerbell(tinkerbellSSHAuthorizedKey, api.WithSSHAuthorizedKeyForAllTinkerbellMachines),
-			api.WithHardwareSelectorLabels(),
-		},
-	}
-
-	tink.serverIP = serverIP
-
-	tink.cidr = cidr
-	tink.inventoryCsvFilePath = os.Getenv(tinkerbellInventoryCsvFilePathEnvVar)
-
-	for _, opt := range opts {
-		opt(tink)
-	}
-
-	return tink
-}
-
-func (t *Tinkerbell) Name() string {
-	return tinkerbellProviderName
-}
-
-func (t *Tinkerbell) Setup() {}
-
-// UpdateKubeConfig customizes generated kubeconfig for the provider.
-func (t *Tinkerbell) UpdateKubeConfig(content *[]byte, clusterName string) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
-// ClusterConfigUpdates satisfies the test framework Provider.
+func (t *Tinkerbell) Name() string { _ = "STUB: not implemented"; return "" }
+
+func (t *Tinkerbell) Setup() {
+	_ = "STUB: not implemented"
+
+	// UpdateKubeConfig customizes generated kubeconfig for the provider.
+	return
+}
+
+func (t *Tinkerbell) UpdateKubeConfig(content *[]byte, clusterName string) error {
+	_ = "STUB: not implemented"
+
+	// ClusterConfigUpdates satisfies the test framework Provider.
+	return nil
+}
+
 func (t *Tinkerbell) ClusterConfigUpdates() []api.ClusterConfigFiller {
-	clusterIP, err := GetIP(t.cidr, ClusterIPPoolEnvVar)
-	if err != nil {
-		t.t.Fatalf("failed to get cluster ip for test environment: %v", err)
-	}
-
-	f := make([]api.ClusterFiller, 0, len(t.clusterFillers)+1)
-	f = append(f, t.clusterFillers...)
-	f = append(f, api.WithControlPlaneEndpointIP(clusterIP))
-
-	return []api.ClusterConfigFiller{api.ClusterToConfigFiller(f...), api.TinkerbellToConfigFiller(t.fillers...)}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (t *Tinkerbell) WithProviderUpgrade(fillers ...api.TinkerbellFiller) ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		e.UpdateClusterConfig(api.TinkerbellToConfigFiller(fillers...))
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 // CleanupResources runs a clean up the Tinkerbell machines which simply powers them down.
-func (t *Tinkerbell) CleanupResources(_ string) error {
-	return cleanup.TinkerbellTestResources(t.inventoryCsvFilePath, true)
-}
+func (t *Tinkerbell) CleanupResources(_ string) error { _ = "STUB: not implemented"; return nil }
 
 // WithKubeVersionAndOS returns a cluster config filler that sets the cluster kube version and the right image for all
 // tinkerbell machine configs.
 func (t *Tinkerbell) WithKubeVersionAndOS(kubeVersion anywherev1.KubernetesVersion, os OS, _ *releasev1.EksARelease, kernelVariant ...string) api.ClusterConfigFiller {
-	return api.JoinClusterConfigFillers(
-		api.ClusterToConfigFiller(api.WithKubernetesVersion(kubeVersion)),
-		api.TinkerbellToConfigFiller(
-			imageForKubeVersionAndOS(kubeVersion, os, "", kernelVariant...),
-			api.WithOsFamilyForAllTinkerbellMachines(osFamiliesForOS[os]),
-		),
-	)
+	_ = "STUB: not implemented"
+	return *new(api.ClusterConfigFiller)
 }
 
 // WithCPKubeVersionAndOS returns a cluster config filler that sets the cluster kube version and the right image for CP
 // tinkerbell machine configs.
 func (t *Tinkerbell) WithCPKubeVersionAndOS(kubeVersion anywherev1.KubernetesVersion, os OS) api.ClusterConfigFiller {
-	return api.JoinClusterConfigFillers(
-		api.TinkerbellToConfigFiller(
-			imageForKubeVersionAndOS(kubeVersion, os, controlPlaneIdentifier),
-		),
-	)
+	_ = "STUB: not implemented"
+	return *new(api.ClusterConfigFiller)
 }
 
 // WithWorkerKubeVersionAndOS returns a cluster config filler that sets the cluster kube version and the right image for all
 // Worker tinkerbell machine configs.
 func (t *Tinkerbell) WithWorkerKubeVersionAndOS(kubeVersion anywherev1.KubernetesVersion, os OS) api.ClusterConfigFiller {
-	return api.JoinClusterConfigFillers(
-		api.TinkerbellToConfigFiller(
-			imageForKubeVersionAndOS(kubeVersion, os, workerIdentifier),
-		),
-	)
+	_ = "STUB: not implemented"
+	return *new(api.ClusterConfigFiller)
 }
 
 // WithNewWorkerNodeGroup returns an api.ClusterFiller that adds a new workerNodeGroupConfiguration and
 // a corresponding TinkerbellMachineConfig to the cluster config.
 func (t *Tinkerbell) WithNewWorkerNodeGroup(name string, workerNodeGroup *WorkerNodeGroup) api.ClusterConfigFiller {
+	_ = "STUB: not implemented"
 	// TODO: Implement for Tinkerbell provider
-	panic("Not implemented for Tinkerbell yet")
+	return *new(api.ClusterConfigFiller)
 }
 
 // WithTinkerbellTemplateConfig returns a cluster config filler that sets a custom TinkerbellTemplateConfig.
 func (t *Tinkerbell) WithTinkerbellTemplateConfig(templateConfig *anywherev1.TinkerbellTemplateConfig) api.ClusterConfigFiller {
-	return api.TinkerbellToConfigFiller(api.WithTinkerbellTemplateConfig(templateConfig))
+	_ = "STUB: not implemented"
+	return *new(api.ClusterConfigFiller)
 }
 
 func envVarForImage(os OS, kubeVersion anywherev1.KubernetesVersion, kernelVariant ...string) string {
-	imageEnvVar := fmt.Sprintf("T_TINKERBELL_IMAGE_%s_%s", strings.ToUpper(strings.ReplaceAll(string(os), "-", "_")), strings.ReplaceAll(string(kubeVersion), ".", "_"))
-	if len(kernelVariant) > 0 && kernelVariant[0] != "" {
-		imageEnvVar = fmt.Sprintf("%s_%s", imageEnvVar, strings.ToUpper(kernelVariant[0]))
-	}
-	return imageEnvVar
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // withKubeVersionAndOS returns a cluster config filler that sets the cluster kube version and the right image for all
 // tinkerbell machine configs.
 func withKubeVersionAndOS(kubeVersion anywherev1.KubernetesVersion, os OS, machineConfigType string, release *releasev1.EksARelease) TinkerbellOpt {
-	if machineConfigType == controlPlaneIdentifier || machineConfigType == workerIdentifier {
-		return func(t *Tinkerbell) {
-			t.fillers = append(t.fillers,
-				imageForKubeVersionAndOS(kubeVersion, os, machineConfigType),
-			)
-		}
-	}
-	return func(t *Tinkerbell) {
-		t.fillers = append(t.fillers,
-			imageForKubeVersionAndOS(kubeVersion, os, ""),
-			api.WithOsFamilyForAllTinkerbellMachines(osFamiliesForOS[os]),
-		)
-	}
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 // WithUbuntu129Tinkerbell tink test with ubuntu 1.29.
-func WithUbuntu129Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube129, Ubuntu2204, "", nil)
-}
+func WithUbuntu129Tinkerbell() TinkerbellOpt { _ = "STUB: not implemented"; return *new(TinkerbellOpt) }
 
 // WithUbuntu130Tinkerbell tink test with ubuntu 1.30.
-func WithUbuntu130Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube130, Ubuntu2204, "", nil)
-}
+func WithUbuntu130Tinkerbell() TinkerbellOpt { _ = "STUB: not implemented"; return *new(TinkerbellOpt) }
 
 // WithUbuntu131Tinkerbell tink test with ubuntu 1.31.
-func WithUbuntu131Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube131, Ubuntu2204, "", nil)
-}
+func WithUbuntu131Tinkerbell() TinkerbellOpt { _ = "STUB: not implemented"; return *new(TinkerbellOpt) }
 
 // WithUbuntu132Tinkerbell tink test with ubuntu 1.32.
-func WithUbuntu132Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube132, Ubuntu2204, "", nil)
-}
+func WithUbuntu132Tinkerbell() TinkerbellOpt { _ = "STUB: not implemented"; return *new(TinkerbellOpt) }
 
 // WithUbuntu133Tinkerbell tink test with ubuntu 1.33.
-func WithUbuntu133Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube133, Ubuntu2204, "", nil)
-}
+func WithUbuntu133Tinkerbell() TinkerbellOpt { _ = "STUB: not implemented"; return *new(TinkerbellOpt) }
 
 // WithUbuntu134Tinkerbell tink test with ubuntu 1.34.
-func WithUbuntu134Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube134, Ubuntu2204, "", nil)
-}
+func WithUbuntu134Tinkerbell() TinkerbellOpt { _ = "STUB: not implemented"; return *new(TinkerbellOpt) }
 
 // WithRedHat129Tinkerbell tink test with redhat 1.29.
-func WithRedHat129Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube129, RedHat8, "", nil)
-}
+func WithRedHat129Tinkerbell() TinkerbellOpt { _ = "STUB: not implemented"; return *new(TinkerbellOpt) }
 
 // WithRedHat130Tinkerbell tink test with redhat 1.30.
-func WithRedHat130Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube130, RedHat8, "", nil)
-}
+func WithRedHat130Tinkerbell() TinkerbellOpt { _ = "STUB: not implemented"; return *new(TinkerbellOpt) }
 
 // WithRedHat131Tinkerbell tink test with redhat 1.31.
-func WithRedHat131Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube131, RedHat8, "", nil)
-}
+func WithRedHat131Tinkerbell() TinkerbellOpt { _ = "STUB: not implemented"; return *new(TinkerbellOpt) }
 
 // WithRedHat9129Tinkerbell tink test with redhat9 efi 1.29.
 func WithRedHat9129Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube129, RedHat9, "", nil)
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 // WithRedHat9130Tinkerbell tink test with redhat9 efi 1.30.
 func WithRedHat9130Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube130, RedHat9, "", nil)
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 // WithRedHat9131Tinkerbell tink test with redhat9 efi 1.31.
 func WithRedHat9131Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube131, RedHat9, "", nil)
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 // WithRedHat9132Tinkerbell tink test with redhat9 efi 1.32.
 func WithRedHat9132Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube132, RedHat9, "", nil)
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 // WithRedHat9133Tinkerbell tink test with redhat9 efi 1.33.
 func WithRedHat9133Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube133, RedHat9, "", nil)
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 // WithRedHat9134Tinkerbell tink test with redhat9 efi 1.34.
 func WithRedHat9134Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube134, RedHat9, "", nil)
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 // WithRedHat9135Tinkerbell tink test with redhat9 efi 1.35.
 func WithRedHat9135Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube135, RedHat9, "", nil)
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 func WithBottleRocketTinkerbell() TinkerbellOpt {
-	return func(t *Tinkerbell) {
-		t.fillers = append(t.fillers,
-			api.WithOsFamilyForAllTinkerbellMachines(anywherev1.Bottlerocket),
-		)
-	}
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 func WithTinkerbellExternalEtcdTopology(count int) TinkerbellOpt {
-	return func(t *Tinkerbell) {
-		t.fillers = append([]api.TinkerbellFiller{api.WithTinkerbellEtcdMachineConfig()}, t.fillers...)
-		t.clusterFillers = append(t.clusterFillers, api.WithExternalEtcdTopology(count), api.WithExternalEtcdMachineRef(anywherev1.TinkerbellMachineConfigKind))
-	}
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 func WithCustomTinkerbellMachineConfig(selector string) TinkerbellOpt {
-	return func(t *Tinkerbell) {
-		t.fillers = append([]api.TinkerbellFiller{api.WithCustomTinkerbellMachineConfig(selector)}, t.fillers...)
-	}
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 // ClusterStateValidations returns a list of provider specific validations.
 func (t *Tinkerbell) ClusterStateValidations() []clusterf.StateValidation {
-	return []clusterf.StateValidation{}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithOSImageURL Modify OS Image url.
 func WithOSImageURL(url string) TinkerbellOpt {
-	return func(t *Tinkerbell) {
-		t.fillers = append(t.fillers,
-			api.WithTinkerbellOSImageURL(url),
-		)
-	}
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 // WithHookImagesURLPath Modify Hook OS Image url.
 func WithHookImagesURLPath(url string) TinkerbellOpt {
-	return func(t *Tinkerbell) {
-		t.fillers = append(t.fillers,
-			api.WithHookImagesURLPath(url),
-		)
-	}
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 // WithHookIsoBoot sets IsoBoot to true.
-func WithHookIsoBoot() TinkerbellOpt {
-	return func(t *Tinkerbell) {
-		t.fillers = append(t.fillers,
-			api.WithHookIsoBoot(),
-		)
-	}
-}
+func WithHookIsoBoot() TinkerbellOpt { _ = "STUB: not implemented"; return *new(TinkerbellOpt) }
 
 // WithHookIsoURLPath helps in setting the HookOS ISO URL value.
 func WithHookIsoURLPath(url string) TinkerbellOpt {
-	return func(t *Tinkerbell) {
-		t.fillers = append(t.fillers,
-			api.WithHookIsoURLPath(url),
-		)
-	}
+	_ = "STUB: not implemented"
+	return *new(TinkerbellOpt)
 }
 
 // imageForKubeVersionAndOS sets osImageURL on the appropriate field in the Machine Config based on the machineConfigType string provided else sets it at Data Center config.
 func imageForKubeVersionAndOS(kubeVersion anywherev1.KubernetesVersion, operatingSystem OS, machineConfigType string, kernelVariant ...string) api.TinkerbellFiller {
-	var tinkerbellFiller api.TinkerbellFiller
-	if machineConfigType == workerIdentifier {
-		tinkerbellFiller = api.WithTinkerbellWorkerMachineConfigOSImageURL(os.Getenv(envVarForImage(operatingSystem, kubeVersion, kernelVariant...)), osFamiliesForOS[operatingSystem])
-	} else if machineConfigType == controlPlaneIdentifier {
-		tinkerbellFiller = api.WithTinkerbellCPMachineConfigOSImageURL(os.Getenv(envVarForImage(operatingSystem, kubeVersion, kernelVariant...)), osFamiliesForOS[operatingSystem])
-	} else {
-		tinkerbellFiller = api.WithTinkerbellOSImageURL(os.Getenv(envVarForImage(operatingSystem, kubeVersion, kernelVariant...)))
-	}
-	return tinkerbellFiller
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu129Image represents an Ubuntu raw image corresponding to Kubernetes 1.29.
 func Ubuntu129Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube129, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu130Image represents an Ubuntu raw image corresponding to Kubernetes 1.30.
 func Ubuntu130Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube130, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu131Image represents an Ubuntu raw image corresponding to Kubernetes 1.31.
 func Ubuntu131Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube131, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu132Image represents an Ubuntu raw image corresponding to Kubernetes 1.32.
 func Ubuntu132Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube132, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu133Image represents an Ubuntu raw image corresponding to Kubernetes 1.33.
 func Ubuntu133Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube133, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu134Image represents an Ubuntu raw image corresponding to Kubernetes 1.34.
 func Ubuntu134Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube134, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu129ImageForCP represents an Ubuntu raw image corresponding to Kubernetes 1.29 and is set for CP machine config.
 func Ubuntu129ImageForCP() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube129, Ubuntu2204, controlPlaneIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu130ImageForCP represents an Ubuntu raw image corresponding to Kubernetes 1.30 and is set for CP machine config.
 func Ubuntu130ImageForCP() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube130, Ubuntu2204, controlPlaneIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu131ImageForCP represents an Ubuntu raw image corresponding to Kubernetes 1.31 and is set for CP machine config.
 func Ubuntu131ImageForCP() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube131, Ubuntu2204, controlPlaneIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu132ImageForCP represents an Ubuntu raw image corresponding to Kubernetes 1.32 and is set for CP machine config.
 func Ubuntu132ImageForCP() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube132, Ubuntu2204, controlPlaneIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu133ImageForCP represents an Ubuntu raw image corresponding to Kubernetes 1.33 and is set for CP machine config.
 func Ubuntu133ImageForCP() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube133, Ubuntu2204, controlPlaneIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu134ImageForCP represents an Ubuntu raw image corresponding to Kubernetes 1.34 and is set for CP machine config.
 func Ubuntu134ImageForCP() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube134, Ubuntu2204, controlPlaneIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu129ImageForWorker represents an Ubuntu raw image corresponding to Kubernetes 1.29 and is set for worker machine config.
 func Ubuntu129ImageForWorker() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube129, Ubuntu2204, workerIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu130ImageForWorker represents an Ubuntu raw image corresponding to Kubernetes 1.30 and is set for worker machine config.
 func Ubuntu130ImageForWorker() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube130, Ubuntu2204, workerIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu131ImageForWorker represents an Ubuntu raw image corresponding to Kubernetes 1.31 and is set for worker machine config.
 func Ubuntu131ImageForWorker() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube131, Ubuntu2204, workerIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu132ImageForWorker represents an Ubuntu raw image corresponding to Kubernetes 1.32 and is set for worker machine config.
 func Ubuntu132ImageForWorker() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube132, Ubuntu2204, workerIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu133ImageForWorker represents an Ubuntu raw image corresponding to Kubernetes 1.33 and is set for worker machine config.
 func Ubuntu133ImageForWorker() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube133, Ubuntu2204, workerIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu134ImageForWorker represents an Ubuntu raw image corresponding to Kubernetes 1.34 and is set for worker machine config.
 func Ubuntu134ImageForWorker() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube134, Ubuntu2204, workerIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2204Kubernetes129Image represents an Ubuntu 22.04 raw image corresponding to Kubernetes 1.29.
 func Ubuntu2204Kubernetes129Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube129, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2204Kubernetes130Image represents an Ubuntu 22.04 raw image corresponding to Kubernetes 1.30.
 func Ubuntu2204Kubernetes130Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube130, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2204Kubernetes131Image represents an Ubuntu 22.04 raw image corresponding to Kubernetes 1.31.
 func Ubuntu2204Kubernetes131Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube131, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2204Kubernetes132Image represents an Ubuntu 22.04 raw image corresponding to Kubernetes 1.32.
 func Ubuntu2204Kubernetes132Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube132, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2204Kubernetes133Image represents an Ubuntu 22.04 raw image corresponding to Kubernetes 1.33.
 func Ubuntu2204Kubernetes133Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube133, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2204Kubernetes134Image represents an Ubuntu 22.04 raw image corresponding to Kubernetes 1.34.
 func Ubuntu2204Kubernetes134Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube134, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2204Kubernetes135Image represents an Ubuntu 22.04 raw image corresponding to Kubernetes 1.35.
 func Ubuntu2204Kubernetes135Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube135, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2404Kubernetes129Image represents an Ubuntu 24.04 raw image corresponding to Kubernetes 1.29.
 func Ubuntu2404Kubernetes129Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube129, Ubuntu2404, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2404Kubernetes130Image represents an Ubuntu 24.04 raw image corresponding to Kubernetes 1.30.
 func Ubuntu2404Kubernetes130Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube130, Ubuntu2404, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2404Kubernetes131Image represents an Ubuntu 24.04 raw image corresponding to Kubernetes 1.31.
 func Ubuntu2404Kubernetes131Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube131, Ubuntu2404, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2404Kubernetes132Image represents an Ubuntu 24.04 raw image corresponding to Kubernetes 1.32.
 func Ubuntu2404Kubernetes132Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube132, Ubuntu2404, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2404Kubernetes133Image represents an Ubuntu 24.04 raw image corresponding to Kubernetes 1.33.
 func Ubuntu2404Kubernetes133Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube133, Ubuntu2404, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2404Kubernetes134Image represents an Ubuntu 24.04 raw image corresponding to Kubernetes 1.34.
 func Ubuntu2404Kubernetes134Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube134, Ubuntu2404, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2204Kubernetes129RTOSImage represents an Ubuntu 22.04 raw image with RTOS kernel corresponding to Kubernetes 1.29.
 func Ubuntu2204Kubernetes129RTOSImage() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube129, Ubuntu2204, "", "RTOS")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2404Kubernetes133RTOSImage represents an Ubuntu 24.04 raw image with RTOS kernel corresponding to Kubernetes 1.33.
 func Ubuntu2404Kubernetes133RTOSImage() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube133, Ubuntu2404, "", "RTOS")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2404Kubernetes134RTOSImage represents an Ubuntu 24.04 raw image with RTOS kernel corresponding to Kubernetes 1.34.
 func Ubuntu2404Kubernetes134RTOSImage() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube134, Ubuntu2404, "", "RTOS")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2204Kubernetes129GenericImage represents an Ubuntu 22.04 raw image with Generic kernel corresponding to Kubernetes 1.29.
 func Ubuntu2204Kubernetes129GenericImage() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube129, Ubuntu2204, "", "GENERIC")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2404Kubernetes133GenericImage represents an Ubuntu 24.04 raw image with Generic kernel corresponding to Kubernetes 1.33.
 func Ubuntu2404Kubernetes133GenericImage() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube133, Ubuntu2404, "", "GENERIC")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2404Kubernetes134GenericImage represents an Ubuntu 24.04 raw image with Generic kernel corresponding to Kubernetes 1.34.
 func Ubuntu2404Kubernetes134GenericImage() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube134, Ubuntu2404, "", "GENERIC")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // RedHat9Kubernetes134Image represents a RedHat 9 raw image corresponding to Kubernetes 1.34.
 func RedHat9Kubernetes134Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube134, RedHat9, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // WithUbuntu135Tinkerbell returns a TinkerbellOpt that adds API fillers to use a Ubuntu Tinkerbell template for k8s 1.35.
-func WithUbuntu135Tinkerbell() TinkerbellOpt {
-	return withKubeVersionAndOS(anywherev1.Kube135, Ubuntu2204, "", nil)
-}
+func WithUbuntu135Tinkerbell() TinkerbellOpt { _ = "STUB: not implemented"; return *new(TinkerbellOpt) }
 
 // Ubuntu135Image represents a Ubuntu raw image corresponding to Kubernetes 1.35.
 func Ubuntu135Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube135, Ubuntu2204, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu135ImageForCP represents a Ubuntu raw image corresponding to Kubernetes 1.35 for control plane nodes.
 func Ubuntu135ImageForCP() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube135, Ubuntu2204, controlPlaneIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu135ImageForWorker represents a Ubuntu raw image corresponding to Kubernetes 1.35 for worker nodes.
 func Ubuntu135ImageForWorker() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube135, Ubuntu2204, workerIdentifier)
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2404Kubernetes135Image represents a Ubuntu 24.04 raw image corresponding to Kubernetes 1.35.
 func Ubuntu2404Kubernetes135Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube135, Ubuntu2404, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2404Kubernetes135RTOSImage represents a Ubuntu 24.04 RTOS raw image corresponding to Kubernetes 1.35.
 func Ubuntu2404Kubernetes135RTOSImage() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube135, Ubuntu2404, "", "RTOS")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // Ubuntu2404Kubernetes135GenericImage represents a Ubuntu 24.04 Generic raw image corresponding to Kubernetes 1.35.
 func Ubuntu2404Kubernetes135GenericImage() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube135, Ubuntu2404, "", "GENERIC")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // RedHat9Kubernetes135Image represents a RedHat 9 raw image corresponding to Kubernetes 1.35.
 func RedHat9Kubernetes135Image() api.TinkerbellFiller {
-	return imageForKubeVersionAndOS(anywherev1.Kube135, RedHat9, "")
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellFiller)
 }
 
 // HookIsoURLOverride returns the Hook ISO URL from the environment variable.
-func HookIsoURLOverride() string {
-	return os.Getenv(tinkerbellHookIsoURLEnvVar)
-}
+func HookIsoURLOverride() string { _ = "STUB: not implemented"; return "" }
 
 // WithTemplateRef returns a TinkerbellMachineFiller that adds a TemplateRef to a TinkerbellMachineConfig.
 func WithTemplateRef(name, kind string) api.TinkerbellMachineFiller {
-	return func(machineConfig *anywherev1.TinkerbellMachineConfig) {
-		machineConfig.Spec.TemplateRef = anywherev1.Ref{
-			Name: name,
-			Kind: kind,
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(api.TinkerbellMachineFiller)
 }

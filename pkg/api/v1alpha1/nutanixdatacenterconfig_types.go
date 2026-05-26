@@ -4,14 +4,7 @@
 package v1alpha1
 
 import (
-	"crypto/x509"
-	"encoding/pem"
-	"errors"
-	"fmt"
-
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-
-	"github.com/aws/eks-anywhere/pkg/constants"
 )
 
 // NutanixDatacenterConfigSpec defines the desired state of NutanixDatacenterConfig.
@@ -94,131 +87,38 @@ type NutanixDatacenterConfig struct {
 	Status NutanixDatacenterConfigStatus `json:"status,omitempty"`
 }
 
-func (in *NutanixDatacenterConfig) Kind() string {
-	return in.TypeMeta.Kind
-}
+func (in *NutanixDatacenterConfig) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (in *NutanixDatacenterConfig) ExpectedKind() string {
-	return NutanixDatacenterKind
-}
+func (in *NutanixDatacenterConfig) ExpectedKind() string { _ = "STUB: not implemented"; return "" }
 
-func (in *NutanixDatacenterConfig) PauseReconcile() {
-	if in.Annotations == nil {
-		in.Annotations = map[string]string{}
-	}
-	in.Annotations[pausedAnnotation] = "true"
-}
+func (in *NutanixDatacenterConfig) PauseReconcile() { _ = "STUB: not implemented"; return }
 
 func (in *NutanixDatacenterConfig) IsReconcilePaused() bool {
-	if s, ok := in.Annotations[pausedAnnotation]; ok {
-		return s == "true"
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
-func (in *NutanixDatacenterConfig) ClearPauseAnnotation() {
-	if in.Annotations != nil {
-		delete(in.Annotations, pausedAnnotation)
-	}
-}
+func (in *NutanixDatacenterConfig) ClearPauseAnnotation() { _ = "STUB: not implemented"; return }
 
 func (in *NutanixDatacenterConfig) ConvertConfigToConfigGenerateStruct() *NutanixDatacenterConfigGenerate {
-	namespace := defaultEksaNamespace
-	if in.Namespace != "" {
-		namespace = in.Namespace
-	}
-	config := &NutanixDatacenterConfigGenerate{
-		TypeMeta: in.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        in.Name,
-			Annotations: in.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: in.Spec,
-	}
-
-	return config
-}
-
-func (in *NutanixDatacenterConfig) Marshallable() Marshallable {
-	return in.ConvertConfigToConfigGenerateStruct()
-}
-
-func (in *NutanixDatacenterConfig) Validate() error {
-	if len(in.Spec.Endpoint) <= 0 {
-		return errors.New("NutanixDatacenterConfig endpoint is not set or is empty")
-	}
-
-	if in.Spec.Port == 0 {
-		return errors.New("NutanixDatacenterConfig port is not set or is empty")
-	}
-
-	if len(in.Spec.AdditionalTrustBundle) > 0 {
-		certPem := []byte(in.Spec.AdditionalTrustBundle)
-		block, _ := pem.Decode(certPem)
-		if block == nil {
-			return errors.New("NutanixDatacenterConfig additionalTrustBundle is not valid: could not find a PEM block in the certificate")
-		}
-		if _, err := x509.ParseCertificates(block.Bytes); err != nil {
-			return fmt.Errorf("NutanixDatacenterConfig additionalTrustBundle is not valid: %s", err)
-		}
-	}
-
-	if in.Spec.CredentialRef != nil {
-		if in.Spec.CredentialRef.Kind != constants.SecretKind {
-			return fmt.Errorf("NutanixDatacenterConfig credentialRef Kind (%s) is not a secret", in.Spec.CredentialRef.Kind)
-		}
-
-		if len(in.Spec.CredentialRef.Name) <= 0 {
-			return errors.New("NutanixDatacenterConfig credentialRef name is not set or is empty")
-		}
-	}
-
-	if len(in.Spec.FailureDomains) != 0 {
-		dccName := in.Namespace + "/" + in.Name
-		validateClusterResourceIdentifier := createValidateNutanixResourceFunc("NutanixDatacenterConfig.Spec.FailureDomains.Cluster", "cluster", dccName)
-		validateSubnetResourceIdentifier := createValidateNutanixResourceFunc("NutanixDatacenterConfig.Spec.FailureDomains.Subnets", "subnet", dccName)
-		for _, fd := range in.Spec.FailureDomains {
-			if err := validateClusterResourceIdentifier(&fd.Cluster); err != nil {
-				return err
-			}
-
-			for _, subnet := range fd.Subnets {
-				if err := validateSubnetResourceIdentifier(&subnet); err != nil {
-					return err
-				}
-			}
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
+func (in *NutanixDatacenterConfig) Marshallable() Marshallable {
+	_ = "STUB: not implemented"
+	return *new(Marshallable)
+}
+
+func (in *NutanixDatacenterConfig) Validate() error { _ = "STUB: not implemented"; return nil }
+
 func createValidateNutanixResourceFunc(msgPrefix, entityName, mfstName string) func(*NutanixResourceIdentifier) error {
-	return func(ntnxRId *NutanixResourceIdentifier) error {
-		if ntnxRId.Type != NutanixIdentifierName && ntnxRId.Type != NutanixIdentifierUUID {
-			return fmt.Errorf("%s: invalid identifier type for %s: %s", msgPrefix, entityName, ntnxRId.Type)
-		}
-
-		if ntnxRId.Type == NutanixIdentifierName && (ntnxRId.Name == nil || *ntnxRId.Name == "") {
-			return fmt.Errorf("%s: missing %s name: %s", msgPrefix, entityName, mfstName)
-		} else if ntnxRId.Type == NutanixIdentifierUUID && (ntnxRId.UUID == nil || *ntnxRId.UUID == "") {
-			return fmt.Errorf("%s: missing %s UUID: %s", msgPrefix, entityName, mfstName)
-		}
-
-		return nil
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetDefaults sets default values for the NutanixDatacenterConfig object.
-func (in *NutanixDatacenterConfig) SetDefaults() {
-	if in.Spec.CredentialRef == nil {
-		in.Spec.CredentialRef = &Ref{
-			Kind: constants.SecretKind,
-			Name: constants.NutanixCredentialsName,
-		}
-	}
-}
+func (in *NutanixDatacenterConfig) SetDefaults() { _ = "STUB: not implemented"; return }
 
 // NutanixDatacenterConfigGenerate is same as NutanixDatacenterConfig except stripped down for generation of yaml file during generate clusterconfig
 //

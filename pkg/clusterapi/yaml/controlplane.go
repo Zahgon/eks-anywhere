@@ -1,11 +1,8 @@
 package yaml
 
 import (
-	etcdv1 "github.com/aws/etcdadm-controller/api/v1beta1"
 	"github.com/go-logr/logr"
-	"github.com/pkg/errors"
 	controlplanev1beta2 "sigs.k8s.io/cluster-api/api/controlplane/kubeadm/v1beta2"
-	clusterv1beta2 "sigs.k8s.io/cluster-api/api/core/v1beta2"
 
 	"github.com/aws/eks-anywhere/pkg/clusterapi"
 	"github.com/aws/eks-anywhere/pkg/yamlutil"
@@ -16,46 +13,14 @@ import (
 // For ControlPlane that need to include more objects, wrap around the provider builder and implement BuildFromParsed
 // Any extra mappings will need to be registered manually in the Parser.
 func NewControlPlaneParserAndBuilder[C clusterapi.Object[C], M clusterapi.Object[M]](logger logr.Logger, clusterMapping yamlutil.Mapping[C], machineTemplateMapping yamlutil.Mapping[M]) (*yamlutil.Parser, *ControlPlaneBuilder[C, M], error) {
-	parser := yamlutil.NewParser(logger)
-	if err := RegisterControlPlaneMappings(parser); err != nil {
-		return nil, nil, errors.Wrap(err, "building capi control plane parser")
-	}
-
-	err := parser.RegisterMappings(
-		clusterMapping.ToAPIObjectMapping(),
-		machineTemplateMapping.ToAPIObjectMapping(),
-	)
-	if err != nil {
-		return nil, nil, errors.Wrap(err, "registering provider control plane mappings")
-	}
-
-	return parser, NewControlPlaneBuilder[C, M](), nil
+	_ = "STUB: not implemented"
+	return nil, nil, nil
 }
 
 // RegisterControlPlaneMappings records the basic mappings for CAPI cluster, kubeadmcontrolplane
 // and etcdadm cluster in a Parser.
 func RegisterControlPlaneMappings(parser *yamlutil.Parser) error {
-	err := parser.RegisterMappings(
-		yamlutil.NewMapping(
-			"Cluster", func() yamlutil.APIObject {
-				return &clusterv1beta2.Cluster{}
-			},
-		),
-		yamlutil.NewMapping(
-			"KubeadmControlPlane", func() yamlutil.APIObject {
-				return &controlplanev1beta2.KubeadmControlPlane{}
-			},
-		),
-		yamlutil.NewMapping(
-			"EtcdadmCluster", func() yamlutil.APIObject {
-				return &etcdv1.EtcdadmCluster{}
-			},
-		),
-	)
-	if err != nil {
-		return errors.Wrap(err, "registering base control plane mappings")
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -67,104 +32,50 @@ type ControlPlaneBuilder[C clusterapi.Object[C], M clusterapi.Object[M]] struct 
 
 // NewControlPlaneBuilder builds a ControlPlaneBuilder.
 func NewControlPlaneBuilder[C clusterapi.Object[C], M clusterapi.Object[M]]() *ControlPlaneBuilder[C, M] {
-	return &ControlPlaneBuilder[C, M]{
-		ControlPlane: new(clusterapi.ControlPlane[C, M]),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BuildFromParsed reads parsed objects in ObjectLookup and sets them in the ControlPlane.
 func (cp *ControlPlaneBuilder[C, M]) BuildFromParsed(lookup yamlutil.ObjectLookup) error {
-	ProcessControlPlaneObjects(cp.ControlPlane, lookup)
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // ProcessControlPlaneObjects finds all necessary objects in the parsed objects and sets them in the ControlPlane.
 func ProcessControlPlaneObjects[C clusterapi.Object[C], M clusterapi.Object[M]](cp *clusterapi.ControlPlane[C, M], lookup yamlutil.ObjectLookup) {
-	ProcessCluster(cp, lookup)
-	if cp.Cluster == nil {
-		return
-	}
-
-	ProcessProviderCluster(cp, lookup)
-	ProcessKubeadmControlPlane(cp, lookup)
-	ProcessEtcdCluster(cp, lookup)
+	_ = "STUB: not implemented"
+	return
 }
 
 // ProcessCluster finds the CAPI cluster in the parsed objects and sets it in ControlPlane.
 func ProcessCluster[C clusterapi.Object[C], M clusterapi.Object[M]](cp *clusterapi.ControlPlane[C, M], lookup yamlutil.ObjectLookup) {
-	for _, obj := range lookup {
-		if obj.GetObjectKind().GroupVersionKind().Kind == "Cluster" {
-			cp.Cluster = obj.(*clusterv1beta2.Cluster)
-			return
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // ProcessProviderCluster finds the provider cluster in the parsed objects and sets it in ControlPlane.
 func ProcessProviderCluster[C clusterapi.Object[C], M clusterapi.Object[M]](cp *clusterapi.ControlPlane[C, M], lookup yamlutil.ObjectLookup) {
-	providerCluster := lookup.GetFromContractVersionedRef(cp.Cluster.Spec.InfrastructureRef)
-	if providerCluster == nil {
-		return
-	}
-
-	cp.ProviderCluster = providerCluster.(C)
+	_ = "STUB: not implemented"
+	return
 }
 
 // ProcessKubeadmControlPlane finds the CAPI kubeadm control plane and the kubeadm control plane machine template
 // in the parsed objects and sets it in ControlPlane.
 func ProcessKubeadmControlPlane[C clusterapi.Object[C], M clusterapi.Object[M]](cp *clusterapi.ControlPlane[C, M], lookup yamlutil.ObjectLookup) {
-	kcp := lookup.GetFromContractVersionedRef(cp.Cluster.Spec.ControlPlaneRef)
-	if kcp == nil {
-		return
-	}
-
-	cp.KubeadmControlPlane = kcp.(*controlplanev1beta2.KubeadmControlPlane)
-	sortKCPExtraArgs(cp.KubeadmControlPlane)
-
-	machineTemplate := lookup.GetFromContractVersionedRef(cp.KubeadmControlPlane.Spec.MachineTemplate.Spec.InfrastructureRef)
-	if machineTemplate == nil {
-		return
-	}
-
-	cp.ControlPlaneMachineTemplate = machineTemplate.(M)
+	_ = "STUB: not implemented"
+	return
 }
 
 // ProcessEtcdCluster finds the CAPI etcdadm cluster (for unstacked clusters) in the parsed objects and sets it in ControlPlane.
 func ProcessEtcdCluster[C clusterapi.Object[C], M clusterapi.Object[M]](cp *clusterapi.ControlPlane[C, M], lookup yamlutil.ObjectLookup) {
-	if cp.Cluster.Spec.ManagedExternalEtcdRef == nil {
-		return
-	}
-
-	etcdCluster := lookup.GetFromContractVersionedRef(*cp.Cluster.Spec.ManagedExternalEtcdRef)
-	if etcdCluster == nil {
-		return
-	}
-
-	cp.EtcdCluster = etcdCluster.(*etcdv1.EtcdadmCluster)
-
-	etcdMachineTemplate := lookup.GetFromRef(cp.EtcdCluster.Spec.InfrastructureTemplate)
-	if etcdMachineTemplate == nil {
-		return
-	}
-
-	cp.EtcdMachineTemplate = etcdMachineTemplate.(M)
+	_ = "STUB: not implemented"
+	return
 }
 
 // sortKCPExtraArgs sorts all ExtraArgs slices in a KubeadmControlPlane for deterministic comparison.
 // YAML-parsed KCP objects have args in template order, while test helpers use alphabetical order via ToArgs().
 func sortKCPExtraArgs(kcp *controlplanev1beta2.KubeadmControlPlane) {
-	if kcp == nil {
-		return
-	}
-	spec := &kcp.Spec.KubeadmConfigSpec
-	clusterapi.SortArgs(spec.ClusterConfiguration.APIServer.ExtraArgs)
-	clusterapi.SortArgs(spec.ClusterConfiguration.ControllerManager.ExtraArgs)
-	clusterapi.SortArgs(spec.ClusterConfiguration.Scheduler.ExtraArgs)
-	clusterapi.SortArgs(spec.ClusterConfiguration.Etcd.Local.ExtraArgs)
-	if spec.InitConfiguration.NodeRegistration.KubeletExtraArgs != nil {
-		clusterapi.SortArgs(spec.InitConfiguration.NodeRegistration.KubeletExtraArgs)
-	}
-	if spec.JoinConfiguration.NodeRegistration.KubeletExtraArgs != nil {
-		clusterapi.SortArgs(spec.JoinConfiguration.NodeRegistration.KubeletExtraArgs)
-	}
+	_ = "STUB: not implemented"
+	return
 }

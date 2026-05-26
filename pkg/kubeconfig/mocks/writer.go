@@ -7,7 +7,6 @@ package mocks
 import (
 	context "context"
 	io "io"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 )
@@ -24,41 +23,35 @@ type MockWriterMockRecorder struct {
 }
 
 // NewMockWriter creates a new mock instance.
-func NewMockWriter(ctrl *gomock.Controller) *MockWriter {
-	mock := &MockWriter{ctrl: ctrl}
-	mock.recorder = &MockWriterMockRecorder{mock}
-	return mock
-}
+func NewMockWriter(ctrl *gomock.Controller) *MockWriter { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockWriter) EXPECT() *MockWriterMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// WriteKubeconfig mocks base method.
+	return nil
 }
 
-// WriteKubeconfig mocks base method.
 func (m *MockWriter) WriteKubeconfig(ctx context.Context, clusterName, kubeconfig string, w io.Writer) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WriteKubeconfig", ctx, clusterName, kubeconfig, w)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WriteKubeconfig indicates an expected call of WriteKubeconfig.
 func (mr *MockWriterMockRecorder) WriteKubeconfig(ctx, clusterName, kubeconfig, w interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WriteKubeconfig", reflect.TypeOf((*MockWriter)(nil).WriteKubeconfig), ctx, clusterName, kubeconfig, w)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WriteKubeconfigContent mocks base method.
 func (m *MockWriter) WriteKubeconfigContent(ctx context.Context, clusterName string, content []byte, w io.Writer) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WriteKubeconfigContent", ctx, clusterName, content, w)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WriteKubeconfigContent indicates an expected call of WriteKubeconfigContent.
 func (mr *MockWriterMockRecorder) WriteKubeconfigContent(ctx, clusterName, content, w interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WriteKubeconfigContent", reflect.TypeOf((*MockWriter)(nil).WriteKubeconfigContent), ctx, clusterName, content, w)
+	_ = "STUB: not implemented"
+	return nil
 }

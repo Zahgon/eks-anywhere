@@ -2,17 +2,11 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
-
-	"github.com/aws/eks-anywhere/cmd/eksctl-anywhere/cmd/internal/commands/artifacts"
-	"github.com/aws/eks-anywhere/pkg/logger"
-	"github.com/aws/eks-anywhere/pkg/registrymirror"
-	"github.com/aws/eks-anywhere/pkg/version"
 )
 
 type checkImagesOptions struct {
@@ -49,27 +43,6 @@ var checkImagesCommand = &cobra.Command{
 }
 
 func checkImages(context context.Context, clusterSpecPath string) error {
-	images, err := getImages(clusterSpecPath, "")
-	if err != nil {
-		return err
-	}
-
-	clusterSpec, err := readAndValidateClusterSpec(clusterSpecPath, version.Get())
-	if err != nil {
-		return err
-	}
-
-	checkImageExistence := artifacts.CheckImageExistence{}
-	for _, image := range images {
-		myImageURI := registrymirror.FromCluster(clusterSpec.Cluster).ReplaceRegistry(image.URI)
-		checkImageExistence.ImageUri = myImageURI
-		if err = checkImageExistence.Run(context); err != nil {
-			fmt.Println(err.Error())
-			logger.MarkFail(myImageURI)
-		} else {
-			logger.MarkPass(myImageURI)
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }

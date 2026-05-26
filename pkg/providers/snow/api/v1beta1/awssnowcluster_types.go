@@ -144,11 +144,13 @@ type AWSSnowClusterList struct {
 }
 
 func (r *AWSSnowCluster) GetConditions() clusterv1.Conditions {
-	return r.Status.Conditions
+	_ = "STUB: not implemented"
+	return *new(clusterv1.Conditions)
 }
 
 func (r *AWSSnowCluster) SetConditions(conditions clusterv1.Conditions) {
-	r.Status.Conditions = conditions
+	_ = "STUB: not implemented"
+	return
 }
 
 func init() {

@@ -76,57 +76,26 @@ var awsIamFiles = []bootstrapv1beta2.File{
 }
 
 func configureAWSIAMAuthInKubeadmControlPlane(kcp *controlplanev1beta2.KubeadmControlPlane, awsIamConfig *v1alpha1.AWSIamConfig) {
-	if awsIamConfig == nil {
-		return
-	}
-
-	kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.APIServer.ExtraArgs = append(
-		kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.APIServer.ExtraArgs,
-		AwsIamAuthExtraArgs(awsIamConfig).ToArgs()...,
-	)
-
-	kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.APIServer.ExtraVolumes = append(
-		kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.APIServer.ExtraVolumes,
-		awsIamMounts...,
-	)
-
-	kcp.Spec.KubeadmConfigSpec.Files = append(kcp.Spec.KubeadmConfigSpec.Files, awsIamFiles...)
+	_ = "STUB: not implemented"
+	return
 }
 
 func configureOIDCInKubeadmControlPlane(kcp *controlplanev1beta2.KubeadmControlPlane, oidcConfig *v1alpha1.OIDCConfig) {
-	if oidcConfig == nil {
-		return
-	}
-
-	kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.APIServer.ExtraArgs = append(
-		kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.APIServer.ExtraArgs,
-		OIDCToExtraArgs(oidcConfig).ToArgs()...,
-	)
+	_ = "STUB: not implemented"
+	return
 }
 
 func configureAPIServerExtraArgsInKubeadmControlPlane(kcp *controlplanev1beta2.KubeadmControlPlane, apiServerExtraArgs map[string]string) {
-	if apiServerExtraArgs == nil {
-		return
-	}
-
-	kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.APIServer.ExtraArgs = append(
-		kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.APIServer.ExtraArgs,
-		ExtraArgs(apiServerExtraArgs).ToArgs()...,
-	)
+	_ = "STUB: not implemented"
+	return
 }
 
 func configurePodIamAuthInKubeadmControlPlane(kcp *controlplanev1beta2.KubeadmControlPlane, podIamConfig *v1alpha1.PodIAMConfig) {
-	if podIamConfig == nil {
-		return
-	}
-
-	kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.APIServer.ExtraArgs = SetPodIAMAuthInArgs(
-		podIamConfig, kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.APIServer.ExtraArgs)
+	_ = "STUB: not implemented"
+	return
 }
 
 func SetIdentityAuthInKubeadmControlPlane(kcp *controlplanev1beta2.KubeadmControlPlane, clusterSpec *cluster.Spec) {
-	configureOIDCInKubeadmControlPlane(kcp, clusterSpec.OIDCConfig)
-	configureAWSIAMAuthInKubeadmControlPlane(kcp, clusterSpec.AWSIamConfig)
-	configureAPIServerExtraArgsInKubeadmControlPlane(kcp, clusterSpec.Cluster.Spec.ControlPlaneConfiguration.APIServerExtraArgs)
-	configurePodIamAuthInKubeadmControlPlane(kcp, clusterSpec.Cluster.Spec.PodIAMConfig)
+	_ = "STUB: not implemented"
+	return
 }

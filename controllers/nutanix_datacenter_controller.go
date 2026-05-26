@@ -18,35 +18,23 @@ type NutanixDatacenterReconciler struct {
 
 // Reconcile reconciles a NutanixDatacenterConfig object.
 func (r *NutanixDatacenterReconciler) Reconcile(ctx context.Context, request ctrl.Request) (ctrl.Result, error) {
-	dc := &anywherev1.NutanixDatacenterConfig{}
-	if err := r.client.Get(ctx, request.NamespacedName, dc); err != nil {
-		return ctrl.Result{}, err
-	}
-
-	r.defaulter.SetDefaultsForDatacenterConfig(*dc)
-
-	if !dc.DeletionTimestamp.IsZero() {
-		return r.reconcileDelete(ctx, dc)
-	}
-
-	return ctrl.Result{}, nil
+	_ = "STUB: not implemented"
+	return *new(ctrl.Result), nil
 }
 
 func (r *NutanixDatacenterReconciler) reconcileDelete(ctx context.Context, dc *anywherev1.NutanixDatacenterConfig) (ctrl.Result, error) {
-	return ctrl.Result{}, nil
+	_ = "STUB: not implemented"
+	return *new(ctrl.Result), nil
 }
 
 // NewNutanixDatacenterReconciler constructs a new NutanixDatacenterReconciler.
 func NewNutanixDatacenterReconciler(client client.Client, defaulter *nutanix.Defaulter) *NutanixDatacenterReconciler {
-	return &NutanixDatacenterReconciler{
-		client:    client,
-		defaulter: defaulter,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetupWithManager sets up the controller with the Manager.
 func (r *NutanixDatacenterReconciler) SetupWithManager(mgr ctrl.Manager) error {
-	return ctrl.NewControllerManagedBy(mgr).
-		For(&anywherev1.NutanixDatacenterConfig{}).
-		Complete(r)
+	_ = "STUB: not implemented"
+	return nil
 }

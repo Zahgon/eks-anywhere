@@ -5,8 +5,6 @@
 package mocks
 
 import (
-	reflect "reflect"
-
 	hardware "github.com/aws/eks-anywhere/pkg/providers/tinkerbell/hardware"
 	gomock "github.com/golang/mock/gomock"
 )
@@ -24,30 +22,25 @@ type MockMachineReaderMockRecorder struct {
 
 // NewMockMachineReader creates a new mock instance.
 func NewMockMachineReader(ctrl *gomock.Controller) *MockMachineReader {
-	mock := &MockMachineReader{ctrl: ctrl}
-	mock.recorder = &MockMachineReaderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockMachineReader) EXPECT() *MockMachineReaderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Read mocks base method.
+	return nil
 }
 
-// Read mocks base method.
 func (m *MockMachineReader) Read() (hardware.Machine, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Read")
-	ret0, _ := ret[0].(hardware.Machine)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(hardware.Machine), nil
 }
 
 // Read indicates an expected call of Read.
-func (mr *MockMachineReaderMockRecorder) Read() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Read", reflect.TypeOf((*MockMachineReader)(nil).Read))
-}
+func (mr *MockMachineReaderMockRecorder) Read() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // MockMachineWriter is a mock of MachineWriter interface.
 type MockMachineWriter struct {
@@ -62,28 +55,27 @@ type MockMachineWriterMockRecorder struct {
 
 // NewMockMachineWriter creates a new mock instance.
 func NewMockMachineWriter(ctrl *gomock.Controller) *MockMachineWriter {
-	mock := &MockMachineWriter{ctrl: ctrl}
-	mock.recorder = &MockMachineWriterMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockMachineWriter) EXPECT() *MockMachineWriterMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Write mocks base method.
+	return nil
 }
 
-// Write mocks base method.
 func (m *MockMachineWriter) Write(arg0 hardware.Machine) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Write", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Write indicates an expected call of Write.
 func (mr *MockMachineWriterMockRecorder) Write(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Write", reflect.TypeOf((*MockMachineWriter)(nil).Write), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockMachineValidator is a mock of MachineValidator interface.
@@ -99,26 +91,25 @@ type MockMachineValidatorMockRecorder struct {
 
 // NewMockMachineValidator creates a new mock instance.
 func NewMockMachineValidator(ctrl *gomock.Controller) *MockMachineValidator {
-	mock := &MockMachineValidator{ctrl: ctrl}
-	mock.recorder = &MockMachineValidatorMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockMachineValidator) EXPECT() *MockMachineValidatorMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Validate mocks base method.
+	return nil
 }
 
-// Validate mocks base method.
 func (m *MockMachineValidator) Validate(arg0 hardware.Machine) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Validate", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Validate indicates an expected call of Validate.
 func (mr *MockMachineValidatorMockRecorder) Validate(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Validate", reflect.TypeOf((*MockMachineValidator)(nil).Validate), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }

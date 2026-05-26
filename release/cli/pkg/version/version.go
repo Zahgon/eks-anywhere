@@ -15,18 +15,6 @@
 package version
 
 import (
-	"bytes"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
-	"os"
-	"path/filepath"
-	"strings"
-
-	"github.com/pkg/errors"
-
-	"github.com/aws/eks-anywhere/release/cli/pkg/filereader"
-	"github.com/aws/eks-anywhere/release/cli/pkg/git"
 	releasetypes "github.com/aws/eks-anywhere/release/cli/pkg/types"
 )
 
@@ -37,12 +25,8 @@ type ProjectVersioner interface {
 }
 
 func BuildComponentVersion(versioner ProjectVersioner, componentCheckSum string) (string, error) {
-	patchVersion, err := versioner.patchVersion()
-	if err != nil {
-		return "", err
-	}
-
-	return fmt.Sprintf("%s+%s", patchVersion, componentCheckSum), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 type Versioner struct {
@@ -50,22 +34,9 @@ type Versioner struct {
 	pathToProject string
 }
 
-func NewVersioner(pathToProject string) *Versioner {
-	return &Versioner{pathToProject: pathToProject}
-}
+func NewVersioner(pathToProject string) *Versioner { _ = "STUB: not implemented"; return nil }
 
-func (v *Versioner) patchVersion() (string, error) {
-	projectSource := filepath.Join(v.repoSource, v.pathToProject)
-	out, err := git.DescribeTag(projectSource)
-	if err != nil {
-		return "", errors.Wrapf(err, "failed executing git describe to get version in [%s]", projectSource)
-	}
-
-	gitVersion := strings.Split(out, "-")
-	gitTag := gitVersion[0]
-
-	return gitTag, nil
-}
+func (v *Versioner) patchVersion() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 type VersionerWithGITTAG struct {
 	Versioner
@@ -75,25 +46,18 @@ type VersionerWithGITTAG struct {
 }
 
 func NewVersionerWithGITTAG(repoSource, pathToProject, sourcedFromBranch string, releaseConfig *releasetypes.ReleaseConfig) *VersionerWithGITTAG {
-	return &VersionerWithGITTAG{
-		folderWithGITTAG:  pathToProject,
-		Versioner:         Versioner{repoSource: repoSource, pathToProject: pathToProject},
-		sourcedFromBranch: sourcedFromBranch,
-		releaseConfig:     releaseConfig,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func NewMultiProjectVersionerWithGITTAG(repoSource, pathToRootFolder, pathToMainProject, sourcedFromBranch string, releaseConfig *releasetypes.ReleaseConfig) *VersionerWithGITTAG {
-	return &VersionerWithGITTAG{
-		folderWithGITTAG:  pathToMainProject,
-		Versioner:         Versioner{repoSource: repoSource, pathToProject: pathToRootFolder},
-		sourcedFromBranch: sourcedFromBranch,
-		releaseConfig:     releaseConfig,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (v *VersionerWithGITTAG) patchVersion() (string, error) {
-	return filereader.ReadGitTag(v.folderWithGITTAG, v.releaseConfig.BuildRepoSource, v.sourcedFromBranch)
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 type cliVersioner struct {
@@ -102,39 +66,18 @@ type cliVersioner struct {
 }
 
 func NewCliVersioner(cliVersion, pathToProject string) *cliVersioner {
-	return &cliVersioner{
-		cliVersion: cliVersion,
-		Versioner:  Versioner{pathToProject: pathToProject},
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (v *cliVersioner) patchVersion() (string, error) {
-	return v.cliVersion, nil
-}
+func (v *cliVersioner) patchVersion() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 func GenerateComponentHash(hashes []string, dryRun bool) string {
-	b := make([][]byte, len(hashes))
-	for i, str := range hashes {
-		b[i] = []byte(str)
-	}
-	joinByteArrays := bytes.Join(b, []byte(""))
-	hash := sha256.Sum256(joinByteArrays)
-	hashStr := hex.EncodeToString(hash[:])[:7]
-
-	return hashStr
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func GenerateManifestHash(r *releasetypes.ReleaseConfig, manifestArtifact *releasetypes.ManifestArtifact) (string, error) {
-	if r.DryRun {
-		return FakeComponentChecksum, nil
-	}
-
-	manifestContents, err := os.ReadFile(filepath.Join(manifestArtifact.ArtifactPath, manifestArtifact.ReleaseName))
-	if err != nil {
-		return "", errors.Wrapf(err, "failed reading manifest contents from [%s]", manifestArtifact.ArtifactPath)
-	}
-	hash := sha256.Sum256(manifestContents)
-	hashStr := hex.EncodeToString(hash[:])
-
-	return hashStr, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }

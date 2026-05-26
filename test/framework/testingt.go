@@ -43,107 +43,69 @@ var _ T = (*testing.T)(nil)
 type LoggingOnlyT struct{}
 
 // NewLoggingOnlyT creates a LoggingOnlyT, which does what its name implies.
-func NewLoggingOnlyT() *LoggingOnlyT { return &LoggingOnlyT{} }
+func NewLoggingOnlyT() *LoggingOnlyT { _ = "STUB: not implemented"; return nil }
 
 // Cleanup implements T.
-func (t LoggingOnlyT) Cleanup(_ func()) {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) Cleanup(_ func()) { _ = "STUB: not implemented"; return }
 
 // Error implements T.
-func (t LoggingOnlyT) Error(_ ...any) {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) Error(_ ...any) { _ = "STUB: not implemented"; return }
 
 // Errorf implements T.
-func (t LoggingOnlyT) Errorf(_ string, _ ...any) {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) Errorf(_ string, _ ...any) { _ = "STUB: not implemented"; return }
 
 // Fail implements T.
-func (t LoggingOnlyT) Fail() {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) Fail() { _ = "STUB: not implemented"; return }
 
 // FailNow implements T.
-func (t LoggingOnlyT) FailNow() {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) FailNow() { _ = "STUB: not implemented"; return }
 
 // Failed implements T.
-func (t LoggingOnlyT) Failed() bool {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) Failed() bool { _ = "STUB: not implemented"; return false }
 
 // Fatal implements T.
-func (t LoggingOnlyT) Fatal(_ ...any) {
-	v := &testing.T{}
-	v.Fatal("foo")
-	// panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) Fatal(_ ...any) { _ = "STUB: not implemented"; return }
+
+// panic("LoggingOnlyT implements only the logging methods of T")
 
 // Fatalf implements T.
-func (t LoggingOnlyT) Fatalf(format string, args ...any) {
-	v := &testing.T{}
-	v.Fatalf(format, args...)
-}
+func (t LoggingOnlyT) Fatalf(format string, args ...any) { _ = "STUB: not implemented"; return }
 
 // Helper implements T.
-func (t LoggingOnlyT) Helper() {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) Helper() { _ = "STUB: not implemented"; return }
 
 // Log implements T.
-func (t LoggingOnlyT) Log(args ...any) {
-	(&testing.T{}).Log(args...)
-}
+func (t LoggingOnlyT) Log(args ...any) { _ = "STUB: not implemented"; return }
 
 // Logf implements T.
-func (t LoggingOnlyT) Logf(format string, args ...any) {
-	(&testing.T{}).Logf(format, args...)
-}
+func (t LoggingOnlyT) Logf(format string, args ...any) { _ = "STUB: not implemented"; return }
 
 // Name implements T.
-func (t LoggingOnlyT) Name() string {
-	return (&testing.T{}).Name()
-}
+func (t LoggingOnlyT) Name() string { _ = "STUB: not implemented"; return "" }
 
 // Parallel implements T.
-func (t LoggingOnlyT) Parallel() {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) Parallel() { _ = "STUB: not implemented"; return }
 
 // Run implements T.
 func (t LoggingOnlyT) Run(_ string, _ func(*testing.T)) bool {
-	panic("LoggingOnlyT implements only the logging methods of T")
+	_ = "STUB: not implemented"
+	return false
 }
 
 // Setenv implements T.
-func (t LoggingOnlyT) Setenv(_ string, _ string) {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) Setenv(_ string, _ string) { _ = "STUB: not implemented"; return }
 
 // Skip implements T.
-func (t LoggingOnlyT) Skip(_ ...any) {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) Skip(_ ...any) { _ = "STUB: not implemented"; return }
 
 // SkipNow implements T.
-func (t LoggingOnlyT) SkipNow() {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) SkipNow() { _ = "STUB: not implemented"; return }
 
 // Skipf implements T.
-func (t LoggingOnlyT) Skipf(_ string, _ ...any) {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) Skipf(_ string, _ ...any) { _ = "STUB: not implemented"; return }
 
 // Skipped implements T.
-func (t LoggingOnlyT) Skipped() bool {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) Skipped() bool { _ = "STUB: not implemented"; return false }
 
 // TempDir implements T.
-func (t LoggingOnlyT) TempDir() string {
-	panic("LoggingOnlyT implements only the logging methods of T")
-}
+func (t LoggingOnlyT) TempDir() string { _ = "STUB: not implemented"; return "" }

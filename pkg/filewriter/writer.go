@@ -1,12 +1,8 @@
 package filewriter
 
 import (
-	"errors"
-	"fmt"
 	"io"
 	"io/fs"
-	"os"
-	"path/filepath"
 )
 
 type writer struct {
@@ -15,74 +11,40 @@ type writer struct {
 }
 
 func NewWriter(dir string) (FileWriter, error) {
-	newFolder := filepath.Join(dir, DefaultTmpFolder)
-	if _, err := os.Stat(newFolder); errors.Is(err, os.ErrNotExist) {
-		err := os.MkdirAll(newFolder, os.ModePerm)
-		if err != nil {
-			return nil, fmt.Errorf("creating directory [%s]: %v", dir, err)
-		}
-	}
-	return &writer{dir: dir, tempDir: newFolder}, nil
+	_ = "STUB: not implemented"
+	return *new(FileWriter), nil
 }
 
 func (w *writer) Write(fileName string, content []byte, opts ...FileOptionsFunc) (string, error) {
-	o := buildOptions(w, opts)
-
-	filePath := filepath.Join(o.BasePath, fileName)
-	err := os.WriteFile(filePath, content, o.Permissions)
-	if err != nil {
-		return "", fmt.Errorf("writing to file [%s]: %v", filePath, err)
-	}
-
-	return filePath, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func (w *writer) WithDir(dir string) (FileWriter, error) {
-	return NewWriter(filepath.Join(w.dir, dir))
+	_ = "STUB: not implemented"
+	return *new(FileWriter), nil
 }
 
-func (w *writer) Dir() string {
-	return w.dir
-}
+func (w *writer) Dir() string { _ = "STUB: not implemented"; return "" }
 
-func (w *writer) TempDir() string {
-	return w.tempDir
-}
+func (w *writer) TempDir() string { _ = "STUB: not implemented"; return "" }
 
-func (w *writer) CleanUp() {
-	_, err := os.Stat(w.dir)
-	if err == nil {
-		os.RemoveAll(w.dir)
-	}
-}
+func (w *writer) CleanUp() { _ = "STUB: not implemented"; return }
 
-func (w *writer) CleanUpTemp() {
-	_, err := os.Stat(w.tempDir)
-	if err == nil {
-		os.RemoveAll(w.tempDir)
-	}
-}
+func (w *writer) CleanUpTemp() { _ = "STUB: not implemented"; return }
 
 // Create creates a file with the given name rooted at w's base directory.
 func (w *writer) Create(name string, opts ...FileOptionsFunc) (_ io.WriteCloser, path string, _ error) {
-	o := buildOptions(w, opts)
-
-	path = filepath.Join(o.BasePath, name)
-	fh, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR, o.Permissions)
-	return fh, path, err
+	_ = "STUB: not implemented"
+	return *new(io.WriteCloser), "", nil
 }
 
 // Delete removes a file with the given name from w's base directory.
-func (w *writer) Delete(fileName string) error {
-	filePath := filepath.Join(w.dir, fileName)
+func (w *writer) Delete(fileName string) error { _ = "STUB: not implemented"; return nil }
 
-	// Check if file exists first
-	if _, err := os.Stat(filePath); os.IsNotExist(err) {
-		return nil // File doesn't exist, nothing to delete
-	}
+// Check if file exists first
 
-	return os.Remove(filePath)
-}
+// File doesn't exist, nothing to delete
 
 type options struct {
 	BasePath    string
@@ -91,20 +53,6 @@ type options struct {
 
 // buildOptions converts a set of FileOptionsFunc's to a single options struct.
 func buildOptions(w *writer, opts []FileOptionsFunc) options {
-	op := defaultFileOptions()
-	for _, fn := range opts {
-		fn(op)
-	}
-
-	var basePath string
-	if op.IsTemp {
-		basePath = w.tempDir
-	} else {
-		basePath = w.dir
-	}
-
-	return options{
-		BasePath:    basePath,
-		Permissions: op.Permissions,
-	}
+	_ = "STUB: not implemented"
+	return *new(options)
 }

@@ -7,7 +7,6 @@ package mocks
 import (
 	bytes "bytes"
 	context "context"
-	reflect "reflect"
 
 	executables "github.com/aws/eks-anywhere/pkg/executables"
 	gomock "github.com/golang/mock/gomock"
@@ -26,108 +25,75 @@ type MockExecutableMockRecorder struct {
 
 // NewMockExecutable creates a new mock instance.
 func NewMockExecutable(ctrl *gomock.Controller) *MockExecutable {
-	mock := &MockExecutable{ctrl: ctrl}
-	mock.recorder = &MockExecutableMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockExecutable) EXPECT() *MockExecutableMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Command mocks base method.
+	return nil
 }
 
-// Command mocks base method.
 func (m *MockExecutable) Command(arg0 context.Context, arg1 ...string) *executables.Command {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0}
-	for _, a := range arg1 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Command", varargs...)
-	ret0, _ := ret[0].(*executables.Command)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Command indicates an expected call of Command.
 func (mr *MockExecutableMockRecorder) Command(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0}, arg1...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Command", reflect.TypeOf((*MockExecutable)(nil).Command), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Execute mocks base method.
 func (m *MockExecutable) Execute(arg0 context.Context, arg1 ...string) (bytes.Buffer, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0}
-	for _, a := range arg1 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Execute", varargs...)
-	ret0, _ := ret[0].(bytes.Buffer)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(bytes.Buffer), nil
 }
 
 // Execute indicates an expected call of Execute.
 func (mr *MockExecutableMockRecorder) Execute(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0}, arg1...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockExecutable)(nil).Execute), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ExecuteWithEnv mocks base method.
 func (m *MockExecutable) ExecuteWithEnv(arg0 context.Context, arg1 map[string]string, arg2 ...string) (bytes.Buffer, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1}
-	for _, a := range arg2 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "ExecuteWithEnv", varargs...)
-	ret0, _ := ret[0].(bytes.Buffer)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(bytes.Buffer), nil
 }
 
 // ExecuteWithEnv indicates an expected call of ExecuteWithEnv.
 func (mr *MockExecutableMockRecorder) ExecuteWithEnv(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExecuteWithEnv", reflect.TypeOf((*MockExecutable)(nil).ExecuteWithEnv), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ExecuteWithStdin mocks base method.
 func (m *MockExecutable) ExecuteWithStdin(arg0 context.Context, arg1 []byte, arg2 ...string) (bytes.Buffer, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1}
-	for _, a := range arg2 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "ExecuteWithStdin", varargs...)
-	ret0, _ := ret[0].(bytes.Buffer)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(bytes.Buffer), nil
 }
 
 // ExecuteWithStdin indicates an expected call of ExecuteWithStdin.
 func (mr *MockExecutableMockRecorder) ExecuteWithStdin(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExecuteWithStdin", reflect.TypeOf((*MockExecutable)(nil).ExecuteWithStdin), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Run mocks base method.
 func (m *MockExecutable) Run(arg0 *executables.Command) (bytes.Buffer, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Run", arg0)
-	ret0, _ := ret[0].(bytes.Buffer)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(bytes.Buffer), nil
 }
 
 // Run indicates an expected call of Run.
 func (mr *MockExecutableMockRecorder) Run(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Run", reflect.TypeOf((*MockExecutable)(nil).Run), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockDockerClient is a mock of DockerClient interface.
@@ -143,62 +109,51 @@ type MockDockerClientMockRecorder struct {
 
 // NewMockDockerClient creates a new mock instance.
 func NewMockDockerClient(ctrl *gomock.Controller) *MockDockerClient {
-	mock := &MockDockerClient{ctrl: ctrl}
-	mock.recorder = &MockDockerClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDockerClient) EXPECT() *MockDockerClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Execute mocks base method.
+	return nil
 }
 
-// Execute mocks base method.
 func (m *MockDockerClient) Execute(arg0 context.Context, arg1 ...string) (bytes.Buffer, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0}
-	for _, a := range arg1 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Execute", varargs...)
-	ret0, _ := ret[0].(bytes.Buffer)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(bytes.Buffer), nil
 }
 
 // Execute indicates an expected call of Execute.
 func (mr *MockDockerClientMockRecorder) Execute(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0}, arg1...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockDockerClient)(nil).Execute), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Login mocks base method.
 func (m *MockDockerClient) Login(arg0 context.Context, arg1, arg2, arg3 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Login", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Login indicates an expected call of Login.
 func (mr *MockDockerClientMockRecorder) Login(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Login", reflect.TypeOf((*MockDockerClient)(nil).Login), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PullImage mocks base method.
 func (m *MockDockerClient) PullImage(arg0 context.Context, arg1 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PullImage", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PullImage indicates an expected call of PullImage.
 func (mr *MockDockerClientMockRecorder) PullImage(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PullImage", reflect.TypeOf((*MockDockerClient)(nil).PullImage), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockDockerContainer is a mock of DockerContainer interface.
@@ -214,54 +169,46 @@ type MockDockerContainerMockRecorder struct {
 
 // NewMockDockerContainer creates a new mock instance.
 func NewMockDockerContainer(ctrl *gomock.Controller) *MockDockerContainer {
-	mock := &MockDockerContainer{ctrl: ctrl}
-	mock.recorder = &MockDockerContainerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDockerContainer) EXPECT() *MockDockerContainerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Close mocks base method.
+	return nil
 }
 
-// Close mocks base method.
 func (m *MockDockerContainer) Close(arg0 context.Context) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Close", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Close indicates an expected call of Close.
 func (mr *MockDockerContainerMockRecorder) Close(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDockerContainer)(nil).Close), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ContainerName mocks base method.
-func (m *MockDockerContainer) ContainerName() string {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ContainerName")
-	ret0, _ := ret[0].(string)
-	return ret0
-}
+func (m *MockDockerContainer) ContainerName() string { _ = "STUB: not implemented"; return "" }
 
 // ContainerName indicates an expected call of ContainerName.
 func (mr *MockDockerContainerMockRecorder) ContainerName() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ContainerName", reflect.TypeOf((*MockDockerContainer)(nil).ContainerName))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Init mocks base method.
 func (m *MockDockerContainer) Init(arg0 context.Context) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Init", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Init indicates an expected call of Init.
 func (mr *MockDockerContainerMockRecorder) Init(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockDockerContainer)(nil).Init), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }

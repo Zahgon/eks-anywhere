@@ -2,16 +2,11 @@ package clusterapi
 
 import (
 	"context"
-	"reflect"
 
-	"github.com/pkg/errors"
 	corev1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/api/equality"
-	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	bootstrapv1beta2 "sigs.k8s.io/cluster-api/api/bootstrap/kubeadm/v1beta2"
 	clusterv1beta2 "sigs.k8s.io/cluster-api/api/core/v1beta2"
 
-	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	"github.com/aws/eks-anywhere/pkg/clients/kubernetes"
 )
 
@@ -21,14 +16,7 @@ type Workers[M Object[M]] struct {
 }
 
 // WorkerObjects returns a list of API objects for concrete provider-specific collection of worker groups.
-func (w *Workers[M]) WorkerObjects() []kubernetes.Object {
-	objs := make([]kubernetes.Object, 0, len(w.Groups)*3)
-	for _, g := range w.Groups {
-		objs = append(objs, g.Objects()...)
-	}
-
-	return objs
-}
+func (w *Workers[M]) WorkerObjects() []kubernetes.Object { _ = "STUB: not implemented"; return nil }
 
 // UpdateImmutableObjectNames checks if any immutable objects have changed by comparing the new definition
 // with the current state of the cluster. If they had, it generates a new name for them by increasing a monotonic number
@@ -39,12 +27,7 @@ func (w *Workers[M]) UpdateImmutableObjectNames(
 	machineTemplateRetriever ObjectRetriever[M],
 	machineTemplateComparator ObjectComparator[M],
 ) error {
-	for _, g := range w.Groups {
-		if err := g.UpdateImmutableObjectNames(ctx, client, machineTemplateRetriever, machineTemplateComparator); err != nil {
-			return err
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -56,13 +39,7 @@ type WorkerGroup[M Object[M]] struct {
 }
 
 // Objects returns a list of API objects for a provider-specific of the worker group.
-func (g *WorkerGroup[M]) Objects() []kubernetes.Object {
-	return []kubernetes.Object{
-		g.KubeadmConfigTemplate,
-		g.MachineDeployment,
-		g.ProviderMachineTemplate,
-	}
-}
+func (g *WorkerGroup[M]) Objects() []kubernetes.Object { _ = "STUB: not implemented"; return nil }
 
 // UpdateImmutableObjectNames checks if any immutable objects have changed by comparing the new definition
 // with the current state of the cluster. If they had, it generates a new name for them by increasing a monotonic number
@@ -75,89 +52,46 @@ func (g *WorkerGroup[M]) UpdateImmutableObjectNames(
 	machineTemplateRetriever ObjectRetriever[M],
 	machineTemplateComparator ObjectComparator[M],
 ) error {
-	currentMachineDeployment := &clusterv1beta2.MachineDeployment{}
-	err := client.Get(ctx, g.MachineDeployment.Name, g.MachineDeployment.Namespace, currentMachineDeployment)
-	if apierrors.IsNotFound(err) {
-		// MachineDeployment doesn't exist, this is a new cluster so machine templates should use their default name
-		return nil
-	}
-	if err != nil {
-		return errors.Wrap(err, "reading current machine deployment from API")
-	}
-
-	g.ProviderMachineTemplate.SetName(currentMachineDeployment.Spec.Template.Spec.InfrastructureRef.Name)
-	if err = EnsureNewNameIfChanged(ctx, client, machineTemplateRetriever, machineTemplateComparator, g.ProviderMachineTemplate); err != nil {
-		return err
-	}
-	g.MachineDeployment.Spec.Template.Spec.InfrastructureRef.Name = g.ProviderMachineTemplate.GetName()
-
-	g.KubeadmConfigTemplate.SetName(currentMachineDeployment.Spec.Template.Spec.Bootstrap.ConfigRef.Name)
-	if err = EnsureNewNameIfChanged(ctx, client, GetKubeadmConfigTemplate, KubeadmConfigTemplateEqual, g.KubeadmConfigTemplate); err != nil {
-		return err
-	}
-	g.MachineDeployment.Spec.Template.Spec.Bootstrap.ConfigRef.Name = g.KubeadmConfigTemplate.Name
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
+// MachineDeployment doesn't exist, this is a new cluster so machine templates should use their default name
+
 // DeepCopy generates a new WorkerGroup copying the contexts of the receiver.
-func (g *WorkerGroup[M]) DeepCopy() *WorkerGroup[M] {
-	return &WorkerGroup[M]{
-		MachineDeployment:       g.MachineDeployment.DeepCopy(),
-		KubeadmConfigTemplate:   g.KubeadmConfigTemplate.DeepCopy(),
-		ProviderMachineTemplate: g.ProviderMachineTemplate.DeepCopy(),
-	}
-}
+func (g *WorkerGroup[M]) DeepCopy() *WorkerGroup[M] { _ = "STUB: not implemented"; return nil }
 
 // GetKubeadmConfigTemplate retrieves a KubeadmConfigTemplate using a client
 // Implements ObjectRetriever.
 func GetKubeadmConfigTemplate(ctx context.Context, client kubernetes.Client, name, namespace string) (*bootstrapv1beta2.KubeadmConfigTemplate, error) {
-	k := &bootstrapv1beta2.KubeadmConfigTemplate{}
-	if err := client.Get(ctx, name, namespace, k); err != nil {
-		return nil, err
-	}
-
-	return k, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // KubeadmConfigTemplateEqual returns true only if the new version of a KubeadmConfigTemplate
 // involves changes with respect to the old one when applied to the cluster.
 // Implements ObjectComparator.
 func KubeadmConfigTemplateEqual(new, old *bootstrapv1beta2.KubeadmConfigTemplate) bool {
+	_ = "STUB: not implemented"
 	// DeepDerivative treats empty map (length == 0) as unset field. We need to manually compare certain fields
 	// such as taints, so that setting it to empty will trigger machine recreate
 	// The file check with deep equal has been added since the introduction of kubelet configuration in case users
 	// want to get rid of the files with that context.
-	return kubeadmConfigTemplateTaintsEqual(new, old) && kubeadmConfigTemplateExtraArgsEqual(new, old) &&
-		reflect.DeepEqual(new.Spec.Template.Spec.Files, old.Spec.Template.Spec.Files) &&
-		equality.Semantic.DeepDerivative(new.Spec, old.Spec)
+	return false
 }
 
 func kubeadmConfigTemplateTaintsEqual(new, old *bootstrapv1beta2.KubeadmConfigTemplate) bool {
-	newTaints := taintsFromPtr(new.Spec.Template.Spec.JoinConfiguration.NodeRegistration.Taints)
-	oldTaints := taintsFromPtr(old.Spec.Template.Spec.JoinConfiguration.NodeRegistration.Taints)
-	return anywherev1.TaintsSliceEqual(newTaints, oldTaints)
+	_ = "STUB: not implemented"
+	return false
 }
 
 func kubeadmConfigTemplateExtraArgsEqual(new, old *bootstrapv1beta2.KubeadmConfigTemplate) bool {
-	return reflect.DeepEqual(
-		new.Spec.Template.Spec.JoinConfiguration.NodeRegistration.KubeletExtraArgs,
-		old.Spec.Template.Spec.JoinConfiguration.NodeRegistration.KubeletExtraArgs,
-	)
+	_ = "STUB: not implemented"
+	return false
 }
 
 // taintsFromPtr dereferences a *[]Taint to []Taint, returning nil if the pointer is nil.
-func taintsFromPtr(t *[]corev1.Taint) []corev1.Taint {
-	if t == nil {
-		return nil
-	}
-	return *t
-}
+func taintsFromPtr(t *[]corev1.Taint) []corev1.Taint { _ = "STUB: not implemented"; return nil }
 
 // taintsToPtr returns a pointer to the taints slice, or nil if the slice is nil.
-func taintsToPtr(t []corev1.Taint) *[]corev1.Taint {
-	if t == nil {
-		return nil
-	}
-	return &t
-}
+func taintsToPtr(t []corev1.Taint) *[]corev1.Taint { _ = "STUB: not implemented"; return nil }

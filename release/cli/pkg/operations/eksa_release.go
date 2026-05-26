@@ -15,52 +15,15 @@
 package operations
 
 import (
-	"context"
-	"fmt"
-
-	"github.com/pkg/errors"
-
-	"github.com/aws/eks-anywhere/release/cli/pkg/bundles"
-	"github.com/aws/eks-anywhere/release/cli/pkg/constants"
 	releasetypes "github.com/aws/eks-anywhere/release/cli/pkg/types"
 )
 
 func GenerateEksAArtifactsTable(r *releasetypes.ReleaseConfig) (releasetypes.ArtifactsTable, error) {
-	fmt.Println("\n==========================================================")
-	fmt.Println("                 EKS-A Artifacts Table Generation")
-	fmt.Println("==========================================================")
-
-	var artifactsTable releasetypes.ArtifactsTable
-	artifacts, err := bundles.GetEksACliArtifacts(r)
-	if err != nil {
-		return releasetypes.ArtifactsTable{}, errors.Wrapf(err, "Error getting artifact information for EKS-A CLI")
-	}
-
-	artifactsTable.Store("eks-a-cli", artifacts)
-
-	fmt.Printf("%s Successfully generated EKS-A artifacts table\n", constants.SuccessIcon)
-
-	return artifactsTable, nil
+	_ = "STUB: not implemented"
+	return *new(releasetypes.ArtifactsTable), nil
 }
 
 func EksAArtifactsRelease(r *releasetypes.ReleaseConfig) error {
-	fmt.Println("\n==========================================================")
-	fmt.Println("                 EKS-A CLI Artifacts Release")
-	fmt.Println("==========================================================")
-	err := DownloadArtifacts(context.Background(), r, r.EksAArtifactsTable)
-	if err != nil {
-		return errors.Cause(err)
-	}
-
-	err = RenameArtifacts(context.Background(), r, r.EksAArtifactsTable)
-	if err != nil {
-		return errors.Cause(err)
-	}
-
-	err = UploadArtifacts(context.Background(), r, r.EksAArtifactsTable, false)
-	if err != nil {
-		return errors.Cause(err)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }

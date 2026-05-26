@@ -23,9 +23,6 @@ type LocalIMDSClient interface {
 type AwsClientMap map[string]AwsClient
 
 func NewAwsClientMap(awsClients aws.Clients) AwsClientMap {
-	c := make(AwsClientMap, len(awsClients))
-	for profile, client := range awsClients {
-		c[profile] = client
-	}
-	return c
+	_ = "STUB: not implemented"
+	return *new(AwsClientMap)
 }

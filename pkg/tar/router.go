@@ -2,7 +2,6 @@ package tar
 
 import (
 	"archive/tar"
-	"path/filepath"
 )
 
 // Router instructs where to extract a file.
@@ -17,9 +16,8 @@ type FolderRouter struct {
 }
 
 func NewFolderRouter(folder string) FolderRouter {
-	return FolderRouter{folder: folder}
+	_ = "STUB: not implemented"
+	return *new(FolderRouter)
 }
 
-func (f FolderRouter) ExtractPath(header *tar.Header) string {
-	return filepath.Join(f.folder, header.Name)
-}
+func (f FolderRouter) ExtractPath(header *tar.Header) string { _ = "STUB: not implemented"; return "" }

@@ -8,16 +8,17 @@ import (
 type Defaulter struct{}
 
 // NewDefaulter returns a new Defaulter.
-func NewDefaulter() *Defaulter {
-	return &Defaulter{}
-}
+func NewDefaulter() *Defaulter { _ = "STUB: not implemented"; return nil }
 
 // SetDefaultsForDatacenterConfig sets defaults for a NutanixDatacenterConfig.
 func (d *Defaulter) SetDefaultsForDatacenterConfig(dcConf anywherev1.NutanixDatacenterConfig) {
-	dcConf.SetDefaults()
+	_ = "STUB: not implemented"
+	return
+
+	// SetDefaultsForMachineConfig sets defaults for a NutanixMachineConfig.
 }
 
-// SetDefaultsForMachineConfig sets defaults for a NutanixMachineConfig.
 func (d *Defaulter) SetDefaultsForMachineConfig(machineConf anywherev1.NutanixMachineConfig) {
-	machineConf.SetDefaults()
+	_ = "STUB: not implemented"
+	return
 }

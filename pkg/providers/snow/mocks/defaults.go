@@ -5,8 +5,6 @@
 package mocks
 
 import (
-	reflect "reflect"
-
 	filewriter "github.com/aws/eks-anywhere/pkg/filewriter"
 	gomock "github.com/golang/mock/gomock"
 )
@@ -24,27 +22,25 @@ type MockSshKeyGeneratorMockRecorder struct {
 
 // NewMockSshKeyGenerator creates a new mock instance.
 func NewMockSshKeyGenerator(ctrl *gomock.Controller) *MockSshKeyGenerator {
-	mock := &MockSshKeyGenerator{ctrl: ctrl}
-	mock.recorder = &MockSshKeyGeneratorMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockSshKeyGenerator) EXPECT() *MockSshKeyGeneratorMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// GenerateSSHAuthKey mocks base method.
+	return nil
 }
 
-// GenerateSSHAuthKey mocks base method.
 func (m *MockSshKeyGenerator) GenerateSSHAuthKey(arg0 filewriter.FileWriter) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GenerateSSHAuthKey", arg0)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GenerateSSHAuthKey indicates an expected call of GenerateSSHAuthKey.
 func (mr *MockSshKeyGeneratorMockRecorder) GenerateSSHAuthKey(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateSSHAuthKey", reflect.TypeOf((*MockSshKeyGenerator)(nil).GenerateSSHAuthKey), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }

@@ -11,7 +11,6 @@ type DockerDatacenterReconciler struct {
 
 // NewDockerDatacenterReconciler creates a new instance of the DockerDatacenterReconciler struct.
 func NewDockerDatacenterReconciler(client client.Client) *DockerDatacenterReconciler {
-	return &DockerDatacenterReconciler{
-		client: client,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }

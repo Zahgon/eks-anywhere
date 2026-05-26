@@ -8,130 +8,37 @@ import (
 
 // RegistryMirrorInsecureSkipVerifyEnabled returns a test RegistryMirrorConfiguration with InsecureSkipVerify enabled.
 func RegistryMirrorInsecureSkipVerifyEnabled() *anywherev1.RegistryMirrorConfiguration {
-	return &anywherev1.RegistryMirrorConfiguration{
-		Endpoint:           "0.0.0.0",
-		Port:               "5000",
-		InsecureSkipVerify: true,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RegistryMirrorInsecureSkipVerifyEnabledAndCACert returns a test RegistryMirrorConfiguration with a CACert specified and InsecureSkipVerify enabled.
 func RegistryMirrorInsecureSkipVerifyEnabledAndCACert() *anywherev1.RegistryMirrorConfiguration {
-	return &anywherev1.RegistryMirrorConfiguration{
-		Endpoint:           "0.0.0.0",
-		Port:               "5000",
-		InsecureSkipVerify: true,
-		CACertContent:      CACertContent(),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CACertContent returns a test string representing a cacert contents.
-func CACertContent() string {
-	return `-----BEGIN CERTIFICATE-----
-8wHMSjm0Mzf0VtaqLcoNXEYv3rWB08wydabTAxSAlFMmDJbFyXmI1tYgeps0n/Mt
-7dvC9zcJkTibFw8YdV5TTlo3aZYYaUiAsFOLhPB41JA4hOtCgrN38Uj3R7pniAlq
-u55B9FjSOOMaooBo+vzdhG/AZD9A2qohos4C7azLjWnTunqjEh0PC0QLZ6oE76jw
-xTAY4N4C2s/wIybZxaJ8iQ39OzDpyN2Ym40Q58GVOHt16XCjFVVorVcZsI3y2B9Q
-9iV7x+Ulu9jtvZ1K54Uspx6dq4K3
------END CERTIFICATE-----
-`
-}
+func CACertContent() string { _ = "STUB: not implemented"; return "" }
 
 // RegistryMirrorConfigFilesInsecureSkipVerify returns cluster-api bootstrap files that configure containerd
 // to use a registry mirror with the insecure_skip_verify flag enabled.
 func RegistryMirrorConfigFilesInsecureSkipVerify() []bootstrapv1beta2.File {
-	return []bootstrapv1beta2.File{
-		{
-			Content: `[plugins."io.containerd.grpc.v1.cri".registry]
-  config_path = "/etc/containerd/certs.d"
-`,
-			Owner: "root:root",
-			Path:  "/etc/containerd/config_append.toml",
-		},
-		{
-			Content: `server = "https://0.0.0.0:5000"
-
-[host."https://0.0.0.0:5000/v2"]
-  capabilities = ["pull", "resolve"]
-  override_path = true
-  skip_verify = true
-`,
-			Owner: "root:root",
-			Path:  "/etc/containerd/certs.d/0.0.0.0:5000/hosts.toml",
-		},
-		{
-			Content: `server = "https://public.ecr.aws"
-
-[host."https://0.0.0.0:5000/v2"]
-  capabilities = ["pull", "resolve"]
-  override_path = true
-  skip_verify = true
-`,
-			Owner: "root:root",
-			Path:  "/etc/containerd/certs.d/public.ecr.aws/hosts.toml",
-		},
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RegistryMirrorConfigFilesInsecureSkipVerifyAndCACert returns cluster-api bootstrap files that configure containerd
 // to use a registry mirror with a cacert file and insecure_skip_verify flag enabled.
 func RegistryMirrorConfigFilesInsecureSkipVerifyAndCACert() []bootstrapv1beta2.File {
-	return []bootstrapv1beta2.File{
-		{
-			Content: CACertContent(),
-			Owner:   "root:root",
-			Path:    "/etc/containerd/certs.d/0.0.0.0:5000/ca.crt",
-		},
-		{
-			Content: `[plugins."io.containerd.grpc.v1.cri".registry]
-  config_path = "/etc/containerd/certs.d"
-`,
-			Owner: "root:root",
-			Path:  "/etc/containerd/config_append.toml",
-		},
-		{
-			Content: `server = "https://0.0.0.0:5000"
-
-[host."https://0.0.0.0:5000/v2"]
-  capabilities = ["pull", "resolve"]
-  override_path = true
-  ca = "/etc/containerd/certs.d/0.0.0.0:5000/ca.crt"
-  skip_verify = true
-`,
-			Owner: "root:root",
-			Path:  "/etc/containerd/certs.d/0.0.0.0:5000/hosts.toml",
-		},
-		{
-			Content: `server = "https://public.ecr.aws"
-
-[host."https://0.0.0.0:5000/v2"]
-  capabilities = ["pull", "resolve"]
-  override_path = true
-  ca = "/etc/containerd/certs.d/0.0.0.0:5000/ca.crt"
-  skip_verify = true
-`,
-			Owner: "root:root",
-			Path:  "/etc/containerd/certs.d/public.ecr.aws/hosts.toml",
-		},
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RegistryMirrorPreKubeadmCommands returns a list of commands to writes a config_append.toml file
 // to configure the registry mirror and restart containerd.
-func RegistryMirrorPreKubeadmCommands() []string {
-	return []string{
-		"cat /etc/containerd/config_append.toml >> /etc/containerd/config.toml",
-		"systemctl daemon-reload",
-		"systemctl restart containerd",
-	}
-}
+func RegistryMirrorPreKubeadmCommands() []string { _ = "STUB: not implemented"; return nil }
 
 // RegistryMirrorSudoPreKubeadmCommands returns a list of commands that writes a config_append.toml file
 // to configure the registry mirror and restart containerd with sudo permissions.
-func RegistryMirrorSudoPreKubeadmCommands() []string {
-	return []string{
-		"cat /etc/containerd/config_append.toml >> /etc/containerd/config.toml",
-		"sudo systemctl daemon-reload",
-		"sudo systemctl restart containerd",
-	}
-}
+func RegistryMirrorSudoPreKubeadmCommands() []string { _ = "STUB: not implemented"; return nil }

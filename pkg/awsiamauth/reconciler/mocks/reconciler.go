@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -25,27 +24,25 @@ type MockRemoteClientRegistryMockRecorder struct {
 
 // NewMockRemoteClientRegistry creates a new mock instance.
 func NewMockRemoteClientRegistry(ctrl *gomock.Controller) *MockRemoteClientRegistry {
-	mock := &MockRemoteClientRegistry{ctrl: ctrl}
-	mock.recorder = &MockRemoteClientRegistryMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockRemoteClientRegistry) EXPECT() *MockRemoteClientRegistryMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// GetClient mocks base method.
+	return nil
 }
 
-// GetClient mocks base method.
 func (m *MockRemoteClientRegistry) GetClient(ctx context.Context, cluster client.ObjectKey) (client.Client, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetClient", ctx, cluster)
-	ret0, _ := ret[0].(client.Client)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(client.Client), nil
 }
 
 // GetClient indicates an expected call of GetClient.
 func (mr *MockRemoteClientRegistryMockRecorder) GetClient(ctx, cluster interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClient", reflect.TypeOf((*MockRemoteClientRegistry)(nil).GetClient), ctx, cluster)
+	_ = "STUB: not implemented"
+	return nil
 }

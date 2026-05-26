@@ -1,11 +1,5 @@
 package v1alpha1
 
-import (
-	"fmt"
-
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-)
-
 // DefaultCloudStackUser is the default CloudStackMachingConfig username.
 const DefaultCloudStackUser = "capc"
 
@@ -26,70 +20,22 @@ var restrictedUserCustomDetails = [...]string{
 
 // Used for generating yaml for generate clusterconfig command.
 func NewCloudStackMachineConfigGenerate(name string) *CloudStackMachineConfigGenerate {
-	return &CloudStackMachineConfigGenerate{
-		TypeMeta: metav1.TypeMeta{
-			Kind:       CloudStackMachineConfigKind,
-			APIVersion: SchemeBuilder.GroupVersion.String(),
-		},
-		ObjectMeta: ObjectMeta{
-			Name: name,
-		},
-		Spec: CloudStackMachineConfigSpec{
-			ComputeOffering: CloudStackResourceIdentifier{
-				Id: "",
-			},
-			Template: CloudStackResourceIdentifier{
-				Id: "",
-			},
-			Users: []UserConfiguration{{
-				Name:              "capc",
-				SshAuthorizedKeys: []string{"ssh-rsa AAAA..."},
-			}},
-		},
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (c *CloudStackMachineConfigGenerate) APIVersion() string {
-	return c.TypeMeta.APIVersion
-}
+func (c *CloudStackMachineConfigGenerate) APIVersion() string { _ = "STUB: not implemented"; return "" }
 
-func (c *CloudStackMachineConfigGenerate) Kind() string {
-	return c.TypeMeta.Kind
-}
+func (c *CloudStackMachineConfigGenerate) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (c *CloudStackMachineConfigGenerate) Name() string {
-	return c.ObjectMeta.Name
-}
+func (c *CloudStackMachineConfigGenerate) Name() string { _ = "STUB: not implemented"; return "" }
 
 func validateCloudStackMachineConfig(machineConfig *CloudStackMachineConfig) error {
-	if len(machineConfig.Spec.ComputeOffering.Id) == 0 && len(machineConfig.Spec.ComputeOffering.Name) == 0 {
-		return fmt.Errorf("computeOffering is not set for CloudStackMachineConfig %s. Default computeOffering is not supported in CloudStack, please provide a computeOffering name or ID", machineConfig.Name)
-	}
-	if len(machineConfig.Spec.Template.Id) == 0 && len(machineConfig.Spec.Template.Name) == 0 {
-		return fmt.Errorf("template is not set for CloudStackMachineConfig %s. Default template is not supported in CloudStack, please provide a template name or ID", machineConfig.Name)
-	}
-	if err, fieldName, fieldValue := machineConfig.Spec.DiskOffering.Validate(); err != nil {
-		return fmt.Errorf("machine config %s validation failed: %s: %s invalid, %v", machineConfig.Name, fieldName, fieldValue, err)
-	}
-	for _, restrictedKey := range restrictedUserCustomDetails {
-		if _, found := machineConfig.Spec.UserCustomDetails[restrictedKey]; found {
-			return fmt.Errorf("restricted key %s found in custom user details", restrictedKey)
-		}
-	}
-	if err := validateAffinityConfig(machineConfig); err != nil {
-		return err
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func validateAffinityConfig(machineConfig *CloudStackMachineConfig) error {
-	if len(machineConfig.Spec.Affinity) > 0 && len(machineConfig.Spec.AffinityGroupIds) > 0 {
-		return fmt.Errorf("affinity and affinityGroupIds cannot be set at the same time for CloudStackMachineConfig %s. Please provide either one of them or none", machineConfig.Name)
-	}
-	if len(machineConfig.Spec.Affinity) > 0 {
-		if machineConfig.Spec.Affinity != "pro" && machineConfig.Spec.Affinity != "anti" && machineConfig.Spec.Affinity != "no" {
-			return fmt.Errorf("invalid affinity type %s for CloudStackMachineConfig %s. Please provide \"pro\", \"anti\" or \"no\"", machineConfig.Spec.Affinity, machineConfig.Name)
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }

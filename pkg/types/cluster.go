@@ -8,12 +8,7 @@ type Cluster struct {
 }
 
 // DeepCopy creates a new in-memory copy of c.
-func (c *Cluster) DeepCopy() *Cluster {
-	return &Cluster{
-		Name:           c.Name,
-		KubeconfigFile: c.KubeconfigFile,
-	}
-}
+func (c *Cluster) DeepCopy() *Cluster { _ = "STUB: not implemented"; return nil }
 
 type InfrastructureBundle struct {
 	FolderName string

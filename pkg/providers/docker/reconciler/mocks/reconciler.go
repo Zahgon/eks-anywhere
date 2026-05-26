@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	cluster "github.com/aws/eks-anywhere/pkg/cluster"
 	controller "github.com/aws/eks-anywhere/pkg/controller"
@@ -28,29 +27,27 @@ type MockCNIReconcilerMockRecorder struct {
 
 // NewMockCNIReconciler creates a new mock instance.
 func NewMockCNIReconciler(ctrl *gomock.Controller) *MockCNIReconciler {
-	mock := &MockCNIReconciler{ctrl: ctrl}
-	mock.recorder = &MockCNIReconcilerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockCNIReconciler) EXPECT() *MockCNIReconcilerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Reconcile mocks base method.
+	return nil
 }
 
-// Reconcile mocks base method.
 func (m *MockCNIReconciler) Reconcile(ctx context.Context, logger logr.Logger, client client.Client, spec *cluster.Spec) (controller.Result, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Reconcile", ctx, logger, client, spec)
-	ret0, _ := ret[0].(controller.Result)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(controller.Result), nil
 }
 
 // Reconcile indicates an expected call of Reconcile.
 func (mr *MockCNIReconcilerMockRecorder) Reconcile(ctx, logger, client, spec interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Reconcile", reflect.TypeOf((*MockCNIReconciler)(nil).Reconcile), ctx, logger, client, spec)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockRemoteClientRegistry is a mock of RemoteClientRegistry interface.
@@ -66,27 +63,25 @@ type MockRemoteClientRegistryMockRecorder struct {
 
 // NewMockRemoteClientRegistry creates a new mock instance.
 func NewMockRemoteClientRegistry(ctrl *gomock.Controller) *MockRemoteClientRegistry {
-	mock := &MockRemoteClientRegistry{ctrl: ctrl}
-	mock.recorder = &MockRemoteClientRegistryMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockRemoteClientRegistry) EXPECT() *MockRemoteClientRegistryMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// GetClient mocks base method.
+	return nil
 }
 
-// GetClient mocks base method.
 func (m *MockRemoteClientRegistry) GetClient(ctx context.Context, cluster client.ObjectKey) (client.Client, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetClient", ctx, cluster)
-	ret0, _ := ret[0].(client.Client)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(client.Client), nil
 }
 
 // GetClient indicates an expected call of GetClient.
 func (mr *MockRemoteClientRegistryMockRecorder) GetClient(ctx, cluster interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetClient", reflect.TypeOf((*MockRemoteClientRegistry)(nil).GetClient), ctx, cluster)
+	_ = "STUB: not implemented"
+	return nil
 }

@@ -15,88 +15,11 @@
 package bundles
 
 import (
-	"fmt"
-
-	"github.com/pkg/errors"
-
 	anywherev1alpha1 "github.com/aws/eks-anywhere/release/api/v1alpha1"
 	releasetypes "github.com/aws/eks-anywhere/release/cli/pkg/types"
-	bundleutils "github.com/aws/eks-anywhere/release/cli/pkg/util/bundles"
-	"github.com/aws/eks-anywhere/release/cli/pkg/version"
 )
 
 func GetEksaBundle(r *releasetypes.ReleaseConfig, imageDigests releasetypes.ImageDigestsTable) (anywherev1alpha1.EksaBundle, error) {
-	projectsInBundle := []string{"eks-anywhere-cli-tools", "eks-anywhere-cluster-controller", "eks-anywhere-diagnostic-collector"}
-	eksABundleArtifacts := map[string][]releasetypes.Artifact{}
-	for _, project := range projectsInBundle {
-		projectArtifacts, err := r.BundleArtifactsTable.Load(project)
-		if err != nil {
-			return anywherev1alpha1.EksaBundle{}, fmt.Errorf("artifacts for project %s not found in bundle artifacts table", project)
-		}
-		eksABundleArtifacts[project] = projectArtifacts
-	}
-	sortedComponentNames := bundleutils.SortArtifactsMap(eksABundleArtifacts)
-
-	var componentChecksum string
-	bundleImageArtifacts := map[string]anywherev1alpha1.Image{}
-	bundleManifestArtifacts := map[string]anywherev1alpha1.Manifest{}
-	artifactHashes := []string{}
-
-	for _, componentName := range sortedComponentNames {
-		for _, artifact := range eksABundleArtifacts[componentName] {
-			if artifact.Image != nil {
-				imageArtifact := artifact.Image
-				imageDigest, err := imageDigests.Load(imageArtifact.ReleaseImageURI)
-				if err != nil {
-					return anywherev1alpha1.EksaBundle{}, fmt.Errorf("loading digest from image digests table: %v", err)
-				}
-				bundleImageArtifact := anywherev1alpha1.Image{
-					Name:        imageArtifact.AssetName,
-					Description: fmt.Sprintf("Container image for %s image", imageArtifact.AssetName),
-					OS:          imageArtifact.OS,
-					Arch:        imageArtifact.Arch,
-					URI:         imageArtifact.ReleaseImageURI,
-					ImageDigest: imageDigest,
-				}
-				bundleImageArtifacts[imageArtifact.AssetName] = bundleImageArtifact
-				artifactHashes = append(artifactHashes, bundleImageArtifact.ImageDigest)
-			}
-
-			if artifact.Manifest != nil {
-				manifestArtifact := artifact.Manifest
-				bundleManifestArtifact := anywherev1alpha1.Manifest{
-					URI: manifestArtifact.ReleaseCdnURI,
-				}
-
-				bundleManifestArtifacts[manifestArtifact.ReleaseName] = bundleManifestArtifact
-
-				manifestHash, err := version.GenerateManifestHash(r, manifestArtifact)
-				if err != nil {
-					return anywherev1alpha1.EksaBundle{}, err
-				}
-
-				artifactHashes = append(artifactHashes, manifestHash)
-			}
-		}
-	}
-
-	if r.DryRun {
-		componentChecksum = version.FakeComponentChecksum
-	} else {
-		componentChecksum = version.GenerateComponentHash(artifactHashes, r.DryRun)
-	}
-	version, err := version.BuildComponentVersion(version.NewCliVersioner(r.ReleaseVersion, r.CliRepoSource), componentChecksum)
-	if err != nil {
-		return anywherev1alpha1.EksaBundle{}, errors.Wrapf(err, "failed generating version for eksa bundle")
-	}
-
-	bundle := anywherev1alpha1.EksaBundle{
-		Version:             version,
-		CliTools:            bundleImageArtifacts["eks-anywhere-cli-tools"],
-		Components:          bundleManifestArtifacts["eksa-components.yaml"],
-		ClusterController:   bundleImageArtifacts["eks-anywhere-cluster-controller"],
-		DiagnosticCollector: bundleImageArtifacts["eks-anywhere-diagnostic-collector"],
-	}
-
-	return bundle, nil
+	_ = "STUB: not implemented"
+	return *new(anywherev1alpha1.EksaBundle), nil
 }

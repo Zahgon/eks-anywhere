@@ -8,11 +8,11 @@ var (
 )
 
 func FakeNow() time.Time {
-	return defaultNow
+	_ = "STUB: not implemented"
+
+	// NewFakeNow sets a dummy value for time.Now in unit tests.
+	// This is particularly useful when testing upgrade operations.
+	return *new(time.Time)
 }
 
-// NewFakeNow sets a dummy value for time.Now in unit tests.
-// This is particularly useful when testing upgrade operations.
-func NewFakeNow() time.Time {
-	return newNow
-}
+func NewFakeNow() time.Time { _ = "STUB: not implemented"; return *new(time.Time) }

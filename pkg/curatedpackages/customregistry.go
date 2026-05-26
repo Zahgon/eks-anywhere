@@ -2,7 +2,6 @@ package curatedpackages
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/aws/eks-anywhere/pkg/helm"
 )
@@ -14,12 +13,11 @@ type CustomRegistry struct {
 
 // NewCustomRegistry returns a new CustomRegistry.
 func NewCustomRegistry(helm helm.Client, registry string) *CustomRegistry {
-	return &CustomRegistry{
-		Client:   helm,
-		registry: registry,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (cm *CustomRegistry) GetRegistryBaseRef(ctx context.Context) (string, error) {
-	return fmt.Sprintf("%s/%s", cm.registry, ImageRepositoryName), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }

@@ -15,5 +15,6 @@ type DisplayablePackage struct {
 }
 
 func NewDisplayablePackage(p *api.Package) *DisplayablePackage {
-	return &DisplayablePackage{Package: p}
+	_ = "STUB: not implemented"
+	return nil
 }

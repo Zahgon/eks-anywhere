@@ -41,27 +41,12 @@ type SnowIPPool struct {
 }
 
 // Validate validates the fields in a SnowIPPool object.
-func (s *SnowIPPool) Validate() error {
-	return validateSnowIPPool(s)
-}
+func (s *SnowIPPool) Validate() error { _ = "STUB: not implemented"; return nil }
 
 // ConvertConfigToConfigGenerateStruct converts a SnowIPPool to SnowIPPoolGenerate object.
 func (s *SnowIPPool) ConvertConfigToConfigGenerateStruct() *SnowIPPoolGenerate {
-	namespace := defaultEksaNamespace
-	if s.Namespace != "" {
-		namespace = s.Namespace
-	}
-	config := &SnowIPPoolGenerate{
-		TypeMeta: s.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        s.Name,
-			Annotations: s.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: s.Spec,
-	}
-
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // +kubebuilder:object:generate=false

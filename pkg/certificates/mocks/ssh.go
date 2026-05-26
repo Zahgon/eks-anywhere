@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	certificates "github.com/aws/eks-anywhere/pkg/certificates"
 	gomock "github.com/golang/mock/gomock"
@@ -26,43 +25,33 @@ type MocksshClientMockRecorder struct {
 
 // NewMocksshClient creates a new mock instance.
 func NewMocksshClient(ctrl *gomock.Controller) *MocksshClient {
-	mock := &MocksshClient{ctrl: ctrl}
-	mock.recorder = &MocksshClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MocksshClient) EXPECT() *MocksshClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Close mocks base method.
+	return nil
 }
 
-// Close mocks base method.
-func (m *MocksshClient) Close() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Close")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MocksshClient) Close() error { _ = "STUB: not implemented"; return nil }
 
 // Close indicates an expected call of Close.
-func (mr *MocksshClientMockRecorder) Close() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MocksshClient)(nil).Close))
-}
+func (mr *MocksshClientMockRecorder) Close() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // NewSession mocks base method.
 func (m *MocksshClient) NewSession() (*ssh.Session, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "NewSession")
-	ret0, _ := ret[0].(*ssh.Session)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // NewSession indicates an expected call of NewSession.
 func (mr *MocksshClientMockRecorder) NewSession() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewSession", reflect.TypeOf((*MocksshClient)(nil).NewSession))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockSSHRunner is a mock of SSHRunner interface.
@@ -78,32 +67,25 @@ type MockSSHRunnerMockRecorder struct {
 
 // NewMockSSHRunner creates a new mock instance.
 func NewMockSSHRunner(ctrl *gomock.Controller) *MockSSHRunner {
-	mock := &MockSSHRunner{ctrl: ctrl}
-	mock.recorder = &MockSSHRunnerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockSSHRunner) EXPECT() *MockSSHRunnerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// RunCommand mocks base method.
+	return nil
 }
 
-// RunCommand mocks base method.
 func (m *MockSSHRunner) RunCommand(ctx context.Context, node, cmd string, opts ...certificates.SSHOption) (string, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, node, cmd}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "RunCommand", varargs...)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // RunCommand indicates an expected call of RunCommand.
 func (mr *MockSSHRunnerMockRecorder) RunCommand(ctx, node, cmd interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, node, cmd}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RunCommand", reflect.TypeOf((*MockSSHRunner)(nil).RunCommand), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }

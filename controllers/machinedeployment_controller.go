@@ -18,26 +18,14 @@ package controllers
 
 import (
 	"context"
-	"encoding/base64"
-	"encoding/json"
-	"fmt"
-	"sort"
-	"strings"
-	"time"
 
 	"github.com/go-logr/logr"
 	corev1 "k8s.io/api/core/v1"
-	apierrors "k8s.io/apimachinery/pkg/api/errors"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	kerrors "k8s.io/apimachinery/pkg/util/errors"
 	clusterv1beta2 "sigs.k8s.io/cluster-api/api/core/v1beta2"
-	"sigs.k8s.io/cluster-api/util/patch"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
-	"github.com/aws/eks-anywhere/pkg/constants"
 )
 
 const (
@@ -57,11 +45,8 @@ type MachineDeploymentReconciler struct {
 
 // NewMachineDeploymentReconciler returns a new instance of MachineDeploymentReconciler.
 func NewMachineDeploymentReconciler(client client.Client, uncachedClient client.Reader) *MachineDeploymentReconciler {
-	return &MachineDeploymentReconciler{
-		client:         client,
-		uncachedClient: uncachedClient,
-		log:            ctrl.Log.WithName("MachineDeploymentController"),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 //+kubebuilder:rbac:groups=cluster.x-k8s.io,resources=machinedeployment,verbs=get;list;watch;update;patch
@@ -69,196 +54,49 @@ func NewMachineDeploymentReconciler(client client.Client, uncachedClient client.
 
 // Reconcile reconciles a MachineDeployment object for in place upgrades.
 func (r *MachineDeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request) (result ctrl.Result, reterr error) {
-	log := r.log.WithValues("MachineDeployment", req.NamespacedName)
-
-	md := &clusterv1beta2.MachineDeployment{}
-	if err := r.uncachedClient.Get(ctx, req.NamespacedName, md); err != nil {
-		if apierrors.IsNotFound(err) {
-			return reconcile.Result{}, err
-		}
-		return ctrl.Result{}, err
-	}
-
-	if !r.inPlaceUpgradeNeeded(md) {
-		return ctrl.Result{}, nil
-	}
-
-	patchHelper, err := patch.NewHelper(md, r.client)
-	if err != nil {
-		return ctrl.Result{}, err
-	}
-
-	defer func() {
-		// Always attempt to patch after each reconciliation in case annotation is removed.
-		if err := patchHelper.Patch(ctx, md); err != nil {
-			reterr = kerrors.NewAggregate([]error{reterr, err})
-		}
-
-		// Only requeue if we are not already re-queueing and the "in-place-upgrade-needed" annotation is not set.
-		// We do this to be able to update the status continuously until it becomes ready,
-		// since there might be changes in state of the world that don't trigger reconciliation requests
-		if reterr == nil && !result.Requeue && result.RequeueAfter <= 0 && r.inPlaceUpgradeNeeded(md) {
-			result = ctrl.Result{RequeueAfter: 10 * time.Second}
-		}
-	}()
-
-	return r.reconcile(ctx, log, md)
+	_ = "STUB: not implemented"
+	return *new(ctrl.Result), nil
 }
+
+// Always attempt to patch after each reconciliation in case annotation is removed.
+
+// Only requeue if we are not already re-queueing and the "in-place-upgrade-needed" annotation is not set.
+// We do this to be able to update the status continuously until it becomes ready,
+// since there might be changes in state of the world that don't trigger reconciliation requests
 
 // SetupWithManager sets up the controller with the Manager.
 func (r *MachineDeploymentReconciler) SetupWithManager(mgr ctrl.Manager) error {
-	return ctrl.NewControllerManagedBy(mgr).
-		For(&clusterv1beta2.MachineDeployment{}).
-		Complete(r)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (r *MachineDeploymentReconciler) reconcile(ctx context.Context, log logr.Logger, md *clusterv1beta2.MachineDeployment) (ctrl.Result, error) {
-	log.Info("Reconciling in place upgrade for workers")
-	if md.Spec.Template.Spec.Version == "" {
-		log.Info("Kubernetes version not present, unable to reconcile for in place upgrade")
-		return ctrl.Result{}, fmt.Errorf("unable to retrieve kubernetes version from MachineDeployment \"%s\"", md.ObjectMeta.Name)
-	}
-
-	mhc := &clusterv1beta2.MachineHealthCheck{}
-	if err := r.client.Get(ctx, GetNamespacedNameType(mdMachineHealthCheckName(md.ObjectMeta.Name), constants.EksaSystemNamespace), mhc); err != nil {
-		if apierrors.IsNotFound(err) {
-			return reconcile.Result{}, err
-		}
-		return ctrl.Result{}, fmt.Errorf("getting MachineHealthCheck %s: %v", mdMachineHealthCheckName(md.ObjectMeta.Name), err)
-	}
-	mhcPatchHelper, err := patch.NewHelper(mhc, r.client)
-	if err != nil {
-		return ctrl.Result{}, err
-	}
-
-	machineList, machineRefList, err := r.machinesToUpgrade(ctx, md)
-	if err != nil {
-		return ctrl.Result{}, fmt.Errorf("retrieving list of control plane machines: %v", err)
-	}
-
-	mdUpgrade := &anywherev1.MachineDeploymentUpgrade{}
-	mduGetErr := r.client.Get(ctx, GetNamespacedNameType(mdUpgradeName(md.ObjectMeta.Name), constants.EksaSystemNamespace), mdUpgrade)
-	if mduGetErr == nil {
-		machinesUpgraded := true
-		for i := range machineList {
-			m := machineList[i]
-			if m.Spec.Version != mdUpgrade.Spec.KubernetesVersion {
-				machinesUpgraded = false
-				break
-			}
-		}
-		if machinesUpgraded && mdUpgrade.Status.Ready {
-			log.Info("Machine deployment upgrade complete, deleting object", "MachineDeploymentUpgrade", mdUpgrade.Name)
-			if err := r.client.Delete(ctx, mdUpgrade); err != nil {
-				return ctrl.Result{}, fmt.Errorf("deleting MachineDeploymentUpgrade object: %v", err)
-			}
-			log.Info("Resuming machine deployment machine health check", "MachineHealthCheck", mdMachineHealthCheckName(md.ObjectMeta.Name))
-			if err := resumeMachineHealthCheck(ctx, mhc, mhcPatchHelper); err != nil {
-				return ctrl.Result{}, fmt.Errorf("updating annotations for machine health check: %v", err)
-			}
-			log.Info("MachineDeployment is ready, removing the \"in-place-upgrade-needed\" annotation")
-			// Remove the in-place-upgrade-needed annotation only after the MachineDeploymentUpgrade object is deleted
-			delete(md.Annotations, mdInPlaceUpgradeNeededAnnotation)
-			return ctrl.Result{}, nil
-		}
-		return ctrl.Result{}, nil
-	}
-
-	if apierrors.IsNotFound(mduGetErr) {
-		log.Info("Creating MachineDeploymentUpgrade object")
-		mdUpgrade, err := machineDeploymentUpgrade(md, machineRefList)
-		if err != nil {
-			return ctrl.Result{}, fmt.Errorf("generating MachineDeploymentUpgrade: %v", err)
-		}
-
-		log.Info("Pausing machine deployment machine health check", "MachineHealthCheck", mdMachineHealthCheckName(md.ObjectMeta.Name))
-		if err := pauseMachineHealthCheck(ctx, mhc, mhcPatchHelper); err != nil {
-			return ctrl.Result{}, fmt.Errorf("updating annotations for machine health check: %v", err)
-		}
-
-		if err := r.client.Create(ctx, mdUpgrade); client.IgnoreAlreadyExists(err) != nil {
-			return ctrl.Result{}, fmt.Errorf("failed to create MachineDeploymentUpgrade for MachineDeployment %s:  %v", md.ObjectMeta.Name, err)
-		}
-		return ctrl.Result{}, nil
-	}
-
-	return ctrl.Result{}, fmt.Errorf("getting MachineDeploymentUpgrade for MachineDeployment %s: %v", md.ObjectMeta.Name, err)
+	_ = "STUB: not implemented"
+	return *new(ctrl.Result), nil
 }
 
+// Remove the in-place-upgrade-needed annotation only after the MachineDeploymentUpgrade object is deleted
+
 func (r *MachineDeploymentReconciler) inPlaceUpgradeNeeded(md *clusterv1beta2.MachineDeployment) bool {
-	return strings.ToLower(md.Annotations[mdInPlaceUpgradeNeededAnnotation]) == "true"
+	_ = "STUB: not implemented"
+	return false
 }
 
 func (r *MachineDeploymentReconciler) machinesToUpgrade(ctx context.Context, md *clusterv1beta2.MachineDeployment) ([]*clusterv1beta2.Machine, []corev1.ObjectReference, error) {
-	selector, err := metav1.LabelSelectorAsSelector(&metav1.LabelSelector{MatchLabels: map[string]string{workerMachineLabel: md.ObjectMeta.Name}})
-	if err != nil {
-		return nil, nil, err
-	}
-	machineList := &clusterv1beta2.MachineList{}
-	if err := r.client.List(ctx, machineList, &client.ListOptions{LabelSelector: selector, Namespace: md.ObjectMeta.Namespace}); err != nil {
-		return nil, nil, err
-	}
-
-	machines := sortMachinesByCreationTimestamp(machineList)
-	machineObjects := make([]corev1.ObjectReference, 0, len(machines))
-	for _, machine := range machines {
-		machineObjects = append(machineObjects,
-			corev1.ObjectReference{
-				Kind:      machine.Kind,
-				Namespace: machine.Namespace,
-				Name:      machine.Name,
-			},
-		)
-	}
-	return machines, machineObjects, nil
+	_ = "STUB: not implemented"
+	return nil, nil, nil
 }
 
 func sortMachinesByCreationTimestamp(list *clusterv1beta2.MachineList) []*clusterv1beta2.Machine {
-	machines := make([]*clusterv1beta2.Machine, len(list.Items))
-	for i := range list.Items {
-		machines[i] = &list.Items[i]
-	}
-
-	sort.Slice(machines, func(i, j int) bool {
-		return machines[i].CreationTimestamp.Before(&machines[j].CreationTimestamp)
-	})
-
-	return machines
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func machineDeploymentUpgrade(md *clusterv1beta2.MachineDeployment, machines []corev1.ObjectReference) (*anywherev1.MachineDeploymentUpgrade, error) {
-	msSpec, err := json.Marshal(md.Spec.Template.Spec)
-	if err != nil {
-		return nil, fmt.Errorf("marshaling Machine spec: %v", err)
-	}
-	return &anywherev1.MachineDeploymentUpgrade{
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      mdUpgradeName(md.ObjectMeta.Name),
-			Namespace: constants.EksaSystemNamespace,
-			OwnerReferences: []metav1.OwnerReference{{
-				APIVersion: clusterv1beta2.GroupVersion.String(),
-				Kind:       machineDeploymentKind,
-				Name:       md.ObjectMeta.Name,
-				UID:        md.ObjectMeta.UID,
-			}},
-		},
-		Spec: anywherev1.MachineDeploymentUpgradeSpec{
-			MachineDeployment: corev1.ObjectReference{
-				Kind:      machineDeploymentKind,
-				Namespace: md.ObjectMeta.Namespace,
-				Name:      md.ObjectMeta.Name,
-			},
-			KubernetesVersion:      md.Spec.Template.Spec.Version,
-			MachinesRequireUpgrade: machines,
-			MachineSpecData:        base64.StdEncoding.EncodeToString(msSpec),
-		},
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func mdUpgradeName(mdName string) string {
-	return mdName + "-md-upgrade"
-}
+func mdUpgradeName(mdName string) string { _ = "STUB: not implemented"; return "" }
 
-func mdMachineHealthCheckName(mdName string) string {
-	return fmt.Sprintf("%s-worker-unhealthy", mdName)
-}
+func mdMachineHealthCheckName(mdName string) string { _ = "STUB: not implemented"; return "" }

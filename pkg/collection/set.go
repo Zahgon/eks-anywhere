@@ -4,57 +4,34 @@ package collection
 type Set[T comparable] map[T]struct{}
 
 // NewSet creates an empty Set.
-func NewSet[T comparable]() Set[T] {
-	return newSet[T](0)
-}
+func NewSet[T comparable]() Set[T] { _ = "STUB: not implemented"; return nil }
 
 // NewSetFrom creates a Set from a list of elements.
-func NewSetFrom[T comparable](elements ...T) Set[T] {
-	s := NewSet[T]()
-	for _, e := range elements {
-		s.Add(e)
-	}
+func NewSetFrom[T comparable](elements ...T) Set[T] { _ = "STUB: not implemented"; return nil }
 
-	return s
-}
-
-func newSet[T comparable](size int) Set[T] {
-	return make(Set[T], size)
-}
+func newSet[T comparable](size int) Set[T] { _ = "STUB: not implemented"; return nil }
 
 // Add stores a new element in the Set if wasn't contained yet.
 func (s Set[T]) Add(e T) {
-	s[e] = struct{}{}
+	_ = "STUB: not implemented"
+
+	// Delete removes an element from the Set if it existed.
+	return
 }
 
-// Delete removes an element from the Set if it existed.
 func (s Set[T]) Delete(e T) {
-	delete(s, e)
+	_ = "STUB: not implemented"
+
+	// Contains checks if an element is contained in the Set.
+	return
 }
 
-// Contains checks if an element is contained in the Set.
-func (s Set[T]) Contains(e T) bool {
-	_, present := s[e]
-	return present
-}
+func (s Set[T]) Contains(e T) bool { _ = "STUB: not implemented"; return false }
 
 // ToSlice generates a new slice with all elements in the Set.
 // Order is non deterministic.
-func (s Set[T]) ToSlice() []T {
-	keys := make([]T, 0, len(s))
-	for k := range s {
-		keys = append(keys, k)
-	}
-	return keys
-}
+func (s Set[T]) ToSlice() []T { _ = "STUB: not implemented"; return nil }
 
 // MapSet converts c to a new set. f is used to extract the value for representing each element
 // of c.
-func MapSet[G any, T comparable](c []G, f func(G) T) Set[T] {
-	s := NewSet[T]()
-	for _, element := range c {
-		s.Add(f(element))
-	}
-
-	return s
-}
+func MapSet[G any, T comparable](c []G, f func(G) T) Set[T] { _ = "STUB: not implemented"; return nil }

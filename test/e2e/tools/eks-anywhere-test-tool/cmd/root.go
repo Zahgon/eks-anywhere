@@ -1,13 +1,10 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-
-	"github.com/aws/eks-anywhere/pkg/logger"
 )
 
 var rootCmd = &cobra.Command{
@@ -24,22 +21,8 @@ func init() {
 	}
 }
 
-func rootPersistentPreRun(cmd *cobra.Command, args []string) {
-	if err := initLogger(); err != nil {
-		log.Fatal(err)
-	}
-}
+func rootPersistentPreRun(cmd *cobra.Command, args []string) { _ = "STUB: not implemented"; return }
 
-func initLogger() error {
-	if err := logger.InitZap(logger.ZapOpts{
-		Level: viper.GetInt("verbosity"),
-	}); err != nil {
-		return fmt.Errorf("failed init zap logger in root command: %v", err)
-	}
+func initLogger() error { _ = "STUB: not implemented"; return nil }
 
-	return nil
-}
-
-func Execute() error {
-	return rootCmd.Execute()
-}
+func Execute() error { _ = "STUB: not implemented"; return nil }

@@ -8,5 +8,6 @@ import (
 type vMOMIAuthorizationManagerBuilder struct{}
 
 func (*vMOMIAuthorizationManagerBuilder) Build(c *vim25.Client) *object.AuthorizationManager {
-	return object.NewAuthorizationManager(c)
+	_ = "STUB: not implemented"
+	return nil
 }

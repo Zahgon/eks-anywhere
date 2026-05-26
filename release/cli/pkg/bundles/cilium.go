@@ -15,15 +15,7 @@
 package bundles
 
 import (
-	"fmt"
-	"path/filepath"
-	"strings"
-
-	"github.com/pkg/errors"
-
 	anywherev1alpha1 "github.com/aws/eks-anywhere/release/api/v1alpha1"
-	"github.com/aws/eks-anywhere/release/cli/pkg/constants"
-	"github.com/aws/eks-anywhere/release/cli/pkg/filereader"
 	releasetypes "github.com/aws/eks-anywhere/release/cli/pkg/types"
 )
 
@@ -37,50 +29,16 @@ const (
 )
 
 func GetCiliumBundle(r *releasetypes.ReleaseConfig) (anywherev1alpha1.CiliumBundle, error) {
-	ciliumContainerRegistry := "public.ecr.aws/eks/cilium"
-	ciliumGitTag, err := filereader.ReadGitTag(constants.CiliumProjectPath, r.BuildRepoSource, r.BuildRepoBranchName)
-	if err != nil {
-		return anywherev1alpha1.CiliumBundle{}, errors.Cause(err)
-	}
-	ciliumImages := []imageDefinition{
-		containerImage(ciliumImageName, ciliumImage, ciliumContainerRegistry, ciliumGitTag),
-		containerImage(ciliumOperatorImageName, ciliumOperatorImage, ciliumContainerRegistry, ciliumGitTag),
-		// Helm charts are in the same repository and have the same
-		// sem version as the corresponding container image but omiting the initial "v"
-		chart(ciliumHelmChartName, ciliumHelmChart, ciliumContainerRegistry, strings.TrimPrefix(ciliumGitTag, "v")),
-	}
-
-	bundleImageArtifacts := map[string]anywherev1alpha1.Image{}
-
-	for _, imageDef := range ciliumImages {
-		imageDigest, err := getCiliumImageDigest(r.BuildRepoSource, imageDef.name)
-		if err != nil {
-			return anywherev1alpha1.CiliumBundle{}, errors.Cause(err)
-		}
-
-		bundleImageArtifacts[imageDef.name] = imageDef.builder(imageDigest)
-	}
-
-	bundle := anywherev1alpha1.CiliumBundle{
-		Version:   ciliumGitTag,
-		Cilium:    bundleImageArtifacts[ciliumImageName],
-		Operator:  bundleImageArtifacts[ciliumOperatorImageName],
-		HelmChart: bundleImageArtifacts[ciliumHelmChartName],
-	}
-
-	return bundle, nil
+	_ = "STUB: not implemented"
+	return *new(anywherev1alpha1.CiliumBundle), nil
 }
 
-func getCiliumImageDigest(gitRootPath, imageName string) (string, error) {
-	projectSource := "projects/cilium/cilium"
-	imageDigestFileName := fmt.Sprintf("images/%s/IMAGE_DIGEST", imageName)
-	imageDigestFile := filepath.Join(gitRootPath, projectSource, imageDigestFileName)
-	imageDigest, err := filereader.ReadFileContentsTrimmed(imageDigestFile)
-	if err != nil {
-		return "", errors.Cause(err)
-	}
+// Helm charts are in the same repository and have the same
+// sem version as the corresponding container image but omiting the initial "v"
 
-	return imageDigest, nil
+func getCiliumImageDigest(gitRootPath, imageName string) (string, error) {
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 type imageDefinition struct {
@@ -91,37 +49,11 @@ type imageDefinition struct {
 type imageBuilder func(digest string) anywherev1alpha1.Image
 
 func containerImage(name, image, registry, tag string) imageDefinition {
-	return imageDefinition{
-		name:     name,
-		image:    image,
-		registry: registry,
-		tag:      tag,
-		builder: func(digest string) anywherev1alpha1.Image {
-			return anywherev1alpha1.Image{
-				Name:        name,
-				Description: fmt.Sprintf("Container image for %s image", name),
-				OS:          "linux",
-				Arch:        []string{"amd64"},
-				URI:         fmt.Sprintf("%s/%s:%s", registry, image, tag),
-				ImageDigest: digest,
-			}
-		},
-	}
+	_ = "STUB: not implemented"
+	return *new(imageDefinition)
 }
 
 func chart(name, image, registry, tag string) imageDefinition {
-	return imageDefinition{
-		name:     name,
-		image:    image,
-		registry: registry,
-		tag:      tag,
-		builder: func(digest string) anywherev1alpha1.Image {
-			return anywherev1alpha1.Image{
-				Name:        name,
-				Description: fmt.Sprintf("Helm chart for %s", name),
-				URI:         fmt.Sprintf("%s/%s:%s", registry, image, tag),
-				ImageDigest: digest,
-			}
-		},
-	}
+	_ = "STUB: not implemented"
+	return *new(imageDefinition)
 }

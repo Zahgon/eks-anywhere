@@ -1,12 +1,7 @@
 package v1alpha1
 
 import (
-	"fmt"
-
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-
-	"github.com/aws/eks-anywhere/pkg/constants"
-	"github.com/aws/eks-anywhere/pkg/logger"
 )
 
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
@@ -38,80 +33,46 @@ type VSphereMachineConfigSpec struct {
 // It collects the Template, ResourcePool, Datastore, and Folder paths
 // into a structured map for easier access and validation during cluster operations.
 func (c *VSphereMachineConfig) ResourcePaths() map[string]string {
-	return map[string]string{
-		"folder":       c.Spec.Folder,
-		"datastore":    c.Spec.Datastore,
-		"resourcePool": c.Spec.ResourcePool,
-		"template":     c.Spec.Template,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (c *VSphereMachineConfig) PauseReconcile() {
-	c.Annotations[pausedAnnotation] = "true"
-}
+func (c *VSphereMachineConfig) PauseReconcile() { _ = "STUB: not implemented"; return }
 
-func (c *VSphereMachineConfig) IsReconcilePaused() bool {
-	if s, ok := c.Annotations[pausedAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (c *VSphereMachineConfig) IsReconcilePaused() bool { _ = "STUB: not implemented"; return false }
 
-func (c *VSphereMachineConfig) SetControlPlane() {
-	c.Annotations[controlPlaneAnnotation] = "true"
-}
+func (c *VSphereMachineConfig) SetControlPlane() { _ = "STUB: not implemented"; return }
 
-func (c *VSphereMachineConfig) IsControlPlane() bool {
-	if s, ok := c.Annotations[controlPlaneAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (c *VSphereMachineConfig) IsControlPlane() bool { _ = "STUB: not implemented"; return false }
 
-func (c *VSphereMachineConfig) SetEtcd() {
-	c.Annotations[etcdAnnotation] = "true"
-}
+func (c *VSphereMachineConfig) SetEtcd() { _ = "STUB: not implemented"; return }
 
-func (c *VSphereMachineConfig) IsEtcd() bool {
-	if s, ok := c.Annotations[etcdAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (c *VSphereMachineConfig) IsEtcd() bool { _ = "STUB: not implemented"; return false }
 
-func (c *VSphereMachineConfig) SetManagedBy(clusterName string) {
-	if c.Annotations == nil {
-		c.Annotations = map[string]string{}
-	}
-	c.Annotations[managementAnnotation] = clusterName
-}
+func (c *VSphereMachineConfig) SetManagedBy(clusterName string) { _ = "STUB: not implemented"; return }
 
 // IsManaged returns true if the vspheremachineconfig is associated with a workload cluster.
-func (c *VSphereMachineConfig) IsManaged() bool {
-	if s, ok := c.Annotations[managementAnnotation]; ok {
-		return s != ""
-	}
-	return false
-}
+func (c *VSphereMachineConfig) IsManaged() bool { _ = "STUB: not implemented"; return false }
 
 func (c *VSphereMachineConfig) OSFamily() OSFamily {
-	return c.Spec.OSFamily
+	_ = "STUB: not implemented"
+	return *
+
+	// Users returns a list of configuration for OS users.
+	new(OSFamily)
 }
 
-// Users returns a list of configuration for OS users.
-func (c *VSphereMachineConfig) Users() []UserConfiguration {
-	return c.Spec.Users
-}
+func (c *VSphereMachineConfig) Users() []UserConfiguration { _ = "STUB: not implemented"; return nil }
 
-func (c *VSphereMachineConfig) GetNamespace() string {
-	return c.Namespace
-}
+func (c *VSphereMachineConfig) GetNamespace() string { _ = "STUB: not implemented"; return "" }
 
 func (c *VSphereMachineConfig) GetName() string {
-	return c.Name
+	_ = "STUB: not implemented"
+
+	// VSphereMachineConfigStatus defines the observed state of VSphereMachineConfig.
+	return ""
 }
 
-// VSphereMachineConfigStatus defines the observed state of VSphereMachineConfig.
 type VSphereMachineConfigStatus struct{}
 
 //+kubebuilder:object:root=true
@@ -127,79 +88,37 @@ type VSphereMachineConfig struct {
 }
 
 func (c *VSphereMachineConfig) ConvertConfigToConfigGenerateStruct() *VSphereMachineConfigGenerate {
-	namespace := defaultEksaNamespace
-	if c.Namespace != "" {
-		namespace = c.Namespace
-	}
-	config := &VSphereMachineConfigGenerate{
-		TypeMeta: c.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        c.Name,
-			Annotations: c.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: c.Spec,
-	}
-
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (c *VSphereMachineConfig) Marshallable() Marshallable {
-	return c.ConvertConfigToConfigGenerateStruct()
+	_ = "STUB: not implemented"
+	return *new(Marshallable)
 }
 
-func (c *VSphereMachineConfig) SetDefaults() {
-	setVSphereMachineConfigDefaults(c)
-}
+func (c *VSphereMachineConfig) SetDefaults() { _ = "STUB: not implemented"; return }
 
 // SetUserDefaults initializes Spec.Users for the VSphereMachineConfig with default values.
 // This only runs in the CLI, as we support do support user defaults through the webhook.
-func (c *VSphereMachineConfig) SetUserDefaults() {
-	var defaultUsername string
-	if len(c.Spec.Users) == 0 || c.Spec.Users[0].Name == "" {
-		if c.Spec.OSFamily == Bottlerocket {
-			defaultUsername = constants.BottlerocketDefaultUser
-		} else {
-			defaultUsername = constants.UbuntuDefaultUser
-		}
-		logger.V(1).Info("SSHUsername is not set or is empty for VSphereMachineConfig, using default", "c", c.Name, "user", defaultUsername)
-	}
-	c.Spec.Users = defaultMachineConfigUsers(defaultUsername, c.Spec.Users)
-}
+func (c *VSphereMachineConfig) SetUserDefaults() { _ = "STUB: not implemented"; return }
 
-func (c *VSphereMachineConfig) Validate() error {
-	return validateVSphereMachineConfig(c)
-}
+func (c *VSphereMachineConfig) Validate() error { _ = "STUB: not implemented"; return nil }
 
 // ValidateUsers verifies a VSphereMachineConfig object must have a users with ssh authorized keys.
 // This validation only runs in VSphereMachineConfig validation webhook, as we support
 // auto-generate and import ssh key when creating a cluster via CLI.
-func (c *VSphereMachineConfig) ValidateUsers() error {
-	if err := validateMachineConfigUsers(c.Name, VSphereMachineConfigKind, c.Spec.Users); err != nil {
-		return err
-	}
-	if err := validateVSphereMachineConfigOSFamilyUser(c); err != nil {
-		return err
-	}
-	return nil
-}
+func (c *VSphereMachineConfig) ValidateUsers() error { _ = "STUB: not implemented"; return nil }
 
 func validateVSphereMachineConfigOSFamilyUser(machineConfig *VSphereMachineConfig) error {
-	if machineConfig.Spec.OSFamily != Bottlerocket {
-		return nil
-	}
-	if machineConfig.Spec.Users[0].Name != constants.BottlerocketDefaultUser {
-		return fmt.Errorf("users[0].name %s is invalid. Please use 'ec2-user' for Bottlerocket", machineConfig.Spec.Users[0].Name)
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // ValidateHasTemplate verifies that a VSphereMachineConfig object has a template.
 // Specifying a template is required when submitting an object via webhook,
 // as we only support auto-importing templates when creating a cluster via CLI.
-func (c *VSphereMachineConfig) ValidateHasTemplate() error {
-	return validateVSphereMachineConfigHasTemplate(c)
-}
+func (c *VSphereMachineConfig) ValidateHasTemplate() error { _ = "STUB: not implemented"; return nil }
 
 // +kubebuilder:object:generate=false
 

@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 )
@@ -24,42 +23,37 @@ type MockDockerExecutableMockRecorder struct {
 
 // NewMockDockerExecutable creates a new mock instance.
 func NewMockDockerExecutable(ctrl *gomock.Controller) *MockDockerExecutable {
-	mock := &MockDockerExecutable{ctrl: ctrl}
-	mock.recorder = &MockDockerExecutableMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDockerExecutable) EXPECT() *MockDockerExecutableMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AllocatedMemory mocks base method.
+	return nil
 }
 
-// AllocatedMemory mocks base method.
 func (m *MockDockerExecutable) AllocatedMemory(arg0 context.Context) (uint64, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AllocatedMemory", arg0)
-	ret0, _ := ret[0].(uint64)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // AllocatedMemory indicates an expected call of AllocatedMemory.
 func (mr *MockDockerExecutableMockRecorder) AllocatedMemory(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AllocatedMemory", reflect.TypeOf((*MockDockerExecutable)(nil).AllocatedMemory), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Version mocks base method.
 func (m *MockDockerExecutable) Version(arg0 context.Context) (int, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Version", arg0)
-	ret0, _ := ret[0].(int)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 // Version indicates an expected call of Version.
 func (mr *MockDockerExecutableMockRecorder) Version(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Version", reflect.TypeOf((*MockDockerExecutable)(nil).Version), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }

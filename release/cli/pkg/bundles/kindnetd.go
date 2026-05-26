@@ -15,64 +15,11 @@
 package bundles
 
 import (
-	"fmt"
-
-	"github.com/pkg/errors"
-
 	anywherev1alpha1 "github.com/aws/eks-anywhere/release/api/v1alpha1"
-	"github.com/aws/eks-anywhere/release/cli/pkg/constants"
 	releasetypes "github.com/aws/eks-anywhere/release/cli/pkg/types"
-	"github.com/aws/eks-anywhere/release/cli/pkg/version"
 )
 
 func GetKindnetdBundle(r *releasetypes.ReleaseConfig) (anywherev1alpha1.KindnetdBundle, error) {
-	kindnetdArtifacts, err := r.BundleArtifactsTable.Load("kindnetd")
-	if err != nil {
-		return anywherev1alpha1.KindnetdBundle{}, fmt.Errorf("artifacts for project kindnetd not found in bundle artifacts table")
-	}
-
-	var sourceBranch string
-	var componentChecksum string
-	bundleManifestArtifacts := map[string]anywherev1alpha1.Manifest{}
-	artifactHashes := []string{}
-
-	for _, artifact := range kindnetdArtifacts {
-		if artifact.Manifest != nil {
-			manifestArtifact := artifact.Manifest
-			sourceBranch = manifestArtifact.SourcedFromBranch
-
-			bundleManifestArtifact := anywherev1alpha1.Manifest{
-				URI: manifestArtifact.ReleaseCdnURI,
-			}
-
-			bundleManifestArtifacts[manifestArtifact.ReleaseName] = bundleManifestArtifact
-
-			manifestHash, err := version.GenerateManifestHash(r, manifestArtifact)
-			if err != nil {
-				return anywherev1alpha1.KindnetdBundle{}, err
-			}
-
-			artifactHashes = append(artifactHashes, manifestHash)
-		}
-	}
-
-	if r.DryRun {
-		componentChecksum = version.FakeComponentChecksum
-	} else {
-		componentChecksum = version.GenerateComponentHash(artifactHashes, r.DryRun)
-	}
-	version, err := version.BuildComponentVersion(
-		version.NewVersionerWithGITTAG(r.BuildRepoSource, constants.KindProjectPath, sourceBranch, r),
-		componentChecksum,
-	)
-	if err != nil {
-		return anywherev1alpha1.KindnetdBundle{}, errors.Wrapf(err, "Error getting version for kind")
-	}
-
-	bundle := anywherev1alpha1.KindnetdBundle{
-		Version:  version,
-		Manifest: bundleManifestArtifacts["kindnetd.yaml"],
-	}
-
-	return bundle, nil
+	_ = "STUB: not implemented"
+	return *new(anywherev1alpha1.KindnetdBundle), nil
 }

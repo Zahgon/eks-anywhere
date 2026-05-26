@@ -1,8 +1,6 @@
 package e2e
 
 import (
-	"fmt"
-	"math/rand"
 	"sync"
 	"time"
 
@@ -19,42 +17,18 @@ type hardwareCatalogue struct {
 }
 
 func (hwQu *hardwareCatalogue) reserveHardware(count int) ([]*api.Hardware, error) {
-	now := time.Now()
-	after := now.Add(hwPollingTimeout)
-	for {
-		if now.After(after) {
-			return nil, fmt.Errorf("hardware polling request timed out")
-		}
-		hwQu.mu.Lock()
-		if count <= len(hwQu.hws) {
-			hardwareReserved := hwQu.hws[:count]
-			hwQu.hws = hwQu.hws[count:]
-			hwQu.mu.Unlock()
-			return hardwareReserved, nil
-		}
-		hwQu.mu.Unlock()
-		time.Sleep(1 * time.Minute)
-	}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (hwQu *hardwareCatalogue) releaseHardware(hws []*api.Hardware) {
-	hwQu.mu.Lock()
-	hwQu.hws = append(hwQu.hws, hws...)
-	hwQu.mu.Unlock()
+	_ = "STUB: not implemented"
+	return
 }
 
-func (hwQu *hardwareCatalogue) shuffleHardware() {
-	hwQu.mu.Lock()
-	random := rand.New(rand.NewSource(time.Now().UnixNano()))
-	random.Shuffle(len(hwQu.hws), func(i, j int) {
-		hwQu.hws[i], hwQu.hws[j] = hwQu.hws[j], hwQu.hws[i]
-	})
-	hwQu.mu.Unlock()
-}
+func (hwQu *hardwareCatalogue) shuffleHardware() { _ = "STUB: not implemented"; return }
 
 func newHardwareCatalogue(hws []*api.Hardware) *hardwareCatalogue {
-	return &hardwareCatalogue{
-		hws: hws,
-		mu:  sync.Mutex{},
-	}
+	_ = "STUB: not implemented"
+	return nil
 }

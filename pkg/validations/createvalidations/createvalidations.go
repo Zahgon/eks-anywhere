@@ -9,10 +9,7 @@ var SkippableValidations = []string{
 	validations.VSphereUserPriv,
 }
 
-func New(opts *validations.Opts) *CreateValidations {
-	opts.SetDefaults()
-	return &CreateValidations{Opts: opts}
-}
+func New(opts *validations.Opts) *CreateValidations { _ = "STUB: not implemented"; return nil }
 
 type CreateValidations struct {
 	Opts *validations.Opts

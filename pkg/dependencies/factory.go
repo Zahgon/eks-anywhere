@@ -2,16 +2,11 @@ package dependencies
 
 import (
 	"context"
-	"crypto/tls"
-	"fmt"
-	"net/http"
-	"os"
 	"time"
 
 	"github.com/go-logr/logr"
 
 	"github.com/aws/eks-anywhere/pkg/api/v1alpha1"
-	"github.com/aws/eks-anywhere/pkg/aws"
 	"github.com/aws/eks-anywhere/pkg/awsiamauth"
 	"github.com/aws/eks-anywhere/pkg/bootstrapper"
 	"github.com/aws/eks-anywhere/pkg/cli"
@@ -20,36 +15,26 @@ import (
 	"github.com/aws/eks-anywhere/pkg/clusterapi"
 	"github.com/aws/eks-anywhere/pkg/clustermanager"
 	cliconfig "github.com/aws/eks-anywhere/pkg/config"
-	"github.com/aws/eks-anywhere/pkg/crypto"
 	"github.com/aws/eks-anywhere/pkg/curatedpackages"
 	"github.com/aws/eks-anywhere/pkg/diagnostics"
 	"github.com/aws/eks-anywhere/pkg/eksd"
 	"github.com/aws/eks-anywhere/pkg/executables"
-	"github.com/aws/eks-anywhere/pkg/executables/cmk"
 	"github.com/aws/eks-anywhere/pkg/files"
 	"github.com/aws/eks-anywhere/pkg/filewriter"
 	gitfactory "github.com/aws/eks-anywhere/pkg/git/factory"
 	"github.com/aws/eks-anywhere/pkg/gitops/flux"
-	"github.com/aws/eks-anywhere/pkg/govmomi"
 	"github.com/aws/eks-anywhere/pkg/helm"
 	"github.com/aws/eks-anywhere/pkg/kubeconfig"
-	"github.com/aws/eks-anywhere/pkg/logger"
 	"github.com/aws/eks-anywhere/pkg/manifests"
-	"github.com/aws/eks-anywhere/pkg/manifests/bundles"
 	"github.com/aws/eks-anywhere/pkg/networking/cilium"
-	"github.com/aws/eks-anywhere/pkg/networkutils"
 	"github.com/aws/eks-anywhere/pkg/providers"
 	"github.com/aws/eks-anywhere/pkg/providers/cloudstack"
-	"github.com/aws/eks-anywhere/pkg/providers/cloudstack/decoder"
-	"github.com/aws/eks-anywhere/pkg/providers/docker"
 	"github.com/aws/eks-anywhere/pkg/providers/nutanix"
 	"github.com/aws/eks-anywhere/pkg/providers/snow"
-	"github.com/aws/eks-anywhere/pkg/providers/tinkerbell"
 	"github.com/aws/eks-anywhere/pkg/providers/tinkerbell/hardware"
 	"github.com/aws/eks-anywhere/pkg/providers/validator"
 	"github.com/aws/eks-anywhere/pkg/providers/vsphere"
 	"github.com/aws/eks-anywhere/pkg/registrymirror"
-	"github.com/aws/eks-anywhere/pkg/retrier"
 	"github.com/aws/eks-anywhere/pkg/types"
 	"github.com/aws/eks-anywhere/pkg/version"
 	"github.com/aws/eks-anywhere/pkg/workflows/interfaces"
@@ -122,27 +107,13 @@ type KubeClients struct {
 }
 
 func (d *Dependencies) Close(ctx context.Context) error {
+	_ = "STUB: not implemented"
 	// Reverse the loop so we close like LIFO
-	for i := len(d.closers) - 1; i >= 0; i-- {
-		if err := d.closers[i].Close(ctx); err != nil {
-			return err
-		}
-	}
-
 	return nil
 }
 
 // ForSpec constructs a Factory using the bundle referenced by clusterSpec.
-func ForSpec(clusterSpec *cluster.Spec) *Factory {
-	managementComponents := cluster.ManagementComponentsFromBundles(clusterSpec.Bundles)
-	eksaToolsImage := managementComponents.Eksa.CliTools
-	return NewFactory().
-		UseExecutableImage(eksaToolsImage.VersionedImage()).
-		WithRegistryMirror(registrymirror.FromCluster(clusterSpec.Cluster)).
-		UseProxyConfiguration(clusterSpec.Cluster.ProxyConfiguration()).
-		WithWriterFolder(clusterSpec.Cluster.Name).
-		WithDiagnosticCollectorImage(managementComponents.Eksa.DiagnosticCollector.VersionedImage())
-}
+func ForSpec(clusterSpec *cluster.Spec) *Factory { _ = "STUB: not implemented"; return nil }
 
 // Factory helps initialization.
 type Factory struct {
@@ -171,244 +142,96 @@ type config struct {
 
 type buildStep func(ctx context.Context) error
 
-func NewFactory() *Factory {
-	return &Factory{
-		writerFolder: "./",
-		executablesConfig: &executablesConfig{
-			useDockerContainer: executables.ExecutablesInDocker(),
-		},
-		buildSteps: make([]buildStep, 0),
-	}
-}
+func NewFactory() *Factory { _ = "STUB: not implemented"; return nil }
 
 func (f *Factory) Build(ctx context.Context) (*Dependencies, error) {
-	for _, step := range f.buildSteps {
-		if err := step(ctx); err != nil {
-			return nil, err
-		}
-	}
-
-	// clean up stack
-	f.buildSteps = make([]buildStep, 0)
-
-	// Make copy of dependencies since its attributes are public
-	d := f.dependencies
-
-	return &d, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (f *Factory) WithWriterFolder(folder string) *Factory {
-	f.writerFolder = folder
-	return f
-}
+// clean up stack
+
+// Make copy of dependencies since its attributes are public
+
+func (f *Factory) WithWriterFolder(folder string) *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithRegistryMirror configures the factory to use registry mirror wherever applicable.
 func (f *Factory) WithRegistryMirror(registryMirror *registrymirror.RegistryMirror) *Factory {
-	f.registryMirror = registryMirror
-
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (f *Factory) UseProxyConfiguration(proxyConfig map[string]string) *Factory {
-	f.proxyConfiguration = proxyConfig
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (f *Factory) GetProxyConfiguration() map[string]string {
-	return f.proxyConfiguration
-}
+func (f *Factory) GetProxyConfiguration() map[string]string { _ = "STUB: not implemented"; return nil }
 
-func (f *Factory) WithProxyConfiguration() *Factory {
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.proxyConfiguration == nil {
-			proxyConfig := cliconfig.GetProxyConfigFromEnv()
-			f.UseProxyConfiguration(proxyConfig)
-		}
-		return nil
-	},
-	)
+func (f *Factory) WithProxyConfiguration() *Factory { _ = "STUB: not implemented"; return nil }
 
-	return f
-}
-
-func (f *Factory) UseExecutableImage(image string) *Factory {
-	f.executablesConfig.image = image
-	return f
-}
+func (f *Factory) UseExecutableImage(image string) *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithExecutableImage sets the right cli tools image for the executable builder, reading
 // from the Bundle and using the first VersionsBundle
 // This is just the default for when there is not an specific kubernetes version available
 // For commands that receive a cluster config file or a kubernetes version directly as input,
 // use UseExecutableImage to specify the image directly.
-func (f *Factory) WithExecutableImage() *Factory {
-	f.WithManifestReader()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.executablesConfig.image != "" {
-			return nil
-		}
-
-		if f.config.bundlesOverride != "" {
-			image, err := f.selectImageFromBundleOverride(f.config.bundlesOverride)
-			if err != nil {
-				return err
-			}
-			f.executablesConfig.image = image
-			return nil
-		}
-		bundles, err := f.dependencies.ManifestReader.ReadBundlesForVersion(version.Get().GitVersion)
-		if err != nil {
-			return fmt.Errorf("retrieving executable tools image from bundle in dependency factory: %v", err)
-		}
-
-		f.executablesConfig.image = bundles.DefaultEksAToolsImage().VersionedImage()
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithExecutableImage() *Factory { _ = "STUB: not implemented"; return nil }
 
 // selectImageFromBundleOverride retrieves an image from a bundles override.
 //
 // Handles cases where the bundle is configured with an override.
 func (f *Factory) selectImageFromBundleOverride(bundlesOverride string) (string, error) {
-	releaseBundles, err := bundles.Read(f.dependencies.ManifestReader, bundlesOverride)
-	if err != nil {
-		return "", fmt.Errorf("retrieving executable tools image from overridden bundle in dependency factory %v", err)
-	}
-	// Note: Currently using the first available version of the cli tools
-	// This is because the binaries bundled are all the same version hence no compatibility concerns
-	// In case, there is a change to this behavior, there might be a need to reassess this item
-	return releaseBundles.DefaultEksAToolsImage().VersionedImage(), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
+
+// Note: Currently using the first available version of the cli tools
+// This is because the binaries bundled are all the same version hence no compatibility concerns
+// In case, there is a change to this behavior, there might be a need to reassess this item
 
 // WithCustomBundles allows configuring a bundle override.
 func (f *Factory) WithCustomBundles(bundlesOverride string) *Factory {
-	if bundlesOverride == "" {
-		return f
-	}
-	f.config.bundlesOverride = bundlesOverride
-	f.WithExecutableImage()
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (f *Factory) WithExecutableMountDirs(mountDirs ...string) *Factory {
-	f.executablesConfig.mountDirs = mountDirs
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (f *Factory) WithLocalExecutables() *Factory {
-	f.executablesConfig.useDockerContainer = false
-	return f
-}
+func (f *Factory) WithLocalExecutables() *Factory { _ = "STUB: not implemented"; return nil }
 
 // UseExecutablesDockerClient forces a specific DockerClient to build
 // Executables as opposed to follow the normal building flow
 // This is only for testing.
 func (f *Factory) UseExecutablesDockerClient(client executables.DockerClient) *Factory {
-	f.executablesConfig.dockerClient = client
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // dockerLogin performs a docker login with the ENV VARS.
 func dockerLogin(ctx context.Context, registry string, docker executables.DockerClient) error {
-	username, password, _ := cliconfig.ReadCredentials()
-	err := docker.Login(ctx, registry, username, password)
-	if err != nil {
-		return err
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // WithDockerLogin adds a docker login to the build steps.
-func (f *Factory) WithDockerLogin() *Factory {
-	f.WithDocker()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.registryMirror != nil {
-			err := dockerLogin(ctx, f.registryMirror.BaseRegistry, f.executablesConfig.dockerClient)
-			if err != nil {
-				return err
-			}
-		}
-		return nil
-	})
-	return f
-}
+func (f *Factory) WithDockerLogin() *Factory { _ = "STUB: not implemented"; return nil }
 
 func (f *Factory) WithExecutableBuilder() *Factory {
+	_ = "STUB: not implemented"
 	// Ensure the file writer is created before the tools container is launched. This is necessary
 	// because we bind mount the cluster directory into the tools container. If the directory
 	// doesn't exist, dockerd (running as root) creates the hostpath for the bind mount with root
 	// ownership. This prevents further files from being written to the cluster directory.
-	f.WithWriter()
-
-	if f.executablesConfig.useDockerContainer {
-		f.WithExecutableImage().WithDocker()
-		if f.registryMirror != nil && f.registryMirror.Auth {
-			f.WithDockerLogin()
-		}
-	}
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.executablesConfig.builder != nil {
-			return nil
-		}
-
-		if f.executablesConfig.useDockerContainer {
-			image := f.executablesConfig.image
-			if f.registryMirror != nil {
-				image = f.registryMirror.ReplaceRegistry(image)
-			}
-			b, err := executables.NewInDockerExecutablesBuilder(
-				f.executablesConfig.dockerClient,
-				image,
-				f.executablesConfig.mountDirs...,
-			)
-			if err != nil {
-				return err
-			}
-			f.executablesConfig.builder = b
-		} else {
-			f.executablesConfig.builder = executables.NewLocalExecutablesBuilder()
-		}
-
-		f.dependencies.ExecutableBuilder = f.executablesConfig.builder
-
-		closer, err := f.executablesConfig.builder.Init(ctx)
-		if err != nil {
-			return err
-		}
-		if f.registryMirror != nil && f.registryMirror.Auth {
-			docker := f.executablesConfig.builder.BuildDockerExecutable()
-			err := dockerLogin(ctx, f.registryMirror.BaseRegistry, docker)
-			if err != nil {
-				return err
-			}
-		}
-		f.dependencies.closers = append(f.dependencies.closers, closer)
-
-		return nil
-	})
-
-	return f
+	return nil
 }
 
 // WithHelmExecutableBuilder adds a build step to initializes the helm.ExecutableBuilder dependency.
-func (f *Factory) WithHelmExecutableBuilder() *Factory {
-	f.WithExecutableBuilder()
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.ExecutableBuilder != nil {
-			return nil
-		}
-
-		f.dependencies.ExecutableBuilder = f.executablesConfig.builder
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithHelmExecutableBuilder() *Factory { _ = "STUB: not implemented"; return nil }
 
 // ProviderOptions contains per provider options.
 type ProviderOptions struct {
@@ -423,534 +246,75 @@ type TinkerbellOptions struct {
 }
 
 // WithProvider initializes the provider dependency and adds to the build steps.
-func (f *Factory) WithProvider(clusterConfigFile string, clusterConfig *v1alpha1.Cluster, skipIPCheck bool, hardwareCSVPath string, force bool, tinkerbellBootstrapIP string, skippedValidations map[string]bool, opts *ProviderOptions) *Factory { // nolint:gocyclo
-	switch clusterConfig.Spec.DatacenterRef.Kind {
-	case v1alpha1.VSphereDatacenterKind:
-		f.WithKubectl().WithGovc().WithWriter().WithIPValidator()
-	case v1alpha1.CloudStackDatacenterKind:
-		f.WithKubectl().WithCloudStackValidatorRegistry(skipIPCheck).WithWriter()
-	case v1alpha1.DockerDatacenterKind:
-		f.WithDocker().WithKubectl()
-	case v1alpha1.TinkerbellDatacenterKind:
-		if clusterConfig.Spec.RegistryMirrorConfiguration != nil {
-			f.WithDocker().WithKubectl().WithWriter().WithHelm(helm.WithInsecure())
-		} else {
-			f.WithDocker().WithKubectl().WithWriter().WithHelm()
-		}
-	case v1alpha1.SnowDatacenterKind:
-		f.WithUnAuthKubeClient().WithSnowConfigManager()
-	case v1alpha1.NutanixDatacenterKind:
-		f.WithKubectl().WithNutanixClientCache().WithNutanixDefaulter().WithNutanixValidator().WithIPValidator()
-	}
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.Provider != nil {
-			return nil
-		}
-
-		switch clusterConfig.Spec.DatacenterRef.Kind {
-		case v1alpha1.VSphereDatacenterKind:
-			datacenterConfig, err := v1alpha1.GetVSphereDatacenterConfig(clusterConfigFile)
-			if err != nil {
-				return fmt.Errorf("unable to get datacenter config from file %s: %v", clusterConfigFile, err)
-			}
-
-			f.dependencies.Provider = vsphere.NewProvider(
-				datacenterConfig,
-				clusterConfig,
-				f.dependencies.Govc,
-				f.dependencies.Kubectl,
-				f.dependencies.Writer,
-				f.dependencies.IPValidator,
-				time.Now,
-				skipIPCheck,
-				skippedValidations,
-			)
-
-		case v1alpha1.CloudStackDatacenterKind:
-			datacenterConfig, err := v1alpha1.GetCloudStackDatacenterConfig(clusterConfigFile)
-			if err != nil {
-				return fmt.Errorf("unable to get datacenter config from file %s: %v", clusterConfigFile, err)
-			}
-
-			execConfig, err := decoder.ParseCloudStackCredsFromEnv()
-			if err != nil {
-				return fmt.Errorf("parsing CloudStack credentials: %v", err)
-			}
-			validator, err := f.dependencies.CloudStackValidatorRegistry.Get(execConfig)
-			if err != nil {
-				return fmt.Errorf("building validator from exec config: %v", err)
-			}
-			f.dependencies.Provider = cloudstack.NewProvider(datacenterConfig, clusterConfig, f.dependencies.Kubectl, validator, f.dependencies.Writer, time.Now, logger.Get())
-
-		case v1alpha1.SnowDatacenterKind:
-			f.dependencies.Provider = snow.NewProvider(
-				f.dependencies.UnAuthKubeClient,
-				f.dependencies.SnowConfigManager,
-				skipIPCheck,
-			)
-
-		case v1alpha1.TinkerbellDatacenterKind:
-			datacenterConfig, err := v1alpha1.GetTinkerbellDatacenterConfig(clusterConfigFile)
-			if err != nil {
-				return fmt.Errorf("unable to get datacenter config from file %s: %v", clusterConfigFile, err)
-			}
-
-			config, err := cluster.ParseConfigFromFile(clusterConfigFile)
-			if err != nil {
-				return fmt.Errorf("unable to get machine config from file %s: %v", clusterConfigFile, err)
-			}
-
-			machineConfigs := config.TinkerbellMachineConfigs
-			tinkerbellIP := tinkerbellBootstrapIP
-			if tinkerbellIP == "" {
-				logger.V(4).Info("Inferring local Tinkerbell Bootstrap IP from environment")
-				localIp, err := networkutils.GetLocalIP()
-				if err != nil {
-					return err
-				}
-				tinkerbellIP = localIp.String()
-			}
-			logger.V(4).Info("Tinkerbell IP", "tinkerbell-ip", tinkerbellIP)
-
-			// Set BMC timeout based on noTimeouts flag
-			bmcTimeout := 5 * time.Minute // Default 5 minutes
-			if f.config.noTimeouts {
-				bmcTimeout = 168 * time.Hour // 1 week, effectively no timeout
-			}
-
-			provider, err := tinkerbell.NewProvider(
-				datacenterConfig,
-				machineConfigs,
-				clusterConfig,
-				hardwareCSVPath,
-				f.dependencies.Writer,
-				f.dependencies.DockerClient,
-				f.dependencies.Helm,
-				f.dependencies.Kubectl,
-				tinkerbellIP,
-				time.Now,
-				force,
-				skipIPCheck,
-				bmcTimeout,
-			)
-			if err != nil {
-				return err
-			}
-			if opts != nil && opts.Tinkerbell != nil && opts.Tinkerbell.BMCOptions != nil {
-				provider.BMCOptions = opts.Tinkerbell.BMCOptions
-			}
-
-			f.dependencies.Provider = provider
-
-		case v1alpha1.DockerDatacenterKind:
-			datacenterConfig, err := v1alpha1.GetDockerDatacenterConfig(clusterConfigFile)
-			if err != nil {
-				return fmt.Errorf("unable to get datacenter config from file %s: %v", clusterConfigFile, err)
-			}
-
-			f.dependencies.Provider = docker.NewProvider(
-				datacenterConfig,
-				f.dependencies.DockerClient,
-				f.dependencies.Kubectl,
-				time.Now,
-			)
-		case v1alpha1.NutanixDatacenterKind:
-			datacenterConfig, err := v1alpha1.GetNutanixDatacenterConfig(clusterConfigFile)
-			if err != nil {
-				return fmt.Errorf("unable to get datacenter config from file %s: %v", clusterConfigFile, err)
-			}
-
-			config, err := cluster.ParseConfigFromFile(clusterConfigFile)
-			if err != nil {
-				return fmt.Errorf("unable to get machine config from file %s: %v", clusterConfigFile, err)
-			}
-
-			machineConfigs := config.NutanixMachineConfigs
-			skipVerifyTransport := http.DefaultTransport.(*http.Transport).Clone()
-			skipVerifyTransport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
-			httpClient := &http.Client{Transport: skipVerifyTransport}
-			provider := nutanix.NewProvider(
-				datacenterConfig,
-				machineConfigs,
-				clusterConfig,
-				f.dependencies.Kubectl,
-				f.dependencies.Writer,
-				f.dependencies.NutanixClientCache,
-				f.dependencies.IPValidator,
-				crypto.NewTlsValidator(),
-				httpClient,
-				time.Now,
-				skipIPCheck,
-			)
-			f.dependencies.Provider = provider
-		default:
-			return fmt.Errorf("no provider support for datacenter kind: %s", clusterConfig.Spec.DatacenterRef.Kind)
-		}
-
-		return nil
-	})
-
-	return f
+func (f *Factory) WithProvider(clusterConfigFile string, clusterConfig *v1alpha1.Cluster, skipIPCheck bool, hardwareCSVPath string, force bool, tinkerbellBootstrapIP string, skippedValidations map[string]bool, opts *ProviderOptions) *Factory {
+	_ = "STUB: not implemented" // nolint:gocyclo
+	return nil
 }
+
+// Set BMC timeout based on noTimeouts flag
+// Default 5 minutes
+
+// 1 week, effectively no timeout
 
 // WithKubeconfigWriter adds the KubeconfigReader dependency depending on the provider.
 func (f *Factory) WithKubeconfigWriter(clusterConfig *v1alpha1.Cluster) *Factory {
-	f.WithUnAuthKubeClient()
-	if clusterConfig.Spec.DatacenterRef.Kind == v1alpha1.DockerDatacenterKind {
-		f.WithDocker()
-	}
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.KubeconfigWriter != nil {
-			return nil
-		}
-		writer := kubeconfig.NewClusterAPIKubeconfigSecretWriter(f.dependencies.UnAuthKubeClient)
-		switch clusterConfig.Spec.DatacenterRef.Kind {
-		case v1alpha1.DockerDatacenterKind:
-			f.dependencies.KubeconfigWriter = docker.NewKubeconfigWriter(f.dependencies.DockerClient, writer)
-		default:
-			f.dependencies.KubeconfigWriter = writer
-		}
-		return nil
-	})
-
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithClusterCreator adds the ClusterCreator dependency.
 func (f *Factory) WithClusterCreator(clusterConfig *v1alpha1.Cluster) *Factory {
-	f.WithClusterApplier().WithWriter().WithKubeconfigWriter(clusterConfig)
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.ClusterCreator != nil {
-			return nil
-		}
-
-		f.dependencies.ClusterCreator = clustermanager.NewClusterCreator(f.dependencies.ClusterApplier, f.dependencies.KubeconfigWriter, f.dependencies.Writer)
-		return nil
-	})
-
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (f *Factory) WithDocker() *Factory {
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.DockerClient != nil {
-			return nil
-		}
+func (f *Factory) WithDocker() *Factory { _ = "STUB: not implemented"; return nil }
 
-		f.dependencies.DockerClient = executables.BuildDockerExecutable()
-		if f.executablesConfig.dockerClient == nil {
-			f.executablesConfig.dockerClient = f.dependencies.DockerClient
-		}
+func (f *Factory) WithKubectl() *Factory { _ = "STUB: not implemented"; return nil }
 
-		return nil
-	})
-
-	return f
-}
-
-func (f *Factory) WithKubectl() *Factory {
-	f.WithExecutableBuilder()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.Kubectl != nil {
-			return nil
-		}
-
-		f.dependencies.Kubectl = f.executablesConfig.builder.BuildKubectlExecutable()
-		return nil
-	})
-
-	return f
-}
-
-func (f *Factory) WithGovc() *Factory {
-	f.WithExecutableBuilder().WithWriter()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.Govc != nil {
-			return nil
-		}
-
-		f.dependencies.Govc = f.executablesConfig.builder.BuildGovcExecutable(f.dependencies.Writer)
-		f.dependencies.closers = append(f.dependencies.closers, f.dependencies.Govc)
-
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithGovc() *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithCloudStackValidatorRegistry initializes the CloudStack validator for the object being constructed to make it available in the constructor.
 func (f *Factory) WithCloudStackValidatorRegistry(skipIPCheck bool) *Factory {
-	f.WithExecutableBuilder().WithWriter()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.CloudStackValidatorRegistry != nil {
-			return nil
-		}
-
-		cmkBuilder := cmk.NewCmkBuilder(f.executablesConfig.builder)
-		f.dependencies.CloudStackValidatorRegistry = cloudstack.NewValidatorFactory(cmkBuilder, f.dependencies.Writer, skipIPCheck)
-
-		return nil
-	})
-
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (f *Factory) WithSnowConfigManager() *Factory {
-	f.WithAwsSnow().WithWriter()
+func (f *Factory) WithSnowConfigManager() *Factory { _ = "STUB: not implemented"; return nil }
 
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.SnowConfigManager != nil {
-			return nil
-		}
+func (f *Factory) WithAwsSnow() *Factory { _ = "STUB: not implemented"; return nil }
 
-		client := aws.NewClient()
-		if err := client.BuildIMDS(ctx); err != nil {
-			return err
-		}
+func (f *Factory) WithWriter() *Factory { _ = "STUB: not implemented"; return nil }
 
-		validator := snow.NewValidator(f.dependencies.SnowAwsClientRegistry, snow.WithIMDS(client))
-		defaulters := snow.NewDefaulters(f.dependencies.SnowAwsClientRegistry, f.dependencies.Writer)
+func (f *Factory) WithKind() *Factory { _ = "STUB: not implemented"; return nil }
 
-		f.dependencies.SnowConfigManager = snow.NewConfigManager(defaulters, validator)
+func (f *Factory) WithClusterctl() *Factory { _ = "STUB: not implemented"; return nil }
 
-		return nil
-	})
+func (f *Factory) WithFlux() *Factory { _ = "STUB: not implemented"; return nil }
 
-	return f
-}
-
-func (f *Factory) WithAwsSnow() *Factory {
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.SnowAwsClientRegistry != nil {
-			return nil
-		}
-
-		clientRegistry := snow.NewAwsClientRegistry()
-		err := clientRegistry.Build(ctx)
-		if err != nil {
-			return err
-		}
-		f.dependencies.SnowAwsClientRegistry = clientRegistry
-
-		return nil
-	})
-
-	return f
-}
-
-func (f *Factory) WithWriter() *Factory {
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.Writer != nil {
-			return nil
-		}
-
-		var err error
-		f.dependencies.Writer, err = filewriter.NewWriter(f.writerFolder)
-		if err != nil {
-			return err
-		}
-
-		return nil
-	})
-
-	return f
-}
-
-func (f *Factory) WithKind() *Factory {
-	f.WithExecutableBuilder().WithWriter()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.Kind != nil {
-			return nil
-		}
-
-		f.dependencies.Kind = f.executablesConfig.builder.BuildKindExecutable(f.dependencies.Writer)
-		return nil
-	})
-
-	return f
-}
-
-func (f *Factory) WithClusterctl() *Factory {
-	f.WithExecutableBuilder().WithWriter().WithFileReader()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.Clusterctl != nil {
-			return nil
-		}
-
-		f.dependencies.Clusterctl = f.executablesConfig.builder.BuildClusterCtlExecutable(
-			f.dependencies.Writer,
-			f.dependencies.FileReader,
-		)
-		return nil
-	})
-
-	return f
-}
-
-func (f *Factory) WithFlux() *Factory {
-	f.WithExecutableBuilder()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.Flux != nil {
-			return nil
-		}
-
-		f.dependencies.Flux = f.executablesConfig.builder.BuildFluxExecutable()
-		return nil
-	})
-
-	return f
-}
-
-func (f *Factory) WithTroubleshoot() *Factory {
-	f.WithExecutableBuilder()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.Troubleshoot != nil {
-			return nil
-		}
-
-		f.dependencies.Troubleshoot = f.executablesConfig.builder.BuildTroubleshootExecutable()
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithTroubleshoot() *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithHelm initializes a new Helm executable as a factory dependency.
-func (f *Factory) WithHelm(opts ...helm.Opt) *Factory {
-	f.WithExecutableBuilder().WithProxyConfiguration()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.registryMirror != nil {
-			opts = append(opts, helm.WithRegistryMirror(f.registryMirror))
-		}
-
-		if f.proxyConfiguration != nil {
-			opts = append(opts, helm.WithProxyConfig(f.proxyConfiguration))
-		}
-
-		f.dependencies.Helm = f.executablesConfig.builder.BuildHelmExecutable(opts...)
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithHelm(opts ...helm.Opt) *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithHelmEnvClientFactory configures the HelmEnvClientFactory dependency with a helm.EnvClientFactory.
 func (f *Factory) WithHelmEnvClientFactory(opts ...helm.Opt) *Factory {
-	f.WithExecutableBuilder().WithProxyConfiguration()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.HelmEnvClientFactory != nil {
-			return nil
-		}
-
-		if f.proxyConfiguration != nil {
-			opts = append(opts, helm.WithProxyConfig(f.proxyConfiguration))
-		}
-
-		envClientFactory := helm.NewEnvClientFactory(f.executablesConfig.builder)
-		err := envClientFactory.Init(ctx, f.registryMirror, opts...)
-		if err != nil {
-			return fmt.Errorf("building helm env client factory: %v", err)
-		}
-
-		f.dependencies.HelmEnvClientFactory = envClientFactory
-		return nil
-	})
-
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (f *Factory) WithCiliumTemplater() *Factory {
-	f.WithHelmEnvClientFactory(helm.WithInsecure())
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.CiliumTemplater != nil {
-			return nil
-		}
-		f.dependencies.CiliumTemplater = cilium.NewTemplater(f.dependencies.HelmEnvClientFactory)
-
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithCiliumTemplater() *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithAwsIamAuth builds dependencies for AWS IAM Auth.
 func (f *Factory) WithAwsIamAuth(clusterConfig *v1alpha1.Cluster) *Factory {
-	f.WithKubectl().WithWriter().WithKubeconfigWriter(clusterConfig)
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.AwsIamAuth != nil {
-			return nil
-		}
-
-		var opts []awsiamauth.RetrierClientOpt
-		if f.config.noTimeouts {
-			opts = append(opts, awsiamauth.RetrierClientRetrier(*retrier.NewWithNoTimeout()))
-		}
-
-		f.dependencies.AwsIamAuth = awsiamauth.NewInstaller(
-			awsiamauth.NewRetrierClient(f.dependencies.Kubectl, opts...),
-			f.dependencies.Writer,
-			f.dependencies.KubeconfigWriter,
-		)
-		return nil
-	})
-
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithIPValidator builds the IPValidator for the given cluster.
-func (f *Factory) WithIPValidator() *Factory {
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.IPValidator != nil {
-			return nil
-		}
-		f.dependencies.IPValidator = validator.NewIPValidator()
-		return nil
-	})
-	return f
-}
+func (f *Factory) WithIPValidator() *Factory { _ = "STUB: not implemented"; return nil }
 
-func (f *Factory) WithBootstrapper() *Factory {
-	f.WithKind().WithKubectl()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.Bootstrapper != nil {
-			return nil
-		}
-
-		var opts []bootstrapper.RetrierClientOpt
-		if f.config.noTimeouts {
-			opts = append(opts,
-				bootstrapper.WithRetrierClientRetrier(
-					*retrier.NewWithNoTimeout(),
-				),
-			)
-		}
-
-		f.dependencies.Bootstrapper = bootstrapper.New(
-			bootstrapper.NewRetrierClient(
-				f.dependencies.Kind,
-				f.dependencies.Kubectl,
-				opts...,
-			),
-		)
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithBootstrapper() *Factory { _ = "STUB: not implemented"; return nil }
 
 type clusterManagerClient struct {
 	*executables.Clusterctl
@@ -965,734 +329,158 @@ type ClusterManagerTimeoutOptions struct {
 }
 
 func (f *Factory) eksaInstallerOpts() []clustermanager.EKSAInstallerOpt {
-	var opts []clustermanager.EKSAInstallerOpt
-	if f.config.noTimeouts {
-		opts = append(opts, clustermanager.WithEKSAInstallerNoTimeouts())
-	}
-	return opts
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (f *Factory) clusterManagerOpts(timeoutOpts *ClusterManagerTimeoutOptions) []clustermanager.ClusterManagerOpt {
-	if timeoutOpts == nil {
-		return nil
-	}
-
-	o := []clustermanager.ClusterManagerOpt{
-		clustermanager.WithControlPlaneWaitTimeout(timeoutOpts.ControlPlaneWait),
-		clustermanager.WithExternalEtcdWaitTimeout(timeoutOpts.ExternalEtcdWait),
-		clustermanager.WithMachineMaxWait(timeoutOpts.MachineWait),
-	}
-
-	if f.config.noTimeouts {
-		o = append(o, clustermanager.WithNoTimeouts())
-	}
-
-	return o
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithClusterManager builds a cluster manager based on the cluster config and timeout options.
 func (f *Factory) WithClusterManager(clusterConfig *v1alpha1.Cluster, timeoutOpts *ClusterManagerTimeoutOptions) *Factory {
-	f.WithClusterctl().WithWriter().WithDiagnosticBundleFactory().WithFileReader().WithUnAuthKubeClient().WithKubernetesRetrierClient().WithEKSAInstaller()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.ClusterManager != nil {
-			return nil
-		}
-
-		client := clusterManagerClient{
-			f.dependencies.Clusterctl,
-			f.dependencies.KubernetesRetrierClient,
-		}
-
-		f.dependencies.ClusterManager = clustermanager.New(
-			f.dependencies.UnAuthKubeClient,
-			client,
-			f.dependencies.Writer,
-			f.dependencies.DignosticCollectorFactory,
-			f.dependencies.EksaInstaller,
-			f.clusterManagerOpts(timeoutOpts)...,
-		)
-		return nil
-	})
-
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithEKSAInstaller builds a cluster manager based on the cluster config and timeout options.
-func (f *Factory) WithEKSAInstaller() *Factory {
-	f.WithFileReader().WithKubernetesRetrierClient()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.EksaInstaller != nil {
-			return nil
-		}
-
-		installer := clustermanager.NewEKSAInstaller(f.dependencies.KubernetesRetrierClient, f.dependencies.FileReader, f.eksaInstallerOpts()...)
-
-		f.dependencies.EksaInstaller = installer
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithEKSAInstaller() *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithKubernetesRetrierClient builds a cluster manager based on the cluster config and timeout options.
-func (f *Factory) WithKubernetesRetrierClient() *Factory {
-	f.WithKubectl()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.KubernetesRetrierClient != nil {
-			return nil
-		}
-		var r *retrier.Retrier
-		if f.config.noTimeouts {
-			r = retrier.NewWithNoTimeout()
-		} else {
-			r = clustermanager.DefaultRetrier()
-		}
-
-		retrierClient := clustermanager.NewRetrierClient(
-			f.dependencies.Kubectl,
-			r,
-		)
-
-		f.dependencies.KubernetesRetrierClient = retrierClient
-
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithKubernetesRetrierClient() *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithNoTimeouts injects no timeouts to all the dependencies with configurable timeout.
 // Calling this method sets no timeout for the waits and retries in all the
 // cluster operations, i.e. cluster manager, eksa installer, networking installer.
 // Instead of passing the option to each dependency's constructor, use this
 // method to pass no timeouts to new dependency.
-func (f *Factory) WithNoTimeouts() *Factory {
-	f.config.noTimeouts = true
-	return f
-}
+func (f *Factory) WithNoTimeouts() *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithCliConfig builds a cli config.
 func (f *Factory) WithCliConfig(cliConfig *cliconfig.CliConfig) *Factory {
-	f.dependencies.CliConfig = cliConfig
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithCreateClusterDefaulter builds a create cluster defaulter that builds defaulter dependencies specific to the create cluster command. The defaulter is then run once the factory is built in the create cluster command.
 func (f *Factory) WithCreateClusterDefaulter(createCliConfig *cliconfig.CreateClusterCLIConfig) *Factory {
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		controlPlaneIPCheckAnnotationDefaulter := cluster.NewControlPlaneIPCheckAnnotationDefaulter(createCliConfig.SkipCPIPCheck)
-		machineHealthCheckDefaulter := cluster.NewMachineHealthCheckDefaulter(createCliConfig.NodeStartupTimeout, createCliConfig.UnhealthyMachineTimeout, createCliConfig.MaxUnhealthy, createCliConfig.WorkerMaxUnhealthy)
-
-		createClusterDefaulter := cli.NewCreateClusterDefaulter(controlPlaneIPCheckAnnotationDefaulter, machineHealthCheckDefaulter)
-
-		f.dependencies.CreateClusterDefaulter = createClusterDefaulter
-
-		return nil
-	})
-
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithUpgradeClusterDefaulter builds a create cluster defaulter that builds defaulter dependencies specific to the create cluster command. The defaulter is then run once the factory is built in the create cluster command.
 func (f *Factory) WithUpgradeClusterDefaulter(upgradeCliConfig *cliconfig.UpgradeClusterCLIConfig) *Factory {
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		machineHealthCheckDefaulter := cluster.NewMachineHealthCheckDefaulter(upgradeCliConfig.NodeStartupTimeout, upgradeCliConfig.UnhealthyMachineTimeout, upgradeCliConfig.MaxUnhealthy, upgradeCliConfig.WorkerMaxUnhealthy)
-
-		upgradeClusterDefaulter := cli.NewUpgradeClusterDefaulter(machineHealthCheckDefaulter)
-
-		f.dependencies.UpgradeClusterDefaulter = upgradeClusterDefaulter
-
-		return nil
-	})
-
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithDeleteClusterDefaulter builds a delete cluster defaulter that builds defaulter dependencies specific to the delete cluster command. The defaulter is then run once the factory is built in the delete cluster command.
 func (f *Factory) WithDeleteClusterDefaulter(deleteCliConfig *cliconfig.DeleteClusterCLIConfig) *Factory {
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		nsDefaulter := cluster.NewNamespaceDefaulter(deleteCliConfig.ClusterNamespace)
-		deleteClusterDefaulter := cli.NewDeleteClusterDefaulter(nsDefaulter)
-
-		f.dependencies.DeleteClusterDefaulter = deleteClusterDefaulter
-
-		return nil
-	})
-
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type eksdInstallerClient struct {
 	*executables.Kubectl
 }
 
-func (f *Factory) WithEksdInstaller() *Factory {
-	f.WithKubectl().WithFileReader()
+func (f *Factory) WithEksdInstaller() *Factory { _ = "STUB: not implemented"; return nil }
 
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.EksdInstaller != nil {
-			return nil
-		}
-
-		var opts []eksd.InstallerOpt
-		if f.config.noTimeouts {
-			opts = append(opts, eksd.WithRetrier(retrier.NewWithNoTimeout()))
-		}
-
-		f.dependencies.EksdInstaller = eksd.NewEksdInstaller(
-			&eksdInstallerClient{
-				f.dependencies.Kubectl,
-			},
-			f.dependencies.FileReader,
-			opts...,
-		)
-		return nil
-	})
-
-	return f
-}
-
-func (f *Factory) WithEksdUpgrader() *Factory {
-	f.WithKubectl().WithFileReader()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.EksdUpgrader != nil {
-			return nil
-		}
-
-		var opts []eksd.InstallerOpt
-		if f.config.noTimeouts {
-			opts = append(opts, eksd.WithRetrier(retrier.NewWithNoTimeout()))
-		}
-
-		f.dependencies.EksdUpgrader = eksd.NewUpgrader(
-			&eksdInstallerClient{
-				f.dependencies.Kubectl,
-			},
-			f.dependencies.FileReader,
-			opts...,
-		)
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithEksdUpgrader() *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithClusterApplier builds a cluster applier.
-func (f *Factory) WithClusterApplier() *Factory {
-	f.WithLogger().WithUnAuthKubeClient().WithLogger()
+func (f *Factory) WithClusterApplier() *Factory { _ = "STUB: not implemented"; return nil }
 
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		var opts []clustermanager.ApplierOpt
-		if f.config.noTimeouts {
-			// opts = append(opts, clustermanager.ManagementUpgraderRetrier(*retrier.NewWithNoTimeout()))
-			opts = append(opts, clustermanager.WithApplierNoTimeouts())
-		}
-
-		f.dependencies.ClusterApplier = clustermanager.NewApplier(
-			f.dependencies.Logger,
-			f.dependencies.UnAuthKubeClient,
-			opts...,
-		)
-		return nil
-	})
-	return f
-}
+// opts = append(opts, clustermanager.ManagementUpgraderRetrier(*retrier.NewWithNoTimeout()))
 
 // WithClusterDeleter builds a cluster deleter.
-func (f *Factory) WithClusterDeleter() *Factory {
-	f.WithLogger().WithUnAuthKubeClient().WithLogger()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		var opts []clustermanager.DeleterOpt
-		if f.config.noTimeouts {
-			opts = append(opts, clustermanager.WithDeleterApplyClusterTimeout(30*time.Minute))
-		}
-
-		f.dependencies.ClusterDeleter = clustermanager.NewDeleter(
-			f.dependencies.Logger,
-			f.dependencies.UnAuthKubeClient,
-			opts...,
-		)
-		return nil
-	})
-	return f
-}
+func (f *Factory) WithClusterDeleter() *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithClusterMover builds a cluster mover.
-func (f *Factory) WithClusterMover() *Factory {
-	f.WithLogger().WithUnAuthKubeClient().WithLogger()
-
-	f.buildSteps = append(f.buildSteps, func(_ context.Context) error {
-		var opts []clustermanager.MoverOpt
-		if f.config.noTimeouts {
-			opts = append(opts, clustermanager.WithMoverNoTimeouts())
-		}
-
-		f.dependencies.ClusterMover = clustermanager.NewMover(
-			f.dependencies.Logger,
-			f.dependencies.UnAuthKubeClient,
-			opts...,
-		)
-		return nil
-	})
-	return f
-}
+func (f *Factory) WithClusterMover() *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithValidatorClients builds KubeClients.
-func (f *Factory) WithValidatorClients() *Factory {
-	f.WithKubectl().WithUnAuthKubeClient()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		f.dependencies.UnAuthKubectlClient = KubeClients{
-			Kubectl:      f.dependencies.Kubectl,
-			UnAuthClient: f.dependencies.UnAuthKubeClient,
-		}
-
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithValidatorClients() *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithLogger setups a logger to be injected in constructors. It uses the logger
 // package level logger.
-func (f *Factory) WithLogger() *Factory {
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		f.dependencies.Logger = logger.Get()
-		return nil
-	})
-	return f
-}
+func (f *Factory) WithLogger() *Factory { _ = "STUB: not implemented"; return nil }
 
 func (f *Factory) WithGit(clusterConfig *v1alpha1.Cluster, fluxConfig *v1alpha1.FluxConfig) *Factory {
-	f.WithWriter()
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.Git != nil {
-			return nil
-		}
-
-		if fluxConfig == nil {
-			return nil
-		}
-
-		tools, err := gitfactory.Build(ctx, clusterConfig, fluxConfig, f.dependencies.Writer)
-		if err != nil {
-			return fmt.Errorf("creating Git provider: %v", err)
-		}
-
-		if fluxConfig.Spec.Git != nil {
-			err = tools.Client.ValidateRemoteExists(ctx)
-			if err != nil {
-				return err
-			}
-		}
-
-		if tools.Provider != nil {
-			err = tools.Provider.Validate(ctx)
-			if err != nil {
-				return fmt.Errorf("validating provider: %v", err)
-			}
-		}
-
-		f.dependencies.Git = tools
-		return nil
-	})
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithGitOpsFlux builds a gitops flux.
 func (f *Factory) WithGitOpsFlux(clusterConfig *v1alpha1.Cluster, fluxConfig *v1alpha1.FluxConfig, cliConfig *cliconfig.CliConfig) *Factory {
-	f.WithWriter().WithFlux().WithKubectl().WithGit(clusterConfig, fluxConfig)
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.GitOpsFlux != nil {
-			return nil
-		}
-
-		f.dependencies.GitOpsFlux = flux.NewFlux(f.dependencies.Flux, f.dependencies.Kubectl, f.dependencies.Git, cliConfig)
-
-		return nil
-	})
-
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithPackageManager builds a package manager.
 func (f *Factory) WithPackageManager(spec *cluster.Spec, packagesLocation, kubeConfig string) *Factory {
-	f.WithKubectl().WithPackageControllerClient(spec, kubeConfig).WithPackageClient()
-	f.buildSteps = append(f.buildSteps, func(_ context.Context) error {
-		if f.dependencies.PackageManager != nil {
-			return nil
-		}
-		managementClusterName := getManagementClusterName(spec)
-		mgmtKubeConfig := kubeconfig.ResolveFilename(kubeConfig, managementClusterName)
-
-		f.dependencies.PackageManager = curatedpackages.NewInstaller(
-			f.dependencies.Kubectl,
-			f.dependencies.PackageClient,
-			f.dependencies.PackageControllerClient,
-			spec,
-			packagesLocation,
-			mgmtKubeConfig,
-		)
-		return nil
-	})
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithPackageManagerWithoutWait builds a package manager that doesn't wait for active bundles.
 func (f *Factory) WithPackageManagerWithoutWait(spec *cluster.Spec, packagesLocation, kubeConfig string) *Factory {
-	f.WithPackageControllerClient(spec, kubeConfig, curatedpackages.WithSkipWait()).
-		WithPackageManager(spec, packagesLocation, kubeConfig)
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithPackageControllerClient builds a client for package controller.
 func (f *Factory) WithPackageControllerClient(spec *cluster.Spec, kubeConfig string, opts ...curatedpackages.PackageControllerClientOpt) *Factory {
-	f.WithHelm(helm.WithInsecure()).WithKubectl()
-
-	f.buildSteps = append(f.buildSteps, func(_ context.Context) error {
-		if f.dependencies.PackageControllerClient != nil || spec == nil {
-			return nil
-		}
-		managementClusterName := getManagementClusterName(spec)
-		mgmtKubeConfig := kubeconfig.ResolveFilename(kubeConfig, managementClusterName)
-
-		httpProxy, httpsProxy, noProxy := getProxyConfiguration(spec)
-		eksaAccessKeyID, eksaSecretKey, eksaRegion, eksSessionToken := os.Getenv(cliconfig.EksaAccessKeyIdEnv), os.Getenv(cliconfig.EksaSecretAccessKeyEnv), os.Getenv(cliconfig.EksaRegionEnv), os.Getenv(cliconfig.EksaSessionTokenKeyEnv)
-
-		eksaAwsConfig := ""
-		p := os.Getenv(cliconfig.EksaAwsConfigFileEnv)
-		if p != "" {
-			b, err := os.ReadFile(p)
-			if err != nil {
-				return err
-			}
-			eksaAwsConfig = string(b)
-		}
-		writer, err := filewriter.NewWriter(spec.Cluster.Name)
-		if err != nil {
-			return err
-		}
-		bundle := spec.RootVersionsBundle()
-		if bundle == nil {
-			return fmt.Errorf("could not find VersionsBundle")
-		}
-
-		options := []curatedpackages.PackageControllerClientOpt{
-			curatedpackages.WithEksaAccessKeyId(eksaAccessKeyID),
-			curatedpackages.WithEksaSecretAccessKey(eksaSecretKey),
-			curatedpackages.WithEksaSessionToken(eksSessionToken),
-			curatedpackages.WithEksaRegion(eksaRegion),
-			curatedpackages.WithEksaAwsConfig(eksaAwsConfig),
-			curatedpackages.WithHTTPProxy(httpProxy),
-			curatedpackages.WithHTTPSProxy(httpsProxy),
-			curatedpackages.WithNoProxy(noProxy),
-			curatedpackages.WithManagementClusterName(managementClusterName),
-			curatedpackages.WithValuesFileWriter(writer),
-			curatedpackages.WithClusterSpec(spec),
-		}
-
-		options = append(options, opts...)
-
-		f.dependencies.PackageControllerClient = curatedpackages.NewPackageControllerClient(
-			f.dependencies.Helm,
-			f.dependencies.Kubectl,
-			spec.Cluster.Name,
-			mgmtKubeConfig,
-			&bundle.PackageController.HelmChart,
-			f.registryMirror,
-			options...,
-		)
-		return nil
-	})
-
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (f *Factory) WithPackageClient() *Factory {
-	f.WithKubectl()
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.PackageClient != nil {
-			return nil
-		}
-
-		f.dependencies.PackageClient = curatedpackages.NewPackageClient(
-			f.dependencies.Kubectl,
-		)
-		return nil
-	})
-	return f
-}
+func (f *Factory) WithPackageClient() *Factory { _ = "STUB: not implemented"; return nil }
 
 func (f *Factory) WithCuratedPackagesRegistry(registryName, kubeVersion string, version version.Info) *Factory {
-	if registryName != "" {
-		f.WithHelm(helm.WithInsecure())
-	} else {
-		f.WithManifestReader()
-	}
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.BundleRegistry != nil {
-			return nil
-		}
-
-		if registryName != "" {
-			f.dependencies.BundleRegistry = curatedpackages.NewCustomRegistry(
-				f.dependencies.Helm,
-				registryName,
-			)
-		} else {
-			f.dependencies.BundleRegistry = curatedpackages.NewDefaultRegistry(
-				f.dependencies.ManifestReader,
-				kubeVersion,
-				version,
-			)
-		}
-		return nil
-	})
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (f *Factory) WithDiagnosticBundleFactory() *Factory {
-	f.WithWriter().WithTroubleshoot().WithCollectorFactory().WithAnalyzerFactory().WithKubectl()
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.DignosticCollectorFactory != nil {
-			return nil
-		}
+func (f *Factory) WithDiagnosticBundleFactory() *Factory { _ = "STUB: not implemented"; return nil }
 
-		opts := diagnostics.EksaDiagnosticBundleFactoryOpts{
-			AnalyzerFactory:  f.dependencies.AnalyzerFactory,
-			Client:           f.dependencies.Troubleshoot,
-			CollectorFactory: f.dependencies.CollectorFactory,
-			Kubectl:          f.dependencies.Kubectl,
-			Writer:           f.dependencies.Writer,
-		}
-
-		f.dependencies.DignosticCollectorFactory = diagnostics.NewFactory(opts)
-		return nil
-	})
-
-	return f
-}
-
-func (f *Factory) WithAnalyzerFactory() *Factory {
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.AnalyzerFactory != nil {
-			return nil
-		}
-
-		f.dependencies.AnalyzerFactory = diagnostics.NewAnalyzerFactory()
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithAnalyzerFactory() *Factory { _ = "STUB: not implemented"; return nil }
 
 func (f *Factory) WithDiagnosticCollectorImage(diagnosticCollectorImage string) *Factory {
-	f.diagnosticCollectorImage = diagnosticCollectorImage
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (f *Factory) WithCollectorFactory() *Factory {
-	f.WithFileReader()
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.CollectorFactory != nil {
-			return nil
-		}
+func (f *Factory) WithCollectorFactory() *Factory { _ = "STUB: not implemented"; return nil }
 
-		if f.diagnosticCollectorImage == "" {
-			f.dependencies.CollectorFactory = diagnostics.NewDefaultCollectorFactory(f.dependencies.FileReader)
-		} else {
-			f.dependencies.CollectorFactory = diagnostics.NewCollectorFactory(f.diagnosticCollectorImage, f.dependencies.FileReader)
-		}
-		return nil
-	})
+func (f *Factory) WithCAPIManager() *Factory { _ = "STUB: not implemented"; return nil }
 
-	return f
-}
+func (f *Factory) WithFileReader() *Factory { _ = "STUB: not implemented"; return nil }
 
-func (f *Factory) WithCAPIManager() *Factory {
-	f.WithClusterctl()
-	f.WithKubectl()
+func (f *Factory) WithManifestReader() *Factory { _ = "STUB: not implemented"; return nil }
 
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.CAPIManager != nil {
-			return nil
-		}
+func (f *Factory) WithUnAuthKubeClient() *Factory { _ = "STUB: not implemented"; return nil }
 
-		f.dependencies.CAPIManager = clusterapi.NewManager(f.dependencies.Clusterctl, f.dependencies.Kubectl)
-		return nil
-	})
+func (f *Factory) WithVSphereValidator() *Factory { _ = "STUB: not implemented"; return nil }
 
-	return f
-}
-
-func (f *Factory) WithFileReader() *Factory {
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.FileReader != nil {
-			return nil
-		}
-
-		f.dependencies.FileReader = files.NewReader(files.WithEKSAUserAgent("cli", version.Get().GitVersion))
-		return nil
-	})
-
-	return f
-}
-
-func (f *Factory) WithManifestReader() *Factory {
-	f.WithFileReader()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.ManifestReader != nil {
-			return nil
-		}
-
-		f.dependencies.ManifestReader = manifests.NewReader(f.dependencies.FileReader)
-		return nil
-	})
-
-	return f
-}
-
-func (f *Factory) WithUnAuthKubeClient() *Factory {
-	f.WithKubectl()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.UnAuthKubeClient != nil {
-			return nil
-		}
-
-		f.dependencies.UnAuthKubeClient = kubernetes.NewUnAuthClient(f.dependencies.Kubectl)
-		if err := f.dependencies.UnAuthKubeClient.Init(); err != nil {
-			return fmt.Errorf("building unauth kube client: %v", err)
-		}
-
-		return nil
-	})
-
-	return f
-}
-
-func (f *Factory) WithVSphereValidator() *Factory {
-	f.WithGovc()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.VSphereValidator != nil {
-			return nil
-		}
-		vcb := govmomi.NewVMOMIClientBuilder()
-		v := vsphere.NewValidator(
-			f.dependencies.Govc,
-			vcb,
-		)
-		f.dependencies.VSphereValidator = v
-
-		return nil
-	})
-
-	return f
-}
-
-func (f *Factory) WithVSphereDefaulter() *Factory {
-	f.WithGovc()
-
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.VSphereDefaulter != nil {
-			return nil
-		}
-
-		f.dependencies.VSphereDefaulter = vsphere.NewDefaulter(f.dependencies.Govc)
-
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithVSphereDefaulter() *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithNutanixDefaulter adds a new NutanixDefaulter to the factory.
-func (f *Factory) WithNutanixDefaulter() *Factory {
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.NutanixDefaulter != nil {
-			return nil
-		}
-
-		f.dependencies.NutanixDefaulter = nutanix.NewDefaulter()
-
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithNutanixDefaulter() *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithNutanixValidator adds a new NutanixValidator to the factory.
-func (f *Factory) WithNutanixValidator() *Factory {
-	f.WithNutanixClientCache()
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.NutanixValidator != nil {
-			return nil
-		}
-		skipVerifyTransport := http.DefaultTransport.(*http.Transport).Clone()
-		skipVerifyTransport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
-		v := nutanix.NewValidator(
-			f.dependencies.NutanixClientCache,
-			crypto.NewTlsValidator(),
-			&http.Client{Transport: skipVerifyTransport},
-		)
-		f.dependencies.NutanixValidator = v
-
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithNutanixValidator() *Factory { _ = "STUB: not implemented"; return nil }
 
 // WithNutanixClientCache adds a new NutanixClientCache to the factory.
-func (f *Factory) WithNutanixClientCache() *Factory {
-	f.buildSteps = append(f.buildSteps, func(ctx context.Context) error {
-		if f.dependencies.NutanixClientCache != nil {
-			return nil
-		}
-
-		f.dependencies.NutanixClientCache = nutanix.NewClientCache()
-
-		return nil
-	})
-
-	return f
-}
+func (f *Factory) WithNutanixClientCache() *Factory { _ = "STUB: not implemented"; return nil }
 
 func getProxyConfiguration(clusterSpec *cluster.Spec) (httpProxy, httpsProxy string, noProxy []string) {
-	proxyConfiguration := clusterSpec.Cluster.Spec.ProxyConfiguration
-	if proxyConfiguration != nil {
-		capacity := len(clusterSpec.Cluster.Spec.ClusterNetwork.Pods.CidrBlocks) +
-			len(clusterSpec.Cluster.Spec.ClusterNetwork.Services.CidrBlocks) +
-			len(clusterSpec.Cluster.Spec.ProxyConfiguration.NoProxy) + 1
-
-		noProxyList := make([]string, 0, capacity)
-		noProxyList = append(noProxyList, clusterSpec.Cluster.Spec.ClusterNetwork.Pods.CidrBlocks...)
-		noProxyList = append(noProxyList, clusterSpec.Cluster.Spec.ClusterNetwork.Services.CidrBlocks...)
-		noProxyList = append(noProxyList, clusterSpec.Cluster.Spec.ProxyConfiguration.NoProxy...)
-
-		if clusterSpec.Cluster.Spec.ControlPlaneConfiguration.Endpoint != nil && clusterSpec.Cluster.Spec.ControlPlaneConfiguration.Endpoint.Host != "" {
-			noProxyList = append(
-				noProxyList,
-				clusterSpec.Cluster.Spec.ControlPlaneConfiguration.Endpoint.Host,
-			)
-		}
-		return proxyConfiguration.HttpProxy, proxyConfiguration.HttpsProxy, noProxyList
-	}
+	_ = "STUB: not implemented"
 	return "", "", nil
 }
 
 func getManagementClusterName(clusterSpec *cluster.Spec) string {
-	if clusterSpec.Cluster.Spec.ManagementCluster.Name != "" {
-		return clusterSpec.Cluster.Spec.ManagementCluster.Name
-	}
-	return clusterSpec.Cluster.Name
+	_ = "STUB: not implemented"
+	return ""
 }

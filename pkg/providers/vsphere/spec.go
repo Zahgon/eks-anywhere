@@ -10,31 +10,26 @@ type Spec struct {
 }
 
 // NewSpec constructs a new vSphere cluster Spec.
-func NewSpec(clusterSpec *cluster.Spec) *Spec {
-	return &Spec{
-		Spec: clusterSpec,
-	}
-}
+func NewSpec(clusterSpec *cluster.Spec) *Spec { _ = "STUB: not implemented"; return nil }
 
 func (s *Spec) controlPlaneMachineConfig() *anywherev1.VSphereMachineConfig {
-	return controlPlaneMachineConfig(s.Spec)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (s *Spec) workerMachineConfig(c anywherev1.WorkerNodeGroupConfiguration) *anywherev1.VSphereMachineConfig {
-	return workerMachineConfig(s.Spec, c)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (s *Spec) etcdMachineConfig() *anywherev1.VSphereMachineConfig {
-	return etcdMachineConfig(s.Spec)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (s *Spec) machineConfigs() []*anywherev1.VSphereMachineConfig {
-	machineConfigs := make([]*anywherev1.VSphereMachineConfig, 0, len(s.VSphereMachineConfigs))
-	for _, m := range s.VSphereMachineConfigs {
-		machineConfigs = append(machineConfigs, m)
-	}
-
-	return machineConfigs
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MachineConfigCount represents a machineConfig with it's associated count.
@@ -44,40 +39,21 @@ type MachineConfigCount struct {
 }
 
 func (s *Spec) machineConfigsWithCount() []MachineConfigCount {
-	machineConfigs := make([]MachineConfigCount, 0, len(s.VSphereMachineConfigs))
-	cpMachineConfig := MachineConfigCount{
-		VSphereMachineConfig: s.controlPlaneMachineConfig(),
-		Count:                s.Cluster.Spec.ControlPlaneConfiguration.Count,
-	}
-	machineConfigs = append(machineConfigs, cpMachineConfig)
-	if s.etcdMachineConfig() != nil {
-		etcdMachineConfig := MachineConfigCount{
-			VSphereMachineConfig: s.etcdMachineConfig(),
-			Count:                s.Cluster.Spec.ExternalEtcdConfiguration.Count,
-		}
-		machineConfigs = append(machineConfigs, etcdMachineConfig)
-	}
-	for _, wc := range s.Cluster.Spec.WorkerNodeGroupConfigurations {
-		workerNodeGroupConfig := MachineConfigCount{
-			VSphereMachineConfig: s.workerMachineConfig(wc),
-			Count:                *wc.Count,
-		}
-		machineConfigs = append(machineConfigs, workerNodeGroupConfig)
-	}
-	return machineConfigs
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func etcdMachineConfig(s *cluster.Spec) *anywherev1.VSphereMachineConfig {
-	if s.Cluster.Spec.ExternalEtcdConfiguration == nil || s.Cluster.Spec.ExternalEtcdConfiguration.MachineGroupRef == nil {
-		return nil
-	}
-	return s.VSphereMachineConfigs[s.Cluster.Spec.ExternalEtcdConfiguration.MachineGroupRef.Name]
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func controlPlaneMachineConfig(s *cluster.Spec) *anywherev1.VSphereMachineConfig {
-	return s.VSphereMachineConfigs[s.Cluster.Spec.ControlPlaneConfiguration.MachineGroupRef.Name]
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func workerMachineConfig(s *cluster.Spec, workers anywherev1.WorkerNodeGroupConfiguration) *anywherev1.VSphereMachineConfig {
-	return s.VSphereMachineConfigs[workers.MachineGroupRef.Name]
+	_ = "STUB: not implemented"
+	return nil
 }

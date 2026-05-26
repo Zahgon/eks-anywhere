@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 	time "time"
 
 	v1alpha1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
@@ -30,44 +29,39 @@ type MockBundleClientMockRecorder struct {
 
 // NewMockBundleClient creates a new mock instance.
 func NewMockBundleClient(ctrl *gomock.Controller) *MockBundleClient {
-	mock := &MockBundleClient{ctrl: ctrl}
-	mock.recorder = &MockBundleClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockBundleClient) EXPECT() *MockBundleClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Analyze mocks base method.
+	return nil
 }
 
-// Analyze mocks base method.
 func (m *MockBundleClient) Analyze(ctx context.Context, bundleSpecPath, archivePath string) ([]*executables.SupportBundleAnalysis, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Analyze", ctx, bundleSpecPath, archivePath)
-	ret0, _ := ret[0].([]*executables.SupportBundleAnalysis)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Analyze indicates an expected call of Analyze.
 func (mr *MockBundleClientMockRecorder) Analyze(ctx, bundleSpecPath, archivePath interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Analyze", reflect.TypeOf((*MockBundleClient)(nil).Analyze), ctx, bundleSpecPath, archivePath)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Collect mocks base method.
 func (m *MockBundleClient) Collect(ctx context.Context, bundlePath string, sinceTime *time.Time, kubeconfig string) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Collect", ctx, bundlePath, sinceTime, kubeconfig)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Collect indicates an expected call of Collect.
 func (mr *MockBundleClientMockRecorder) Collect(ctx, bundlePath, sinceTime, kubeconfig interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Collect", reflect.TypeOf((*MockBundleClient)(nil).Collect), ctx, bundlePath, sinceTime, kubeconfig)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockDiagnosticBundleFactory is a mock of DiagnosticBundleFactory interface.
@@ -83,87 +77,75 @@ type MockDiagnosticBundleFactoryMockRecorder struct {
 
 // NewMockDiagnosticBundleFactory creates a new mock instance.
 func NewMockDiagnosticBundleFactory(ctrl *gomock.Controller) *MockDiagnosticBundleFactory {
-	mock := &MockDiagnosticBundleFactory{ctrl: ctrl}
-	mock.recorder = &MockDiagnosticBundleFactoryMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDiagnosticBundleFactory) EXPECT() *MockDiagnosticBundleFactoryMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// DiagnosticBundle mocks base method.
+	return nil
 }
 
-// DiagnosticBundle mocks base method.
 func (m *MockDiagnosticBundleFactory) DiagnosticBundle(spec *cluster.Spec, provider providers.Provider, kubeconfig, bundlePath string, auditLogs bool) (diagnostics.DiagnosticBundle, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DiagnosticBundle", spec, provider, kubeconfig, bundlePath, auditLogs)
-	ret0, _ := ret[0].(diagnostics.DiagnosticBundle)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(diagnostics.DiagnosticBundle), nil
 }
 
 // DiagnosticBundle indicates an expected call of DiagnosticBundle.
 func (mr *MockDiagnosticBundleFactoryMockRecorder) DiagnosticBundle(spec, provider, kubeconfig, bundlePath, auditLogs interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DiagnosticBundle", reflect.TypeOf((*MockDiagnosticBundleFactory)(nil).DiagnosticBundle), spec, provider, kubeconfig, bundlePath, auditLogs)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DiagnosticBundleCustom mocks base method.
 func (m *MockDiagnosticBundleFactory) DiagnosticBundleCustom(kubeconfig, bundlePath string) diagnostics.DiagnosticBundle {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DiagnosticBundleCustom", kubeconfig, bundlePath)
-	ret0, _ := ret[0].(diagnostics.DiagnosticBundle)
-	return ret0
+	_ = "STUB: not implemented"
+	return *new(diagnostics.DiagnosticBundle)
 }
 
 // DiagnosticBundleCustom indicates an expected call of DiagnosticBundleCustom.
 func (mr *MockDiagnosticBundleFactoryMockRecorder) DiagnosticBundleCustom(kubeconfig, bundlePath interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DiagnosticBundleCustom", reflect.TypeOf((*MockDiagnosticBundleFactory)(nil).DiagnosticBundleCustom), kubeconfig, bundlePath)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DiagnosticBundleDefault mocks base method.
 func (m *MockDiagnosticBundleFactory) DiagnosticBundleDefault() diagnostics.DiagnosticBundle {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DiagnosticBundleDefault")
-	ret0, _ := ret[0].(diagnostics.DiagnosticBundle)
-	return ret0
+	_ = "STUB: not implemented"
+	return *new(diagnostics.DiagnosticBundle)
 }
 
 // DiagnosticBundleDefault indicates an expected call of DiagnosticBundleDefault.
 func (mr *MockDiagnosticBundleFactoryMockRecorder) DiagnosticBundleDefault() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DiagnosticBundleDefault", reflect.TypeOf((*MockDiagnosticBundleFactory)(nil).DiagnosticBundleDefault))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DiagnosticBundleManagementCluster mocks base method.
 func (m *MockDiagnosticBundleFactory) DiagnosticBundleManagementCluster(spec *cluster.Spec, kubeconfig string) (diagnostics.DiagnosticBundle, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DiagnosticBundleManagementCluster", spec, kubeconfig)
-	ret0, _ := ret[0].(diagnostics.DiagnosticBundle)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(diagnostics.DiagnosticBundle), nil
 }
 
 // DiagnosticBundleManagementCluster indicates an expected call of DiagnosticBundleManagementCluster.
 func (mr *MockDiagnosticBundleFactoryMockRecorder) DiagnosticBundleManagementCluster(spec, kubeconfig interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DiagnosticBundleManagementCluster", reflect.TypeOf((*MockDiagnosticBundleFactory)(nil).DiagnosticBundleManagementCluster), spec, kubeconfig)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DiagnosticBundleWorkloadCluster mocks base method.
 func (m *MockDiagnosticBundleFactory) DiagnosticBundleWorkloadCluster(spec *cluster.Spec, provider providers.Provider, kubeconfig string, auditLogs bool) (diagnostics.DiagnosticBundle, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DiagnosticBundleWorkloadCluster", spec, provider, kubeconfig, auditLogs)
-	ret0, _ := ret[0].(diagnostics.DiagnosticBundle)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(diagnostics.DiagnosticBundle), nil
 }
 
 // DiagnosticBundleWorkloadCluster indicates an expected call of DiagnosticBundleWorkloadCluster.
 func (mr *MockDiagnosticBundleFactoryMockRecorder) DiagnosticBundleWorkloadCluster(spec, provider, kubeconfig, auditLogs interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DiagnosticBundleWorkloadCluster", reflect.TypeOf((*MockDiagnosticBundleFactory)(nil).DiagnosticBundleWorkloadCluster), spec, provider, kubeconfig, auditLogs)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockDiagnosticBundle is a mock of DiagnosticBundle interface.
@@ -179,211 +161,174 @@ type MockDiagnosticBundleMockRecorder struct {
 
 // NewMockDiagnosticBundle creates a new mock instance.
 func NewMockDiagnosticBundle(ctrl *gomock.Controller) *MockDiagnosticBundle {
-	mock := &MockDiagnosticBundle{ctrl: ctrl}
-	mock.recorder = &MockDiagnosticBundleMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDiagnosticBundle) EXPECT() *MockDiagnosticBundleMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// CollectAndAnalyze mocks base method.
+	return nil
 }
 
-// CollectAndAnalyze mocks base method.
 func (m *MockDiagnosticBundle) CollectAndAnalyze(ctx context.Context, sinceTimeValue *time.Time) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CollectAndAnalyze", ctx, sinceTimeValue)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CollectAndAnalyze indicates an expected call of CollectAndAnalyze.
 func (mr *MockDiagnosticBundleMockRecorder) CollectAndAnalyze(ctx, sinceTimeValue interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CollectAndAnalyze", reflect.TypeOf((*MockDiagnosticBundle)(nil).CollectAndAnalyze), ctx, sinceTimeValue)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PrintAnalysis mocks base method.
-func (m *MockDiagnosticBundle) PrintAnalysis() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PrintAnalysis")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockDiagnosticBundle) PrintAnalysis() error { _ = "STUB: not implemented"; return nil }
 
 // PrintAnalysis indicates an expected call of PrintAnalysis.
 func (mr *MockDiagnosticBundleMockRecorder) PrintAnalysis() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PrintAnalysis", reflect.TypeOf((*MockDiagnosticBundle)(nil).PrintAnalysis))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PrintBundleConfig mocks base method.
-func (m *MockDiagnosticBundle) PrintBundleConfig() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PrintBundleConfig")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockDiagnosticBundle) PrintBundleConfig() error { _ = "STUB: not implemented"; return nil }
 
 // PrintBundleConfig indicates an expected call of PrintBundleConfig.
 func (mr *MockDiagnosticBundleMockRecorder) PrintBundleConfig() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PrintBundleConfig", reflect.TypeOf((*MockDiagnosticBundle)(nil).PrintBundleConfig))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithDatacenterConfig mocks base method.
 func (m *MockDiagnosticBundle) WithDatacenterConfig(config v1alpha1.Ref, spec *cluster.Spec) *diagnostics.EksaDiagnosticBundle {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WithDatacenterConfig", config, spec)
-	ret0, _ := ret[0].(*diagnostics.EksaDiagnosticBundle)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithDatacenterConfig indicates an expected call of WithDatacenterConfig.
 func (mr *MockDiagnosticBundleMockRecorder) WithDatacenterConfig(config, spec interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithDatacenterConfig", reflect.TypeOf((*MockDiagnosticBundle)(nil).WithDatacenterConfig), config, spec)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithDefaultAnalyzers mocks base method.
 func (m *MockDiagnosticBundle) WithDefaultAnalyzers() *diagnostics.EksaDiagnosticBundle {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WithDefaultAnalyzers")
-	ret0, _ := ret[0].(*diagnostics.EksaDiagnosticBundle)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithDefaultAnalyzers indicates an expected call of WithDefaultAnalyzers.
 func (mr *MockDiagnosticBundleMockRecorder) WithDefaultAnalyzers() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithDefaultAnalyzers", reflect.TypeOf((*MockDiagnosticBundle)(nil).WithDefaultAnalyzers))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithDefaultCollectors mocks base method.
 func (m *MockDiagnosticBundle) WithDefaultCollectors() *diagnostics.EksaDiagnosticBundle {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WithDefaultCollectors")
-	ret0, _ := ret[0].(*diagnostics.EksaDiagnosticBundle)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithDefaultCollectors indicates an expected call of WithDefaultCollectors.
 func (mr *MockDiagnosticBundleMockRecorder) WithDefaultCollectors() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithDefaultCollectors", reflect.TypeOf((*MockDiagnosticBundle)(nil).WithDefaultCollectors))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithExternalEtcd mocks base method.
 func (m *MockDiagnosticBundle) WithExternalEtcd(config *v1alpha1.ExternalEtcdConfiguration) *diagnostics.EksaDiagnosticBundle {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WithExternalEtcd", config)
-	ret0, _ := ret[0].(*diagnostics.EksaDiagnosticBundle)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithExternalEtcd indicates an expected call of WithExternalEtcd.
 func (mr *MockDiagnosticBundleMockRecorder) WithExternalEtcd(config interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithExternalEtcd", reflect.TypeOf((*MockDiagnosticBundle)(nil).WithExternalEtcd), config)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithFileCollectors mocks base method.
 func (m *MockDiagnosticBundle) WithFileCollectors(paths []string) *diagnostics.EksaDiagnosticBundle {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WithFileCollectors", paths)
-	ret0, _ := ret[0].(*diagnostics.EksaDiagnosticBundle)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithFileCollectors indicates an expected call of WithFileCollectors.
 func (mr *MockDiagnosticBundleMockRecorder) WithFileCollectors(paths interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithFileCollectors", reflect.TypeOf((*MockDiagnosticBundle)(nil).WithFileCollectors), paths)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithGitOpsConfig mocks base method.
 func (m *MockDiagnosticBundle) WithGitOpsConfig(config *v1alpha1.GitOpsConfig) *diagnostics.EksaDiagnosticBundle {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WithGitOpsConfig", config)
-	ret0, _ := ret[0].(*diagnostics.EksaDiagnosticBundle)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithGitOpsConfig indicates an expected call of WithGitOpsConfig.
 func (mr *MockDiagnosticBundleMockRecorder) WithGitOpsConfig(config interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithGitOpsConfig", reflect.TypeOf((*MockDiagnosticBundle)(nil).WithGitOpsConfig), config)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithLogTextAnalyzers mocks base method.
 func (m *MockDiagnosticBundle) WithLogTextAnalyzers() *diagnostics.EksaDiagnosticBundle {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WithLogTextAnalyzers")
-	ret0, _ := ret[0].(*diagnostics.EksaDiagnosticBundle)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithLogTextAnalyzers indicates an expected call of WithLogTextAnalyzers.
 func (mr *MockDiagnosticBundleMockRecorder) WithLogTextAnalyzers() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithLogTextAnalyzers", reflect.TypeOf((*MockDiagnosticBundle)(nil).WithLogTextAnalyzers))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithMachineConfigs mocks base method.
 func (m *MockDiagnosticBundle) WithMachineConfigs(configs []providers.MachineConfig) *diagnostics.EksaDiagnosticBundle {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WithMachineConfigs", configs)
-	ret0, _ := ret[0].(*diagnostics.EksaDiagnosticBundle)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithMachineConfigs indicates an expected call of WithMachineConfigs.
 func (mr *MockDiagnosticBundleMockRecorder) WithMachineConfigs(configs interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithMachineConfigs", reflect.TypeOf((*MockDiagnosticBundle)(nil).WithMachineConfigs), configs)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithOidcConfig mocks base method.
 func (m *MockDiagnosticBundle) WithOidcConfig(config *v1alpha1.OIDCConfig) *diagnostics.EksaDiagnosticBundle {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WithOidcConfig", config)
-	ret0, _ := ret[0].(*diagnostics.EksaDiagnosticBundle)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithOidcConfig indicates an expected call of WithOidcConfig.
 func (mr *MockDiagnosticBundleMockRecorder) WithOidcConfig(config interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithOidcConfig", reflect.TypeOf((*MockDiagnosticBundle)(nil).WithOidcConfig), config)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WriteAnalysisToFile mocks base method.
 func (m *MockDiagnosticBundle) WriteAnalysisToFile() (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WriteAnalysisToFile")
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // WriteAnalysisToFile indicates an expected call of WriteAnalysisToFile.
 func (mr *MockDiagnosticBundleMockRecorder) WriteAnalysisToFile() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WriteAnalysisToFile", reflect.TypeOf((*MockDiagnosticBundle)(nil).WriteAnalysisToFile))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WriteBundleConfig mocks base method.
-func (m *MockDiagnosticBundle) WriteBundleConfig() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WriteBundleConfig")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockDiagnosticBundle) WriteBundleConfig() error { _ = "STUB: not implemented"; return nil }
 
 // WriteBundleConfig indicates an expected call of WriteBundleConfig.
 func (mr *MockDiagnosticBundleMockRecorder) WriteBundleConfig() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WriteBundleConfig", reflect.TypeOf((*MockDiagnosticBundle)(nil).WriteBundleConfig))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockAnalyzerFactory is a mock of AnalyzerFactory interface.
@@ -399,126 +344,111 @@ type MockAnalyzerFactoryMockRecorder struct {
 
 // NewMockAnalyzerFactory creates a new mock instance.
 func NewMockAnalyzerFactory(ctrl *gomock.Controller) *MockAnalyzerFactory {
-	mock := &MockAnalyzerFactory{ctrl: ctrl}
-	mock.recorder = &MockAnalyzerFactoryMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockAnalyzerFactory) EXPECT() *MockAnalyzerFactoryMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// DataCenterConfigAnalyzers mocks base method.
+	return nil
 }
 
-// DataCenterConfigAnalyzers mocks base method.
 func (m *MockAnalyzerFactory) DataCenterConfigAnalyzers(datacenter v1alpha1.Ref) []*diagnostics.Analyze {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DataCenterConfigAnalyzers", datacenter)
-	ret0, _ := ret[0].([]*diagnostics.Analyze)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DataCenterConfigAnalyzers indicates an expected call of DataCenterConfigAnalyzers.
 func (mr *MockAnalyzerFactoryMockRecorder) DataCenterConfigAnalyzers(datacenter interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DataCenterConfigAnalyzers", reflect.TypeOf((*MockAnalyzerFactory)(nil).DataCenterConfigAnalyzers), datacenter)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DefaultAnalyzers mocks base method.
 func (m *MockAnalyzerFactory) DefaultAnalyzers() []*diagnostics.Analyze {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DefaultAnalyzers")
-	ret0, _ := ret[0].([]*diagnostics.Analyze)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DefaultAnalyzers indicates an expected call of DefaultAnalyzers.
 func (mr *MockAnalyzerFactoryMockRecorder) DefaultAnalyzers() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DefaultAnalyzers", reflect.TypeOf((*MockAnalyzerFactory)(nil).DefaultAnalyzers))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EksaExternalEtcdAnalyzers mocks base method.
 func (m *MockAnalyzerFactory) EksaExternalEtcdAnalyzers() []*diagnostics.Analyze {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EksaExternalEtcdAnalyzers")
-	ret0, _ := ret[0].([]*diagnostics.Analyze)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EksaExternalEtcdAnalyzers indicates an expected call of EksaExternalEtcdAnalyzers.
 func (mr *MockAnalyzerFactoryMockRecorder) EksaExternalEtcdAnalyzers() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EksaExternalEtcdAnalyzers", reflect.TypeOf((*MockAnalyzerFactory)(nil).EksaExternalEtcdAnalyzers))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EksaGitopsAnalyzers mocks base method.
 func (m *MockAnalyzerFactory) EksaGitopsAnalyzers() []*diagnostics.Analyze {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EksaGitopsAnalyzers")
-	ret0, _ := ret[0].([]*diagnostics.Analyze)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EksaGitopsAnalyzers indicates an expected call of EksaGitopsAnalyzers.
 func (mr *MockAnalyzerFactoryMockRecorder) EksaGitopsAnalyzers() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EksaGitopsAnalyzers", reflect.TypeOf((*MockAnalyzerFactory)(nil).EksaGitopsAnalyzers))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EksaLogTextAnalyzers mocks base method.
 func (m *MockAnalyzerFactory) EksaLogTextAnalyzers(collectors []*diagnostics.Collect) []*diagnostics.Analyze {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EksaLogTextAnalyzers", collectors)
-	ret0, _ := ret[0].([]*diagnostics.Analyze)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EksaLogTextAnalyzers indicates an expected call of EksaLogTextAnalyzers.
 func (mr *MockAnalyzerFactoryMockRecorder) EksaLogTextAnalyzers(collectors interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EksaLogTextAnalyzers", reflect.TypeOf((*MockAnalyzerFactory)(nil).EksaLogTextAnalyzers), collectors)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EksaOidcAnalyzers mocks base method.
 func (m *MockAnalyzerFactory) EksaOidcAnalyzers() []*diagnostics.Analyze {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EksaOidcAnalyzers")
-	ret0, _ := ret[0].([]*diagnostics.Analyze)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EksaOidcAnalyzers indicates an expected call of EksaOidcAnalyzers.
 func (mr *MockAnalyzerFactoryMockRecorder) EksaOidcAnalyzers() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EksaOidcAnalyzers", reflect.TypeOf((*MockAnalyzerFactory)(nil).EksaOidcAnalyzers))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ManagementClusterAnalyzers mocks base method.
 func (m *MockAnalyzerFactory) ManagementClusterAnalyzers() []*diagnostics.Analyze {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ManagementClusterAnalyzers")
-	ret0, _ := ret[0].([]*diagnostics.Analyze)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ManagementClusterAnalyzers indicates an expected call of ManagementClusterAnalyzers.
 func (mr *MockAnalyzerFactoryMockRecorder) ManagementClusterAnalyzers() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ManagementClusterAnalyzers", reflect.TypeOf((*MockAnalyzerFactory)(nil).ManagementClusterAnalyzers))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PackageAnalyzers mocks base method.
 func (m *MockAnalyzerFactory) PackageAnalyzers() []*diagnostics.Analyze {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PackageAnalyzers")
-	ret0, _ := ret[0].([]*diagnostics.Analyze)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PackageAnalyzers indicates an expected call of PackageAnalyzers.
 func (mr *MockAnalyzerFactoryMockRecorder) PackageAnalyzers() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PackageAnalyzers", reflect.TypeOf((*MockAnalyzerFactory)(nil).PackageAnalyzers))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockCollectorFactory is a mock of CollectorFactory interface.
@@ -534,124 +464,109 @@ type MockCollectorFactoryMockRecorder struct {
 
 // NewMockCollectorFactory creates a new mock instance.
 func NewMockCollectorFactory(ctrl *gomock.Controller) *MockCollectorFactory {
-	mock := &MockCollectorFactory{ctrl: ctrl}
-	mock.recorder = &MockCollectorFactoryMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockCollectorFactory) EXPECT() *MockCollectorFactoryMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AuditLogCollectors mocks base method.
+	return nil
 }
 
-// AuditLogCollectors mocks base method.
 func (m *MockCollectorFactory) AuditLogCollectors() []*diagnostics.Collect {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AuditLogCollectors")
-	ret0, _ := ret[0].([]*diagnostics.Collect)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AuditLogCollectors indicates an expected call of AuditLogCollectors.
 func (mr *MockCollectorFactoryMockRecorder) AuditLogCollectors() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AuditLogCollectors", reflect.TypeOf((*MockCollectorFactory)(nil).AuditLogCollectors))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DataCenterConfigCollectors mocks base method.
 func (m *MockCollectorFactory) DataCenterConfigCollectors(datacenter v1alpha1.Ref, spec *cluster.Spec) []*diagnostics.Collect {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DataCenterConfigCollectors", datacenter, spec)
-	ret0, _ := ret[0].([]*diagnostics.Collect)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DataCenterConfigCollectors indicates an expected call of DataCenterConfigCollectors.
 func (mr *MockCollectorFactoryMockRecorder) DataCenterConfigCollectors(datacenter, spec interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DataCenterConfigCollectors", reflect.TypeOf((*MockCollectorFactory)(nil).DataCenterConfigCollectors), datacenter, spec)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DefaultCollectors mocks base method.
 func (m *MockCollectorFactory) DefaultCollectors() []*diagnostics.Collect {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DefaultCollectors")
-	ret0, _ := ret[0].([]*diagnostics.Collect)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DefaultCollectors indicates an expected call of DefaultCollectors.
 func (mr *MockCollectorFactoryMockRecorder) DefaultCollectors() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DefaultCollectors", reflect.TypeOf((*MockCollectorFactory)(nil).DefaultCollectors))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EksaHostCollectors mocks base method.
 func (m *MockCollectorFactory) EksaHostCollectors(configs []providers.MachineConfig) []*diagnostics.Collect {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EksaHostCollectors", configs)
-	ret0, _ := ret[0].([]*diagnostics.Collect)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EksaHostCollectors indicates an expected call of EksaHostCollectors.
 func (mr *MockCollectorFactoryMockRecorder) EksaHostCollectors(configs interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EksaHostCollectors", reflect.TypeOf((*MockCollectorFactory)(nil).EksaHostCollectors), configs)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // FileCollectors mocks base method.
 func (m *MockCollectorFactory) FileCollectors(paths []string) []*diagnostics.Collect {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FileCollectors", paths)
-	ret0, _ := ret[0].([]*diagnostics.Collect)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // FileCollectors indicates an expected call of FileCollectors.
 func (mr *MockCollectorFactoryMockRecorder) FileCollectors(paths interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FileCollectors", reflect.TypeOf((*MockCollectorFactory)(nil).FileCollectors), paths)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // HostCollectors mocks base method.
 func (m *MockCollectorFactory) HostCollectors(datacenter v1alpha1.Ref) []*diagnostics.Collect {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "HostCollectors", datacenter)
-	ret0, _ := ret[0].([]*diagnostics.Collect)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // HostCollectors indicates an expected call of HostCollectors.
 func (mr *MockCollectorFactoryMockRecorder) HostCollectors(datacenter interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HostCollectors", reflect.TypeOf((*MockCollectorFactory)(nil).HostCollectors), datacenter)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ManagementClusterCollectors mocks base method.
 func (m *MockCollectorFactory) ManagementClusterCollectors() []*diagnostics.Collect {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ManagementClusterCollectors")
-	ret0, _ := ret[0].([]*diagnostics.Collect)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ManagementClusterCollectors indicates an expected call of ManagementClusterCollectors.
 func (mr *MockCollectorFactoryMockRecorder) ManagementClusterCollectors() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ManagementClusterCollectors", reflect.TypeOf((*MockCollectorFactory)(nil).ManagementClusterCollectors))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PackagesCollectors mocks base method.
 func (m *MockCollectorFactory) PackagesCollectors() []*diagnostics.Collect {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PackagesCollectors")
-	ret0, _ := ret[0].([]*diagnostics.Collect)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PackagesCollectors indicates an expected call of PackagesCollectors.
 func (mr *MockCollectorFactoryMockRecorder) PackagesCollectors() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PackagesCollectors", reflect.TypeOf((*MockCollectorFactory)(nil).PackagesCollectors))
+	_ = "STUB: not implemented"
+	return nil
 }

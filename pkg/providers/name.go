@@ -1,18 +1,10 @@
 package providers
 
-import (
-	"fmt"
-)
-
 const (
 	EtcdNodeNameSuffix         = "etcd"
 	ControlPlaneNodeNameSuffix = "cp"
 )
 
-func GetControlPlaneNodeName(clusterName string) string {
-	return fmt.Sprintf("%s-%s", clusterName, ControlPlaneNodeNameSuffix)
-}
+func GetControlPlaneNodeName(clusterName string) string { _ = "STUB: not implemented"; return "" }
 
-func GetEtcdNodeName(clusterName string) string {
-	return fmt.Sprintf("%s-%s", clusterName, EtcdNodeNameSuffix)
-}
+func GetEtcdNodeName(clusterName string) string { _ = "STUB: not implemented"; return "" }

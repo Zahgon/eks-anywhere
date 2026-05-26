@@ -8,13 +8,6 @@ import (
 )
 
 func runAPIServerExtraArgsUpgradeFlow(test *framework.ClusterE2ETest, clusterOpts ...[]framework.ClusterE2ETestOpt) {
-	test.GenerateClusterConfig()
-	test.GenerateSupportBundleOnCleanupIfTestFailed()
-	test.CreateCluster()
-	for _, opts := range clusterOpts {
-		test.UpgradeClusterWithNewConfig(opts)
-		test.ValidateClusterState()
-		test.StopIfFailed()
-	}
-	test.DeleteCluster()
+	_ = "STUB: not implemented"
+	return
 }

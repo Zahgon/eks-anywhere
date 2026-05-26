@@ -30,45 +30,26 @@ var SleepWithContext func(context.Context, time.Duration) error
 // is canceled. Which ever happens first. If the context is canceled the
 // Context's error will be returned.
 func sleepWithContext(ctx context.Context, dur time.Duration) error {
-	t := time.NewTimer(dur)
-	defer t.Stop()
-
-	select {
-	case <-t.C:
-		break
-	case <-ctx.Done():
-		return ctx.Err()
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // noOpSleepWithContext does nothing, returns immediately.
 func noOpSleepWithContext(context.Context, time.Duration) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func noOpSleep(time.Duration) {}
+func noOpSleep(time.Duration) {
+	_ = "STUB: not implemented"
 
-// TestingUseNopSleep is a utility for disabling sleep across the SDK for
-// testing.
-func TestingUseNopSleep() func() {
-	SleepWithContext = noOpSleepWithContext
-	Sleep = noOpSleep
-
-	return func() {
-		SleepWithContext = sleepWithContext
-		Sleep = time.Sleep
-	}
+	// TestingUseNopSleep is a utility for disabling sleep across the SDK for
+	// testing.
+	return
 }
+
+func TestingUseNopSleep() func() { _ = "STUB: not implemented"; return nil }
 
 // TestingUseReferenceTime is a utility for swapping the time function across the SDK to return a specific reference time
 // for testing purposes.
-func TestingUseReferenceTime(referenceTime time.Time) func() {
-	NowTime = func() time.Time {
-		return referenceTime
-	}
-	return func() {
-		NowTime = time.Now
-	}
-}
+func TestingUseReferenceTime(referenceTime time.Time) func() { _ = "STUB: not implemented"; return nil }

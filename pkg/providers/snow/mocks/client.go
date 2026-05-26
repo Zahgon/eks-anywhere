@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	kubernetes "github.com/aws/eks-anywhere/pkg/clients/kubernetes"
 	gomock "github.com/golang/mock/gomock"
@@ -26,40 +25,37 @@ type MockKubeUnAuthClientMockRecorder struct {
 
 // NewMockKubeUnAuthClient creates a new mock instance.
 func NewMockKubeUnAuthClient(ctrl *gomock.Controller) *MockKubeUnAuthClient {
-	mock := &MockKubeUnAuthClient{ctrl: ctrl}
-	mock.recorder = &MockKubeUnAuthClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockKubeUnAuthClient) EXPECT() *MockKubeUnAuthClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Apply mocks base method.
+	return nil
 }
 
-// Apply mocks base method.
 func (m *MockKubeUnAuthClient) Apply(ctx context.Context, kubeconfig string, obj runtime.Object) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Apply", ctx, kubeconfig, obj)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Apply indicates an expected call of Apply.
 func (mr *MockKubeUnAuthClientMockRecorder) Apply(ctx, kubeconfig, obj interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Apply", reflect.TypeOf((*MockKubeUnAuthClient)(nil).Apply), ctx, kubeconfig, obj)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // KubeconfigClient mocks base method.
 func (m *MockKubeUnAuthClient) KubeconfigClient(kubeconfig string) kubernetes.Client {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "KubeconfigClient", kubeconfig)
-	ret0, _ := ret[0].(kubernetes.Client)
-	return ret0
+	_ = "STUB: not implemented"
+	return *new(kubernetes.Client)
 }
 
 // KubeconfigClient indicates an expected call of KubeconfigClient.
 func (mr *MockKubeUnAuthClientMockRecorder) KubeconfigClient(kubeconfig interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "KubeconfigClient", reflect.TypeOf((*MockKubeUnAuthClient)(nil).KubeconfigClient), kubeconfig)
+	_ = "STUB: not implemented"
+	return nil
 }

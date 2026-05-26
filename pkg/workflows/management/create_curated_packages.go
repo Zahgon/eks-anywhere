@@ -9,18 +9,18 @@ import (
 type installCuratedPackagesTask struct{}
 
 func (s *installCuratedPackagesTask) Run(ctx context.Context, commandContext *task.CommandContext) task.Task {
-	commandContext.PackageManager.InstallCuratedPackages(ctx)
-	return nil
+	_ = "STUB: not implemented"
+	return *new(task.Task)
 }
 
-func (s *installCuratedPackagesTask) Name() string {
-	return "install-curated-packages"
-}
+func (s *installCuratedPackagesTask) Name() string { _ = "STUB: not implemented"; return "" }
 
 func (s *installCuratedPackagesTask) Restore(ctx context.Context, commandContext *task.CommandContext, completedTask *task.CompletedTask) (task.Task, error) {
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(task.Task), nil
 }
 
 func (s *installCuratedPackagesTask) Checkpoint() *task.CompletedTask {
+	_ = "STUB: not implemented"
 	return nil
 }

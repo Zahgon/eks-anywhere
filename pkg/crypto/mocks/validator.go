@@ -5,8 +5,6 @@
 package mocks
 
 import (
-	reflect "reflect"
-
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -23,41 +21,37 @@ type MockTlsValidatorMockRecorder struct {
 
 // NewMockTlsValidator creates a new mock instance.
 func NewMockTlsValidator(ctrl *gomock.Controller) *MockTlsValidator {
-	mock := &MockTlsValidator{ctrl: ctrl}
-	mock.recorder = &MockTlsValidatorMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockTlsValidator) EXPECT() *MockTlsValidatorMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// IsSignedByUnknownAuthority mocks base method.
+	return nil
 }
 
-// IsSignedByUnknownAuthority mocks base method.
 func (m *MockTlsValidator) IsSignedByUnknownAuthority(host, port string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "IsSignedByUnknownAuthority", host, port)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // IsSignedByUnknownAuthority indicates an expected call of IsSignedByUnknownAuthority.
 func (mr *MockTlsValidatorMockRecorder) IsSignedByUnknownAuthority(host, port interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsSignedByUnknownAuthority", reflect.TypeOf((*MockTlsValidator)(nil).IsSignedByUnknownAuthority), host, port)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateCert mocks base method.
 func (m *MockTlsValidator) ValidateCert(host, port, caCertContent string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ValidateCert", host, port, caCertContent)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateCert indicates an expected call of ValidateCert.
 func (mr *MockTlsValidatorMockRecorder) ValidateCert(host, port, caCertContent interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateCert", reflect.TypeOf((*MockTlsValidator)(nil).ValidateCert), host, port, caCertContent)
+	_ = "STUB: not implemented"
+	return nil
 }

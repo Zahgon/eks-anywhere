@@ -9,9 +9,8 @@ type DockerContainer interface {
 }
 
 func NewDockerExecutableBuilder(dockerContainer DockerContainer) *dockerExecutableBuilder {
-	return &dockerExecutableBuilder{
-		container: dockerContainer,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type dockerExecutableBuilder struct {
@@ -19,9 +18,11 @@ type dockerExecutableBuilder struct {
 }
 
 func (d *dockerExecutableBuilder) Build(binaryName string) Executable {
-	return NewDockerExecutable(binaryName, d.container.ContainerName())
+	_ = "STUB: not implemented"
+	return *new(Executable)
 }
 
 func (b *dockerExecutableBuilder) Init(ctx context.Context) (Closer, error) {
-	return b.container.Close, b.container.Init(ctx)
+	_ = "STUB: not implemented"
+	return *new(Closer), nil
 }

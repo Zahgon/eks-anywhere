@@ -91,9 +91,7 @@ type CloudStackMachineSpec struct {
 	UncompressedUserData *bool `json:"uncompressedUserData,omitempty"`
 }
 
-func (c *CloudStackMachine) CompressUserdata() bool {
-	return c.Spec.UncompressedUserData == nil || !*c.Spec.UncompressedUserData
-}
+func (c *CloudStackMachine) CompressUserdata() bool { _ = "STUB: not implemented"; return false }
 
 type CloudStackResourceIdentifier struct {
 	// Cloudstack resource ID.
@@ -148,10 +146,8 @@ type CloudStackMachineStatus struct {
 // TimeSinceLastStateChange returns the amount of time that's elapsed since the state was last updated.  If the state
 // hasn't ever been updated, it returns a negative value.
 func (s *CloudStackMachineStatus) TimeSinceLastStateChange() time.Duration {
-	if s.InstanceStateLastUpdated.IsZero() {
-		return time.Duration(-1)
-	}
-	return time.Since(s.InstanceStateLastUpdated.Time)
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 // +kubebuilder:object:root=true

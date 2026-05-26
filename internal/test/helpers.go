@@ -1,55 +1,28 @@
 package test
 
 import (
-	"errors"
 	"io"
-	"io/fs"
 	"os"
 	"testing"
 
 	"k8s.io/client-go/rest"
-	"sigs.k8s.io/controller-runtime/pkg/envtest"
 )
 
 // WithFakeFile returns a throwaway file in a test-specific directory.
 //
 // The file is automatically closed and removed when the test ends.
-func WithFakeFile(t *testing.T) (f *os.File) {
-	f, err := os.CreateTemp(t.TempDir(), "fake-file")
-	if err != nil {
-		t.Fatalf("opening throwaway file: %s", err)
-	}
-
-	t.Cleanup(func() {
-		if err := f.Close(); err != nil {
-			t.Logf("closing throwaway file %q: %s", f.Name(), err)
-		}
-	})
-
-	return f
-}
+func WithFakeFile(t *testing.T) (f *os.File) { _ = "STUB: not implemented"; return nil }
 
 // WithFakeFileContents returns a throwaway file containing some data.
 //
 // The file is automatically closed and removed when the test ends.
 func WithFakeFileContents(t *testing.T, r io.Reader) (f *os.File) {
-	f = WithFakeFile(t)
-	_, err := io.Copy(f, r)
-	if err != nil {
-		t.Fatalf("copying contents into fake file %q: %s", f.Name(), err)
-	}
-
-	return f
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RemoveFileIfExists is a helper for ValidateFilename tests.
-func RemoveFileIfExists(t *testing.T, filename string) {
-	if err := os.Remove(filename); err != nil {
-		if !errors.Is(err, fs.ErrNotExist) {
-			t.Fatalf("removing file %q: %s", filename, err)
-		}
-	}
-}
+func RemoveFileIfExists(t *testing.T, filename string) { _ = "STUB: not implemented"; return }
 
 // UseEnvTest sets up the controller-runtime EnvTest framework.
 //
@@ -64,23 +37,10 @@ func RemoveFileIfExists(t *testing.T, filename string) {
 // TODO: What could be done to integrate EnvTest with go test, so that "go
 // test" would work?
 func UseEnvTest(t *testing.T) *rest.Config {
+	_ = "STUB: not implemented"
 	// Detect if EnvTest has been set up.
-	if os.Getenv("KUBEBUILDER_ASSETS") == "" {
-		// By skipping this test, we allow traditional runs of go test from
-		// the command-line (or your editor) to work.
-		t.Skip("no EnvTest assets found in KUBEBUILDER_ASSETS")
-	}
-
-	testEnv := &envtest.Environment{}
-	cfg, err := testEnv.Start()
-	if err != nil {
-		t.Fatalf("setting up EnvTest framework: %s", err)
-	}
-	t.Cleanup(func() {
-		if err := testEnv.Stop(); err != nil {
-			t.Logf("stopping EnvTest framework: %s", err)
-		}
-	})
-
-	return cfg
+	return nil
 }
+
+// By skipping this test, we allow traditional runs of go test from
+// the command-line (or your editor) to work.

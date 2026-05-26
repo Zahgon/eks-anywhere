@@ -43,9 +43,7 @@ type Bundles struct {
 }
 
 // DefaultEksAToolsImage returns the default EKS Anywhere Tools image.
-func (b *Bundles) DefaultEksAToolsImage() Image {
-	return b.Spec.VersionsBundles[0].Eksa.CliTools
-}
+func (b *Bundles) DefaultEksAToolsImage() Image { _ = "STUB: not implemented"; return *new(Image) }
 
 //+kubebuilder:object:root=true
 

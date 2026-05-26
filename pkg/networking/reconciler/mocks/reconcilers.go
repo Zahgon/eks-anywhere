@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	cluster "github.com/aws/eks-anywhere/pkg/cluster"
 	controller "github.com/aws/eks-anywhere/pkg/controller"
@@ -28,27 +27,25 @@ type MockCiliumReconcilerMockRecorder struct {
 
 // NewMockCiliumReconciler creates a new mock instance.
 func NewMockCiliumReconciler(ctrl *gomock.Controller) *MockCiliumReconciler {
-	mock := &MockCiliumReconciler{ctrl: ctrl}
-	mock.recorder = &MockCiliumReconcilerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockCiliumReconciler) EXPECT() *MockCiliumReconcilerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Reconcile mocks base method.
+	return nil
 }
 
-// Reconcile mocks base method.
 func (m *MockCiliumReconciler) Reconcile(ctx context.Context, logger logr.Logger, client client.Client, spec *cluster.Spec) (controller.Result, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Reconcile", ctx, logger, client, spec)
-	ret0, _ := ret[0].(controller.Result)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(controller.Result), nil
 }
 
 // Reconcile indicates an expected call of Reconcile.
 func (mr *MockCiliumReconcilerMockRecorder) Reconcile(ctx, logger, client, spec interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Reconcile", reflect.TypeOf((*MockCiliumReconciler)(nil).Reconcile), ctx, logger, client, spec)
+	_ = "STUB: not implemented"
+	return nil
 }

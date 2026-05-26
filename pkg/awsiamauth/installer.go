@@ -2,12 +2,10 @@ package awsiamauth
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/aws/eks-anywhere/pkg/cluster"
 	"github.com/aws/eks-anywhere/pkg/filewriter"
 	"github.com/aws/eks-anywhere/pkg/kubeconfig"
-	"github.com/aws/eks-anywhere/pkg/logger"
 	"github.com/aws/eks-anywhere/pkg/types"
 )
 
@@ -32,11 +30,8 @@ func NewInstaller(
 	writer filewriter.FileWriter,
 	kubeconfigWriter kubeconfig.Writer,
 ) *Installer {
-	return &Installer{
-		k8s:              k8s,
-		writer:           writer,
-		kubeconfigWriter: kubeconfigWriter,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GenerateWorkloadKubeconfig generates the AWS IAM auth kubeconfig.
@@ -45,34 +40,7 @@ func (i *Installer) GenerateWorkloadKubeconfig(
 	management, workload *types.Cluster,
 	spec *cluster.Spec,
 ) error {
-	fileName := fmt.Sprintf("%s-aws.kubeconfig", workload.Name)
-
-	fsOptions := []filewriter.FileOptionsFunc{filewriter.PersistentFile, filewriter.Permission0600}
-	fh, path, err := i.writer.Create(
-		fileName,
-		fsOptions...,
-	)
-	if err != nil {
-		return err
-	}
-
-	defer fh.Close()
-
-	decodedKubeconfigSecretValue, err := i.k8s.GetAWSIAMKubeconfigSecretValue(
-		ctx,
-		management,
-		workload.Name,
-	)
-	if err != nil {
-		return fmt.Errorf("generating aws-iam-authenticator kubeconfig: %v", err)
-	}
-
-	err = i.kubeconfigWriter.WriteKubeconfigContent(ctx, workload.Name, decodedKubeconfigSecretValue, fh)
-	if err != nil {
-		return fmt.Errorf("writing aws-iam-authenticator kubeconfig to %s: %v", path, err)
-	}
-
-	logger.V(3).Info("Generated aws-iam-authenticator kubeconfig", "kubeconfig", path)
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -81,46 +49,12 @@ func (i *Installer) GenerateManagementKubeconfig(
 	ctx context.Context,
 	cluster *types.Cluster,
 ) error {
-	fileName := fmt.Sprintf("%s-aws.kubeconfig", cluster.Name)
-
-	fsOptions := []filewriter.FileOptionsFunc{filewriter.PersistentFile, filewriter.Permission0600}
-	fh, path, err := i.writer.Create(
-		fileName,
-		fsOptions...,
-	)
-	if err != nil {
-		return err
-	}
-
-	defer fh.Close()
-
-	decodedKubeconfigSecretValue, err := i.k8s.GetAWSIAMKubeconfigSecretValue(
-		ctx,
-		cluster,
-		cluster.Name,
-	)
-	if err != nil {
-		return fmt.Errorf("generating aws-iam-authenticator kubeconfig: %v", err)
-	}
-
-	err = i.kubeconfigWriter.WriteKubeconfigContent(ctx, cluster.Name, decodedKubeconfigSecretValue, fh)
-	if err != nil {
-		return fmt.Errorf("writing aws-iam-authenticator kubeconfig to %s: %v", path, err)
-	}
-
-	logger.V(3).Info("Generated aws-iam-authenticator kubeconfig", "kubeconfig", path)
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // CleanupKubeconfig removes an existing AWS IAM kubeconfig file when AWS IAM is removed from cluster.
 func (i *Installer) CleanupKubeconfig(clusterName string) error {
-	fileName := fmt.Sprintf("%s-aws.kubeconfig", clusterName)
-
-	err := i.writer.Delete(fileName)
-	if err != nil {
-		return fmt.Errorf("removing aws-iam-authenticator kubeconfig %s: %v", fileName, err)
-	}
-
-	logger.V(3).Info("Cleaned up aws-iam-authenticator kubeconfig", "file", fileName)
+	_ = "STUB: not implemented"
 	return nil
 }

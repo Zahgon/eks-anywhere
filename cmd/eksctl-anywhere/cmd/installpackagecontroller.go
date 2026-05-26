@@ -2,17 +2,9 @@ package cmd
 
 import (
 	"context"
-	"errors"
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
-
-	"github.com/aws/eks-anywhere/pkg/cluster"
-	"github.com/aws/eks-anywhere/pkg/curatedpackages"
-	"github.com/aws/eks-anywhere/pkg/kubeconfig"
-	"github.com/aws/eks-anywhere/pkg/validations"
-	"github.com/aws/eks-anywhere/pkg/version"
 )
 
 type installControllerOptions struct {
@@ -45,50 +37,8 @@ var installPackageControllerCommand = &cobra.Command{
 }
 
 func runInstallPackageController(cmd *cobra.Command, args []string) error {
-	clusterConfigFileExist := validations.FileExists(ico.fileName)
-	if !clusterConfigFileExist {
-		return fmt.Errorf("the cluster config file %s does not exist", ico.fileName)
-	}
-	return installPackageController(cmd.Context())
-}
-
-func installPackageController(ctx context.Context) error {
-	kubeConfig := kubeconfig.FromEnvironment()
-
-	var opts []cluster.FileSpecBuilderOpt
-	if ico.bundlesOverride != "" {
-		opts = append(opts, cluster.WithOverrideBundlesManifest(ico.bundlesOverride))
-	}
-	clusterSpec, err := readAndValidateClusterSpec(ico.fileName, version.Get(), opts...)
-	if err != nil {
-		return fmt.Errorf("the cluster config file provided is invalid: %v", err)
-	}
-
-	deps, err := NewDependenciesForPackages(ctx,
-		WithMountPaths(kubeConfig),
-		WithClusterSpec(clusterSpec),
-		WithKubeConfig(ico.kubeConfig),
-		WithBundlesOverride(ico.bundlesOverride),
-		WithCluster(clusterSpec.Cluster))
-	if err != nil {
-		return fmt.Errorf("unable to initialize executables: %v", err)
-	}
-
-	ctrlClient := deps.PackageControllerClient
-
-	if clusterSpec.Cluster.IsSelfManaged() && ctrlClient.IsInstalled(ctx) {
-		return errors.New("curated Packages controller exists in the current cluster")
-	}
-
-	if curatedpackages.IsPackageControllerDisabled(clusterSpec.Cluster) {
-		return errors.New("package controller disabled in cluster specification")
-	}
-
-	curatedpackages.PrintLicense()
-	err = ctrlClient.Enable(ctx)
-	if err != nil {
-		return err
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
+
+func installPackageController(ctx context.Context) error { _ = "STUB: not implemented"; return nil }

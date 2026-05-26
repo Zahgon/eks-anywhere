@@ -16,9 +16,7 @@ package v1alpha1
 
 import (
 	"context"
-	"fmt"
 
-	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/validation/field"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -31,10 +29,8 @@ import (
 var fluxconfiglog = logf.Log.WithName("fluxconfig-resource")
 
 func (r *FluxConfig) SetupWebhookWithManager(mgr ctrl.Manager) error {
-	return ctrl.NewWebhookManagedBy(mgr).
-		For(r).
-		WithValidator(r).
-		Complete()
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Change verbs to "verbs=create;update;delete" if you want to enable deletion validation.
@@ -44,73 +40,23 @@ var _ webhook.CustomValidator = &FluxConfig{}
 
 // ValidateCreate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *FluxConfig) ValidateCreate(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	fluxConfig, ok := obj.(*FluxConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a FluxConfig but got %T", obj)
-	}
-
-	fluxconfiglog.Info("validate create", "name", fluxConfig.Name)
-
-	if err := fluxConfig.Validate(); err != nil {
-		return nil, apierrors.NewInvalid(
-			fluxConfig.GroupVersionKind().GroupKind(),
-			fluxConfig.Name,
-			field.ErrorList{field.Invalid(field.NewPath("spec"), fluxConfig.Spec, err.Error())})
-	}
-
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 // ValidateUpdate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *FluxConfig) ValidateUpdate(_ context.Context, old, obj runtime.Object) (admission.Warnings, error) {
-	fluxConfig, ok := obj.(*FluxConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a FluxConfig but got %T", obj)
-	}
-
-	fluxconfiglog.Info("validate update", "name", fluxConfig.Name)
-
-	oldFluxConfig, ok := old.(*FluxConfig)
-	if !ok {
-		return nil, apierrors.NewBadRequest(fmt.Sprintf("expected a FluxConfig but got a %T", old))
-	}
-
-	var allErrs field.ErrorList
-
-	allErrs = append(allErrs, validateImmutableFluxFields(fluxConfig, oldFluxConfig)...)
-
-	if err := fluxConfig.Validate(); err != nil {
-		allErrs = append(allErrs, field.Invalid(field.NewPath("spec"), fluxConfig.Spec, err.Error()))
-	}
-
-	if len(allErrs) == 0 {
-		return nil, nil
-	}
-
-	return nil, apierrors.NewInvalid(GroupVersion.WithKind(FluxConfigKind).GroupKind(), fluxConfig.Name, allErrs)
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 // ValidateDelete implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *FluxConfig) ValidateDelete(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	fluxConfig, ok := obj.(*FluxConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a FluxConfig but got %T", obj)
-	}
-
-	fluxconfiglog.Info("validate delete", "name", fluxConfig.Name)
-
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 func validateImmutableFluxFields(new, old *FluxConfig) field.ErrorList {
-	var allErrs field.ErrorList
-
-	if !new.Spec.Equal(&old.Spec) {
-		allErrs = append(
-			allErrs,
-			field.Forbidden(field.NewPath(FluxConfigKind), "config is immutable"),
-		)
-	}
-
-	return allErrs
+	_ = "STUB: not implemented"
+	return *new(field.ErrorList)
 }

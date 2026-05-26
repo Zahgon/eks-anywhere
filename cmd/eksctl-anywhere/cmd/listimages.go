@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
@@ -42,18 +41,6 @@ var listImagesCommand = &cobra.Command{
 }
 
 func listImages(context context.Context, clusterSpecPath, bundlesOverride string) error {
-	images, err := getImages(clusterSpecPath, bundlesOverride)
-	if err != nil {
-		return err
-	}
-
-	for _, image := range images {
-		if image.ImageDigest != "" {
-			fmt.Printf("%s@%s\n", image.URI, image.ImageDigest)
-		} else {
-			fmt.Printf("%s\n", image.URI)
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }

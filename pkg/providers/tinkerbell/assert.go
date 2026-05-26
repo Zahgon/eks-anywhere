@@ -1,10 +1,6 @@
 package tinkerbell
 
 import (
-	"errors"
-	"fmt"
-	"net/http"
-
 	controlplanev1beta2 "sigs.k8s.io/cluster-api/api/controlplane/kubeadm/v1beta2"
 
 	"github.com/aws/eks-anywhere/pkg/api/v1alpha1"
@@ -17,129 +13,80 @@ import (
 // TODO(chrisdoherty) Add worker node group assertions
 
 // AssertMachineConfigsValid iterates over all machine configs in calling validateMachineConfig.
-func AssertMachineConfigsValid(spec *ClusterSpec) error {
-	for _, config := range spec.MachineConfigs {
-		if err := config.Validate(); err != nil {
-			return err
-		}
-	}
-	return nil
-}
+func AssertMachineConfigsValid(spec *ClusterSpec) error { _ = "STUB: not implemented"; return nil }
 
 // AssertDatacenterConfigValid asserts the DatacenterConfig in spec is valid.
-func AssertDatacenterConfigValid(spec *ClusterSpec) error {
-	return spec.DatacenterConfig.Validate()
-}
+func AssertDatacenterConfigValid(spec *ClusterSpec) error { _ = "STUB: not implemented"; return nil }
 
 // AssertMachineConfigNamespaceMatchesDatacenterConfig ensures all machine configuration instances
 // are configured with the same namespace as the provider specific data center configuration
 // namespace.
 func AssertMachineConfigNamespaceMatchesDatacenterConfig(spec *ClusterSpec) error {
-	return validateMachineConfigNamespacesMatchDatacenterConfig(spec.DatacenterConfig, spec.MachineConfigs)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AssertControlPlaneMachineRefExists ensures the control plane machine ref is referencing a
 // known machine config.
 func AssertControlPlaneMachineRefExists(spec *ClusterSpec) error {
-	controlPlaneMachineRef := spec.Cluster.Spec.ControlPlaneConfiguration.MachineGroupRef
-	if err := validateMachineRefExists(controlPlaneMachineRef, spec.MachineConfigs); err != nil {
-		return fmt.Errorf("control plane configuration machine ref: %v", err)
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // AssertEtcdMachineRefExists ensures that, if the etcd configuration is specified, it references
 // a known machine config.
 func AssertEtcdMachineRefExists(spec *ClusterSpec) error {
+	_ = "STUB: not implemented"
 	// Unstacked etcd is optional.
-	if spec.Cluster.Spec.ExternalEtcdConfiguration == nil {
-		return nil
-	}
-
-	etcdMachineRef := spec.Cluster.Spec.ExternalEtcdConfiguration.MachineGroupRef
-	if err := validateMachineRefExists(etcdMachineRef, spec.MachineConfigs); err != nil {
-		return fmt.Errorf("external etcd configuration machine group ref: %v", err)
-	}
-
 	return nil
 }
 
 // AssertWorkerNodeGroupMachineRefsExists ensures all worker node group machine refs are
 // referencing a known machine config.
 func AssertWorkerNodeGroupMachineRefsExists(spec *ClusterSpec) error {
-	for _, group := range spec.Cluster.Spec.WorkerNodeGroupConfigurations {
-		groupRef := group.MachineGroupRef
-		if err := validateMachineRefExists(groupRef, spec.MachineConfigs); err != nil {
-			return fmt.Errorf("worker node group configuration machine group ref: %v", err)
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // AssertK8SVersionNot120 ensures Kubernetes version is not set to v1.20.
-func AssertK8SVersionNot120(spec *ClusterSpec) error {
-	if spec.Cluster.Spec.KubernetesVersion == v1alpha1.Kube120 {
-		return errors.New("kubernetes version v1.20 is not supported for Bare Metal")
-	}
+func AssertK8SVersionNot120(spec *ClusterSpec) error { _ = "STUB: not implemented"; return nil }
 
-	return nil
-}
-
-func AssertOsFamilyValid(spec *ClusterSpec) error {
-	return validateOsFamily(spec)
-}
+func AssertOsFamilyValid(spec *ClusterSpec) error { _ = "STUB: not implemented"; return nil }
 
 // AssertUpgradeRolloutStrategyValid ensures that the upgrade rollout strategy is valid for both CP and worker node configurations.
 func AssertUpgradeRolloutStrategyValid(spec *ClusterSpec) error {
-	return validateUpgradeRolloutStrategy(spec)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AssertAutoScalerDisabledForInPlace ensures that the autoscaler configuration is not enabled when upgrade rollout strategy is InPlace.
 func AssertAutoScalerDisabledForInPlace(spec *ClusterSpec) error {
-	return validateAutoScalerDisabledForInPlace(spec)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AssertOSImageURL ensures that the OSImageURL value is either set at the datacenter config level or set for each machine config and not at both levels.
-func AssertOSImageURL(spec *ClusterSpec) error {
-	return validateOSImageURL(spec)
-}
+func AssertOSImageURL(spec *ClusterSpec) error { _ = "STUB: not implemented"; return nil }
 
 // AssertISOURL ensures that the ISOURL value set is in the expected file format that the smee deployment expects.
-func AssertISOURL(spec *ClusterSpec) error {
-	return validateISOURL(spec)
-}
+func AssertISOURL(spec *ClusterSpec) error { _ = "STUB: not implemented"; return nil }
 
 // AssertcontrolPlaneIPNotInUse ensures the endpoint host for the control plane isn't in use.
 // The check may be unreliable due to its implementation.
 func NewIPNotInUseAssertion(client networkutils.NetClient) ClusterSpecAssertion {
-	return func(spec *ClusterSpec) error {
-		ip := spec.Cluster.Spec.ControlPlaneConfiguration.Endpoint.Host
-		if err := validateIPUnused(client, ip); err != nil {
-			return fmt.Errorf("control plane endpoint ip in use: %v", ip)
-		}
-		return nil
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterSpecAssertion)
 }
 
 // AssertTinkerbellIPNotInUse ensures tinkerbell ip isn't in use.
 func AssertTinkerbellIPNotInUse(client networkutils.NetClient) ClusterSpecAssertion {
-	return func(spec *ClusterSpec) error {
-		ip := spec.DatacenterConfig.Spec.TinkerbellIP
-		if err := validateIPUnused(client, ip); err != nil {
-			return fmt.Errorf("tinkerbellIP <%s> is already in use, please provide a unique IP", ip)
-		}
-		return nil
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterSpecAssertion)
 }
 
 // AssertTinkerbellIPAndControlPlaneIPNotSame ensures tinkerbell ip and controlplane ip are not the same.
 func AssertTinkerbellIPAndControlPlaneIPNotSame(spec *ClusterSpec) error {
-	tinkerbellIP := spec.DatacenterConfig.Spec.TinkerbellIP
-	controlPlaneIP := spec.Cluster.Spec.ControlPlaneConfiguration.Endpoint.Host
-	if tinkerbellIP == controlPlaneIP {
-		return fmt.Errorf("controlPlaneConfiguration.endpoint.host and tinkerbellIP are the same (%s), please provide two unique IPs", tinkerbellIP)
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -147,99 +94,43 @@ func AssertTinkerbellIPAndControlPlaneIPNotSame(spec *ClusterSpec) error {
 // from the host URL without a proxy configured. It does not guarantee the target node
 // will be able to download Hook.
 func AssertHookRetrievableWithoutProxy(spec *ClusterSpec) error {
-	if spec.Cluster.Spec.ProxyConfiguration == nil {
-		return nil
-	}
-
-	// return an error if hookImagesURLPath field is not specified for during Proxy configuration.
-	if spec.DatacenterConfig.Spec.HookImagesURLPath == "" {
-		return fmt.Errorf("locally hosted hookImagesURLPath is required to support ProxyConfiguration")
-	}
-
-	// verify hookImagesURLPath is accessible locally too
-	transport := http.DefaultTransport.(*http.Transport).Clone()
-	transport.Proxy = nil
-	client := &http.Client{
-		Transport: transport,
-	}
-
-	resp, err := client.Get(spec.DatacenterConfig.Spec.HookImagesURLPath)
-	if err != nil {
-		return fmt.Errorf("HookImagesURLPath: %s needs to be hosted locally while specifiying Proxy configuration: %v", spec.DatacenterConfig.Spec.HookImagesURLPath, err)
-	}
-
-	defer resp.Body.Close()
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
+// return an error if hookImagesURLPath field is not specified for during Proxy configuration.
+
+// verify hookImagesURLPath is accessible locally too
+
 // AssertPortsNotInUse ensures that ports 80, 42113, and 7172 are available.
 func AssertPortsNotInUse(client networkutils.NetClient) ClusterSpecAssertion {
-	return func(spec *ClusterSpec) error {
-		host := "0.0.0.0"
-		if err := validatePortsAvailable(client, host); err != nil {
-			return err
-		}
-		return nil
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterSpecAssertion)
 }
 
 // HardwareSatisfiesOnlyOneSelectorAssertion ensures hardware in catalogue only satisfies 1
 // of the MachineConfig's HardwareSelector's from the spec.
 func HardwareSatisfiesOnlyOneSelectorAssertion(catalogue *hardware.Catalogue) ClusterSpecAssertion {
-	return func(spec *ClusterSpec) error {
-		selectors, err := selectorsFromClusterSpec(spec)
-		if err != nil {
-			return err
-		}
-
-		return validateHardwareSatisfiesOnlyOneSelector(catalogue.AllHardware(), selectors)
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterSpecAssertion)
 }
 
 // selectorsFromClusterSpec extracts all selectors specified on MachineConfig's from spec.
 // When HardwareAffinity is used, it extracts matchLabels from Required terms.
 func selectorsFromClusterSpec(spec *ClusterSpec) (selectorSet, error) {
-	selectors := selectorSet{}
-
-	if err := addSelectorsFromMachineConfig(spec.ControlPlaneMachineConfig(), &selectors); err != nil {
-		return nil, err
-	}
-
-	for _, nodeGroup := range spec.WorkerNodeGroupConfigurations() {
-		if err := addSelectorsFromMachineConfig(spec.WorkerNodeGroupMachineConfig(nodeGroup), &selectors); err != nil {
-			return nil, err
-		}
-	}
-
-	if spec.HasExternalEtcd() {
-		if err := addSelectorsFromMachineConfig(spec.ExternalEtcdMachineConfig(), &selectors); err != nil {
-			return nil, err
-		}
-	}
-
-	return selectors, nil
+	_ = "STUB: not implemented"
+	return *new(selectorSet), nil
 }
 
 // addSelectorsFromMachineConfig extracts selectors from a machine config.
 // If HardwareAffinity is set, it extracts matchLabels from Required terms.
 // Otherwise, it uses the HardwareSelector.
 func addSelectorsFromMachineConfig(config *v1alpha1.TinkerbellMachineConfig, selectors *selectorSet) error {
-	if config.Spec.HardwareAffinity != nil {
-		// Extract matchLabels from each Required term
-		for _, term := range config.Spec.HardwareAffinity.Required {
-			if len(term.LabelSelector.MatchLabels) > 0 {
-				selector := v1alpha1.HardwareSelector(term.LabelSelector.MatchLabels)
-				if err := selectors.Add(selector); err != nil {
-					return err
-				}
-			}
-		}
-		return nil
-	}
-
-	return selectors.Add(config.Spec.HardwareSelector)
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// Extract matchLabels from each Required term
 
 // MinimumHardwareAvailableAssertionForCreate asserts that catalogue has sufficient hardware to
 // support the ClusterSpec during a create workflow.
@@ -247,45 +138,15 @@ func addSelectorsFromMachineConfig(config *v1alpha1.TinkerbellMachineConfig, sel
 // It does not protect against intersections or subsets so consumers should ensure a 1-2-1
 // mapping between catalogue hardware and selectors.
 func MinimumHardwareAvailableAssertionForCreate(catalogue *hardware.Catalogue) ClusterSpecAssertion {
-	return func(spec *ClusterSpec) error {
-		// Without Hardware selectors we get undesirable behavior so ensure we have them for
-		// all MachineConfigs.
-		if err := ensureHardwareSelectorsSpecified(spec); err != nil {
-			return err
-		}
-
-		// Build a set of required hardware counts per machine group. minimumHardwareRequirements
-		// will account for the same selector being specified on different groups.
-		requirements := MinimumHardwareRequirements{}
-
-		selectors := GetSelectorsFromMachineConfig(spec.ControlPlaneMachineConfig())
-		for _, selector := range selectors {
-			if err := requirements.Add(selector, spec.ControlPlaneConfiguration().Count); err != nil {
-				return err
-			}
-		}
-
-		for _, nodeGroup := range spec.WorkerNodeGroupConfigurations() {
-			selectors := GetSelectorsFromMachineConfig(spec.WorkerNodeGroupMachineConfig(nodeGroup))
-			for _, selector := range selectors {
-				if err := requirements.Add(selector, *nodeGroup.Count); err != nil {
-					return err
-				}
-			}
-		}
-
-		if spec.HasExternalEtcd() {
-			selectors := GetSelectorsFromMachineConfig(spec.ExternalEtcdMachineConfig())
-			for _, selector := range selectors {
-				if err := requirements.Add(selector, spec.ExternalEtcdConfiguration().Count); err != nil {
-					return err
-				}
-			}
-		}
-
-		return validateMinimumHardwareRequirements(requirements, catalogue)
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterSpecAssertion)
 }
+
+// Without Hardware selectors we get undesirable behavior so ensure we have them for
+// all MachineConfigs.
+
+// Build a set of required hardware counts per machine group. minimumHardwareRequirements
+// will account for the same selector being specified on different groups.
 
 // WorkerNodeHardware holds machine deployment name, replica count and hardware selector for a Tinkerbell worker node.
 type WorkerNodeHardware struct {
@@ -316,30 +177,26 @@ type ValidatableTinkerbellClusterSpec struct {
 
 // ControlPlaneReplicaCount retrieves the ValidatableTinkerbellClusterSpec control plane replica count.
 func (v *ValidatableTinkerbellClusterSpec) ControlPlaneReplicaCount() int {
-	return v.Cluster.Spec.ControlPlaneConfiguration.Count
+	_ = "STUB: not implemented"
+	return 0
 }
 
 // WorkerNodeHardwareGroups retrieves a list of WorkerNodeHardwares for a ValidatableTinkerbellClusterSpec.
 func (v *ValidatableTinkerbellClusterSpec) WorkerNodeHardwareGroups() []WorkerNodeHardware {
-	workerNodeGroupConfigs := make([]WorkerNodeHardware, 0, len(v.Cluster.Spec.WorkerNodeGroupConfigurations))
-	for _, workerNodeGroup := range v.Cluster.Spec.WorkerNodeGroupConfigurations {
-		workerNodeGroupConfig := &WorkerNodeHardware{
-			MachineDeploymentName: machineDeploymentName(v.Cluster.Name, workerNodeGroup.Name),
-			Replicas:              *workerNodeGroup.Count,
-		}
-		workerNodeGroupConfigs = append(workerNodeGroupConfigs, *workerNodeGroupConfig)
-	}
-	return workerNodeGroupConfigs
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ClusterK8sVersion retrieves the Kubernetes version set at the cluster level.
 func (v *ValidatableTinkerbellClusterSpec) ClusterK8sVersion() v1alpha1.KubernetesVersion {
-	return v.Cluster.Spec.KubernetesVersion
+	_ = "STUB: not implemented"
+	return *new(v1alpha1.KubernetesVersion)
 }
 
 // WorkerNodeGroupK8sVersion returns each worker node group with its associated Kubernetes version.
 func (v *ValidatableTinkerbellClusterSpec) WorkerNodeGroupK8sVersion() map[string]v1alpha1.KubernetesVersion {
-	return WorkerNodeGroupWithK8sVersion(v.ClusterSpec.Spec)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidatableTinkerbellCAPI wraps around the Tinkerbell control plane and worker CAPI obects as a ValidatableCluster.
@@ -350,236 +207,96 @@ type ValidatableTinkerbellCAPI struct {
 
 // ControlPlaneReplicaCount retrieves the ValidatableTinkerbellCAPI control plane replica count.
 func (v *ValidatableTinkerbellCAPI) ControlPlaneReplicaCount() int {
-	return int(*v.KubeadmControlPlane.Spec.Replicas)
+	_ = "STUB: not implemented"
+	return 0
 }
 
 // WorkerNodeHardwareGroups retrieves a list of WorkerNodeHardwares for a ValidatableTinkerbellCAPI.
 func (v *ValidatableTinkerbellCAPI) WorkerNodeHardwareGroups() []WorkerNodeHardware {
-	workerNodeHardwareList := make([]WorkerNodeHardware, 0, len(v.WorkerGroups))
-	for _, workerGroup := range v.WorkerGroups {
-		workerNodeHardware := &WorkerNodeHardware{
-			MachineDeploymentName: workerGroup.MachineDeployment.Name,
-			Replicas:              int(*workerGroup.MachineDeployment.Spec.Replicas),
-		}
-		workerNodeHardwareList = append(workerNodeHardwareList, *workerNodeHardware)
-	}
-	return workerNodeHardwareList
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ClusterK8sVersion returns the Kubernetes version in major.minor format for a ValidatableTinkerbellCAPI.
 func (v *ValidatableTinkerbellCAPI) ClusterK8sVersion() v1alpha1.KubernetesVersion {
-	return v.toK8sVersion(v.KubeadmControlPlane.Spec.Version)
+	_ = "STUB: not implemented"
+	return *new(v1alpha1.KubernetesVersion)
 }
 
 // WorkerNodeGroupK8sVersion returns each worker node group mapped to Kubernetes version in major.minor format for a ValidatableTinkerbellCAPI.
 func (v *ValidatableTinkerbellCAPI) WorkerNodeGroupK8sVersion() map[string]v1alpha1.KubernetesVersion {
-	wngK8sversion := make(map[string]v1alpha1.KubernetesVersion)
-	for _, wng := range v.WorkerGroups {
-		k8sVersion := v.toK8sVersion(wng.MachineDeployment.Spec.Template.Spec.Version)
-		wngK8sversion[wng.MachineDeployment.Name] = k8sVersion
-	}
-	return wngK8sversion
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (v *ValidatableTinkerbellCAPI) toK8sVersion(k8sversion string) v1alpha1.KubernetesVersion {
-	kubeVersion := v1alpha1.KubernetesVersion(k8sversion[1:5])
-	return kubeVersion
+	_ = "STUB: not implemented"
+	return *new(v1alpha1.KubernetesVersion)
 }
 
 // AssertionsForScaleUpDown asserts that catalogue has sufficient hardware to
 // support the scaling up/down from current ClusterSpec to desired ValidatableCluster.
 // nolint:gocyclo // TODO: Reduce cyclomatic complexity https://github.com/aws/eks-anywhere-internal/issues/1186
 func AssertionsForScaleUpDown(catalogue *hardware.Catalogue, current ValidatableCluster, rollingUpgrade bool) ClusterSpecAssertion {
-	return func(spec *ClusterSpec) error {
-		// Without Hardware selectors we get undesirable behavior so ensure we have them for
-		// all MachineConfigs.
-		if err := ensureHardwareSelectorsSpecified(spec); err != nil {
-			return err
-		}
-
-		if spec.HasExternalEtcd() {
-			return fmt.Errorf("scale up/down not supported for external etcd")
-		}
-		// Build a set of required hardware counts per machine group. minimumHardwareRequirements
-		// will account for the same selector being specified on different groups.
-		requirements := MinimumHardwareRequirements{}
-
-		if current.ControlPlaneReplicaCount() != spec.Cluster.Spec.ControlPlaneConfiguration.Count {
-			if rollingUpgrade {
-				return fmt.Errorf("cannot perform scale up or down during rolling upgrades")
-			}
-			if current.ControlPlaneReplicaCount() < spec.Cluster.Spec.ControlPlaneConfiguration.Count {
-				selectors := GetSelectorsFromMachineConfig(spec.ControlPlaneMachineConfig())
-				for _, selector := range selectors {
-					if err := requirements.Add(selector, spec.Cluster.Spec.ControlPlaneConfiguration.Count-current.ControlPlaneReplicaCount()); err != nil {
-						return fmt.Errorf("error during scale up: %v", err)
-					}
-				}
-			}
-		}
-
-		workerNodeHardwareMap := make(map[string]WorkerNodeHardware)
-		for _, workerNodeHardware := range current.WorkerNodeHardwareGroups() {
-			workerNodeHardwareMap[workerNodeHardware.MachineDeploymentName] = workerNodeHardware
-		}
-
-		for _, nodeGroupNewSpec := range spec.Cluster.Spec.WorkerNodeGroupConfigurations {
-			nodeGroupMachineDeploymentNameNewSpec := machineDeploymentName(spec.Cluster.Name, nodeGroupNewSpec.Name)
-			if workerNodeGroupOldSpec, ok := workerNodeHardwareMap[nodeGroupMachineDeploymentNameNewSpec]; ok {
-				if *nodeGroupNewSpec.Count != workerNodeGroupOldSpec.Replicas {
-					if rollingUpgrade {
-						return fmt.Errorf("cannot perform scale up or down during rolling upgrades")
-					}
-					if *nodeGroupNewSpec.Count > workerNodeGroupOldSpec.Replicas {
-						selectors := GetSelectorsFromMachineConfig(spec.WorkerNodeGroupMachineConfig(nodeGroupNewSpec))
-						for _, selector := range selectors {
-							if err := requirements.Add(selector, *nodeGroupNewSpec.Count-workerNodeGroupOldSpec.Replicas); err != nil {
-								return fmt.Errorf("error during scale up: %v", err)
-							}
-						}
-					}
-				}
-			} else { // worker node group was newly added
-				if rollingUpgrade {
-					return fmt.Errorf("cannot perform scale up or down during rolling upgrades")
-				}
-				selectors := GetSelectorsFromMachineConfig(spec.WorkerNodeGroupMachineConfig(nodeGroupNewSpec))
-				for _, selector := range selectors {
-					if err := requirements.Add(selector, *nodeGroupNewSpec.Count); err != nil {
-						return fmt.Errorf("error during scale up: %v", err)
-					}
-				}
-			}
-		}
-
-		if err := validateMinimumHardwareRequirements(requirements, catalogue); err != nil {
-			return fmt.Errorf("for scale up, %v", err)
-		}
-		return nil
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterSpecAssertion)
 }
+
+// Without Hardware selectors we get undesirable behavior so ensure we have them for
+// all MachineConfigs.
+
+// Build a set of required hardware counts per machine group. minimumHardwareRequirements
+// will account for the same selector being specified on different groups.
+
+// worker node group was newly added
 
 // ExtraHardwareAvailableAssertionForRollingUpgrade asserts that catalogue has sufficient hardware to
 // support the ClusterSpec during an rolling upgrade workflow.
 func ExtraHardwareAvailableAssertionForRollingUpgrade(catalogue *hardware.Catalogue, current ValidatableCluster, eksaVersionUpgrade bool) ClusterSpecAssertion {
-	return func(spec *ClusterSpec) error {
-		// Without Hardware selectors we get undesirable behavior so ensure we have them for
-		// all MachineConfigs.
-		if err := ensureHardwareSelectorsSpecified(spec); err != nil {
-			return err
-		}
-
-		// Build a set of required hardware counts per machine group. minimumHardwareRequirements
-		// will account for the same selector being specified on different groups.
-		requirements := MinimumHardwareRequirements{}
-
-		if spec.Cluster.Spec.KubernetesVersion != current.ClusterK8sVersion() || eksaVersionUpgrade {
-			if err := ensureCPHardwareAvailability(spec, requirements); err != nil {
-				return err
-			}
-		}
-
-		if err := ensureWorkerHardwareAvailability(spec, current, requirements, eksaVersionUpgrade); err != nil {
-			return err
-		}
-
-		if spec.HasExternalEtcd() {
-			return fmt.Errorf("external etcd upgrade is not supported")
-		}
-
-		if err := validateMinimumHardwareRequirements(requirements, catalogue); err != nil {
-			return fmt.Errorf("for rolling upgrade, %v", err)
-		}
-		return nil
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterSpecAssertion)
 }
 
-func ensureCPHardwareAvailability(spec *ClusterSpec, hwReq MinimumHardwareRequirements) error {
-	maxSurge := 1
+// Without Hardware selectors we get undesirable behavior so ensure we have them for
+// all MachineConfigs.
 
-	rolloutStrategy := spec.Cluster.Spec.ControlPlaneConfiguration.UpgradeRolloutStrategy
-	if rolloutStrategy != nil && rolloutStrategy.Type == "RollingUpdate" {
-		maxSurge = spec.Cluster.Spec.ControlPlaneConfiguration.UpgradeRolloutStrategy.RollingUpdate.MaxSurge
-	}
-	selectors := GetSelectorsFromMachineConfig(spec.ControlPlaneMachineConfig())
-	for _, selector := range selectors {
-		if err := hwReq.Add(selector, maxSurge); err != nil {
-			return fmt.Errorf("for rolling upgrade, %v", err)
-		}
-	}
+// Build a set of required hardware counts per machine group. minimumHardwareRequirements
+// will account for the same selector being specified on different groups.
+
+func ensureCPHardwareAvailability(spec *ClusterSpec, hwReq MinimumHardwareRequirements) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func ensureWorkerHardwareAvailability(spec *ClusterSpec, current ValidatableCluster, hwReq MinimumHardwareRequirements, eksaVersionUpgrade bool) error {
-	currentWngK8sversion := current.WorkerNodeGroupK8sVersion()
-	desiredWngK8sVersion := WorkerNodeGroupWithK8sVersion(spec.Spec)
-	for _, nodeGroup := range spec.WorkerNodeGroupConfigurations() {
-		maxSurge := 1
-		// As rolling upgrades and scale up/down is not permitted in a single operation, its safe to access directly using the md name.
-		mdName := fmt.Sprintf("%s-%s", spec.Cluster.Name, nodeGroup.Name)
-		if currentWngK8sversion[mdName] != desiredWngK8sVersion[mdName] || eksaVersionUpgrade {
-			if nodeGroup.UpgradeRolloutStrategy != nil && nodeGroup.UpgradeRolloutStrategy.Type == "RollingUpdate" {
-				maxSurge = nodeGroup.UpgradeRolloutStrategy.RollingUpdate.MaxSurge
-			}
-			selectors := GetSelectorsFromMachineConfig(spec.WorkerNodeGroupMachineConfig(nodeGroup))
-			for _, selector := range selectors {
-				if err := hwReq.Add(selector, maxSurge); err != nil {
-					return fmt.Errorf("for rolling upgrade, %v", err)
-				}
-			}
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// As rolling upgrades and scale up/down is not permitted in a single operation, its safe to access directly using the md name.
 
 // ensureHardwareSelectorsSpecified ensures each machine config present in spec has a hardware
 // selector or hardware affinity.
 func ensureHardwareSelectorsSpecified(spec *ClusterSpec) error {
-	if !hasHardwareSelection(spec.ControlPlaneMachineConfig()) {
-		return missingHardwareSelectorErr{
-			Name: spec.ControlPlaneMachineConfig().Name,
-		}
-	}
-
-	for _, nodeGroup := range spec.WorkerNodeGroupConfigurations() {
-		if !hasHardwareSelection(spec.WorkerNodeGroupMachineConfig(nodeGroup)) {
-			return missingHardwareSelectorErr{
-				Name: spec.WorkerNodeGroupMachineConfig(nodeGroup).Name,
-			}
-		}
-	}
-
-	if spec.HasExternalEtcd() {
-		if !hasHardwareSelection(spec.ExternalEtcdMachineConfig()) {
-			return missingHardwareSelectorErr{
-				Name: spec.ExternalEtcdMachineConfig().Name,
-			}
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // hasHardwareSelection returns true if the machine config has either HardwareSelector or HardwareAffinity set.
 func hasHardwareSelection(config *v1alpha1.TinkerbellMachineConfig) bool {
-	return len(config.Spec.HardwareSelector) > 0 || config.Spec.HardwareAffinity != nil
+	_ = "STUB: not implemented"
+	return false
 }
 
 // ExtraHardwareAvailableAssertionForNodeRollOut asserts catalogue has sufficient hardware to meet minimum requirement
 // and is component agnostic between Control Plane and worker nodes.
 func ExtraHardwareAvailableAssertionForNodeRollOut(catalogue *hardware.Catalogue, hwReq MinimumHardwareRequirements) ClusterSpecAssertion {
-	return func(_ *ClusterSpec) error {
-		if err := validateMinimumHardwareRequirements(hwReq, catalogue); err != nil {
-			return fmt.Errorf("for node rollout, %v", err)
-		}
-		return nil
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterSpecAssertion)
 }
 
 type missingHardwareSelectorErr struct {
 	Name string
 }
 
-func (e missingHardwareSelectorErr) Error() string {
-	return fmt.Sprintf("missing hardware selector for %v", e.Name)
-}
+func (e missingHardwareSelectorErr) Error() string { _ = "STUB: not implemented"; return "" }

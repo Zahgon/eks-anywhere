@@ -6,7 +6,6 @@ package cloudstack
 
 import (
 	context "context"
-	reflect "reflect"
 
 	v1alpha1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	cluster "github.com/aws/eks-anywhere/pkg/cluster"
@@ -28,70 +27,63 @@ type MockProviderValidatorMockRecorder struct {
 
 // NewMockProviderValidator creates a new mock instance.
 func NewMockProviderValidator(ctrl *gomock.Controller) *MockProviderValidator {
-	mock := &MockProviderValidator{ctrl: ctrl}
-	mock.recorder = &MockProviderValidatorMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockProviderValidator) EXPECT() *MockProviderValidatorMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ValidateCloudStackDatacenterConfig mocks base method.
+	return nil
 }
 
-// ValidateCloudStackDatacenterConfig mocks base method.
 func (m *MockProviderValidator) ValidateCloudStackDatacenterConfig(arg0 context.Context, arg1 *v1alpha1.CloudStackDatacenterConfig) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ValidateCloudStackDatacenterConfig", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateCloudStackDatacenterConfig indicates an expected call of ValidateCloudStackDatacenterConfig.
 func (mr *MockProviderValidatorMockRecorder) ValidateCloudStackDatacenterConfig(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateCloudStackDatacenterConfig", reflect.TypeOf((*MockProviderValidator)(nil).ValidateCloudStackDatacenterConfig), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateClusterMachineConfigs mocks base method.
 func (m *MockProviderValidator) ValidateClusterMachineConfigs(arg0 context.Context, arg1 *cluster.Spec) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ValidateClusterMachineConfigs", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateClusterMachineConfigs indicates an expected call of ValidateClusterMachineConfigs.
 func (mr *MockProviderValidatorMockRecorder) ValidateClusterMachineConfigs(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateClusterMachineConfigs", reflect.TypeOf((*MockProviderValidator)(nil).ValidateClusterMachineConfigs), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateControlPlaneEndpointUniqueness mocks base method.
 func (m *MockProviderValidator) ValidateControlPlaneEndpointUniqueness(arg0 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ValidateControlPlaneEndpointUniqueness", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateControlPlaneEndpointUniqueness indicates an expected call of ValidateControlPlaneEndpointUniqueness.
 func (mr *MockProviderValidatorMockRecorder) ValidateControlPlaneEndpointUniqueness(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateControlPlaneEndpointUniqueness", reflect.TypeOf((*MockProviderValidator)(nil).ValidateControlPlaneEndpointUniqueness), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateSecretsUnchanged mocks base method.
 func (m *MockProviderValidator) ValidateSecretsUnchanged(arg0 context.Context, arg1 *types.Cluster, arg2 *decoder.CloudStackExecConfig, arg3 ProviderKubectlClient) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ValidateSecretsUnchanged", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateSecretsUnchanged indicates an expected call of ValidateSecretsUnchanged.
 func (mr *MockProviderValidatorMockRecorder) ValidateSecretsUnchanged(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateSecretsUnchanged", reflect.TypeOf((*MockProviderValidator)(nil).ValidateSecretsUnchanged), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockValidatorRegistry is a mock of ValidatorRegistry interface.
@@ -107,27 +99,25 @@ type MockValidatorRegistryMockRecorder struct {
 
 // NewMockValidatorRegistry creates a new mock instance.
 func NewMockValidatorRegistry(ctrl *gomock.Controller) *MockValidatorRegistry {
-	mock := &MockValidatorRegistry{ctrl: ctrl}
-	mock.recorder = &MockValidatorRegistryMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockValidatorRegistry) EXPECT() *MockValidatorRegistryMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Get mocks base method.
+	return nil
 }
 
-// Get mocks base method.
 func (m *MockValidatorRegistry) Get(arg0 *decoder.CloudStackExecConfig) (ProviderValidator, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Get", arg0)
-	ret0, _ := ret[0].(ProviderValidator)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(ProviderValidator), nil
 }
 
 // Get indicates an expected call of Get.
 func (mr *MockValidatorRegistryMockRecorder) Get(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockValidatorRegistry)(nil).Get), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }

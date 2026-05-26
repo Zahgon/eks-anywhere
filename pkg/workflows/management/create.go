@@ -6,7 +6,6 @@ import (
 	"github.com/aws/eks-anywhere/pkg/cluster"
 	"github.com/aws/eks-anywhere/pkg/filewriter"
 	"github.com/aws/eks-anywhere/pkg/providers"
-	"github.com/aws/eks-anywhere/pkg/task"
 	"github.com/aws/eks-anywhere/pkg/workflows/interfaces"
 )
 
@@ -37,42 +36,12 @@ func NewCreate(bootstrapper interfaces.Bootstrapper,
 	mover interfaces.ClusterMover,
 	iamAuth interfaces.AwsIamAuth,
 ) *Create {
-	createWorkflow := &Create{
-		bootstrapper:   bootstrapper,
-		clientFactory:  clientFactory,
-		provider:       provider,
-		clusterManager: clusterManager,
-		gitOpsManager:  gitOpsManager,
-		writer:         writer,
-		eksdInstaller:  eksdInstaller,
-		packageManager: packageManager,
-		clusterCreator: clusterCreator,
-		eksaInstaller:  eksaInstaller,
-		clusterMover:   mover,
-		iamAuth:        iamAuth,
-	}
-
-	return createWorkflow
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Run runs all the create management cluster tasks.
 func (c *Create) Run(ctx context.Context, clusterSpec *cluster.Spec, validator interfaces.Validator) error {
-	commandContext := &task.CommandContext{
-		Bootstrapper:   c.bootstrapper,
-		ClientFactory:  c.clientFactory,
-		Provider:       c.provider,
-		ClusterManager: c.clusterManager,
-		GitOpsManager:  c.gitOpsManager,
-		ClusterSpec:    clusterSpec,
-		Writer:         c.writer,
-		Validations:    validator,
-		EksdInstaller:  c.eksdInstaller,
-		PackageManager: c.packageManager,
-		ClusterCreator: c.clusterCreator,
-		EksaInstaller:  c.eksaInstaller,
-		ClusterMover:   c.clusterMover,
-		IamAuth:        c.iamAuth,
-	}
-
-	return task.NewTaskRunner(&setupAndValidateCreate{}, c.writer).RunTask(ctx, commandContext)
+	_ = "STUB: not implemented"
+	return nil
 }

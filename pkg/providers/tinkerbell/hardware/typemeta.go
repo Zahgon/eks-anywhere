@@ -14,23 +14,8 @@ const (
 	secretAPIVersion = "v1"
 )
 
-func newHardwareTypeMeta() v1.TypeMeta {
-	return v1.TypeMeta{
-		Kind:       tinkerbellHardwareKind,
-		APIVersion: tinkerbellAPIVersion,
-	}
-}
+func newHardwareTypeMeta() v1.TypeMeta { _ = "STUB: not implemented"; return *new(v1.TypeMeta) }
 
-func newMachineTypeMeta() v1.TypeMeta {
-	return v1.TypeMeta{
-		Kind:       tinkerbellBMCKind,
-		APIVersion: rufioAPIVersion,
-	}
-}
+func newMachineTypeMeta() v1.TypeMeta { _ = "STUB: not implemented"; return *new(v1.TypeMeta) }
 
-func newSecretTypeMeta() v1.TypeMeta {
-	return v1.TypeMeta{
-		Kind:       secretKind,
-		APIVersion: secretAPIVersion,
-	}
-}
+func newSecretTypeMeta() v1.TypeMeta { _ = "STUB: not implemented"; return *new(v1.TypeMeta) }

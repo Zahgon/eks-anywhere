@@ -2,7 +2,6 @@ package config
 
 import (
 	_ "embed"
-	"os"
 )
 
 const (
@@ -33,25 +32,6 @@ var VSphereAdminPrivsFile string
 //go:embed static/readOnlyPrivs.json
 var VSphereReadOnlyPrivs string
 
-func NewVsphereUserConfig() *VSphereUserConfig {
-	eksaVsphereUsername := os.Getenv(EksavSphereUsernameKey)
-	eksaVspherePassword := os.Getenv(EksavSpherePasswordKey)
+func NewVsphereUserConfig() *VSphereUserConfig { _ = "STUB: not implemented"; return nil }
 
-	// Cloud provider credentials
-	eksaCPUsername := os.Getenv(EksavSphereCPUsernameKey)
-	eksaCPPassword := os.Getenv(EksavSphereCPPasswordKey)
-
-	if eksaCPUsername == "" {
-		eksaCPUsername = eksaVsphereUsername
-		eksaCPPassword = eksaVspherePassword
-	}
-
-	vuc := VSphereUserConfig{
-		eksaVsphereUsername,
-		eksaVspherePassword,
-		eksaCPUsername,
-		eksaCPPassword,
-	}
-
-	return &vuc
-}
+// Cloud provider credentials

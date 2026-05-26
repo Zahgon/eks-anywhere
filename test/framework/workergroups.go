@@ -9,16 +9,11 @@ type WorkerNodeGroup struct {
 }
 
 func WithWorkerNodeGroup(name string, fillers ...api.WorkerNodeGroupFiller) *WorkerNodeGroup {
-	return &WorkerNodeGroup{
-		Name:    name,
-		Fillers: fillers,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (w *WorkerNodeGroup) ClusterFiller() api.ClusterFiller {
-	wf := make([]api.WorkerNodeGroupFiller, 0, len(w.Fillers)+1)
-	wf = append(wf, api.WithMachineGroupRef(w.MachineConfigName, w.MachineConfigKind))
-	wf = append(wf, w.Fillers...)
-
-	return api.WithWorkerNodeGroup(w.Name, wf...)
+	_ = "STUB: not implemented"
+	return *new(api.ClusterFiller)
 }

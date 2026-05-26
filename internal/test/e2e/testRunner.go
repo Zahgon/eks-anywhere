@@ -1,24 +1,7 @@
 package e2e
 
 import (
-	"context"
-	"encoding/json"
-	"fmt"
-	"os"
-	"strconv"
-	"time"
-
-	"github.com/aws/aws-sdk-go-v2/aws"
-	aws_ssm "github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/go-logr/logr"
-	"gopkg.in/yaml.v2"
-
-	"github.com/aws/eks-anywhere/internal/pkg/ec2"
-	"github.com/aws/eks-anywhere/internal/pkg/ssm"
-	"github.com/aws/eks-anywhere/internal/pkg/vsphere"
-	"github.com/aws/eks-anywhere/internal/test/cleanup"
-	"github.com/aws/eks-anywhere/pkg/executables"
-	"github.com/aws/eks-anywhere/pkg/retrier"
 )
 
 const (
@@ -48,17 +31,8 @@ const (
 )
 
 func newTestRunner(runnerType TestRunnerType, config TestInfraConfig) (TestRunner, error) {
-	if runnerType == VSphereTestRunnerType {
-		var err error
-		v := &config.VSphereTestRunner
-		v.envMap, err = v.setEnvironment()
-		if err != nil {
-			return nil, fmt.Errorf("failed to set env for vSphere test runner: %v", err)
-		}
-		return v, nil
-	} else {
-		return &config.Ec2TestRunner, nil
-	}
+	_ = "STUB: not implemented"
+	return *new(TestRunner), nil
 }
 
 type TestInfraConfig struct {
@@ -67,21 +41,8 @@ type TestInfraConfig struct {
 }
 
 func NewTestRunnerConfigFromFile(logger logr.Logger, configFile string) (*TestInfraConfig, error) {
-	file, err := os.ReadFile(configFile)
-	if err != nil {
-		return nil, fmt.Errorf("failed to create test runner config from file: %v", err)
-	}
-
-	config := TestInfraConfig{}
-	config.VSphereTestRunner.logger = logger
-	config.Ec2TestRunner.logger = logger
-
-	err = yaml.Unmarshal(file, &config)
-	if err != nil {
-		return nil, fmt.Errorf("failed to create test runner config from file: %v", err)
-	}
-
-	return &config, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 type testRunner struct {
@@ -111,146 +72,45 @@ type VSphereTestRunner struct {
 }
 
 func (v *VSphereTestRunner) setEnvironment() (map[string]string, error) {
-	envMap := make(map[string]string)
-	if vSphereUsername, ok := os.LookupEnv(testRunnerVCUserEnvVar); ok && len(vSphereUsername) > 0 {
-		envMap[govcUsernameKey] = vSphereUsername
-	} else {
-		return nil, fmt.Errorf("missing environment variable: %s", testRunnerVCUserEnvVar)
-	}
-
-	if vSpherePassword, ok := os.LookupEnv(testRunnerVCPasswordEnvVar); ok && len(vSpherePassword) > 0 {
-		envMap[govcPasswordKey] = vSpherePassword
-	} else {
-		return nil, fmt.Errorf("missing environment variable: %s", testRunnerVCPasswordEnvVar)
-	}
-
-	envMap[govcURLKey] = v.Url
-	envMap[govcInsecure] = strconv.FormatBool(v.Insecure)
-	envMap[govcDatacenterKey] = v.Datacenter
-
-	v.envMap = envMap
-	return envMap, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (v *VSphereTestRunner) createInstance(c instanceRunConf) (string, error) {
-	name := getTestRunnerName(v.logger, c.JobID)
-
-	ssmActivationInfo, err := ssm.CreateActivation(c.Session, name, c.InstanceProfileName)
-	if err != nil {
-		return "", fmt.Errorf("unable to create ssm activation: %v", err)
-	}
-
-	// TODO: import ova template from url if not exist
-
-	opts := vsphere.OVFDeployOptions{
-		Name:             name,
-		PowerOn:          true,
-		DiskProvisioning: "thin",
-		WaitForIP:        true,
-		InjectOvfEnv:     true,
-		NetworkMappings:  []vsphere.NetworkMapping{{Name: v.Network, Network: v.Network}},
-		PropertyMapping: []vsphere.OVFProperty{
-			{Key: ssmActivationCodeKey, Value: ssmActivationInfo.ActivationCode},
-			{Key: ssmActivationIdKey, Value: ssmActivationInfo.ActivationID},
-			{Key: ssmActivationRegionKey, Value: *c.Session.Config.Region},
-		},
-	}
-	optsJSON, err := json.Marshal(opts)
-	if err != nil {
-		return "", err
-	}
-	v.logger.V(1).Info("Creating vSphere Test Runner instance", "name", name, "ovf_deployment_opts", optsJSON)
-
-	// deploy template
-	if err := vsphere.DeployTemplate(v.envMap, v.Library, v.Template, name, v.Folder, v.Datacenter, v.Datastore, v.ResourcePool, opts); err != nil {
-		return "", err
-	}
-
-	var ssmInstance *aws_ssm.InstanceInformation
-	err = retrier.Retry(10, 5*time.Second, func() error {
-		ssmInstance, err = ssm.GetInstanceByActivationId(c.Session, ssmActivationInfo.ActivationID)
-		if err != nil {
-			return fmt.Errorf("failed to get ssm instance info post ovf deployment: %v", err)
-		}
-		return nil
-	})
-	if err != nil {
-		return "", fmt.Errorf("waiting for ssm instance to activate %s : %v", name, err)
-	}
-
-	v.InstanceID = *ssmInstance.InstanceId
-	v.ActivationId = ssmActivationInfo.ActivationID
-
-	return *ssmInstance.InstanceId, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
+// TODO: import ova template from url if not exist
+
+// deploy template
+
 func (e *Ec2TestRunner) createInstance(c instanceRunConf) (string, error) {
-	name := getTestRunnerName(e.logger, c.JobID)
-	e.logger.V(1).Info("Creating ec2 Test Runner instance", "name", name)
-	instanceID, err := ec2.CreateInstance(c.Session, e.AmiID, key, tag, c.InstanceProfileName, e.SubnetID, name)
-	if err != nil {
-		return "", fmt.Errorf("creating instance for e2e tests: %v", err)
-	}
-	e.logger.V(1).Info("Instance created", "instance-id", instanceID)
-	e.InstanceID = instanceID
-	return instanceID, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func (v *VSphereTestRunner) tagInstance(c instanceRunConf, key, value string) error {
-	vmName := getTestRunnerName(v.logger, c.JobID)
-	vmPath := fmt.Sprintf("/%s/vm/%s/%s", v.Datacenter, v.Folder, vmName)
-	tag := fmt.Sprintf("%s:%s", key, value)
-
-	if err := vsphere.TagVirtualMachine(v.envMap, vmPath, tag); err != nil {
-		return fmt.Errorf("failed to tag vSphere test runner: %v", err)
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (e *Ec2TestRunner) tagInstance(c instanceRunConf, key, value string) error {
-	err := ec2.TagInstance(c.Session, e.InstanceID, key, value)
-	if err != nil {
-		return fmt.Errorf("failed to tag Ec2 test runner: %v", err)
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (v *VSphereTestRunner) decommInstance(c instanceRunConf) error {
-	_, deregisterError := ssm.DeregisterInstance(c.Session, v.InstanceID)
-	_, deactivateError := ssm.DeleteActivation(c.Session, v.ActivationId)
-	deleteError := cleanup.VsphereRmVms(context.Background(), getTestRunnerName(v.logger, c.JobID), executables.WithGovcEnvMap(v.envMap))
-
-	if deregisterError != nil {
-		return fmt.Errorf("failed to decommission vsphere test runner ssm instance: %v", deregisterError)
-	}
-
-	if deactivateError != nil {
-		return fmt.Errorf("failed to decommission vsphere test runner ssm instance: %v", deactivateError)
-	}
-
-	if deleteError != nil {
-		return fmt.Errorf("failed to decommission vsphere test runner ssm instance: %v", deleteError)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (e *Ec2TestRunner) decommInstance(c instanceRunConf) error {
-	runnerName := getTestRunnerName(e.logger, c.JobID)
-	e.logger.V(1).Info("Terminating ec2 Test Runner instance", "instanceID", e.InstanceID, "runner", runnerName)
-	if err := ec2.TerminateEc2Instances(c.Session, aws.StringSlice([]string{e.InstanceID})); err != nil {
-		return fmt.Errorf("terminating instance %s for runner %s: %w", e.InstanceID, runnerName, err)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func getTestRunnerName(logger logr.Logger, jobId string) string {
-	name := fmt.Sprintf("eksa-e2e-%s", jobId)
-	if len(name) > 80 {
-		logger.V(1).Info("Truncating test runner name to 80 chars", "original_name", name)
-		name = name[len(name)-80:]
-		logger.V(1).Info("Truncated test runner name", "truncated_name", name)
-	}
-	return name
+	_ = "STUB: not implemented"
+	return ""
 }

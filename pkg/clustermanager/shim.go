@@ -21,36 +21,37 @@ func NewCreateClusterShim(
 	spec *cluster.Spec,
 	provider providers.Provider,
 ) *CreateClusterShim {
-	return &CreateClusterShim{
-		spec: spec,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateAsync satisfies the workload.Cluster interface.
 func (s CreateClusterShim) CreateAsync(ctx context.Context, management *types.Cluster) error {
+	_ = "STUB: not implemented"
 	// TODO: implement reusing the apply logic from clustermanager.Applier
 	return nil
 }
 
 // GetName satisfies the workload.Cluster interface.
-func (s CreateClusterShim) GetName() string {
-	return s.spec.Cluster.Name
-}
+func (s CreateClusterShim) GetName() string { _ = "STUB: not implemented"; return "" }
 
 // WriteKubeconfig satisfies the workload.Cluster interface.
 func (s CreateClusterShim) WriteKubeconfig(ctx context.Context, w io.Writer, management *types.Cluster) error {
+	_ = "STUB: not implemented"
 	// TODO: reuse logic from clustermanager.ClusterCreator
 	return nil
 }
 
 // WaitUntilControlPlaneAvailable satisfies the workload.Cluster interface.
 func (s CreateClusterShim) WaitUntilControlPlaneAvailable(ctx context.Context, management *types.Cluster) error {
+	_ = "STUB: not implemented"
 	// TODO: implement reusing the wait logic from clustermanager.Applier
 	return nil
 }
 
 // WaitUntilReady satisfies the workload.Cluster interface.
 func (s CreateClusterShim) WaitUntilReady(ctx context.Context, management *types.Cluster) error {
+	_ = "STUB: not implemented"
 	// TODO: implement reusing the wait logic from clustermanager.Applier
 	return nil
 }

@@ -2,14 +2,10 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
-	"github.com/spf13/viper"
 
-	"github.com/aws/eks-anywhere/internal/test/cleanup"
 	"github.com/aws/eks-anywhere/pkg/logger"
 )
 
@@ -33,12 +29,8 @@ var cleanUpVsphereCmd = &cobra.Command{
 }
 
 func preRunCleanUpVsphereSetup(cmd *cobra.Command, args []string) {
-	cmd.Flags().VisitAll(func(flag *pflag.Flag) {
-		err := viper.BindPFlag(flag.Name, flag)
-		if err != nil {
-			log.Fatalf("Error initializing flags: %v", err)
-		}
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 var requiredVsphereCleanUpFlags = []string{clusterNameFlagName}
@@ -54,12 +46,4 @@ func init() {
 	}
 }
 
-func cleanUpVsphereTestResources(ctx context.Context) error {
-	clusterName := viper.GetString(clusterNameFlagName)
-	err := cleanup.CleanUpVsphereTestResources(ctx, clusterName)
-	if err != nil {
-		return fmt.Errorf("running cleanup for vsphere vcenter vms: %v", err)
-	}
-
-	return nil
-}
+func cleanUpVsphereTestResources(ctx context.Context) error { _ = "STUB: not implemented"; return nil }

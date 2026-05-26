@@ -4,9 +4,7 @@ package awsrulesfn
 
 // GetPartition returns an AWS [Partition] for the region provided. If the
 // partition cannot be determined nil will be returned.
-func GetPartition(region string) *PartitionConfig {
-	return getPartition(partitions, region)
-}
+func GetPartition(region string) *PartitionConfig { _ = "STUB: not implemented"; return nil }
 
 var partitions = []Partition{
 	{

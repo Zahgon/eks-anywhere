@@ -1,12 +1,9 @@
 package cmd
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"os"
-	"path/filepath"
-	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -37,35 +34,11 @@ func init() {
 	}
 }
 
-func rootPersistentPreRun(cmd *cobra.Command, args []string) {
-	if err := initLogger(); err != nil {
-		log.Fatal(err)
-	}
-}
+func rootPersistentPreRun(cmd *cobra.Command, args []string) { _ = "STUB: not implemented"; return }
 
-func initLogger() error {
-	logsFolder := filepath.Join(".", "eksa-cli-logs")
-	err := os.MkdirAll(logsFolder, 0o750)
-	if err != nil {
-		return fmt.Errorf("failed to create logs folder: %v", err)
-	}
+func initLogger() error { _ = "STUB: not implemented"; return nil }
 
-	outputFilePath := filepath.Join(".", "eksa-cli-logs", fmt.Sprintf("%s.log", time.Now().Format("2006-01-02T15_04_05")))
-	if err = logger.Init(logger.Options{
-		Level:          viper.GetInt("verbosity"),
-		OutputFilePath: outputFilePath,
-	}); err != nil {
-		return fmt.Errorf("root cmd: %v", err)
-	}
-
-	return nil
-}
-
-func Execute() error {
-	return rootCmd.ExecuteContext(context.Background())
-}
+func Execute() error { _ = "STUB: not implemented"; return nil }
 
 // RootCmd returns the eksctl-anywhere root cmd.
-func RootCmd() *cobra.Command {
-	return rootCmd
-}
+func RootCmd() *cobra.Command { _ = "STUB: not implemented"; return nil }

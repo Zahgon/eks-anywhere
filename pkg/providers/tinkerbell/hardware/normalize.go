@@ -1,7 +1,5 @@
 package hardware
 
-import "strings"
-
 // NormalizerFunc applies a normalization transformation to the Machine.
 type NormalizerFunc func(Machine) Machine
 
@@ -14,49 +12,21 @@ type Normalizer struct {
 
 // NewNormalizer creates a Normalizer instance that decorates r's Read(). A set of default
 // normalization functions are pre-registered.
-func NewNormalizer(r MachineReader) *Normalizer {
-	normalizer := NewRawNormalizer(r)
-	RegisterDefaultNormalizations(normalizer)
-	return normalizer
-}
+func NewNormalizer(r MachineReader) *Normalizer { _ = "STUB: not implemented"; return nil }
 
 // NewRawNormalizer returns a Normalizer with default normalizations registered by
 // RegisterDefaultNormalizations.
-func NewRawNormalizer(r MachineReader) *Normalizer {
-	return &Normalizer{reader: r}
-}
+func NewRawNormalizer(r MachineReader) *Normalizer { _ = "STUB: not implemented"; return nil }
 
 // Read reads an Machine from the decorated MachineReader, applies all normalization funcs and
 // returns the machine. If the decorated MachineReader errors, it is returned.
-func (n Normalizer) Read() (Machine, error) {
-	machine, err := n.reader.Read()
-	if err != nil {
-		return Machine{}, err
-	}
-
-	for _, fn := range n.normalizers {
-		machine = fn(machine)
-	}
-
-	return machine, nil
-}
+func (n Normalizer) Read() (Machine, error) { _ = "STUB: not implemented"; return *new(Machine), nil }
 
 // Register fn to n such that fn is run over each machine read from the wrapped MachineReader.
-func (n *Normalizer) Register(fn NormalizerFunc) {
-	n.normalizers = append(n.normalizers, fn)
-}
+func (n *Normalizer) Register(fn NormalizerFunc) { _ = "STUB: not implemented"; return }
 
 // LowercaseMACAddress ensures m's MACAddress field has lower chase characters.
-func LowercaseMACAddress(m Machine) Machine {
-	m.MACAddress = strings.ToLower(m.MACAddress)
-	return m
-}
+func LowercaseMACAddress(m Machine) Machine { _ = "STUB: not implemented"; return *new(Machine) }
 
 // RegisterDefaultNormalizations registers a set of default normalizations on n.
-func RegisterDefaultNormalizations(n *Normalizer) {
-	for _, fn := range []NormalizerFunc{
-		LowercaseMACAddress,
-	} {
-		n.Register(fn)
-	}
-}
+func RegisterDefaultNormalizations(n *Normalizer) { _ = "STUB: not implemented"; return }

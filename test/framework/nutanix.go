@@ -2,14 +2,10 @@ package framework
 
 import (
 	"context"
-	"fmt"
-	"os"
-	"strings"
 	"testing"
 
 	"github.com/aws/eks-anywhere/internal/pkg/api"
 	"github.com/aws/eks-anywhere/internal/pkg/nutanix"
-	"github.com/aws/eks-anywhere/internal/test/cleanup"
 	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	"github.com/aws/eks-anywhere/pkg/constants"
 	releasev1 "github.com/aws/eks-anywhere/release/api/v1alpha1"
@@ -117,662 +113,611 @@ type Nutanix struct {
 
 type NutanixOpt func(*Nutanix)
 
-func NewNutanix(t *testing.T, opts ...NutanixOpt) *Nutanix {
-	checkRequiredEnvVars(t, requiredNutanixEnvVars)
+func NewNutanix(t *testing.T, opts ...NutanixOpt) *Nutanix { _ = "STUB: not implemented"; return nil }
 
-	nutanixProvider := &Nutanix{
-		t: t,
-		fillers: []api.NutanixFiller{
-			api.WithNutanixStringFromEnvVar(nutanixEndpoint, api.WithNutanixEndpoint),
-			api.WithNutanixIntFromEnvVar(nutanixPort, api.WithNutanixPort),
-			api.WithNutanixStringFromEnvVar(nutanixAdditionalTrustBundle, api.WithNutanixAdditionalTrustBundle),
-			api.WithNutanixStringFromEnvVar(nutanixMachineMemorySize, api.WithNutanixMachineMemorySize),
-			api.WithNutanixStringFromEnvVar(nutanixSystemDiskSize, api.WithNutanixMachineSystemDiskSize),
-			api.WithNutanixInt32FromEnvVar(nutanixMachineVCPUsPerSocket, api.WithNutanixMachineVCPUsPerSocket),
-			api.WithNutanixInt32FromEnvVar(nutanixMachineVCPUSocket, api.WithNutanixMachineVCPUSocket),
-			api.WithNutanixStringFromEnvVar(nutanixSSHAuthorizedKey, api.WithNutanixSSHAuthorizedKey),
-			api.WithNutanixBoolFromEnvVar(nutanixInsecure, api.WithNutanixInsecure),
-			// Assumption: generated clusterconfig by nutanix provider sets name as id type by default.
-			// for uuid specific id type, we will set it thru each specific test so that current CI
-			// works as is with name id type for following resources
-			api.WithNutanixStringFromEnvVar(nutanixPrismElementClusterName, api.WithNutanixPrismElementClusterName),
-			api.WithNutanixStringFromEnvVar(nutanixSubnetName, api.WithNutanixSubnetName),
-		},
-	}
-
-	nutanixProvider.controlPlaneEndpointIP = os.Getenv(nutanixControlPlaneEndpointIP)
-	nutanixProvider.cpCidr = os.Getenv(nutanixControlPlaneCidrVar)
-	nutanixProvider.podCidr = os.Getenv(nutanixPodCidrVar)
-	nutanixProvider.serviceCidr = os.Getenv(nutanixServiceCidrVar)
-	client, err := nutanix.NewPrismClient(os.Getenv(nutanixEndpoint), os.Getenv(nutanixPort), true)
-	if err != nil {
-		t.Fatalf("Failed to initialize Nutanix Prism Client: %v", err)
-	}
-	nutanixProvider.client = client
-	nutanixProvider.templatesRegistry = &templateRegistry{cache: map[string]string{}, generator: nutanixProvider}
-
-	for _, opt := range opts {
-		opt(nutanixProvider)
-	}
-
-	return nutanixProvider
-}
+// Assumption: generated clusterconfig by nutanix provider sets name as id type by default.
+// for uuid specific id type, we will set it thru each specific test so that current CI
+// works as is with name id type for following resources
 
 // RequiredNutanixEnvVars returns a list of environment variables needed for Nutanix tests.
-func RequiredNutanixEnvVars() []string {
-	return requiredNutanixEnvVars
-}
+func RequiredNutanixEnvVars() []string { _ = "STUB: not implemented"; return nil }
 
 // Name returns the provider name. It satisfies the test framework Provider.
 func (n *Nutanix) Name() string {
-	return "nutanix"
+	_ = "STUB: not implemented"
+
+	// Setup does nothing. It satisfies the test framework Provider.
+	return ""
 }
 
-// Setup does nothing. It satisfies the test framework Provider.
-func (n *Nutanix) Setup() {}
+func (n *Nutanix) Setup() {
+	_ = "STUB: not implemented"
 
-// UpdateKubeConfig customizes generated kubeconfig for the provider.
+	// UpdateKubeConfig customizes generated kubeconfig for the provider.
+	return
+}
+
 func (n *Nutanix) UpdateKubeConfig(content *[]byte, clusterName string) error {
+	_ = "STUB: not implemented"
+
+	// CleanupResources satisfies the test framework Provider.
 	return nil
 }
 
-// CleanupResources satisfies the test framework Provider.
-func (n *Nutanix) CleanupResources(clustername string) error {
-	return cleanup.NutanixTestResources(clustername, os.Getenv(nutanixEndpoint), os.Getenv(nutanixPort), true, true)
-}
+func (n *Nutanix) CleanupResources(clustername string) error { _ = "STUB: not implemented"; return nil }
 
 // ClusterConfigUpdates satisfies the test framework Provider.
 func (n *Nutanix) ClusterConfigUpdates() []api.ClusterConfigFiller {
-	f := make([]api.ClusterFiller, 0, len(n.clusterFillers)+3)
-	f = append(f, n.clusterFillers...)
-	if n.controlPlaneEndpointIP != "" {
-		f = append(f, api.WithControlPlaneEndpointIP(n.controlPlaneEndpointIP))
-	} else {
-		clusterIP, err := GetIP(n.cpCidr, ClusterIPPoolEnvVar)
-		if err != nil {
-			n.t.Fatalf("failed to get cluster ip for test environment: %v", err)
-		}
-		f = append(f, api.WithControlPlaneEndpointIP(clusterIP))
-	}
-
-	if n.podCidr != "" {
-		f = append(f, api.WithPodCidr(n.podCidr))
-	}
-
-	if n.serviceCidr != "" {
-		f = append(f, api.WithServiceCidr(n.serviceCidr))
-	}
-
-	return []api.ClusterConfigFiller{api.ClusterToConfigFiller(f...), api.NutanixToConfigFiller(n.fillers...)}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithProviderUpgrade returns a ClusterE2EOpt that updates the cluster config for provider-specific upgrade.
 func (n *Nutanix) WithProviderUpgrade(fillers ...api.NutanixFiller) ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		e.UpdateClusterConfig(api.NutanixToConfigFiller(fillers...))
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }
 
 // WithKubeVersionAndOS returns a cluster config filler that sets the cluster kube version and the right template for all
 // nutanix machine configs.
 func (n *Nutanix) WithKubeVersionAndOS(_ anywherev1.KubernetesVersion, _ OS, _ *releasev1.EksARelease, _ ...string) api.ClusterConfigFiller {
+	_ = "STUB: not implemented"
 	// TODO: Update tests to use this
-	panic("Not implemented for Nutanix yet")
+	return *new(api.ClusterConfigFiller)
 }
 
 // WithNewWorkerNodeGroup returns an api.ClusterFiller that adds a new workerNodeGroupConfiguration and
 // a corresponding NutanixMachineConfig to the cluster config.
 func (n *Nutanix) WithNewWorkerNodeGroup(name string, workerNodeGroup *WorkerNodeGroup) api.ClusterConfigFiller {
+	_ = "STUB: not implemented"
 	// TODO: Implement for Nutanix provider
-	panic("Not implemented for Nutanix yet")
+	return *new(api.ClusterConfigFiller)
 }
 
 // withNutanixKubeVersionAndOS returns a NutanixOpt that adds API fillers to use a Nutanix template for
 // the specified OS family and version (default if not provided), corresponding to a particular
 // Kubernetes version, in addition to configuring all machine configs to use this OS family.
 func withNutanixKubeVersionAndOS(kubeVersion anywherev1.KubernetesVersion, os OS, release *releasev1.EksARelease) NutanixOpt {
-	return func(n *Nutanix) {
-		n.fillers = append(n.fillers,
-			n.templateForKubeVersionAndOS(kubeVersion, os, release),
-			api.WithOsFamilyForAllNutanixMachines(osFamiliesForOS[os]),
-		)
-	}
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204Kubernetes129Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template for k8s 1.29
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2204Kubernetes129Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube129, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204Kubernetes130Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template for k8s 1.30
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2204Kubernetes130Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube130, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204Kubernetes131Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template for k8s 1.31
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2204Kubernetes131Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube131, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204Kubernetes132Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template for k8s 1.32
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2204Kubernetes132Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube132, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204Kubernetes133Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template for k8s 1.33
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2204Kubernetes133Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube133, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204Kubernetes134Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template for k8s 1.34
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2204Kubernetes134Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube134, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2404Kubernetes129Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template for k8s 1.29
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2404Kubernetes129Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube129, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2404Kubernetes130Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template for k8s 1.30
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2404Kubernetes130Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube130, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2404Kubernetes131Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template for k8s 1.31
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2404Kubernetes131Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube131, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2404Kubernetes132Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template for k8s 1.32
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2404Kubernetes132Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube132, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2404Kubernetes133Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template for k8s 1.33
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2404Kubernetes133Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube133, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2404Kubernetes134Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template for k8s 1.34
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2404Kubernetes134Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube134, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithRedHat129Nutanix returns a NutanixOpt that adds API fillers to use a RedHat 8 Nutanix template for k8s 1.29
 // and the "redhat" osFamily in all machine configs.
-func WithRedHat129Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube129, RedHat8, nil)
-}
+func WithRedHat129Nutanix() NutanixOpt { _ = "STUB: not implemented"; return *new(NutanixOpt) }
 
 // WithRedHat130Nutanix returns a NutanixOpt that adds API fillers to use a RedHat 8 Nutanix template for k8s 1.30
 // and the "redhat" osFamily in all machine configs.
-func WithRedHat130Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube130, RedHat8, nil)
-}
+func WithRedHat130Nutanix() NutanixOpt { _ = "STUB: not implemented"; return *new(NutanixOpt) }
 
 // WithRedHat131Nutanix returns a NutanixOpt that adds API fillers to use a RedHat 8 Nutanix template for k8s 1.31
 // and the "redhat" osFamily in all machine configs.
-func WithRedHat131Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube131, RedHat8, nil)
-}
+func WithRedHat131Nutanix() NutanixOpt { _ = "STUB: not implemented"; return *new(NutanixOpt) }
 
 // WithRedHat9Kubernetes129Nutanix returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template for k8s 1.29
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes129Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube129, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithRedHat9Kubernetes130Nutanix returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template for k8s 1.30
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes130Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube130, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithRedHat9Kubernetes131Nutanix returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template for k8s 1.31
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes131Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube131, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithRedHat9Kubernetes132Nutanix returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template for k8s 1.32
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes132Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube132, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithRedHat9Kubernetes133Nutanix returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template for k8s 1.33
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes133Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube133, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithRedHat9Kubernetes134Nutanix returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template for k8s 1.34
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes134Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube134, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204135Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template for k8s 1.35
 // and the "ubuntu" osFamily in all machine configs.
-func WithUbuntu2204135Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube135, Ubuntu2204, nil)
-}
+func WithUbuntu2204135Nutanix() NutanixOpt { _ = "STUB: not implemented"; return *new(NutanixOpt) }
 
 // WithUbuntu2404135Nutanix returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template for k8s 1.35
 // and the "ubuntu" osFamily in all machine configs.
-func WithUbuntu2404135Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube135, Ubuntu2404, nil)
-}
+func WithUbuntu2404135Nutanix() NutanixOpt { _ = "STUB: not implemented"; return *new(NutanixOpt) }
 
 // WithRedHat9135Nutanix returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template for k8s 1.35
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes135Nutanix() NutanixOpt {
-	return withNutanixKubeVersionAndOS(anywherev1.Kube135, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // withNutanixKubeVersionAndOSForUUID returns a NutanixOpt that adds API fillers to use a Nutanix template UUID
 // corresponding to the provided OS family and Kubernetes version, in addition to configuring all machine configs
 // to use this OS family.
 func withNutanixKubeVersionAndOSForUUID(kubeVersion anywherev1.KubernetesVersion, os OS, release *releasev1.EksARelease) NutanixOpt {
-	return func(n *Nutanix) {
-		useBundlesOverride := getBundlesOverride() == "true"
-		name := n.templateForDevRelease(kubeVersion, os, useBundlesOverride)
-		n.fillers = append(n.fillers, n.withNutanixUUID(name, osFamiliesForOS[os])...)
-	}
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithRedHat129NutanixUUID returns a NutanixOpt that adds API fillers to use a RedHat 8 Nutanix template UUID for k8s 1.29
 // and the "redhat" osFamily in all machine configs.
-func WithRedHat129NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube129, RedHat8, nil)
-}
+func WithRedHat129NutanixUUID() NutanixOpt { _ = "STUB: not implemented"; return *new(NutanixOpt) }
 
 // WithRedHat130NutanixUUID returns a NutanixOpt that adds API fillers to use a RedHat Nutanix template UUID for k8s 1.30
 // and the "redhat" osFamily in all machine configs.
-func WithRedHat130NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube130, RedHat8, nil)
-}
+func WithRedHat130NutanixUUID() NutanixOpt { _ = "STUB: not implemented"; return *new(NutanixOpt) }
 
 // WithRedHat131NutanixUUID returns a NutanixOpt that adds API fillers to use a RedHat Nutanix template UUID for k8s 1.31
 // and the "redhat" osFamily in all machine configs.
-func WithRedHat131NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube131, RedHat8, nil)
-}
+func WithRedHat131NutanixUUID() NutanixOpt { _ = "STUB: not implemented"; return *new(NutanixOpt) }
 
 // WithRedHat9Kubernetes129NutanixUUID returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template UUID for k8s 1.28
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes129NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube129, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithRedHat9Kubernetes130NutanixUUID returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template UUID for k8s 1.30
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes130NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube130, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithRedHat9Kubernetes131NutanixUUID returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template UUID for k8s 1.31
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes131NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube131, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithRedHat9Kubernetes132NutanixUUID returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template UUID for k8s 1.32
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes132NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube132, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithRedHat9Kubernetes133NutanixUUID returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template UUID for k8s 1.33
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes133NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube133, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithRedHat9Kubernetes134NutanixUUID returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template UUID for k8s 1.34
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes134NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube134, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204135NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template UUID for k8s 1.35
 // and the "ubuntu" osFamily in all machine configs.
-func WithUbuntu2204135NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube135, Ubuntu2204, nil)
-}
+func WithUbuntu2204135NutanixUUID() NutanixOpt { _ = "STUB: not implemented"; return *new(NutanixOpt) }
 
 // WithUbuntu2404135NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template UUID for k8s 1.35
 // and the "ubuntu" osFamily in all machine configs.
-func WithUbuntu2404135NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube135, Ubuntu2404, nil)
-}
+func WithUbuntu2404135NutanixUUID() NutanixOpt { _ = "STUB: not implemented"; return *new(NutanixOpt) }
 
 // WithRedHat9135NutanixUUID returns a NutanixOpt that adds API fillers to use a RedHat 9 Nutanix template UUID for k8s 1.35
 // and the "redhat" osFamily in all machine configs.
 func WithRedHat9Kubernetes135NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube135, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204Kubernetes129NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template UUID for k8s 1.29
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2204Kubernetes129NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube129, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204Kubernetes130NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template UUID for k8s 1.30
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2204Kubernetes130NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube130, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204Kubernetes131NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template UUID for k8s 1.31
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2204Kubernetes131NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube131, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204Kubernetes132NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template UUID for k8s 1.32
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2204Kubernetes132NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube132, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204Kubernetes133NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template UUID for k8s 1.33
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2204Kubernetes133NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube133, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2204Kubernetes134NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 22.04 Nutanix template UUID for k8s 1.34
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2204Kubernetes134NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube134, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2404Kubernetes129NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template UUID for k8s 1.29
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2404Kubernetes129NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube129, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2404Kubernetes130NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template UUID for k8s 1.30
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2404Kubernetes130NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube130, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2404Kubernetes131NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template UUID for k8s 1.31
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2404Kubernetes131NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube131, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2404Kubernetes132NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template UUID for k8s 1.32
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2404Kubernetes132NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube132, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2404Kubernetes133NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template UUID for k8s 1.33
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2404Kubernetes133NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube133, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 // WithUbuntu2404Kubernetes134NutanixUUID returns a NutanixOpt that adds API fillers to use a Ubuntu 24.04 Nutanix template UUID for k8s 1.34
 // and the "ubuntu" osFamily in all machine configs.
 func WithUbuntu2404Kubernetes134NutanixUUID() NutanixOpt {
-	return withNutanixKubeVersionAndOSForUUID(anywherev1.Kube134, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(NutanixOpt)
 }
 
 func (n *Nutanix) withNutanixUUID(name string, osFamily anywherev1.OSFamily) []api.NutanixFiller {
-	uuid, err := n.client.GetImageUUIDFromName(context.Background(), name)
-	if err != nil {
-		n.t.Fatalf("Failed to get UUID for image %s: %v", name, err)
-	}
-	return append([]api.NutanixFiller{},
-		api.WithNutanixMachineTemplateImageUUID(*uuid),
-		api.WithOsFamilyForAllNutanixMachines(osFamily),
-	)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithPrismElementClusterUUID returns a NutanixOpt that adds API fillers to use a PE Cluster UUID.
-func WithPrismElementClusterUUID() NutanixOpt {
-	return func(n *Nutanix) {
-		name := os.Getenv(nutanixPrismElementClusterName)
-		uuid, err := n.client.GetClusterUUIDFromName(context.Background(), name)
-		if err != nil {
-			n.t.Fatalf("Failed to get UUID for image %s: %v", name, err)
-		}
-		n.fillers = append(n.fillers, api.WithNutanixPrismElementClusterUUID(*uuid))
-	}
-}
+func WithPrismElementClusterUUID() NutanixOpt { _ = "STUB: not implemented"; return *new(NutanixOpt) }
 
 // WithNutanixSubnetUUID returns a NutanixOpt that adds API fillers to use a Subnet UUID.
-func WithNutanixSubnetUUID() NutanixOpt {
-	return func(n *Nutanix) {
-		name := os.Getenv(nutanixSubnetName)
-		uuid, err := n.client.GetSubnetUUIDFromName(context.Background(), name)
-		if err != nil {
-			n.t.Fatalf("Failed to get UUID for image %s: %v", name, err)
-		}
-		n.fillers = append(n.fillers, api.WithNutanixSubnetUUID(*uuid))
-	}
-}
+func WithNutanixSubnetUUID() NutanixOpt { _ = "STUB: not implemented"; return *new(NutanixOpt) }
 
 // templateForKubeVersionAndOS returns a Nutanix filler for the given OS and Kubernetes version.
 func (n *Nutanix) templateForKubeVersionAndOS(kubeVersion anywherev1.KubernetesVersion, os OS, release *releasev1.EksARelease) api.NutanixFiller {
-	var template string
-	useBundlesOverride := getBundlesOverride() == "true"
-	if release == nil {
-		template = n.templateForDevRelease(kubeVersion, os, useBundlesOverride)
-	} else {
-		template = n.templatesRegistry.templateForRelease(n.t, release, kubeVersion, os, useBundlesOverride)
-	}
-	return api.WithNutanixMachineTemplateImageName(template)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2204Kubernetes129Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2204Kubernetes129Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube129, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2204Kubernetes130Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2204Kubernetes130Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube130, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2204Kubernetes131Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2204Kubernetes131Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube131, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2204Kubernetes132Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2204Kubernetes132Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube132, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2204Kubernetes133Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2204Kubernetes133Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube133, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2204Kubernetes134Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2204Kubernetes134Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube134, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2404Kubernetes129Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2404Kubernetes129Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube129, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2404Kubernetes130Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2404Kubernetes130Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube130, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2404Kubernetes131Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2404Kubernetes131Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube131, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2404Kubernetes132Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2404Kubernetes132Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube132, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2404Kubernetes133Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2404Kubernetes133Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube133, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2404Kubernetes134Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2404Kubernetes134Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube134, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // RedHat129Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) RedHat129Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube129, RedHat8, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // RedHat130Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) RedHat130Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube130, RedHat8, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // RedHat131Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) RedHat131Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube131, RedHat8, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // RedHat9Kubernetes129Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) RedHat9Kubernetes129Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube129, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // RedHat9Kubernetes130Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) RedHat9Kubernetes130Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube130, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // RedHat9Kubernetes131Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) RedHat9Kubernetes131Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube131, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // RedHat9Kubernetes132Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) RedHat9Kubernetes132Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube132, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // RedHat9Kubernetes133Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) RedHat9Kubernetes133Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube133, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // RedHat9Kubernetes134Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) RedHat9Kubernetes134Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube134, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2204135Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2204135Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube135, Ubuntu2204, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // Ubuntu2404135Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) Ubuntu2404135Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube135, Ubuntu2404, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // RedHat9135Template returns NutanixFiller by reading the env var and setting machine config's
 // image name parameter in the spec.
 func (n *Nutanix) RedHat9135Template() api.NutanixFiller {
-	return n.templateForKubeVersionAndOS(anywherev1.Kube135, RedHat9, nil)
+	_ = "STUB: not implemented"
+	return *new(api.NutanixFiller)
 }
 
 // ClusterStateValidations returns a list of provider specific ClusterStateValidations.
 func (n *Nutanix) ClusterStateValidations() []clusterf.StateValidation {
-	return []clusterf.StateValidation{}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (n *Nutanix) getDevRelease() *releasev1.EksARelease {
-	n.t.Helper()
-	if n.devRelease == nil {
-		localDevRelease, err := localEksaCLIDevVersionRelease()
-		if err != nil {
-			n.t.Fatal(err)
-		}
-		n.t.Log("Using local eksa dev release:", localDevRelease.Version)
-		n.devRelease = localDevRelease
-	}
-
-	return n.devRelease
-}
+func (n *Nutanix) getDevRelease() *releasev1.EksARelease { _ = "STUB: not implemented"; return nil }
 
 func (n *Nutanix) templateForDevRelease(kubeVersion anywherev1.KubernetesVersion, os OS, useBundlesOverride bool) string {
-	n.t.Helper()
-	return n.templatesRegistry.templateForRelease(n.t, n.getDevRelease(), kubeVersion, os, useBundlesOverride)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // envVarForTemplate looks for explicit configuration through an env var: "T_NUTANIX_TEMPLATE_{osFamily}_{eks-d version}"
 // eg: T_NUTANIX_TEMPLATE_UBUNTU_KUBERNETES_1_27_EKS_22.
 func (n *Nutanix) envVarForTemplate(os OS, eksDName string) string {
-	return fmt.Sprintf("T_NUTANIX_TEMPLATE_%s_%s", strings.ToUpper(strings.ReplaceAll(string(os), "-", "_")), strings.ToUpper(strings.ReplaceAll(eksDName, "-", "_")))
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // defaultNameForTemplate looks for a template: "{eks-d version}-{osFamily}"
 // eg: kubernetes-1-27-eks-22-ubuntu.
 func (n *Nutanix) defaultNameForTemplate(os OS, eksDName string) string {
-	return fmt.Sprintf("%s-%s", strings.ToLower(eksDName), strings.ToLower(string(os)))
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // defaultEnvVarForTemplate returns the value of the default template env vars: "T_NUTANIX_TEMPLATE_{osFamily}_{kubeVersion}"
 // eg. T_NUTANIX_TEMPLATE_UBUNTU_1_27.
 func (n *Nutanix) defaultEnvVarForTemplate(os OS, kubeVersion anywherev1.KubernetesVersion) string {
-	return fmt.Sprintf("T_NUTANIX_TEMPLATE_NAME_%s_%s", strings.ToUpper(strings.ReplaceAll(string(os), "-", "_")), strings.ReplaceAll(string(kubeVersion), ".", "_"))
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // searchTemplate returns template name if the given template exists in Prism Central.
 func (n *Nutanix) searchTemplate(ctx context.Context, template string) (string, error) {
+	_ = "STUB: not implemented"
 	// TODO: implement search functionality for Nutanix templates
 	return "", nil
 }

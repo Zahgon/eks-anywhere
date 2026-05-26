@@ -1,12 +1,5 @@
 package framework
 
-import (
-	"os"
-	"strings"
-
-	"github.com/aws/eks-anywhere/internal/pkg/api"
-)
-
 const (
 	vsphereHttpProxyVar     = "T_HTTP_PROXY_VSPHERE"
 	vsphereHttpsProxyVar    = "T_HTTPS_PROXY_VSPHERE"
@@ -45,18 +38,6 @@ type ProxyRequiredEnvVars struct {
 }
 
 func WithProxy(requiredEnvVars ProxyRequiredEnvVars) ClusterE2ETestOpt {
-	return func(e *ClusterE2ETest) {
-		checkRequiredEnvVars(e.T, []string{requiredEnvVars.HttpProxy, requiredEnvVars.HttpsProxy, requiredEnvVars.NoProxy})
-		httpProxy := os.Getenv(requiredEnvVars.HttpProxy)
-		httpsProxy := os.Getenv(requiredEnvVars.HttpsProxy)
-		noProxies := os.Getenv(requiredEnvVars.NoProxy)
-		var noProxy []string
-		for _, data := range strings.Split(noProxies, ",") {
-			noProxy = append(noProxy, strings.TrimSpace(data))
-		}
-
-		e.clusterFillers = append(e.clusterFillers,
-			api.WithProxyConfig(httpProxy, httpsProxy, noProxy),
-		)
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterE2ETestOpt)
 }

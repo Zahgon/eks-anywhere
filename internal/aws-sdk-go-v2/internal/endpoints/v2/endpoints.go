@@ -1,9 +1,7 @@
 package endpoints
 
 import (
-	"fmt"
 	"regexp"
-	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/smithy-go/logging"
@@ -75,13 +73,8 @@ type Options struct {
 
 // GetEndpointVariant returns the EndpointVariant for the variant associated options.
 func (o Options) GetEndpointVariant() (v EndpointVariant) {
-	if o.UseDualStackEndpoint == aws.DualStackEndpointStateEnabled {
-		v |= DualStackVariant
-	}
-	if o.UseFIPSEndpoint == aws.FIPSEndpointStateEnabled {
-		v |= FIPSVariant
-	}
-	return v
+	_ = "STUB: not implemented"
+	return *new(EndpointVariant)
 }
 
 // Partitions is a slice of partition
@@ -89,29 +82,11 @@ type Partitions []Partition
 
 // ResolveEndpoint resolves a service endpoint for the given region and options.
 func (ps Partitions) ResolveEndpoint(region string, opts Options) (aws.Endpoint, error) {
-	if len(ps) == 0 {
-		return aws.Endpoint{}, fmt.Errorf("no partitions found")
-	}
-
-	if opts.Logger == nil {
-		opts.Logger = logging.Nop{}
-	}
-
-	if len(opts.ResolvedRegion) > 0 {
-		region = opts.ResolvedRegion
-	}
-
-	for i := 0; i < len(ps); i++ {
-		if !ps[i].canResolveEndpoint(region, opts) {
-			continue
-		}
-
-		return ps[i].ResolveEndpoint(region, opts)
-	}
-
-	// fallback to first partition format to use when resolving the endpoint.
-	return ps[0].ResolveEndpoint(region, opts)
+	_ = "STUB: not implemented"
+	return *new(aws.Endpoint), nil
 }
+
+// fallback to first partition format to use when resolving the endpoint.
 
 // Partition is an AWS partition description for a service and its' region endpoints.
 type Partition struct {
@@ -124,54 +99,23 @@ type Partition struct {
 }
 
 func (p Partition) canResolveEndpoint(region string, opts Options) bool {
-	_, ok := p.Endpoints[EndpointKey{
-		Region:  region,
-		Variant: opts.GetEndpointVariant(),
-	}]
-	return ok || p.RegionRegex.MatchString(region)
+	_ = "STUB: not implemented"
+	return false
 }
 
 // ResolveEndpoint resolves and service endpoint for the given region and options.
 func (p Partition) ResolveEndpoint(region string, options Options) (resolved aws.Endpoint, err error) {
-	if len(region) == 0 && len(p.PartitionEndpoint) != 0 {
-		region = p.PartitionEndpoint
-	}
-
-	endpoints := p.Endpoints
-
-	variant := options.GetEndpointVariant()
-	serviceVariant := options.ServiceVariant
-
-	defaults := p.Defaults[DefaultKey{
-		Variant:        variant,
-		ServiceVariant: serviceVariant,
-	}]
-
-	return p.endpointForRegion(region, variant, serviceVariant, endpoints).resolve(p.ID, region, defaults, options)
+	_ = "STUB: not implemented"
+	return *new(aws.Endpoint), nil
 }
 
 func (p Partition) endpointForRegion(region string, variant EndpointVariant, serviceVariant ServiceVariant, endpoints Endpoints) Endpoint {
-	key := EndpointKey{
-		Region:  region,
-		Variant: variant,
-	}
-
-	if e, ok := endpoints[key]; ok {
-		return e
-	}
-
-	if !p.IsRegionalized {
-		return endpoints[EndpointKey{
-			Region:         p.PartitionEndpoint,
-			Variant:        variant,
-			ServiceVariant: serviceVariant,
-		}]
-	}
-
-	// Unable to find any matching endpoint, return
-	// blank that will be used for generic endpoint creation.
-	return Endpoint{}
+	_ = "STUB: not implemented"
+	return *new(Endpoint)
 }
+
+// Unable to find any matching endpoint, return
+// blank that will be used for generic endpoint creation.
 
 // Endpoints is a map of service config regions to endpoints
 type Endpoints map[EndpointKey]Endpoint
@@ -199,104 +143,20 @@ type Endpoint struct {
 }
 
 // IsZero returns whether the endpoint structure is an empty (zero) value.
-func (e Endpoint) IsZero() bool {
-	switch {
-	case e.Unresolveable != aws.UnknownTernary:
-		return false
-	case len(e.Hostname) != 0:
-		return false
-	case len(e.Protocols) != 0:
-		return false
-	case e.CredentialScope != (CredentialScope{}):
-		return false
-	case len(e.SignatureVersions) != 0:
-		return false
-	}
-	return true
-}
+func (e Endpoint) IsZero() bool { _ = "STUB: not implemented"; return false }
 
 func (e Endpoint) resolve(partition, region string, def Endpoint, options Options) (aws.Endpoint, error) {
-	var merged Endpoint
-	merged.mergeIn(def)
-	merged.mergeIn(e)
-	e = merged
-
-	if e.IsZero() {
-		return aws.Endpoint{}, fmt.Errorf("unable to resolve endpoint for region: %v", region)
-	}
-
-	var u string
-	if e.Unresolveable != aws.TrueTernary {
-		// Only attempt to resolve the endpoint if it can be resolved.
-		hostname := strings.Replace(e.Hostname, "{region}", region, 1)
-
-		scheme := getEndpointScheme(e.Protocols, options.DisableHTTPS)
-		u = scheme + "://" + hostname
-	}
-
-	signingRegion := e.CredentialScope.Region
-	if len(signingRegion) == 0 {
-		signingRegion = region
-	}
-	signingName := e.CredentialScope.Service
-
-	if e.Deprecated == aws.TrueTernary && options.LogDeprecated {
-		options.Logger.Logf(logging.Warn, "endpoint identifier %q, url %q marked as deprecated", region, u)
-	}
-
-	return aws.Endpoint{
-		URL:           u,
-		PartitionID:   partition,
-		SigningRegion: signingRegion,
-		SigningName:   signingName,
-		SigningMethod: getByPriority(e.SignatureVersions, signerPriority, defaultSigner),
-	}, nil
+	_ = "STUB: not implemented"
+	return *new(aws.Endpoint), nil
 }
 
-func (e *Endpoint) mergeIn(other Endpoint) {
-	if other.Unresolveable != aws.UnknownTernary {
-		e.Unresolveable = other.Unresolveable
-	}
-	if len(other.Hostname) > 0 {
-		e.Hostname = other.Hostname
-	}
-	if len(other.Protocols) > 0 {
-		e.Protocols = other.Protocols
-	}
-	if len(other.CredentialScope.Region) > 0 {
-		e.CredentialScope.Region = other.CredentialScope.Region
-	}
-	if len(other.CredentialScope.Service) > 0 {
-		e.CredentialScope.Service = other.CredentialScope.Service
-	}
-	if len(other.SignatureVersions) > 0 {
-		e.SignatureVersions = other.SignatureVersions
-	}
-	if other.Deprecated != aws.UnknownTernary {
-		e.Deprecated = other.Deprecated
-	}
-}
+// Only attempt to resolve the endpoint if it can be resolved.
+
+func (e *Endpoint) mergeIn(other Endpoint) { _ = "STUB: not implemented"; return }
 
 func getEndpointScheme(protocols []string, disableHTTPS bool) string {
-	if disableHTTPS {
-		return "http"
-	}
-
-	return getByPriority(protocols, protocolPriority, defaultProtocol)
+	_ = "STUB: not implemented"
+	return ""
 }
 
-func getByPriority(s []string, p []string, def string) string {
-	if len(s) == 0 {
-		return def
-	}
-
-	for i := 0; i < len(p); i++ {
-		for j := 0; j < len(s); j++ {
-			if s[j] == p[i] {
-				return s[j]
-			}
-		}
-	}
-
-	return s[0]
-}
+func getByPriority(s []string, p []string, def string) string { _ = "STUB: not implemented"; return "" }

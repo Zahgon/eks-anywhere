@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 )
@@ -24,127 +23,109 @@ type MockGovcClientMockRecorder struct {
 
 // NewMockGovcClient creates a new mock instance.
 func NewMockGovcClient(ctrl *gomock.Controller) *MockGovcClient {
-	mock := &MockGovcClient{ctrl: ctrl}
-	mock.recorder = &MockGovcClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockGovcClient) EXPECT() *MockGovcClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AddUserToGroup mocks base method.
+	return nil
 }
 
-// AddUserToGroup mocks base method.
 func (m *MockGovcClient) AddUserToGroup(arg0 context.Context, arg1, arg2 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AddUserToGroup", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AddUserToGroup indicates an expected call of AddUserToGroup.
 func (mr *MockGovcClientMockRecorder) AddUserToGroup(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddUserToGroup", reflect.TypeOf((*MockGovcClient)(nil).AddUserToGroup), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateGroup mocks base method.
 func (m *MockGovcClient) CreateGroup(arg0 context.Context, arg1 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateGroup", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateGroup indicates an expected call of CreateGroup.
 func (mr *MockGovcClientMockRecorder) CreateGroup(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateGroup", reflect.TypeOf((*MockGovcClient)(nil).CreateGroup), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateRole mocks base method.
 func (m *MockGovcClient) CreateRole(arg0 context.Context, arg1 string, arg2 []string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateRole", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateRole indicates an expected call of CreateRole.
 func (mr *MockGovcClientMockRecorder) CreateRole(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateRole", reflect.TypeOf((*MockGovcClient)(nil).CreateRole), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateUser mocks base method.
 func (m *MockGovcClient) CreateUser(arg0 context.Context, arg1, arg2 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateUser", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateUser indicates an expected call of CreateUser.
 func (mr *MockGovcClientMockRecorder) CreateUser(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUser", reflect.TypeOf((*MockGovcClient)(nil).CreateUser), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GroupExists mocks base method.
 func (m *MockGovcClient) GroupExists(arg0 context.Context, arg1 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GroupExists", arg0, arg1)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // GroupExists indicates an expected call of GroupExists.
 func (mr *MockGovcClientMockRecorder) GroupExists(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GroupExists", reflect.TypeOf((*MockGovcClient)(nil).GroupExists), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RoleExists mocks base method.
 func (m *MockGovcClient) RoleExists(arg0 context.Context, arg1 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RoleExists", arg0, arg1)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // RoleExists indicates an expected call of RoleExists.
 func (mr *MockGovcClientMockRecorder) RoleExists(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RoleExists", reflect.TypeOf((*MockGovcClient)(nil).RoleExists), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetGroupRoleOnObject mocks base method.
 func (m *MockGovcClient) SetGroupRoleOnObject(arg0 context.Context, arg1, arg2, arg3, arg4 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SetGroupRoleOnObject", arg0, arg1, arg2, arg3, arg4)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetGroupRoleOnObject indicates an expected call of SetGroupRoleOnObject.
 func (mr *MockGovcClientMockRecorder) SetGroupRoleOnObject(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetGroupRoleOnObject", reflect.TypeOf((*MockGovcClient)(nil).SetGroupRoleOnObject), arg0, arg1, arg2, arg3, arg4)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UserExists mocks base method.
 func (m *MockGovcClient) UserExists(arg0 context.Context, arg1 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UserExists", arg0, arg1)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // UserExists indicates an expected call of UserExists.
 func (mr *MockGovcClientMockRecorder) UserExists(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UserExists", reflect.TypeOf((*MockGovcClient)(nil).UserExists), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }

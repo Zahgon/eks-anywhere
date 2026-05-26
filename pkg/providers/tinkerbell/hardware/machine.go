@@ -1,10 +1,7 @@
 package hardware
 
 import (
-	"fmt"
 	"net/http"
-	"sort"
-	"strings"
 )
 
 // Machine is a machine configuration with optional BMC interface configuration.
@@ -100,9 +97,7 @@ type HMACOpts struct {
 
 // HasBMC determines if m has a BMC configuration. A BMC configuration is present if any of the BMC fields
 // contain non-empty strings.
-func (m *Machine) HasBMC() bool {
-	return m.BMCIPAddress != "" || m.BMCUsername != "" || m.BMCPassword != ""
-}
+func (m *Machine) HasBMC() bool { _ = "STUB: not implemented"; return false }
 
 // NameserversSeparator is used to unmarshal Nameservers.
 const NameserversSeparator = "|"
@@ -110,78 +105,45 @@ const NameserversSeparator = "|"
 // Nameservers is a custom type that can unmarshal a CSV representation of nameservers.
 type Nameservers []string
 
-func (n *Nameservers) String() string {
-	return strings.Join(*n, NameserversSeparator)
-}
+func (n *Nameservers) String() string { _ = "STUB: not implemented"; return "" }
 
 // UnmarshalCSV unmarshalls s where is is a list of nameservers separated by NameserversSeparator.
-func (n *Nameservers) UnmarshalCSV(s string) error {
-	servers := strings.Split(s, NameserversSeparator)
-	*n = append(*n, servers...)
-	return nil
-}
+func (n *Nameservers) UnmarshalCSV(s string) error { _ = "STUB: not implemented"; return nil }
 
 // MarshalCSV marshalls Nameservers into a string list of nameservers separated by NameserversSeparator.
 func (n *Nameservers) MarshalCSV() (string, error) {
-	return n.String(), nil
+	_ = "STUB: not implemented"
+	return "",
+
+		// LabelSSeparator is used to separate key value label pairs.
+		nil
 }
 
-// LabelSSeparator is used to separate key value label pairs.
 const LabelsSeparator = "|"
 
 // Labels defines a lebsl set. It satisfies https://pkg.go.dev/k8s.io/apimachinery/pkg/labels#Labels.
 type Labels map[string]string
 
 // Get returns the value for the provided label.
-func (l Labels) Has(k string) bool {
-	_, ok := l[k]
-	return ok
-}
+func (l Labels) Has(k string) bool { _ = "STUB: not implemented"; return false }
 
 // See https://pkg.go.dev/k8s.io/apimachinery/pkg/labels#Labels
-func (l Labels) Get(k string) string {
-	return l[k]
-}
+func (l Labels) Get(k string) string { _ = "STUB: not implemented"; return "" }
 
-func (l *Labels) MarshalCSV() (string, error) {
-	return l.String(), nil
-}
+func (l *Labels) MarshalCSV() (string, error) { _ = "STUB: not implemented"; return "", nil }
 
 func (l *Labels) UnmarshalCSV(s string) error {
+	_ = "STUB: not implemented"
 	// Ensure we make the map so consumers of l don't segfault.
-	*l = make(Labels)
-
-	// Cater for no labels being specified.
-	split := strings.Split(s, LabelsSeparator)
-	if len(split) == 1 && split[0] == "" {
-		return nil
-	}
-
-	for _, pair := range split {
-		keyValue := strings.Split(strings.TrimSpace(pair), "=")
-		if len(keyValue) != 2 {
-			return fmt.Errorf("badly formatted key-value pair: %v", pair)
-		}
-
-		(*l)[strings.TrimSpace(keyValue[0])] = strings.TrimSpace(keyValue[1])
-	}
 	return nil
 }
 
-func (l Labels) String() string {
-	labels := make([]string, 0, len(l))
-	for key, value := range l {
-		labels = append(labels, fmt.Sprintf("%v=%v", key, value))
-	}
-	// Sort for determinism.
-	sort.StringSlice(labels).Sort()
-	return strings.Join(labels, LabelsSeparator)
-}
+// Cater for no labels being specified.
 
-func newEmptyFieldError(s string) error {
-	return newMachineError(fmt.Sprintf("%v is empty", s))
-}
+func (l Labels) String() string { _ = "STUB: not implemented"; return "" }
 
-func newMachineError(s string) error {
-	return fmt.Errorf("machine: %v", s)
-}
+// Sort for determinism.
+
+func newEmptyFieldError(s string) error { _ = "STUB: not implemented"; return nil }
+
+func newMachineError(s string) error { _ = "STUB: not implemented"; return nil }

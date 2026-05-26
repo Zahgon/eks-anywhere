@@ -22,53 +22,50 @@ func NewClusterSpec(
 	machineConfigs map[string]*v1alpha1.TinkerbellMachineConfig,
 	datacenterConfig *v1alpha1.TinkerbellDatacenterConfig,
 ) *ClusterSpec {
-	return &ClusterSpec{
-		Spec:             clusterSpec,
-		DatacenterConfig: datacenterConfig,
-		MachineConfigs:   machineConfigs,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ControlPlaneMachineConfig retrieves the TinkerbellMachineConfig referenced by the cluster
 // control plane machine reference.
 func (s *ClusterSpec) ControlPlaneMachineConfig() *v1alpha1.TinkerbellMachineConfig {
-	return s.MachineConfigs[s.Cluster.Spec.ControlPlaneConfiguration.MachineGroupRef.Name]
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ControlPlaneConfiguration retrieves the control plane configuration from s.
 func (s *ClusterSpec) ControlPlaneConfiguration() *v1alpha1.ControlPlaneConfiguration {
-	return &s.Cluster.Spec.ControlPlaneConfiguration
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // HasExternalEtcd returns true if there is an external etcd configuration.
-func (s *ClusterSpec) HasExternalEtcd() bool {
-	return s.Spec.Cluster.Spec.ExternalEtcdConfiguration != nil
-}
+func (s *ClusterSpec) HasExternalEtcd() bool { _ = "STUB: not implemented"; return false }
 
 // ExternalEtcdConfiguration returns the etcd configuration. The configuration may be nil. Consumers
 // should check if external etcd configuration is present using HasExternalEtcd().
 func (s *ClusterSpec) ExternalEtcdConfiguration() *v1alpha1.ExternalEtcdConfiguration {
-	return s.Cluster.Spec.ExternalEtcdConfiguration
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ExternalEtcdMachineConfig retrieves the TinkerbellMachineConfig referenced by the cluster etcd machine
 // reference.
 func (s *ClusterSpec) ExternalEtcdMachineConfig() *v1alpha1.TinkerbellMachineConfig {
-	if !s.HasExternalEtcd() {
-		return nil
-	}
-
-	return s.MachineConfigs[s.Cluster.Spec.ExternalEtcdConfiguration.MachineGroupRef.Name]
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WorkerNodeGroupConfigurations retrieves all worker node group configurations in s.
 func (s *ClusterSpec) WorkerNodeGroupConfigurations() []v1alpha1.WorkerNodeGroupConfiguration {
-	return s.Cluster.Spec.WorkerNodeGroupConfigurations
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WorkerNodeGroupMachineConfig retrieves the machine group associated with conf.
 func (s *ClusterSpec) WorkerNodeGroupMachineConfig(conf v1alpha1.WorkerNodeGroupConfiguration) *v1alpha1.TinkerbellMachineConfig {
-	return s.MachineConfigs[conf.MachineGroupRef.Name]
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ClusterSpecAssertion makes an assertion on spec.
@@ -80,41 +77,22 @@ type ClusterSpecValidator []ClusterSpecAssertion
 
 // Register registers assertions with v.
 func (v *ClusterSpecValidator) Register(assertions ...ClusterSpecAssertion) {
-	*v = append(*v, assertions...)
+	_ = "STUB: not implemented"
+	return
 }
 
 // Validate validates spec with all assertions registered on v.
 func (v *ClusterSpecValidator) Validate(spec *ClusterSpec) error {
-	for _, a := range *v {
-		if err := a(spec); err != nil {
-			return err
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // NewClusterSpecValidator creates a ClusterSpecValidator instance with a set of default assertions.
 // Any assertions passed will be registered in addition to the default assertions.
 func NewClusterSpecValidator(assertions ...ClusterSpecAssertion) *ClusterSpecValidator {
-	var v ClusterSpecValidator
+	_ = "STUB: not implemented"
+	return nil
+
 	// Register mandatory assertions. If an assertion becomes optional dependent on context move it
 	// to a New* func and register it dynamically. See assert.go for examples.
-	v.Register(
-		AssertK8SVersionNot120,
-		AssertDatacenterConfigValid,
-		AssertControlPlaneMachineRefExists,
-		AssertEtcdMachineRefExists,
-		AssertWorkerNodeGroupMachineRefsExists,
-		AssertMachineConfigsValid,
-		AssertMachineConfigNamespaceMatchesDatacenterConfig,
-		AssertOsFamilyValid,
-		AssertOSImageURL,
-		AssertISOURL,
-		AssertTinkerbellIPAndControlPlaneIPNotSame,
-		AssertHookRetrievableWithoutProxy,
-		AssertUpgradeRolloutStrategyValid,
-		AssertAutoScalerDisabledForInPlace,
-	)
-	v.Register(assertions...)
-	return &v
 }

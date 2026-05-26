@@ -5,11 +5,8 @@ import (
 	"context"
 	_ "embed"
 	"fmt"
-	"os"
-	"text/template"
 	"time"
 
-	"github.com/Masterminds/sprig"
 	etcdv1 "github.com/aws/etcdadm-controller/api/v1beta1"
 	corev1 "k8s.io/api/core/v1"
 	controlplanev1beta2 "sigs.k8s.io/cluster-api/api/controlplane/kubeadm/v1beta2"
@@ -18,18 +15,11 @@ import (
 	"github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	"github.com/aws/eks-anywhere/pkg/bootstrapper"
 	"github.com/aws/eks-anywhere/pkg/cluster"
-	"github.com/aws/eks-anywhere/pkg/config"
-	"github.com/aws/eks-anywhere/pkg/constants"
 	"github.com/aws/eks-anywhere/pkg/executables"
 	"github.com/aws/eks-anywhere/pkg/filewriter"
-	"github.com/aws/eks-anywhere/pkg/govmomi"
-	"github.com/aws/eks-anywhere/pkg/logger"
 	"github.com/aws/eks-anywhere/pkg/providers"
-	"github.com/aws/eks-anywhere/pkg/providers/common"
 	"github.com/aws/eks-anywhere/pkg/retrier"
 	"github.com/aws/eks-anywhere/pkg/types"
-	"github.com/aws/eks-anywhere/pkg/validations"
-	releasev1alpha1 "github.com/aws/eks-anywhere/release/api/v1alpha1"
 )
 
 const (
@@ -167,27 +157,11 @@ func NewProvider(
 	now types.NowFunc,
 	skipIPCheck bool,
 	skippedValidations map[string]bool,
-) *vsphereProvider { //nolint:revive
+) *vsphereProvider {
+	_ = "STUB: not implemented" //nolint:revive
 	// TODO(g-gaston): ignoring linter error for exported function returning unexported member
 	// We should make it exported, but that would involve a bunch of changes, so will do it separately
-	vcb := govmomi.NewVMOMIClientBuilder()
-	v := NewValidator(
-		providerGovcClient,
-		vcb,
-	)
-
-	return NewProviderCustomNet(
-		datacenterConfig,
-		clusterConfig,
-		providerGovcClient,
-		providerKubectlClient,
-		writer,
-		ipValidator,
-		now,
-		skipIPCheck,
-		v,
-		skippedValidations,
-	)
+	return nil
 }
 
 // NewProviderCustomNet initializes and returns a new vsphereProvider.
@@ -202,263 +176,73 @@ func NewProviderCustomNet(
 	skipIPCheck bool,
 	v *Validator,
 	skippedValidations map[string]bool,
-) *vsphereProvider { //nolint:revive
+) *vsphereProvider {
+	_ = "STUB: not implemented" //nolint:revive
 	// TODO(g-gaston): ignoring linter error for exported function returning unexported member
 	// We should make it exported, but that would involve a bunch of changes, so will do it separately
-	retrier := retrier.NewWithMaxRetries(maxRetries, backOffPeriod)
-	return &vsphereProvider{
-		clusterConfig:         clusterConfig,
-		providerGovcClient:    providerGovcClient,
-		providerKubectlClient: providerKubectlClient,
-		writer:                writer,
-		templateBuilder: NewVsphereTemplateBuilder(
-			now,
-		),
-		skipIPCheck:        skipIPCheck,
-		Retrier:            retrier,
-		validator:          v,
-		defaulter:          NewDefaulter(providerGovcClient),
-		ipValidator:        ipValidator,
-		skippedValidations: skippedValidations,
-	}
+	return nil
 }
 
 func (p *vsphereProvider) UpdateKubeConfig(_ *[]byte, _ string) error {
+	_ = "STUB: not implemented"
 	// customize generated kube config
 	return nil
 }
 
 func (p *vsphereProvider) BootstrapClusterOpts(spec *cluster.Spec) ([]bootstrapper.BootstrapClusterOption, error) {
-	return common.BootstrapClusterOpts(p.clusterConfig, spec.VSphereDatacenter.Spec.Server)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (p *vsphereProvider) Name() string {
-	return constants.VSphereProviderName
-}
+func (p *vsphereProvider) Name() string { _ = "STUB: not implemented"; return "" }
 
-func (p *vsphereProvider) DatacenterResourceType() string {
-	return eksaVSphereDatacenterResourceType
-}
+func (p *vsphereProvider) DatacenterResourceType() string { _ = "STUB: not implemented"; return "" }
 
-func (p *vsphereProvider) MachineResourceType() string {
-	return eksaVSphereMachineResourceType
-}
+func (p *vsphereProvider) MachineResourceType() string { _ = "STUB: not implemented"; return "" }
 
 func (p *vsphereProvider) generateSSHKeysIfNotSet(machineConfigs map[string]*v1alpha1.VSphereMachineConfig) error {
-	var generatedKey string
-	for _, machineConfig := range machineConfigs {
-		user := machineConfig.Spec.Users[0]
-		if user.SshAuthorizedKeys[0] == "" {
-			if generatedKey != "" { // use the same key
-				user.SshAuthorizedKeys[0] = generatedKey
-			} else {
-				logger.Info("Provided sshAuthorizedKey is not set or is empty, auto-generating new key pair...", "vSphereMachineConfig", machineConfig.Name)
-				var err error
-				generatedKey, err = common.GenerateSSHAuthKey(p.writer)
-				if err != nil {
-					return err
-				}
-				user.SshAuthorizedKeys[0] = generatedKey
-			}
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
+// use the same key
+
 func (p *vsphereProvider) PostClusterDeleteValidate(_ context.Context, _ *types.Cluster) error {
+	_ = "STUB: not implemented"
 	// No validations
 	return nil
 }
 
 func (p *vsphereProvider) PostMoveManagementToBootstrap(_ context.Context, _ *types.Cluster) error {
+	_ = "STUB: not implemented"
 	// NOOP
 	return nil
 }
 
 func (p *vsphereProvider) SetupAndValidateCreateCluster(ctx context.Context, clusterSpec *cluster.Spec) error {
-	if err := SetupEnvVars(clusterSpec.VSphereDatacenter); err != nil {
-		return fmt.Errorf("failed setup and validations: %v", err)
-	}
-
-	vSphereClusterSpec := NewSpec(clusterSpec)
-
-	if err := p.defaulter.SetDefaultsForDatacenterConfig(ctx, vSphereClusterSpec.VSphereDatacenter); err != nil {
-		return fmt.Errorf("failed setting default values for vsphere datacenter config: %v", err)
-	}
-
-	if err := vSphereClusterSpec.VSphereDatacenter.Validate(); err != nil {
-		return err
-	}
-
-	if err := p.validator.ValidateVCenterConfig(ctx, vSphereClusterSpec.VSphereDatacenter); err != nil {
-		return err
-	}
-
-	// Validate machine config networks right after basic vCenter validation
-	if err := p.validator.validateNetworksFieldUsage(ctx, vSphereClusterSpec); err != nil {
-		return err
-	}
-
-	if err := p.validator.ValidateFailureDomains(ctx, vSphereClusterSpec); err != nil {
-		return err
-	}
-
-	if err := p.defaulter.setDefaultsForMachineConfig(ctx, vSphereClusterSpec); err != nil {
-		return fmt.Errorf("failed setting default values for vsphere machine configs: %v", err)
-	}
-
-	if err := p.validator.ValidateClusterMachineConfigs(ctx, vSphereClusterSpec); err != nil {
-		return err
-	}
-	if err := p.validateDatastoreUsageForCreate(ctx, vSphereClusterSpec); err != nil {
-		return fmt.Errorf("validating vsphere machine configs datastore usage: %v", err)
-	}
-	if err := p.validateMemoryUsage(ctx, vSphereClusterSpec, nil); err != nil {
-		return fmt.Errorf("validating vsphere machine configs resource pool memory usage: %v", err)
-	}
-	if err := p.generateSSHKeysIfNotSet(clusterSpec.VSphereMachineConfigs); err != nil {
-		return fmt.Errorf("failed setup and validations: %v", err)
-	}
-
-	// TODO: move this to validator
-	if clusterSpec.Cluster.IsManaged() {
-		for _, mc := range clusterSpec.VSphereMachineConfigs {
-			em, err := p.providerKubectlClient.SearchVsphereMachineConfig(ctx, mc.GetName(), clusterSpec.ManagementCluster.KubeconfigFile, mc.GetNamespace())
-			if err != nil {
-				return err
-			}
-			if len(em) > 0 {
-				return fmt.Errorf("VSphereMachineConfig %s already exists", mc.GetName())
-			}
-		}
-		existingDatacenter, err := p.providerKubectlClient.SearchVsphereDatacenterConfig(ctx, clusterSpec.VSphereDatacenter.Name, clusterSpec.ManagementCluster.KubeconfigFile, clusterSpec.Cluster.Namespace)
-		if err != nil {
-			return err
-		}
-		if len(existingDatacenter) > 0 {
-			return fmt.Errorf("VSphereDatacenter %s already exists", clusterSpec.VSphereDatacenter.Name)
-		}
-		for _, identityProviderRef := range clusterSpec.Cluster.Spec.IdentityProviderRefs {
-			if identityProviderRef.Kind == v1alpha1.OIDCConfigKind {
-				clusterSpec.OIDCConfig.SetManagedBy(p.clusterConfig.ManagedBy())
-			}
-		}
-	}
-
-	if !p.skipIPCheck {
-		if err := p.ipValidator.ValidateControlPlaneIPUniqueness(clusterSpec.Cluster); err != nil {
-			return err
-		}
-	} else {
-		logger.Info("Skipping check for whether control plane ip is in use")
-	}
-
-	if !p.skippedValidations[validations.VSphereUserPriv] {
-		if err := p.validator.validateVsphereUserPrivs(ctx, vSphereClusterSpec); err != nil {
-			return fmt.Errorf("validating vsphere user privileges: %w, please refer to %s for required permissions or use -v 3 for full missing permissions", err, vSpherePermissionDoc)
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// Validate machine config networks right after basic vCenter validation
+
+// TODO: move this to validator
 
 func (p *vsphereProvider) SetupAndValidateUpgradeCluster(ctx context.Context, cluster *types.Cluster, clusterSpec, _ *cluster.Spec) error {
-	if err := SetupEnvVars(clusterSpec.VSphereDatacenter); err != nil {
-		return fmt.Errorf("failed setup and validations: %v", err)
-	}
-
-	vSphereClusterSpec := NewSpec(clusterSpec)
-
-	if err := p.defaulter.SetDefaultsForDatacenterConfig(ctx, vSphereClusterSpec.VSphereDatacenter); err != nil {
-		return fmt.Errorf("failed setting default values for vsphere datacenter config: %v", err)
-	}
-
-	if err := vSphereClusterSpec.VSphereDatacenter.Validate(); err != nil {
-		return err
-	}
-
-	if err := p.validator.ValidateVCenterConfig(ctx, vSphereClusterSpec.VSphereDatacenter); err != nil {
-		return err
-	}
-
-	// Validate machine config networks right after basic vCenter validation
-	if err := p.validator.validateNetworksFieldUsage(ctx, vSphereClusterSpec); err != nil {
-		return err
-	}
-
-	if err := p.validator.ValidateFailureDomains(ctx, vSphereClusterSpec); err != nil {
-		return err
-	}
-
-	if err := p.defaulter.setDefaultsForMachineConfig(ctx, vSphereClusterSpec); err != nil {
-		return fmt.Errorf("failed setting default values for vsphere machine configs: %v", err)
-	}
-
-	if err := p.validator.ValidateClusterMachineConfigs(ctx, vSphereClusterSpec); err != nil {
-		return err
-	}
-
-	if err := p.validateDatastoreUsageForUpgrade(ctx, vSphereClusterSpec, cluster); err != nil {
-		return fmt.Errorf("validating vsphere machine configs datastore usage: %v", err)
-	}
-
-	if err := p.validateMemoryUsage(ctx, vSphereClusterSpec, cluster); err != nil {
-		return fmt.Errorf("validating vsphere machine configs resource pool memory usage: %v", err)
-	}
-
-	if !p.skippedValidations[validations.VSphereUserPriv] {
-		if err := p.validator.validateVsphereUserPrivs(ctx, vSphereClusterSpec); err != nil {
-			return fmt.Errorf("validating vsphere user privileges: %w, please refer to %s for required permissions or use -v 3 for full missing permissions", err, vSpherePermissionDoc)
-		}
-	}
-
-	err := p.validateMachineConfigsNameUniqueness(ctx, cluster, clusterSpec)
-	if err != nil {
-		return fmt.Errorf("failed validate machineconfig uniqueness: %v", err)
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// Validate machine config networks right after basic vCenter validation
 
 // SetupAndValidateUpgradeManagementComponents performs necessary setup for upgrade management components operation.
 func (p *vsphereProvider) SetupAndValidateUpgradeManagementComponents(ctx context.Context, clusterSpec *cluster.Spec) error {
-	if err := SetupEnvVars(clusterSpec.VSphereDatacenter); err != nil {
-		return fmt.Errorf("failed environment variable setup: %v", err)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (p *vsphereProvider) validateMachineConfigsNameUniqueness(ctx context.Context, cluster *types.Cluster, clusterSpec *cluster.Spec) error {
-	prevSpec, err := p.providerKubectlClient.GetEksaCluster(ctx, cluster, clusterSpec.Cluster.GetName())
-	if err != nil {
-		return err
-	}
-
-	cpMachineConfigName := clusterSpec.Cluster.Spec.ControlPlaneConfiguration.MachineGroupRef.Name
-	if prevSpec.Spec.ControlPlaneConfiguration.MachineGroupRef.Name != cpMachineConfigName {
-		em, err := p.providerKubectlClient.SearchVsphereMachineConfig(ctx, cpMachineConfigName, cluster.KubeconfigFile, clusterSpec.Cluster.GetNamespace())
-		if err != nil {
-			return err
-		}
-		if len(em) > 0 {
-			return fmt.Errorf("control plane VSphereMachineConfig %s already exists", cpMachineConfigName)
-		}
-	}
-
-	if clusterSpec.Cluster.Spec.ExternalEtcdConfiguration != nil && prevSpec.Spec.ExternalEtcdConfiguration != nil {
-		etcdMachineConfigName := clusterSpec.Cluster.Spec.ExternalEtcdConfiguration.MachineGroupRef.Name
-		if prevSpec.Spec.ExternalEtcdConfiguration.MachineGroupRef.Name != etcdMachineConfigName {
-			em, err := p.providerKubectlClient.SearchVsphereMachineConfig(ctx, etcdMachineConfigName, cluster.KubeconfigFile, clusterSpec.Cluster.GetNamespace())
-			if err != nil {
-				return err
-			}
-			if len(em) > 0 {
-				return fmt.Errorf("external etcd machineconfig %s already exists", etcdMachineConfigName)
-			}
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -468,507 +252,200 @@ type datastoreUsage struct {
 }
 
 func (p *vsphereProvider) getPrevMachineConfigDatastoreUsage(ctx context.Context, machineConfig *v1alpha1.VSphereMachineConfig, cluster *types.Cluster, count int) (diskGiB float64, err error) {
-	if count > 0 {
-		em, err := p.providerKubectlClient.GetEksaVSphereMachineConfig(ctx, machineConfig.Name, cluster.KubeconfigFile, machineConfig.GetNamespace())
-		if err != nil {
-			return 0, err
-		}
-		if em != nil {
-			return float64(em.Spec.DiskGiB * count), nil
-		}
-	}
+	_ = "STUB: not implemented"
 	return 0, nil
 }
 
 func (p *vsphereProvider) getMachineConfigDatastoreRequirements(ctx context.Context, machineConfig *v1alpha1.VSphereMachineConfig, count int) (available float64, need int, err error) {
-	availableSpace, err := p.providerGovcClient.GetWorkloadAvailableSpace(ctx, machineConfig.Spec.Datastore) // TODO: remove dependency on machineConfig
-	if err != nil {
-		return 0, 0, fmt.Errorf("getting datastore details: %v", err)
-	}
-	needGiB := machineConfig.Spec.DiskGiB * count
-	return availableSpace, needGiB, nil
+	_ = "STUB: not implemented"
+	return 0, 0, nil
 }
 
+// TODO: remove dependency on machineConfig
+
 func (p *vsphereProvider) calculateDatastoreUsage(ctx context.Context, machineConfig *v1alpha1.VSphereMachineConfig, cluster *types.Cluster, usage map[string]*datastoreUsage, prevCount, newCount int) error {
-	availableSpace, needGiB, err := p.getMachineConfigDatastoreRequirements(ctx, machineConfig, newCount)
-	if err != nil {
-		return err
-	}
-	prevUsage, err := p.getPrevMachineConfigDatastoreUsage(ctx, machineConfig, cluster, prevCount)
-	if err != nil {
-		return err
-	}
-	availableSpace += prevUsage
-	updateDatastoreUsageMap(machineConfig, needGiB, availableSpace, prevUsage, usage)
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func updateDatastoreUsageMap(machineConfig *v1alpha1.VSphereMachineConfig, needGiB int, availableSpace, prevUsage float64, usage map[string]*datastoreUsage) {
-	if _, ok := usage[machineConfig.Spec.Datastore]; ok {
-		usage[machineConfig.Spec.Datastore].needGiBSpace += needGiB
-		usage[machineConfig.Spec.Datastore].availableSpace += prevUsage
-	} else {
-		usage[machineConfig.Spec.Datastore] = &datastoreUsage{
-			availableSpace: availableSpace,
-			needGiBSpace:   needGiB,
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func (p *vsphereProvider) validateDatastoreUsageForUpgrade(ctx context.Context, currentClusterSpec *Spec, cluster *types.Cluster) error {
-	usage := make(map[string]*datastoreUsage)
-	prevEksaCluster, err := p.providerKubectlClient.GetEksaCluster(ctx, cluster, currentClusterSpec.Cluster.GetName())
-	if err != nil {
-		return err
-	}
-
-	cpMachineConfig := currentClusterSpec.controlPlaneMachineConfig()
-	if err := p.calculateDatastoreUsage(ctx, cpMachineConfig, cluster, usage, prevEksaCluster.Spec.ControlPlaneConfiguration.Count, currentClusterSpec.Cluster.Spec.ControlPlaneConfiguration.Count); err != nil {
-		return fmt.Errorf("calculating datastore usage: %v", err)
-	}
-
-	prevMachineConfigRefs := machineRefSliceToMap(prevEksaCluster.MachineConfigRefs())
-	for _, workerNodeGroupConfiguration := range currentClusterSpec.Cluster.Spec.WorkerNodeGroupConfigurations {
-		prevCount := 0
-		workerMachineConfig := currentClusterSpec.workerMachineConfig(workerNodeGroupConfiguration)
-		if _, ok := prevMachineConfigRefs[workerNodeGroupConfiguration.MachineGroupRef.Name]; ok {
-			prevCount = *workerNodeGroupConfiguration.Count
-		}
-		if err := p.calculateDatastoreUsage(ctx, workerMachineConfig, cluster, usage, prevCount, *workerNodeGroupConfiguration.Count); err != nil {
-			return fmt.Errorf("calculating datastore usage: %v", err)
-		}
-	}
-
-	etcdMachineConfig := currentClusterSpec.etcdMachineConfig()
-	if etcdMachineConfig != nil {
-		prevCount := 0
-		if prevEksaCluster.Spec.ExternalEtcdConfiguration != nil {
-			prevCount = prevEksaCluster.Spec.ExternalEtcdConfiguration.Count
-		}
-		if err := p.calculateDatastoreUsage(ctx, etcdMachineConfig, cluster, usage, prevCount, currentClusterSpec.Cluster.Spec.ExternalEtcdConfiguration.Count); err != nil {
-			return fmt.Errorf("calculating datastore usage: %v", err)
-		}
-	}
-
-	for datastore, usage := range usage {
-		if float64(usage.needGiBSpace) > usage.availableSpace {
-			return fmt.Errorf("not enough space in datastore %v for given diskGiB and count for respective machine groups", datastore)
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (p *vsphereProvider) validateDatastoreUsageForCreate(ctx context.Context, vsphereClusterSpec *Spec) error {
-	usage := make(map[string]*datastoreUsage)
-	cpMachineConfig := vsphereClusterSpec.controlPlaneMachineConfig()
-	controlPlaneAvailableSpace, controlPlaneNeedGiB, err := p.getMachineConfigDatastoreRequirements(ctx, cpMachineConfig, vsphereClusterSpec.Cluster.Spec.ControlPlaneConfiguration.Count)
-	if err != nil {
-		return err
-	}
-	updateDatastoreUsageMap(cpMachineConfig, controlPlaneNeedGiB, controlPlaneAvailableSpace, 0, usage)
-
-	for _, workerNodeGroupConfiguration := range vsphereClusterSpec.Cluster.Spec.WorkerNodeGroupConfigurations {
-		workerMachineConfig := vsphereClusterSpec.workerMachineConfig(workerNodeGroupConfiguration)
-		workerAvailableSpace, workerNeedGiB, err := p.getMachineConfigDatastoreRequirements(ctx, workerMachineConfig, *workerNodeGroupConfiguration.Count)
-		if err != nil {
-			return err
-		}
-		updateDatastoreUsageMap(workerMachineConfig, workerNeedGiB, workerAvailableSpace, 0, usage)
-	}
-
-	etcdMachineConfig := vsphereClusterSpec.etcdMachineConfig()
-	if etcdMachineConfig != nil {
-		etcdAvailableSpace, etcdNeedGiB, err := p.getMachineConfigDatastoreRequirements(ctx, etcdMachineConfig, vsphereClusterSpec.Cluster.Spec.ExternalEtcdConfiguration.Count)
-		if err != nil {
-			return err
-		}
-		updateDatastoreUsageMap(etcdMachineConfig, etcdNeedGiB, etcdAvailableSpace, 0, usage)
-	}
-
-	for datastore, usage := range usage {
-		if float64(usage.needGiBSpace) > usage.availableSpace {
-			return fmt.Errorf("not enough space in datastore %v for given diskGiB and count for respective machine groups", datastore)
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // getPrevMachineConfigMemoryUsage returns the memoryMiB freed up from the given machineConfig based on the count.
 func (p *vsphereProvider) getPrevMachineConfigMemoryUsage(ctx context.Context, mc *v1alpha1.VSphereMachineConfig, cluster *types.Cluster, machineConfigCount int) (memoryMiB int, err error) {
-	em, err := p.providerKubectlClient.GetEksaVSphereMachineConfig(ctx, mc.Name, cluster.KubeconfigFile, mc.GetNamespace())
-	if err != nil {
-		return 0, err
-	}
-	if em != nil && em.Spec.ResourcePool == mc.Spec.ResourcePool {
-		return em.Spec.MemoryMiB * machineConfigCount, nil
-	}
+	_ = "STUB: not implemented"
 	return 0, nil
 }
 
 // getMachineConfigMemoryAvailability accepts a machine config and returns available memory in the config's resource pool along with needed memory for the machine config.
 func (p *vsphereProvider) getMachineConfigMemoryAvailability(ctx context.Context, datacenter string, mc *v1alpha1.VSphereMachineConfig, machineConfigCount int) (availableMemoryMiB, needMemoryMiB int, err error) {
-	poolInfo, err := p.providerGovcClient.GetResourcePoolInfo(ctx, datacenter, mc.Spec.ResourcePool)
-	if err != nil {
-		return 0, 0, err
-	}
-	needMemoryMiB = mc.Spec.MemoryMiB * machineConfigCount
-	return poolInfo[MemoryAvailable], needMemoryMiB, nil
+	_ = "STUB: not implemented"
+	return 0, 0, nil
 }
 
 // updateMemoryUsageMap updates the memory availability for the machine config's resource pool.
 func updateMemoryUsageMap(mc *v1alpha1.VSphereMachineConfig, needMiB, availableMiB int, mu map[string]int) {
-	if _, ok := mu[mc.Spec.ResourcePool]; !ok {
-		mu[mc.Spec.ResourcePool] = availableMiB
-	}
-	// needMiB can be ignored when the resource pool memory limit is unset
-	if availableMiB != -1 {
-		mu[mc.Spec.ResourcePool] -= needMiB
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
+// needMiB can be ignored when the resource pool memory limit is unset
+
 func addPrevMachineConfigMemoryUsage(mc *v1alpha1.VSphereMachineConfig, prevUsage int, memoryUsage map[string]int) {
+	_ = "STUB: not implemented"
 	// when the memory limit for the respective resource pool is unset, skip accounting for previous usage and validating the needed memory
-	if _, ok := memoryUsage[mc.Spec.ResourcePool]; ok && memoryUsage[mc.Spec.ResourcePool] != -1 {
-		memoryUsage[mc.Spec.ResourcePool] += prevUsage
-	}
+	return
 }
 
 func (p *vsphereProvider) validateMemoryUsage(ctx context.Context, clusterSpec *Spec, cluster *types.Cluster) error {
-	memoryUsage := make(map[string]int)
-	datacenter := clusterSpec.VSphereDatacenter.Spec.Datacenter
-	for _, mc := range clusterSpec.machineConfigsWithCount() {
-		availableMemoryMiB, needMemoryMiB, err := p.getMachineConfigMemoryAvailability(ctx, datacenter, mc.VSphereMachineConfig, mc.Count)
-		if err != nil {
-			return fmt.Errorf("calculating memory usage for machine config %v: %v", mc.VSphereMachineConfig.ObjectMeta.Name, err)
-		}
-		updateMemoryUsageMap(mc.VSphereMachineConfig, needMemoryMiB, availableMemoryMiB, memoryUsage)
-	}
-	// account for previous cluster resources that are freed up during upgrade.
-	if cluster != nil {
-		err := p.updatePrevClusterMemoryUsage(ctx, clusterSpec, cluster, memoryUsage)
-		if err != nil {
-			return err
-		}
-	}
-	for resourcePool, remaniningMiB := range memoryUsage {
-		if remaniningMiB != -1 && remaniningMiB < 0 {
-			return fmt.Errorf("not enough memory available in resource pool %v for given memoryMiB and count for respective machine groups", resourcePool)
-		}
-	}
-	logger.V(5).Info("Memory availability for machine configs in requested resource pool validated")
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// account for previous cluster resources that are freed up during upgrade.
 
 // updatePrevClusterMemoryUsage calculates memory freed up from previous CP and worker nodes during upgrade and adds up the memory usage for the specific resource pool.
 func (p *vsphereProvider) updatePrevClusterMemoryUsage(ctx context.Context, clusterSpec *Spec, cluster *types.Cluster, memoryUsage map[string]int) error {
-	prevEksaCluster, err := p.providerKubectlClient.GetEksaCluster(ctx, cluster, clusterSpec.Cluster.GetName())
-	if err != nil {
-		return err
-	}
-	prevMachineConfigRefs := machineRefSliceToMap(prevEksaCluster.MachineConfigRefs())
-	if _, ok := prevMachineConfigRefs[clusterSpec.Cluster.Spec.ControlPlaneConfiguration.MachineGroupRef.Name]; ok {
-		cpMachineConfig := clusterSpec.controlPlaneMachineConfig()
-		// The last CP machine is deleted only after the desired number of new worker machines are rolled out, so don't add it's memory
-		prevCPusage, err := p.getPrevMachineConfigMemoryUsage(ctx, cpMachineConfig, cluster, prevEksaCluster.Spec.ControlPlaneConfiguration.Count-1)
-		if err != nil {
-			return fmt.Errorf("calculating previous memory usage for control plane: %v", err)
-		}
-		addPrevMachineConfigMemoryUsage(cpMachineConfig, prevCPusage, memoryUsage)
-	}
-	for _, workerNodeGroupConfiguration := range clusterSpec.Cluster.Spec.WorkerNodeGroupConfigurations {
-		workerMachineConfig := clusterSpec.workerMachineConfig(workerNodeGroupConfiguration)
-		if _, ok := prevMachineConfigRefs[workerNodeGroupConfiguration.MachineGroupRef.Name]; ok {
-			prevCount := *workerNodeGroupConfiguration.Count
-			// The last worker machine is deleted only after the desired number of new worker machines are rolled out, so don't add it's memory
-			prevWorkerUsage, err := p.getPrevMachineConfigMemoryUsage(ctx, workerMachineConfig, cluster, prevCount-1)
-			if err != nil {
-				return fmt.Errorf("calculating previous memory usage for worker node group - %v: %v", workerMachineConfig.Name, err)
-			}
-			addPrevMachineConfigMemoryUsage(workerMachineConfig, prevWorkerUsage, memoryUsage)
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (p *vsphereProvider) UpdateSecrets(ctx context.Context, cluster *types.Cluster, _ *cluster.Spec) error {
-	var contents bytes.Buffer
-	err := p.createSecret(ctx, cluster, &contents)
-	if err != nil {
-		return err
-	}
+// The last CP machine is deleted only after the desired number of new worker machines are rolled out, so don't add it's memory
 
-	err = p.providerKubectlClient.ApplyKubeSpecFromBytes(ctx, cluster, contents.Bytes())
-	if err != nil {
-		return fmt.Errorf("loading secrets object: %v", err)
-	}
+// The last worker machine is deleted only after the desired number of new worker machines are rolled out, so don't add it's memory
+
+func (p *vsphereProvider) UpdateSecrets(ctx context.Context, cluster *types.Cluster, _ *cluster.Spec) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (p *vsphereProvider) SetupAndValidateDeleteCluster(ctx context.Context, _ *types.Cluster, spec *cluster.Spec) error {
-	if err := SetupEnvVars(spec.VSphereDatacenter); err != nil {
-		return fmt.Errorf("failed setup and validations: %v", err)
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (p *vsphereProvider) createSecret(ctx context.Context, cluster *types.Cluster, contents *bytes.Buffer) error {
-	t, err := template.New("tmpl").Funcs(sprig.TxtFuncMap()).Parse(defaultSecretObject)
-	if err != nil {
-		return fmt.Errorf("creating secret object template: %v", err)
-	}
-	vuc := config.NewVsphereUserConfig()
-
-	values := map[string]string{
-		"vspherePassword":           os.Getenv(vSpherePasswordKey),
-		"vsphereUsername":           os.Getenv(vSphereUsernameKey),
-		"eksaCloudProviderUsername": vuc.EksaVsphereCPUsername,
-		"eksaCloudProviderPassword": vuc.EksaVsphereCPPassword,
-		"eksaLicense":               os.Getenv(eksaLicense),
-		"eksaSystemNamespace":       constants.EksaSystemNamespace,
-		"vsphereCredentialsName":    constants.VSphereCredentialsName,
-		"eksaLicenseName":           constants.EksaLicenseName,
-	}
-	err = t.Execute(contents, values)
-	if err != nil {
-		return fmt.Errorf("substituting values for secret object template: %v", err)
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (p *vsphereProvider) PreCAPIInstallOnBootstrap(ctx context.Context, cluster *types.Cluster, clusterSpec *cluster.Spec) error {
-	return p.UpdateSecrets(ctx, cluster, nil)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (p *vsphereProvider) PostBootstrapSetup(ctx context.Context, clusterConfig *v1alpha1.Cluster, cluster *types.Cluster) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (p *vsphereProvider) PostWorkloadInit(ctx context.Context, cluster *types.Cluster, clusterSpec *cluster.Spec) error {
+	_ = "STUB: not implemented"
+
+	// EnvMap returns a map of environment variables required for the vsphere provider.
 	return nil
 }
 
-// EnvMap returns a map of environment variables required for the vsphere provider.
 func (p *vsphereProvider) EnvMap(_ *cluster.ManagementComponents, _ *cluster.Spec) (map[string]string, error) {
-	envMap := make(map[string]string)
-	for _, key := range requiredEnvs {
-		if env, ok := os.LookupEnv(key); ok && len(env) > 0 {
-			envMap[key] = env
-		} else {
-			return envMap, fmt.Errorf("warning required env not set %s", key)
-		}
-	}
-	return envMap, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (p *vsphereProvider) GetDeployments() map[string][]string {
-	return map[string][]string{
-		"capv-system": {"capv-controller-manager"},
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (p *vsphereProvider) DatacenterConfig(spec *cluster.Spec) providers.DatacenterConfig {
-	return spec.VSphereDatacenter
+	_ = "STUB: not implemented"
+	return *new(providers.DatacenterConfig)
 }
 
 func (p *vsphereProvider) MachineConfigs(spec *cluster.Spec) []providers.MachineConfig {
-	annotateMachineConfig(
-		spec,
-		spec.Cluster.Spec.ControlPlaneConfiguration.MachineGroupRef.Name,
-		spec.Cluster.ControlPlaneAnnotation(),
-		"true",
-	)
-	if spec.Cluster.Spec.ExternalEtcdConfiguration != nil {
-		annotateMachineConfig(
-			spec,
-			spec.Cluster.Spec.ExternalEtcdConfiguration.MachineGroupRef.Name,
-			spec.Cluster.EtcdAnnotation(),
-			"true",
-		)
-	}
-
-	for _, workerNodeGroupConfiguration := range p.clusterConfig.Spec.WorkerNodeGroupConfigurations {
-		setMachineConfigManagedBy(
-			spec,
-			workerNodeGroupConfiguration.MachineGroupRef.Name,
-		)
-	}
-
-	machineConfigs := make([]providers.MachineConfig, 0, len(spec.VSphereMachineConfigs))
-	for _, m := range spec.VSphereMachineConfigs {
-		machineConfigs = append(machineConfigs, m)
-	}
-
-	return machineConfigs
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func annotateMachineConfig(spec *cluster.Spec, machineConfigName, annotationKey, annotationValue string) {
-	machineConfig := spec.VSphereMachineConfigs[machineConfigName]
-	if machineConfig.Annotations == nil {
-		machineConfig.Annotations = make(map[string]string, 1)
-	}
-	machineConfig.Annotations[annotationKey] = annotationValue
-	setMachineConfigManagedBy(spec, machineConfigName)
+	_ = "STUB: not implemented"
+	return
 }
 
 func setMachineConfigManagedBy(spec *cluster.Spec, machineConfigName string) {
-	machineConfig := spec.VSphereMachineConfigs[machineConfigName]
-	if machineConfig.Annotations == nil {
-		machineConfig.Annotations = make(map[string]string, 1)
-	}
-	if spec.Cluster.IsManaged() {
-		machineConfig.SetManagedBy(spec.Cluster.ManagedBy())
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func (p *vsphereProvider) ValidateNewSpec(ctx context.Context, cluster *types.Cluster, clusterSpec *cluster.Spec) error {
-	prevSpec, err := p.providerKubectlClient.GetEksaCluster(ctx, cluster, clusterSpec.Cluster.Name)
-	if err != nil {
-		return err
-	}
-
-	prevDatacenter, err := p.providerKubectlClient.GetEksaVSphereDatacenterConfig(ctx, prevSpec.Spec.DatacenterRef.Name, cluster.KubeconfigFile, prevSpec.Namespace)
-	if err != nil {
-		return err
-	}
-
-	datacenter := clusterSpec.VSphereDatacenter
-
-	oSpec := prevDatacenter.Spec
-	nSpec := datacenter.Spec
-
-	prevMachineConfigRefs := machineRefSliceToMap(prevSpec.MachineConfigRefs())
-
-	for _, machineConfigRef := range clusterSpec.Cluster.MachineConfigRefs() {
-		machineConfig, ok := clusterSpec.VSphereMachineConfigs[machineConfigRef.Name]
-		if !ok {
-			return fmt.Errorf("cannot find machine config %s in vsphere provider machine configs", machineConfigRef.Name)
-		}
-
-		if _, ok = prevMachineConfigRefs[machineConfig.Name]; ok {
-			err = p.validateMachineConfigImmutability(ctx, cluster, machineConfig, clusterSpec)
-			if err != nil {
-				return err
-			}
-		}
-	}
-
-	if nSpec.Server != oSpec.Server {
-		return fmt.Errorf("spec.server is immutable. Previous value %s, new value %s", oSpec.Server, nSpec.Server)
-	}
-	if nSpec.Datacenter != oSpec.Datacenter {
-		return fmt.Errorf("spec.datacenter is immutable. Previous value %s, new value %s", oSpec.Datacenter, nSpec.Datacenter)
-	}
-
-	if nSpec.Network != oSpec.Network {
-		return fmt.Errorf("spec.network is immutable. Previous value %s, new value %s", oSpec.Network, nSpec.Network)
-	}
-
-	secretChanged, err := p.secretContentsChanged(ctx, cluster)
-	if err != nil {
-		return err
-	}
-
-	if secretChanged {
-		return fmt.Errorf("the VSphere credentials derived from %s and %s are immutable; please use the same credentials for the upgraded cluster", vSpherePasswordKey, vSphereUsernameKey)
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (p *vsphereProvider) validateMachineConfigImmutability(ctx context.Context, cluster *types.Cluster, newConfig *v1alpha1.VSphereMachineConfig, clusterSpec *cluster.Spec) error {
-	prevMachineConfig, err := p.providerKubectlClient.GetEksaVSphereMachineConfig(ctx, newConfig.Name, cluster.KubeconfigFile, clusterSpec.Cluster.Namespace)
-	if err != nil {
-		return err
-	}
-
-	if newConfig.Spec.StoragePolicyName != prevMachineConfig.Spec.StoragePolicyName {
-		return fmt.Errorf("spec.storagePolicyName is immutable. Previous value %s, new value %s", prevMachineConfig.Spec.StoragePolicyName, newConfig.Spec.StoragePolicyName)
-	}
-
-	if newConfig.Spec.OSFamily != prevMachineConfig.Spec.OSFamily {
-		return fmt.Errorf("spec.osFamily is immutable. Previous value %v, new value %v", prevMachineConfig.Spec.OSFamily, newConfig.Spec.OSFamily)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (p *vsphereProvider) secretContentsChanged(ctx context.Context, workloadCluster *types.Cluster) (bool, error) {
-	nPassword := os.Getenv(vSpherePasswordKey)
-	oSecret, err := p.providerKubectlClient.GetSecretFromNamespace(ctx, workloadCluster.KubeconfigFile, CredentialsObjectName, constants.EksaSystemNamespace)
-	if err != nil {
-		return false, fmt.Errorf("obtaining VSphere secret %s from workload cluster: %v", CredentialsObjectName, err)
-	}
-
-	if string(oSecret.Data["password"]) != nPassword {
-		return true, nil
-	}
-
-	nUser := os.Getenv(vSphereUsernameKey)
-	if string(oSecret.Data["username"]) != nUser {
-		return true, nil
-	}
+	_ = "STUB: not implemented"
 	return false, nil
 }
 
 // ChangeDiff returns the component change diff for the provider.
 func (p *vsphereProvider) ChangeDiff(currentComponents, newComponents *cluster.ManagementComponents) *types.ComponentChangeDiff {
-	if currentComponents.VSphere.Version == newComponents.VSphere.Version {
-		return nil
-	}
-
-	return &types.ComponentChangeDiff{
-		ComponentName: constants.VSphereProviderName,
-		NewVersion:    newComponents.VSphere.Version,
-		OldVersion:    currentComponents.VSphere.Version,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetInfrastructureBundle returns the infrastructure bundle for the provider.
 func (p *vsphereProvider) GetInfrastructureBundle(components *cluster.ManagementComponents) *types.InfrastructureBundle {
-	folderName := fmt.Sprintf("infrastructure-vsphere/%s/", components.VSphere.Version)
-
-	infraBundle := types.InfrastructureBundle{
-		FolderName: folderName,
-		Manifests: []releasev1alpha1.Manifest{
-			components.VSphere.Components,
-			components.VSphere.Metadata,
-			components.VSphere.ClusterTemplate,
-		},
-	}
-
-	return &infraBundle
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Version returns the version of the provider.
 func (p *vsphereProvider) Version(components *cluster.ManagementComponents) string {
-	return components.VSphere.Version
+	_ = "STUB: not implemented"
+	return ""
 }
 
 func (p *vsphereProvider) RunPostControlPlaneUpgrade(_ context.Context, _, _ *cluster.Spec, _, _ *types.Cluster) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func cpiResourceSetName(clusterSpec *cluster.Spec) string {
-	return fmt.Sprintf("%s-cpi", clusterSpec.Cluster.Name)
-}
+func cpiResourceSetName(clusterSpec *cluster.Spec) string { _ = "STUB: not implemented"; return "" }
 
 func machineRefSliceToMap(machineRefs []v1alpha1.Ref) map[string]v1alpha1.Ref {
-	refMap := make(map[string]v1alpha1.Ref, len(machineRefs))
-	for _, ref := range machineRefs {
-		refMap[ref.Name] = ref
-	}
-	return refMap
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (p *vsphereProvider) InstallCustomProviderComponents(ctx context.Context, kubeconfigFile string) error {
+	_ = "STUB: not implemented"
+
+	// PreCoreComponentsUpgrade satisfies the Provider interface.
 	return nil
 }
 
-// PreCoreComponentsUpgrade satisfies the Provider interface.
 func (p *vsphereProvider) PreCoreComponentsUpgrade(
 	ctx context.Context,
 	cluster *types.Cluster,
 	managementComponents *cluster.ManagementComponents,
 	clusterSpec *cluster.Spec,
 ) error {
+	_ = "STUB: not implemented"
 	return nil
 }

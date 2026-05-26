@@ -2,18 +2,11 @@ package registry
 
 import (
 	"context"
-	"crypto/tls"
-	"fmt"
-	"net/http"
-	"path"
 	"sync"
 
 	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
-	"oras.land/oras-go/v2"
-	"oras.land/oras-go/v2/content"
 	orasregistry "oras.land/oras-go/v2/registry"
 	"oras.land/oras-go/v2/registry/remote"
-	"oras.land/oras-go/v2/registry/remote/auth"
 )
 
 // OCIRegistryClient storage client for an OCI registry.
@@ -27,91 +20,63 @@ var _ StorageClient = (*OCIRegistryClient)(nil)
 
 // NewOCIRegistry create an OCI registry client.
 func NewOCIRegistry(context StorageContext) *OCIRegistryClient {
-	return &OCIRegistryClient{
-		StorageContext: context,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Init registry configuration.
-func (or *OCIRegistryClient) Init() error {
-	var err error
-	onceFunc := func() {
-		or.registry, err = remote.NewRegistry(or.host)
-		if err != nil {
-			err = fmt.Errorf("error with registry <%s>: %v", or.host, err)
-			return
-		}
+func (or *OCIRegistryClient) Init() error { _ = "STUB: not implemented"; return nil }
 
-		transport := http.DefaultTransport.(*http.Transport).Clone()
-		{ // #nosec G402
-			transport.TLSClientConfig = &tls.Config{
-				RootCAs:            or.certificates,
-				InsecureSkipVerify: or.insecure,
-			}
-		}
-		authClient := &auth.Client{
-			Client: &http.Client{
-				Transport: transport,
-			},
-			Cache: auth.NewCache(),
-		}
-		authClient.SetUserAgent("eksa")
-		authClient.Credential = func(ctx context.Context, s string) (auth.Credential, error) {
-			return or.credentialStore.Credential(s)
-		}
-		or.registry.Client = authClient
-	}
-	or.initialized.Do(onceFunc)
-	return err
-}
+// #nosec G402
 
 // GetHost for registry host.
 func (or *OCIRegistryClient) GetHost() string {
-	return or.host
+	_ = "STUB: not implemented"
+
+	// SetProject for registry destination.
+	return ""
 }
 
-// SetProject for registry destination.
-func (or *OCIRegistryClient) SetProject(project string) {
-	or.project = project
-}
+func (or *OCIRegistryClient) SetProject(project string) { _ = "STUB: not implemented"; return }
 
 // Destination of this storage registry.
 func (or *OCIRegistryClient) Destination(image Artifact) string {
-	return path.Join(or.host, or.project, image.Repository) + image.Version()
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // GetStorage object based on repository.
 func (or *OCIRegistryClient) GetStorage(ctx context.Context, artifact Artifact) (repo orasregistry.Repository, err error) {
-	dstRepo := path.Join(or.project, artifact.Repository)
-	repo, err = or.registry.Repository(ctx, dstRepo)
-	if err != nil {
-		return nil, fmt.Errorf("error creating repository %s: %v", dstRepo, err)
-	}
-	return repo, nil
+	_ = "STUB: not implemented"
+	return *new(orasregistry.Repository), nil
 }
 
 // Resolve the location of the source repository given the image.
 func (or *OCIRegistryClient) Resolve(ctx context.Context, srcStorage orasregistry.Repository, versionedImage string) (desc ocispec.Descriptor, err error) {
-	or.registry.Reference.Reference = versionedImage
-	return srcStorage.Resolve(ctx, or.registry.Reference.Reference)
+	_ = "STUB: not implemented"
+	return *new(ocispec.Descriptor), nil
 }
 
 // FetchBytes a resource from the registry.
 func (or *OCIRegistryClient) FetchBytes(ctx context.Context, srcStorage orasregistry.Repository, artifact Artifact) (ocispec.Descriptor, []byte, error) {
-	return oras.FetchBytes(ctx, srcStorage, artifact.VersionedImage(), oras.DefaultFetchBytesOptions)
+	_ = "STUB: not implemented"
+	return *new(ocispec.Descriptor), nil, nil
 }
 
 // FetchBlob get named blob.
 func (or *OCIRegistryClient) FetchBlob(ctx context.Context, srcStorage orasregistry.Repository, descriptor ocispec.Descriptor) ([]byte, error) {
-	return content.FetchAll(ctx, srcStorage, descriptor)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CopyGraph copy manifest and all blobs to destination.
 func (or *OCIRegistryClient) CopyGraph(ctx context.Context, srcStorage orasregistry.Repository, srcRef string, dstStorage orasregistry.Repository, dstRef string) (ocispec.Descriptor, error) {
-	return oras.Copy(ctx, srcStorage, srcRef, dstStorage, dstRef, oras.CopyOptions{})
+	_ = "STUB: not implemented"
+	return *new(ocispec.Descriptor), nil
 }
 
 // Tag an image.
 func (or *OCIRegistryClient) Tag(ctx context.Context, dstStorage orasregistry.Repository, desc ocispec.Descriptor, tag string) error {
-	return dstStorage.Tag(ctx, desc, tag)
+	_ = "STUB: not implemented"
+	return nil
 }

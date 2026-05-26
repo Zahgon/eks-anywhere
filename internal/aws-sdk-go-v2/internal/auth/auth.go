@@ -18,28 +18,32 @@ var _ smithyhttp.AuthScheme = (*HTTPAuthScheme)(nil)
 
 // NewHTTPAuthScheme returns an auth scheme instance with the given config.
 func NewHTTPAuthScheme(schemeID string, signer smithyhttp.Signer) *HTTPAuthScheme {
-	return &HTTPAuthScheme{
-		schemeID: schemeID,
-		signer:   signer,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SchemeID identifies the auth scheme.
 func (s *HTTPAuthScheme) SchemeID() string {
-	return s.schemeID
+	_ = "STUB: not implemented"
+
+	// IdentityResolver gets the identity resolver for the auth scheme.
+	return ""
 }
 
-// IdentityResolver gets the identity resolver for the auth scheme.
 func (s *HTTPAuthScheme) IdentityResolver(o auth.IdentityResolverOptions) auth.IdentityResolver {
-	return o.GetIdentityResolver(s.schemeID)
+	_ = "STUB: not implemented"
+	return *new(auth.IdentityResolver)
 }
 
 // Signer gets the signer for the auth scheme.
 func (s *HTTPAuthScheme) Signer() smithyhttp.Signer {
-	return s.signer
+	_ = "STUB: not implemented"
+
+	// WithSigner returns a new instance of the auth scheme with the updated signer.
+	return *new(smithyhttp.Signer)
 }
 
-// WithSigner returns a new instance of the auth scheme with the updated signer.
 func (s *HTTPAuthScheme) WithSigner(signer smithyhttp.Signer) *HTTPAuthScheme {
-	return NewHTTPAuthScheme(s.schemeID, signer)
+	_ = "STUB: not implemented"
+	return nil
 }

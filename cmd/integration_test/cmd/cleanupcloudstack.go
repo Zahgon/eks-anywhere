@@ -2,14 +2,10 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
-	"github.com/spf13/viper"
 
-	"github.com/aws/eks-anywhere/internal/test/cleanup"
 	"github.com/aws/eks-anywhere/pkg/logger"
 )
 
@@ -29,12 +25,8 @@ var cleanUpCloudstackCmd = &cobra.Command{
 }
 
 func preRunCleanUpCloudstackSetup(cmd *cobra.Command, args []string) {
-	cmd.Flags().VisitAll(func(flag *pflag.Flag) {
-		err := viper.BindPFlag(flag.Name, flag)
-		if err != nil {
-			log.Fatalf("Error initializing flags: %v", err)
-		}
-	})
+	_ = "STUB: not implemented"
+	return
 }
 
 const deleteDuplicateNetworksFlag = "delete-duplicate-networks"
@@ -54,12 +46,6 @@ func init() {
 }
 
 func cleanUpCloudstackTestResources(ctx context.Context) error {
-	clusterName := viper.GetString(clusterNameFlagName)
-	deleteDuplicateNetworks := viper.IsSet(deleteDuplicateNetworksFlag)
-	err := cleanup.CloudstackTestResources(ctx, clusterName, false, deleteDuplicateNetworks)
-	if err != nil {
-		return fmt.Errorf("running cleanup for cloudstack vms: %v", err)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }

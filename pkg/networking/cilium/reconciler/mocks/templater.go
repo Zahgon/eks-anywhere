@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	cluster "github.com/aws/eks-anywhere/pkg/cluster"
 	cilium "github.com/aws/eks-anywhere/pkg/networking/cilium"
@@ -26,47 +25,37 @@ type MockTemplaterMockRecorder struct {
 
 // NewMockTemplater creates a new mock instance.
 func NewMockTemplater(ctrl *gomock.Controller) *MockTemplater {
-	mock := &MockTemplater{ctrl: ctrl}
-	mock.recorder = &MockTemplaterMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockTemplater) EXPECT() *MockTemplaterMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// GenerateManifest mocks base method.
+	return nil
 }
 
-// GenerateManifest mocks base method.
 func (m *MockTemplater) GenerateManifest(ctx context.Context, spec *cluster.Spec, opts ...cilium.ManifestOpt) ([]byte, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, spec}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GenerateManifest", varargs...)
-	ret0, _ := ret[0].([]byte)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GenerateManifest indicates an expected call of GenerateManifest.
 func (mr *MockTemplaterMockRecorder) GenerateManifest(ctx, spec interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, spec}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateManifest", reflect.TypeOf((*MockTemplater)(nil).GenerateManifest), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GenerateUpgradePreflightManifest mocks base method.
 func (m *MockTemplater) GenerateUpgradePreflightManifest(ctx context.Context, spec *cluster.Spec) ([]byte, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GenerateUpgradePreflightManifest", ctx, spec)
-	ret0, _ := ret[0].([]byte)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GenerateUpgradePreflightManifest indicates an expected call of GenerateUpgradePreflightManifest.
 func (mr *MockTemplaterMockRecorder) GenerateUpgradePreflightManifest(ctx, spec interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateUpgradePreflightManifest", reflect.TypeOf((*MockTemplater)(nil).GenerateUpgradePreflightManifest), ctx, spec)
+	_ = "STUB: not implemented"
+	return nil
 }

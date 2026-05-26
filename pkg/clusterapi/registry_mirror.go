@@ -2,17 +2,13 @@ package clusterapi
 
 import (
 	_ "embed"
-	"fmt"
 
-	etcdbootstrapv1 "github.com/aws/etcdadm-bootstrap-provider/api/v1beta1"
 	etcdv1 "github.com/aws/etcdadm-controller/api/v1beta1"
 	bootstrapv1beta2 "sigs.k8s.io/cluster-api/api/bootstrap/kubeadm/v1beta2"
 	controlplanev1beta2 "sigs.k8s.io/cluster-api/api/controlplane/kubeadm/v1beta2"
 
 	"github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	"github.com/aws/eks-anywhere/pkg/registrymirror"
-	"github.com/aws/eks-anywhere/pkg/registrymirror/containerd"
-	"github.com/aws/eks-anywhere/pkg/templater"
 )
 
 //go:embed config/containerd_config_append.toml
@@ -23,145 +19,65 @@ var hostsTemplate string
 
 // SetRegistryMirrorInKubeadmControlPlaneForBottlerocket sets up registry mirror configuration in kubeadmControlPlane for bottlerocket.
 func SetRegistryMirrorInKubeadmControlPlaneForBottlerocket(kcp *controlplanev1beta2.KubeadmControlPlane, mirrorConfig *v1alpha1.RegistryMirrorConfiguration) {
-	if mirrorConfig == nil {
-		return
-	}
-
-	kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.RegistryMirror = registryMirror(mirrorConfig)
-	kcp.Spec.KubeadmConfigSpec.JoinConfiguration.RegistryMirror = registryMirror(mirrorConfig)
+	_ = "STUB: not implemented"
+	return
 }
 
 // SetRegistryMirrorInKubeadmControlPlaneForUbuntu sets up registry mirror configuration in kubeadmControlPlane for ubuntu.
 func SetRegistryMirrorInKubeadmControlPlaneForUbuntu(kcp *controlplanev1beta2.KubeadmControlPlane, mirrorConfig *v1alpha1.RegistryMirrorConfiguration) error {
-	if mirrorConfig == nil {
-		return nil
-	}
-
-	return addRegistryMirrorInKubeadmConfigSpecFiles(&kcp.Spec.KubeadmConfigSpec, mirrorConfig)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetRegistryMirrorInKubeadmConfigTemplateForBottlerocket sets up registry mirror configuration in kubeadmConfigTemplate for bottlerocket.
 func SetRegistryMirrorInKubeadmConfigTemplateForBottlerocket(kct *bootstrapv1beta2.KubeadmConfigTemplate, mirrorConfig *v1alpha1.RegistryMirrorConfiguration) {
-	if mirrorConfig == nil {
-		return
-	}
-
-	kct.Spec.Template.Spec.JoinConfiguration.RegistryMirror = registryMirror(mirrorConfig)
+	_ = "STUB: not implemented"
+	return
 }
 
 // SetRegistryMirrorInKubeadmConfigTemplateForUbuntu sets up registry mirror configuration in kubeadmConfigTemplate for ubuntu.
 func SetRegistryMirrorInKubeadmConfigTemplateForUbuntu(kct *bootstrapv1beta2.KubeadmConfigTemplate, mirrorConfig *v1alpha1.RegistryMirrorConfiguration) error {
-	if mirrorConfig == nil {
-		return nil
-	}
-
-	return addRegistryMirrorInKubeadmConfigSpecFiles(&kct.Spec.Template.Spec, mirrorConfig)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // setRegistryMirrorInEtcdCluster sets up registry mirror configuration in etcdadmCluster.
 func setRegistryMirrorInEtcdCluster(etcd *etcdv1.EtcdadmCluster, mirrorConfig *v1alpha1.RegistryMirrorConfiguration) {
-	if mirrorConfig == nil {
-		return
-	}
-
-	etcd.Spec.EtcdadmConfigSpec.RegistryMirror = &etcdbootstrapv1.RegistryMirrorConfiguration{
-		Endpoint: containerd.ToAPIEndpoint(registrymirror.FromClusterRegistryMirrorConfiguration(mirrorConfig).CoreEKSAMirror()),
-		CACert:   mirrorConfig.CACertContent,
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func registryMirror(mirrorConfig *v1alpha1.RegistryMirrorConfiguration) bootstrapv1beta2.RegistryMirrorConfiguration {
-	return bootstrapv1beta2.RegistryMirrorConfiguration{
-		Endpoint: containerd.ToAPIEndpoint(registrymirror.FromClusterRegistryMirrorConfiguration(mirrorConfig).CoreEKSAMirror()),
-		CACert:   mirrorConfig.CACertContent,
-	}
+	_ = "STUB: not implemented"
+	return *new(bootstrapv1beta2.RegistryMirrorConfiguration)
 }
 
 type values map[string]interface{}
 
 func registryMirrorConfigContent(registryMirror *registrymirror.RegistryMirror) (string, error) {
-	config, err := templater.Execute(containerdConfig, nil)
-	if err != nil {
-		return "", fmt.Errorf("building containerd config file: %v", err)
-	}
-	return string(config), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func hostsFileContent(registryMirror *registrymirror.RegistryMirror, server, host string) (string, error) {
-	val := values{
-		"server":         server,
-		"host":           host,
-		"mirrorBase":     registryMirror.BaseRegistry,
-		"registryCACert": registryMirror.CACertContent,
-		"insecureSkip":   registryMirror.InsecureSkipVerify,
-	}
-
-	content, err := templater.Execute(hostsTemplate, val)
-	if err != nil {
-		return "", fmt.Errorf("building hosts.toml file: %v", err)
-	}
-	return string(content), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func registryMirrorConfig(registryMirrorConfig *v1alpha1.RegistryMirrorConfiguration) (files []bootstrapv1beta2.File, err error) {
-	registryMirror := registrymirror.FromClusterRegistryMirrorConfiguration(registryMirrorConfig)
-	registryConfig, err := registryMirrorConfigContent(registryMirror)
-	if err != nil {
-		return nil, err
-	}
-
-	// Main config file
-	files = []bootstrapv1beta2.File{
-		{
-			Path:    "/etc/containerd/config_append.toml",
-			Owner:   "root:root",
-			Content: registryConfig,
-		},
-	}
-
-	// CA certificate if present
-	if registryMirrorConfig.CACertContent != "" {
-		files = append(files, bootstrapv1beta2.File{
-			Path:    fmt.Sprintf("/etc/containerd/certs.d/%s/ca.crt", registryMirror.BaseRegistry),
-			Owner:   "root:root",
-			Content: registryMirrorConfig.CACertContent,
-		})
-	}
-
-	// Mirror base hosts.toml
-	mirrorBaseContent, err := hostsFileContent(registryMirror, registryMirror.BaseRegistry, containerd.ToAPIEndpoint(registryMirror.BaseRegistry))
-	if err != nil {
-		return nil, err
-	}
-	files = append(files, bootstrapv1beta2.File{
-		Path:    fmt.Sprintf("/etc/containerd/certs.d/%s/hosts.toml", registryMirror.BaseRegistry),
-		Owner:   "root:root",
-		Content: mirrorBaseContent,
-	})
-
-	// Individual registry hosts.toml files
-	for originalRegistry, mirrorEndpoint := range containerd.ToAPIEndpoints(registryMirror.NamespacedRegistryMap) {
-		registryContent, err := hostsFileContent(registryMirror, originalRegistry, mirrorEndpoint)
-		if err != nil {
-			return nil, err
-		}
-		files = append(files, bootstrapv1beta2.File{
-			Path:    fmt.Sprintf("/etc/containerd/certs.d/%s/hosts.toml", originalRegistry),
-			Owner:   "root:root",
-			Content: registryContent,
-		})
-	}
-
-	return files, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
+// Main config file
+
+// CA certificate if present
+
+// Mirror base hosts.toml
+
+// Individual registry hosts.toml files
+
 func addRegistryMirrorInKubeadmConfigSpecFiles(kcs *bootstrapv1beta2.KubeadmConfigSpec, mirrorConfig *v1alpha1.RegistryMirrorConfiguration) error {
-	containerdFiles, err := registryMirrorConfig(mirrorConfig)
-	if err != nil {
-		return fmt.Errorf("setting registry mirror configuration: %v", err)
-	}
-
-	kcs.Files = append(kcs.Files, containerdFiles...)
-
+	_ = "STUB: not implemented"
 	return nil
 }

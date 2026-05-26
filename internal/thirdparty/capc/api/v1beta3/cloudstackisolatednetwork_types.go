@@ -53,13 +53,7 @@ type CloudStackIsolatedNetworkStatus struct {
 	Ready bool `json:"ready"`
 }
 
-func (n *CloudStackIsolatedNetwork) Network() *Network {
-	return &Network{
-		Name: n.Spec.Name,
-		Type: "IsolatedNetwork",
-		ID:   n.Spec.ID,
-	}
-}
+func (n *CloudStackIsolatedNetwork) Network() *Network { _ = "STUB: not implemented"; return nil }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status

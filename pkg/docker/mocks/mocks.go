@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
 )
@@ -24,28 +23,27 @@ type MockImageDiskLoaderMockRecorder struct {
 
 // NewMockImageDiskLoader creates a new mock instance.
 func NewMockImageDiskLoader(ctrl *gomock.Controller) *MockImageDiskLoader {
-	mock := &MockImageDiskLoader{ctrl: ctrl}
-	mock.recorder = &MockImageDiskLoaderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockImageDiskLoader) EXPECT() *MockImageDiskLoaderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// LoadFromFile mocks base method.
+	return nil
 }
 
-// LoadFromFile mocks base method.
 func (m *MockImageDiskLoader) LoadFromFile(ctx context.Context, filepath string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LoadFromFile", ctx, filepath)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // LoadFromFile indicates an expected call of LoadFromFile.
 func (mr *MockImageDiskLoaderMockRecorder) LoadFromFile(ctx, filepath interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LoadFromFile", reflect.TypeOf((*MockImageDiskLoader)(nil).LoadFromFile), ctx, filepath)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockImageDiskWriter is a mock of ImageDiskWriter interface.
@@ -61,33 +59,27 @@ type MockImageDiskWriterMockRecorder struct {
 
 // NewMockImageDiskWriter creates a new mock instance.
 func NewMockImageDiskWriter(ctrl *gomock.Controller) *MockImageDiskWriter {
-	mock := &MockImageDiskWriter{ctrl: ctrl}
-	mock.recorder = &MockImageDiskWriterMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockImageDiskWriter) EXPECT() *MockImageDiskWriterMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// SaveToFile mocks base method.
+	return nil
 }
 
-// SaveToFile mocks base method.
 func (m *MockImageDiskWriter) SaveToFile(ctx context.Context, filepath string, images ...string) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, filepath}
-	for _, a := range images {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "SaveToFile", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SaveToFile indicates an expected call of SaveToFile.
 func (mr *MockImageDiskWriterMockRecorder) SaveToFile(ctx, filepath interface{}, images ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, filepath}, images...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaveToFile", reflect.TypeOf((*MockImageDiskWriter)(nil).SaveToFile), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockImageTaggerPusher is a mock of ImageTaggerPusher interface.
@@ -103,42 +95,39 @@ type MockImageTaggerPusherMockRecorder struct {
 
 // NewMockImageTaggerPusher creates a new mock instance.
 func NewMockImageTaggerPusher(ctrl *gomock.Controller) *MockImageTaggerPusher {
-	mock := &MockImageTaggerPusher{ctrl: ctrl}
-	mock.recorder = &MockImageTaggerPusherMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockImageTaggerPusher) EXPECT() *MockImageTaggerPusherMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// PushImage mocks base method.
+	return nil
 }
 
-// PushImage mocks base method.
 func (m *MockImageTaggerPusher) PushImage(ctx context.Context, image, endpoint string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PushImage", ctx, image, endpoint)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PushImage indicates an expected call of PushImage.
 func (mr *MockImageTaggerPusherMockRecorder) PushImage(ctx, image, endpoint interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PushImage", reflect.TypeOf((*MockImageTaggerPusher)(nil).PushImage), ctx, image, endpoint)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // TagImage mocks base method.
 func (m *MockImageTaggerPusher) TagImage(ctx context.Context, image, endpoint string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "TagImage", ctx, image, endpoint)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // TagImage indicates an expected call of TagImage.
 func (mr *MockImageTaggerPusherMockRecorder) TagImage(ctx, image, endpoint interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TagImage", reflect.TypeOf((*MockImageTaggerPusher)(nil).TagImage), ctx, image, endpoint)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockImagePuller is a mock of ImagePuller interface.
@@ -154,28 +143,27 @@ type MockImagePullerMockRecorder struct {
 
 // NewMockImagePuller creates a new mock instance.
 func NewMockImagePuller(ctrl *gomock.Controller) *MockImagePuller {
-	mock := &MockImagePuller{ctrl: ctrl}
-	mock.recorder = &MockImagePullerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockImagePuller) EXPECT() *MockImagePullerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// PullImage mocks base method.
+	return nil
 }
 
-// PullImage mocks base method.
 func (m *MockImagePuller) PullImage(ctx context.Context, image string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PullImage", ctx, image)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PullImage indicates an expected call of PullImage.
 func (mr *MockImagePullerMockRecorder) PullImage(ctx, image interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PullImage", reflect.TypeOf((*MockImagePuller)(nil).PullImage), ctx, image)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockDockerClient is a mock of DockerClient interface.
@@ -191,61 +179,51 @@ type MockDockerClientMockRecorder struct {
 
 // NewMockDockerClient creates a new mock instance.
 func NewMockDockerClient(ctrl *gomock.Controller) *MockDockerClient {
-	mock := &MockDockerClient{ctrl: ctrl}
-	mock.recorder = &MockDockerClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDockerClient) EXPECT() *MockDockerClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// LoadFromFile mocks base method.
+	return nil
 }
 
-// LoadFromFile mocks base method.
 func (m *MockDockerClient) LoadFromFile(ctx context.Context, filepath string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LoadFromFile", ctx, filepath)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // LoadFromFile indicates an expected call of LoadFromFile.
 func (mr *MockDockerClientMockRecorder) LoadFromFile(ctx, filepath interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LoadFromFile", reflect.TypeOf((*MockDockerClient)(nil).LoadFromFile), ctx, filepath)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PullImage mocks base method.
 func (m *MockDockerClient) PullImage(ctx context.Context, image string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PullImage", ctx, image)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PullImage indicates an expected call of PullImage.
 func (mr *MockDockerClientMockRecorder) PullImage(ctx, image interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PullImage", reflect.TypeOf((*MockDockerClient)(nil).PullImage), ctx, image)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SaveToFile mocks base method.
 func (m *MockDockerClient) SaveToFile(ctx context.Context, filepath string, images ...string) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, filepath}
-	for _, a := range images {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "SaveToFile", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SaveToFile indicates an expected call of SaveToFile.
 func (mr *MockDockerClientMockRecorder) SaveToFile(ctx, filepath interface{}, images ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, filepath}, images...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaveToFile", reflect.TypeOf((*MockDockerClient)(nil).SaveToFile), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockImageSource is a mock of ImageSource interface.
@@ -261,33 +239,27 @@ type MockImageSourceMockRecorder struct {
 
 // NewMockImageSource creates a new mock instance.
 func NewMockImageSource(ctrl *gomock.Controller) *MockImageSource {
-	mock := &MockImageSource{ctrl: ctrl}
-	mock.recorder = &MockImageSourceMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockImageSource) EXPECT() *MockImageSourceMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Load mocks base method.
+	return nil
 }
 
-// Load mocks base method.
 func (m *MockImageSource) Load(ctx context.Context, images ...string) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx}
-	for _, a := range images {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Load", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Load indicates an expected call of Load.
 func (mr *MockImageSourceMockRecorder) Load(ctx interface{}, images ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx}, images...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Load", reflect.TypeOf((*MockImageSource)(nil).Load), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockImageDestination is a mock of ImageDestination interface.
@@ -303,31 +275,25 @@ type MockImageDestinationMockRecorder struct {
 
 // NewMockImageDestination creates a new mock instance.
 func NewMockImageDestination(ctrl *gomock.Controller) *MockImageDestination {
-	mock := &MockImageDestination{ctrl: ctrl}
-	mock.recorder = &MockImageDestinationMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockImageDestination) EXPECT() *MockImageDestinationMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Write mocks base method.
+	return nil
 }
 
-// Write mocks base method.
 func (m *MockImageDestination) Write(ctx context.Context, images ...string) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx}
-	for _, a := range images {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Write", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Write indicates an expected call of Write.
 func (mr *MockImageDestinationMockRecorder) Write(ctx interface{}, images ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx}, images...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Write", reflect.TypeOf((*MockImageDestination)(nil).Write), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }

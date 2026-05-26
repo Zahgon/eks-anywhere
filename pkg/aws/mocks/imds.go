@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	imds "github.com/aws/aws-sdk-go-v2/feature/ec2/imds"
 	gomock "github.com/golang/mock/gomock"
@@ -25,32 +24,25 @@ type MockIMDSClientMockRecorder struct {
 
 // NewMockIMDSClient creates a new mock instance.
 func NewMockIMDSClient(ctrl *gomock.Controller) *MockIMDSClient {
-	mock := &MockIMDSClient{ctrl: ctrl}
-	mock.recorder = &MockIMDSClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockIMDSClient) EXPECT() *MockIMDSClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// GetMetadata mocks base method.
+	return nil
 }
 
-// GetMetadata mocks base method.
 func (m *MockIMDSClient) GetMetadata(ctx context.Context, params *imds.GetMetadataInput, optFns ...func(*imds.Options)) (*imds.GetMetadataOutput, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, params}
-	for _, a := range optFns {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetMetadata", varargs...)
-	ret0, _ := ret[0].(*imds.GetMetadataOutput)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetMetadata indicates an expected call of GetMetadata.
 func (mr *MockIMDSClientMockRecorder) GetMetadata(ctx, params interface{}, optFns ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, params}, optFns...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMetadata", reflect.TypeOf((*MockIMDSClient)(nil).GetMetadata), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }

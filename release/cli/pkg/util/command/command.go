@@ -16,16 +16,6 @@ package command
 
 import (
 	"os/exec"
-	"strings"
-
-	"github.com/pkg/errors"
 )
 
-func ExecCommand(cmd *exec.Cmd) (string, error) {
-	commandOutput, err := cmd.CombinedOutput()
-	commandOutputStr := strings.TrimSpace(string(commandOutput))
-	if err != nil {
-		return commandOutputStr, errors.Cause(err)
-	}
-	return commandOutputStr, nil
-}
+func ExecCommand(cmd *exec.Cmd) (string, error) { _ = "STUB: not implemented"; return "", nil }

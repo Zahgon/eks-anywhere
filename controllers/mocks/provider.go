@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	v1alpha1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	controller "github.com/aws/eks-anywhere/pkg/controller"
@@ -27,27 +26,25 @@ type MockProviderClusterReconcilerMockRecorder struct {
 
 // NewMockProviderClusterReconciler creates a new mock instance.
 func NewMockProviderClusterReconciler(ctrl *gomock.Controller) *MockProviderClusterReconciler {
-	mock := &MockProviderClusterReconciler{ctrl: ctrl}
-	mock.recorder = &MockProviderClusterReconcilerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockProviderClusterReconciler) EXPECT() *MockProviderClusterReconcilerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Reconcile mocks base method.
+	return nil
 }
 
-// Reconcile mocks base method.
 func (m *MockProviderClusterReconciler) Reconcile(ctx context.Context, log logr.Logger, cluster *v1alpha1.Cluster) (controller.Result, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Reconcile", ctx, log, cluster)
-	ret0, _ := ret[0].(controller.Result)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(controller.Result), nil
 }
 
 // Reconcile indicates an expected call of Reconcile.
 func (mr *MockProviderClusterReconcilerMockRecorder) Reconcile(ctx, log, cluster interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Reconcile", reflect.TypeOf((*MockProviderClusterReconciler)(nil).Reconcile), ctx, log, cluster)
+	_ = "STUB: not implemented"
+	return nil
 }

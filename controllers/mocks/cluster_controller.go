@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	v1alpha1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	cluster "github.com/aws/eks-anywhere/pkg/cluster"
@@ -34,61 +33,51 @@ type MockPackagesClientMockRecorder struct {
 
 // NewMockPackagesClient creates a new mock instance.
 func NewMockPackagesClient(ctrl *gomock.Controller) *MockPackagesClient {
-	mock := &MockPackagesClient{ctrl: ctrl}
-	mock.recorder = &MockPackagesClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockPackagesClient) EXPECT() *MockPackagesClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// EnableFullLifecycle mocks base method.
+	return nil
 }
 
-// EnableFullLifecycle mocks base method.
 func (m *MockPackagesClient) EnableFullLifecycle(ctx context.Context, log logr.Logger, clusterName, kubeConfig string, chart *v1alpha10.Image, registry *registrymirror.RegistryMirror, options ...curatedpackages.PackageControllerClientOpt) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, log, clusterName, kubeConfig, chart, registry}
-	for _, a := range options {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "EnableFullLifecycle", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EnableFullLifecycle indicates an expected call of EnableFullLifecycle.
 func (mr *MockPackagesClientMockRecorder) EnableFullLifecycle(ctx, log, clusterName, kubeConfig, chart, registry interface{}, options ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, log, clusterName, kubeConfig, chart, registry}, options...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EnableFullLifecycle", reflect.TypeOf((*MockPackagesClient)(nil).EnableFullLifecycle), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Reconcile mocks base method.
 func (m *MockPackagesClient) Reconcile(arg0 context.Context, arg1 logr.Logger, arg2 client.Client, arg3 *v1alpha1.Cluster) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Reconcile", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Reconcile indicates an expected call of Reconcile.
 func (mr *MockPackagesClientMockRecorder) Reconcile(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Reconcile", reflect.TypeOf((*MockPackagesClient)(nil).Reconcile), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReconcileDelete mocks base method.
 func (m *MockPackagesClient) ReconcileDelete(arg0 context.Context, arg1 logr.Logger, arg2 curatedpackages.KubeDeleter, arg3 *v1alpha1.Cluster) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReconcileDelete", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReconcileDelete indicates an expected call of ReconcileDelete.
 func (mr *MockPackagesClientMockRecorder) ReconcileDelete(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReconcileDelete", reflect.TypeOf((*MockPackagesClient)(nil).ReconcileDelete), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockProviderClusterReconcilerRegistry is a mock of ProviderClusterReconcilerRegistry interface.
@@ -104,28 +93,27 @@ type MockProviderClusterReconcilerRegistryMockRecorder struct {
 
 // NewMockProviderClusterReconcilerRegistry creates a new mock instance.
 func NewMockProviderClusterReconcilerRegistry(ctrl *gomock.Controller) *MockProviderClusterReconcilerRegistry {
-	mock := &MockProviderClusterReconcilerRegistry{ctrl: ctrl}
-	mock.recorder = &MockProviderClusterReconcilerRegistryMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockProviderClusterReconcilerRegistry) EXPECT() *MockProviderClusterReconcilerRegistryMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Get mocks base method.
+	return nil
 }
 
-// Get mocks base method.
 func (m *MockProviderClusterReconcilerRegistry) Get(datacenterKind string) clusters.ProviderClusterReconciler {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Get", datacenterKind)
-	ret0, _ := ret[0].(clusters.ProviderClusterReconciler)
-	return ret0
+	_ = "STUB: not implemented"
+	return *new(clusters.ProviderClusterReconciler)
 }
 
 // Get indicates an expected call of Get.
 func (mr *MockProviderClusterReconcilerRegistryMockRecorder) Get(datacenterKind interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockProviderClusterReconcilerRegistry)(nil).Get), datacenterKind)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockAWSIamConfigReconciler is a mock of AWSIamConfigReconciler interface.
@@ -141,72 +129,63 @@ type MockAWSIamConfigReconcilerMockRecorder struct {
 
 // NewMockAWSIamConfigReconciler creates a new mock instance.
 func NewMockAWSIamConfigReconciler(ctrl *gomock.Controller) *MockAWSIamConfigReconciler {
-	mock := &MockAWSIamConfigReconciler{ctrl: ctrl}
-	mock.recorder = &MockAWSIamConfigReconcilerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockAWSIamConfigReconciler) EXPECT() *MockAWSIamConfigReconcilerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// EnsureCASecret mocks base method.
+	return nil
 }
 
-// EnsureCASecret mocks base method.
 func (m *MockAWSIamConfigReconciler) EnsureCASecret(ctx context.Context, logger logr.Logger, cluster *v1alpha1.Cluster) (controller.Result, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EnsureCASecret", ctx, logger, cluster)
-	ret0, _ := ret[0].(controller.Result)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(controller.Result), nil
 }
 
 // EnsureCASecret indicates an expected call of EnsureCASecret.
 func (mr *MockAWSIamConfigReconcilerMockRecorder) EnsureCASecret(ctx, logger, cluster interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EnsureCASecret", reflect.TypeOf((*MockAWSIamConfigReconciler)(nil).EnsureCASecret), ctx, logger, cluster)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Reconcile mocks base method.
 func (m *MockAWSIamConfigReconciler) Reconcile(ctx context.Context, logger logr.Logger, cluster *v1alpha1.Cluster) (controller.Result, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Reconcile", ctx, logger, cluster)
-	ret0, _ := ret[0].(controller.Result)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(controller.Result), nil
 }
 
 // Reconcile indicates an expected call of Reconcile.
 func (mr *MockAWSIamConfigReconcilerMockRecorder) Reconcile(ctx, logger, cluster interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Reconcile", reflect.TypeOf((*MockAWSIamConfigReconciler)(nil).Reconcile), ctx, logger, cluster)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReconcileDelete mocks base method.
 func (m *MockAWSIamConfigReconciler) ReconcileDelete(ctx context.Context, logger logr.Logger, cluster *v1alpha1.Cluster) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReconcileDelete", ctx, logger, cluster)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReconcileDelete indicates an expected call of ReconcileDelete.
 func (mr *MockAWSIamConfigReconcilerMockRecorder) ReconcileDelete(ctx, logger, cluster interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReconcileDelete", reflect.TypeOf((*MockAWSIamConfigReconciler)(nil).ReconcileDelete), ctx, logger, cluster)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReconcileWorkloadClusterDelete mocks base method.
 func (m *MockAWSIamConfigReconciler) ReconcileWorkloadClusterDelete(ctx context.Context, logger logr.Logger, cluster *v1alpha1.Cluster, awsIamConfig *v1alpha1.AWSIamConfig) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReconcileWorkloadClusterDelete", ctx, logger, cluster, awsIamConfig)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReconcileWorkloadClusterDelete indicates an expected call of ReconcileWorkloadClusterDelete.
 func (mr *MockAWSIamConfigReconcilerMockRecorder) ReconcileWorkloadClusterDelete(ctx, logger, cluster, awsIamConfig interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReconcileWorkloadClusterDelete", reflect.TypeOf((*MockAWSIamConfigReconciler)(nil).ReconcileWorkloadClusterDelete), ctx, logger, cluster, awsIamConfig)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockMachineHealthCheckReconciler is a mock of MachineHealthCheckReconciler interface.
@@ -222,28 +201,27 @@ type MockMachineHealthCheckReconcilerMockRecorder struct {
 
 // NewMockMachineHealthCheckReconciler creates a new mock instance.
 func NewMockMachineHealthCheckReconciler(ctrl *gomock.Controller) *MockMachineHealthCheckReconciler {
-	mock := &MockMachineHealthCheckReconciler{ctrl: ctrl}
-	mock.recorder = &MockMachineHealthCheckReconcilerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockMachineHealthCheckReconciler) EXPECT() *MockMachineHealthCheckReconcilerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Reconcile mocks base method.
+	return nil
 }
 
-// Reconcile mocks base method.
 func (m *MockMachineHealthCheckReconciler) Reconcile(ctx context.Context, logger logr.Logger, cluster *v1alpha1.Cluster) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Reconcile", ctx, logger, cluster)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Reconcile indicates an expected call of Reconcile.
 func (mr *MockMachineHealthCheckReconcilerMockRecorder) Reconcile(ctx, logger, cluster interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Reconcile", reflect.TypeOf((*MockMachineHealthCheckReconciler)(nil).Reconcile), ctx, logger, cluster)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockClusterValidator is a mock of ClusterValidator interface.
@@ -259,28 +237,27 @@ type MockClusterValidatorMockRecorder struct {
 
 // NewMockClusterValidator creates a new mock instance.
 func NewMockClusterValidator(ctrl *gomock.Controller) *MockClusterValidator {
-	mock := &MockClusterValidator{ctrl: ctrl}
-	mock.recorder = &MockClusterValidatorMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockClusterValidator) EXPECT() *MockClusterValidatorMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ValidateManagementClusterName mocks base method.
+	return nil
 }
 
-// ValidateManagementClusterName mocks base method.
 func (m *MockClusterValidator) ValidateManagementClusterName(ctx context.Context, log logr.Logger, cluster *v1alpha1.Cluster) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ValidateManagementClusterName", ctx, log, cluster)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateManagementClusterName indicates an expected call of ValidateManagementClusterName.
 func (mr *MockClusterValidatorMockRecorder) ValidateManagementClusterName(ctx, log, cluster interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateManagementClusterName", reflect.TypeOf((*MockClusterValidator)(nil).ValidateManagementClusterName), ctx, log, cluster)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockSpecBuilder is a mock of SpecBuilder interface.
@@ -296,29 +273,27 @@ type MockSpecBuilderMockRecorder struct {
 
 // NewMockSpecBuilder creates a new mock instance.
 func NewMockSpecBuilder(ctrl *gomock.Controller) *MockSpecBuilder {
-	mock := &MockSpecBuilder{ctrl: ctrl}
-	mock.recorder = &MockSpecBuilderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockSpecBuilder) EXPECT() *MockSpecBuilderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// BuildSpec mocks base method.
+	return nil
 }
 
-// BuildSpec mocks base method.
 func (m *MockSpecBuilder) BuildSpec(ctx context.Context, eksaCluster *v1alpha1.Cluster) (*cluster.Spec, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BuildSpec", ctx, eksaCluster)
-	ret0, _ := ret[0].(*cluster.Spec)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // BuildSpec indicates an expected call of BuildSpec.
 func (mr *MockSpecBuilderMockRecorder) BuildSpec(ctx, eksaCluster interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BuildSpec", reflect.TypeOf((*MockSpecBuilder)(nil).BuildSpec), ctx, eksaCluster)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockFailureDomainSpecBuilder is a mock of FailureDomainSpecBuilder interface.
@@ -334,29 +309,27 @@ type MockFailureDomainSpecBuilderMockRecorder struct {
 
 // NewMockFailureDomainSpecBuilder creates a new mock instance.
 func NewMockFailureDomainSpecBuilder(ctrl *gomock.Controller) *MockFailureDomainSpecBuilder {
-	mock := &MockFailureDomainSpecBuilder{ctrl: ctrl}
-	mock.recorder = &MockFailureDomainSpecBuilderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockFailureDomainSpecBuilder) EXPECT() *MockFailureDomainSpecBuilderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// BuildFailureDomainSpec mocks base method.
+	return nil
 }
 
-// BuildFailureDomainSpec mocks base method.
 func (m *MockFailureDomainSpecBuilder) BuildFailureDomainSpec(log logr.Logger, clusterSpec *cluster.Spec) (*vsphere.FailureDomains, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BuildFailureDomainSpec", log, clusterSpec)
-	ret0, _ := ret[0].(*vsphere.FailureDomains)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // BuildFailureDomainSpec indicates an expected call of BuildFailureDomainSpec.
 func (mr *MockFailureDomainSpecBuilderMockRecorder) BuildFailureDomainSpec(log, clusterSpec interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BuildFailureDomainSpec", reflect.TypeOf((*MockFailureDomainSpecBuilder)(nil).BuildFailureDomainSpec), log, clusterSpec)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockObjectReconciler is a mock of ObjectReconciler interface.
@@ -372,28 +345,27 @@ type MockObjectReconcilerMockRecorder struct {
 
 // NewMockObjectReconciler creates a new mock instance.
 func NewMockObjectReconciler(ctrl *gomock.Controller) *MockObjectReconciler {
-	mock := &MockObjectReconciler{ctrl: ctrl}
-	mock.recorder = &MockObjectReconcilerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockObjectReconciler) EXPECT() *MockObjectReconcilerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ReconcileObjects mocks base method.
+	return nil
 }
 
-// ReconcileObjects mocks base method.
 func (m *MockObjectReconciler) ReconcileObjects(ctx context.Context, fd *vsphere.FailureDomains) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReconcileObjects", ctx, fd)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReconcileObjects indicates an expected call of ReconcileObjects.
 func (mr *MockObjectReconcilerMockRecorder) ReconcileObjects(ctx, fd interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReconcileObjects", reflect.TypeOf((*MockObjectReconciler)(nil).ReconcileObjects), ctx, fd)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockFailureDomainApplier is a mock of FailureDomainApplier interface.
@@ -409,26 +381,25 @@ type MockFailureDomainApplierMockRecorder struct {
 
 // NewMockFailureDomainApplier creates a new mock instance.
 func NewMockFailureDomainApplier(ctrl *gomock.Controller) *MockFailureDomainApplier {
-	mock := &MockFailureDomainApplier{ctrl: ctrl}
-	mock.recorder = &MockFailureDomainApplierMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockFailureDomainApplier) EXPECT() *MockFailureDomainApplierMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ApplyFailureDomains mocks base method.
+	return nil
 }
 
-// ApplyFailureDomains mocks base method.
 func (m *MockFailureDomainApplier) ApplyFailureDomains(ctx context.Context, log logr.Logger, cluster *v1alpha1.Cluster) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ApplyFailureDomains", ctx, log, cluster)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ApplyFailureDomains indicates an expected call of ApplyFailureDomains.
 func (mr *MockFailureDomainApplierMockRecorder) ApplyFailureDomains(ctx, log, cluster interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ApplyFailureDomains", reflect.TypeOf((*MockFailureDomainApplier)(nil).ApplyFailureDomains), ctx, log, cluster)
+	_ = "STUB: not implemented"
+	return nil
 }

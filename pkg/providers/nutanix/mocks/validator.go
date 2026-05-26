@@ -5,8 +5,6 @@
 package mocks
 
 import (
-	reflect "reflect"
-
 	v1alpha1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	gomock "github.com/golang/mock/gomock"
 )
@@ -24,26 +22,25 @@ type MockIPValidatorMockRecorder struct {
 
 // NewMockIPValidator creates a new mock instance.
 func NewMockIPValidator(ctrl *gomock.Controller) *MockIPValidator {
-	mock := &MockIPValidator{ctrl: ctrl}
-	mock.recorder = &MockIPValidatorMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockIPValidator) EXPECT() *MockIPValidatorMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ValidateControlPlaneIPUniqueness mocks base method.
+	return nil
 }
 
-// ValidateControlPlaneIPUniqueness mocks base method.
 func (m *MockIPValidator) ValidateControlPlaneIPUniqueness(cluster *v1alpha1.Cluster) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ValidateControlPlaneIPUniqueness", cluster)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateControlPlaneIPUniqueness indicates an expected call of ValidateControlPlaneIPUniqueness.
 func (mr *MockIPValidatorMockRecorder) ValidateControlPlaneIPUniqueness(cluster interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateControlPlaneIPUniqueness", reflect.TypeOf((*MockIPValidator)(nil).ValidateControlPlaneIPUniqueness), cluster)
+	_ = "STUB: not implemented"
+	return nil
 }

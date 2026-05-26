@@ -327,22 +327,18 @@ type AWSSnowMachineList struct {
 }
 
 func (r *AWSSnowMachine) GetConditions() clusterv1.Conditions {
-	return r.Status.Conditions
+	_ = "STUB: not implemented"
+	return *new(clusterv1.Conditions)
 }
 
 func (r *AWSSnowMachine) SetConditions(conditions clusterv1.Conditions) {
-	r.Status.Conditions = conditions
+	_ = "STUB: not implemented"
+	return
 }
 
-func (r *AWSSnowMachine) IsControlPlane() bool {
-	_, keyExists := r.ObjectMeta.Labels[clusterv1.MachineControlPlaneNameLabel]
-	return keyExists
-}
+func (r *AWSSnowMachine) IsControlPlane() bool { _ = "STUB: not implemented"; return false }
 
-func (r *AWSSnowMachine) IsEtcd() bool {
-	_, keyExists := r.ObjectMeta.Labels[MachineEtcdLabelName]
-	return keyExists
-}
+func (r *AWSSnowMachine) IsEtcd() bool { _ = "STUB: not implemented"; return false }
 
 func init() {
 	SchemeBuilder.Register(&AWSSnowMachine{}, &AWSSnowMachineList{})

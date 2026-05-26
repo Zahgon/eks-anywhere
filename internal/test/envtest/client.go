@@ -2,64 +2,30 @@ package envtest
 
 import (
 	"context"
-	"errors"
 	"testing"
 	"time"
 
 	"github.com/onsi/gomega"
-	corev1 "k8s.io/api/core/v1"
-	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/types"
-	"k8s.io/klog/v2"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
 // CreateObjs creates Objects using the provided kube client and waits until its cache
 // has been updated with those objects.
 func CreateObjs(ctx context.Context, t testing.TB, c client.Client, objs ...client.Object) {
-	t.Helper()
-	for _, o := range objs {
-		// we copy objects because the client modifies them while making creating/updating calls
-		obj := copyObject(t, o)
-
-		if err := c.Create(ctx, obj); isNamespace(obj) && apierrors.IsAlreadyExists(err) {
-			// namespaces can't be deleted
-			// assuming most tests just want the namespace to exist, since it already does
-			// we ignore the error
-			// for more advance usecases, handle namespaces manually outside of this helper
-			continue
-		} else if err != nil {
-			t.Fatal(err)
-		}
-	}
-
-	newStatuses := []updatedStatus{}
-	noStatusObjs := []client.Object{}
-
-	for _, o := range objs {
-		newStatus := updateStatus(ctx, t, c, o)
-		if newStatus != nil {
-			newStatuses = append(newStatuses, updatedStatus{
-				obj:       o,
-				newStatus: newStatus,
-			})
-		} else {
-			noStatusObjs = append(noStatusObjs, o)
-		}
-	}
-
-	// If the status doesn't need to be updated, just wait for the object to
-	// to be available.
-	for _, o := range noStatusObjs {
-		waitForObjectAvailable(ctx, t, c, o)
-	}
-
-	for _, u := range newStatuses {
-		waitForStatusUpdated(ctx, t, c, u.obj, u.newStatus)
-	}
+	_ = "STUB: not implemented"
+	return
 }
+
+// we copy objects because the client modifies them while making creating/updating calls
+
+// namespaces can't be deleted
+// assuming most tests just want the namespace to exist, since it already does
+// we ignore the error
+// for more advance usecases, handle namespaces manually outside of this helper
+
+// If the status doesn't need to be updated, just wait for the object to
+// to be available.
 
 type updatedStatus struct {
 	obj       client.Object
@@ -69,137 +35,59 @@ type updatedStatus struct {
 // UpdateStatusAndWait updates an objects status subresource and waits until the cache refreshes
 // and reflects the new status.
 func UpdateStatusAndWait(ctx context.Context, t testing.TB, c client.Client, o client.Object) {
-	newStatus := updateStatus(ctx, t, c, o)
-	if newStatus != nil {
-		waitForStatusUpdated(ctx, t, c, o, newStatus)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func updateStatus(ctx context.Context, t testing.TB, c client.Client, o client.Object) (newStatus map[string]interface{}) {
-	objUnstructured, err := runtime.DefaultUnstructuredConverter.ToUnstructured(o)
-	if err != nil {
-		t.Fatalf("Failed converting object %s to unstructured: %v", klog.KObj(o), err)
-	}
-	obj := &unstructured.Unstructured{Object: objUnstructured}
-
-	newStatus, found, err := unstructured.NestedMap(objUnstructured, "status")
-	if err != nil {
-		t.Fatalf("Failed checking status for object %s: %v", klog.KObj(obj), err)
-	}
-	if !found || len(newStatus) == 0 {
-		return nil
-	}
-
-	objReady := waitForObjectAvailable(ctx, t, c, obj)
-
-	// We need to update the status independently, kubernetes doesn't allow to create the main objects and
-	// its subresources all at once
-	obj.SetResourceVersion(objReady.GetResourceVersion())
-	if err := c.Status().Update(ctx, obj); apierrors.IsNotFound(err) {
-		// Some objects without a subresource will fail here,
-		// so we just try and if it fails with a 404, we ignore the error
-		t.Logf(
-			"Try updating status but failed with a 404 error for [%s name=%s namespace=%s] object, most probably because it doesn't have a defined status subresource",
-			obj.GetObjectKind().GroupVersionKind().String(),
-			obj.GetName(),
-			obj.GetNamespace(),
-		)
-	} else if err != nil {
-		t.Fatal(err)
-	}
-
-	return newStatus
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// We need to update the status independently, kubernetes doesn't allow to create the main objects and
+// its subresources all at once
+
+// Some objects without a subresource will fail here,
+// so we just try and if it fails with a 404, we ignore the error
 
 func waitForStatusUpdated(ctx context.Context, t testing.TB, c client.Client, o client.Object, newStatus map[string]interface{}) {
-	g := gomega.NewWithT(t)
-	g.Eventually(func(g gomega.Gomega) error {
-		updatedObj := &unstructured.Unstructured{}
-		updatedObj.SetGroupVersionKind(o.GetObjectKind().GroupVersionKind())
-		g.Expect(
-			c.Get(ctx, types.NamespacedName{Name: o.GetName(), Namespace: o.GetNamespace()}, updatedObj),
-		).To(gomega.Succeed())
-
-		updatedStatus, found, err := unstructured.NestedMap(updatedObj.Object, "status")
-		g.Expect(err).NotTo(gomega.HaveOccurred())
-		if !found {
-			return errors.New("no status found in updated object")
-		}
-
-		// Filter out CAPI v1beta1 fields that are deprecated in v1beta2 for CAPI objects
-		// These fields (infrastructureReady, controlPlaneReady, ready) are removed in CAPI v1beta2
-		// and may not be preserved during API version conversions
-		// TODO: Remove these conditions once we move to using CAPI v1beta2 objects inside EKS-Anywhere
-		if isCAPIObject(o) || isDockerInfraObject(o) {
-			updatedStatus = filterDeprecatedCAPIFields(updatedStatus)
-			newStatus = filterDeprecatedCAPIFields(newStatus)
-		}
-
-		g.Expect(updatedStatus).To(gomega.Equal(newStatus), "updated status should be equal to desired status")
-
-		return nil
-	}, 5*time.Second).Should(gomega.Succeed(), "the status should be updated")
+	_ = "STUB: not implemented"
+	return
 }
+
+// Filter out CAPI v1beta1 fields that are deprecated in v1beta2 for CAPI objects
+// These fields (infrastructureReady, controlPlaneReady, ready) are removed in CAPI v1beta2
+// and may not be preserved during API version conversions
+// TODO: Remove these conditions once we move to using CAPI v1beta2 objects inside EKS-Anywhere
 
 // isCAPIObject checks if the object is any CAPI object that might have deprecated fields.
-func isCAPIObject(obj client.Object) bool {
-	gvk := obj.GetObjectKind().GroupVersionKind()
-	// Check for CAPI core objects and infrastructure objects
-	return gvk.Group == "cluster.x-k8s.io" ||
-		gvk.Group == "controlplane.cluster.x-k8s.io" ||
-		gvk.Group == "infrastructure.cluster.x-k8s.io"
-}
+func isCAPIObject(obj client.Object) bool { _ = "STUB: not implemented"; return false }
+
+// Check for CAPI core objects and infrastructure objects
 
 // isDockerInfraObject checks if the object is a Docker infrastructure object used in tests.
-func isDockerInfraObject(obj client.Object) bool {
-	gvk := obj.GetObjectKind().GroupVersionKind()
-	// Check for Docker infrastructure objects used in CAPI tests
-	return gvk.Group == "infrastructure.cluster.x-k8s.io" &&
-		(gvk.Kind == "DockerCluster" || gvk.Kind == "DockerMachineTemplate")
-}
+func isDockerInfraObject(obj client.Object) bool { _ = "STUB: not implemented"; return false }
+
+// Check for Docker infrastructure objects used in CAPI tests
 
 // filterDeprecatedCAPIFields removes deprecated CAPI v1beta1 fields that don't exist in v1beta2.
 func filterDeprecatedCAPIFields(status map[string]interface{}) map[string]interface{} {
-	filtered := make(map[string]interface{})
-	for k, v := range status {
-		// Skip deprecated fields that were removed in CAPI v1beta2
-		if k == "infrastructureReady" || k == "controlPlaneReady" || k == "ready" ||
-			k == "unavailableReplicas" || k == "initialized" || k == "updatedReplicas" {
-			continue
-		}
-		filtered[k] = v
-	}
-	return filtered
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// Skip deprecated fields that were removed in CAPI v1beta2
 
 func waitForObjectAvailable(ctx context.Context, t testing.TB, c client.Client, obj client.Object) *unstructured.Unstructured {
-	unstructuredObj := &unstructured.Unstructured{}
-	for {
-		unstructuredObj.SetGroupVersionKind(obj.GetObjectKind().GroupVersionKind())
-		if err := c.Get(ctx, types.NamespacedName{Name: obj.GetName(), Namespace: obj.GetNamespace()}, unstructuredObj); err == nil {
-			break
-		} else if !apierrors.IsNotFound(err) {
-			t.Fatal(err)
-		}
-	}
-
-	return unstructuredObj
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func isNamespace(obj client.Object) bool {
-	_, isNamespaceStruct := obj.(*corev1.Namespace)
-	return isNamespaceStruct ||
-		obj.GetObjectKind().GroupVersionKind().GroupKind() == corev1.SchemeGroupVersion.WithKind("Namespace").GroupKind()
-}
+func isNamespace(obj client.Object) bool { _ = "STUB: not implemented"; return false }
 
 func copyObject(t testing.TB, obj client.Object) client.Object {
-	copyRuntimeObj := obj.DeepCopyObject()
-	copyObj, ok := copyRuntimeObj.(client.Object)
-	if !ok {
-		t.Fatal("Unexpected error converting back to client.Object after deep copy")
-	}
-
-	return copyObj
+	_ = "STUB: not implemented"
+	return *new(client.Object)
 }
 
 // APIExpecter is a helper to define eventual expectations over API resources in tests.
@@ -214,73 +102,38 @@ type APIExpecter struct {
 
 // NewAPIExpecter constructs a new APIExpecter.
 func NewAPIExpecter(t testing.TB, client client.Client) *APIExpecter {
-	return &APIExpecter{
-		t:       t,
-		g:       gomega.NewWithT(t),
-		client:  client,
-		timeout: 5 * time.Second,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteAndWait sends delete requests for a collection of objects and waits until
 // the client cache reflects the changes.
 func (a *APIExpecter) DeleteAndWait(ctx context.Context, objs ...client.Object) {
-	a.t.Helper()
-	for _, obj := range objs {
-		// namespaces can't be deleted with envtest
-		if isNamespace(obj) {
-			continue
-		}
-
-		err := a.client.Delete(ctx, obj)
-		if !apierrors.IsNotFound(err) {
-			a.g.Expect(err).To(gomega.Succeed(), "should delete object %s", obj.GetName())
-		}
-		a.ShouldEventuallyNotExist(ctx, obj)
-	}
+	_ = "STUB: not implemented"
+	return
 }
+
+// namespaces can't be deleted with envtest
 
 // DeleteAllOfAndWait deletes all objects of the given type and waits until the client's
 // cache reflects those changes.
 func (a *APIExpecter) DeleteAllOfAndWait(ctx context.Context, obj client.Object) {
-	a.t.Helper()
-	a.g.Eventually(func() error {
-		err := a.client.DeleteAllOf(ctx, obj)
-		if apierrors.IsNotFound(err) {
-			return nil
-		}
-		if err != nil {
-			return err
-		}
-
-		return errors.New("some objects still existed before delete operation, try deleting another round")
-	}, a.timeout).Should(gomega.Succeed(), "all objects of kind %s should eventually be deleted", obj.GetObjectKind().GroupVersionKind().Kind)
+	_ = "STUB: not implemented"
+	return
 }
 
 // ShouldEventuallyExist defines an eventual expectation that succeeds if the provided object
 // becomes readable by the client before the timeout expires.
 func (a *APIExpecter) ShouldEventuallyExist(ctx context.Context, obj client.Object) {
-	a.t.Helper()
-	key := client.ObjectKeyFromObject(obj)
-	a.g.Eventually(func() error {
-		return a.client.Get(ctx, key, obj)
-	}, a.timeout).Should(gomega.Succeed(), "object %s should eventually exist", obj.GetName())
+	_ = "STUB: not implemented"
+	return
 }
 
 // ShouldEventuallyMatch defines an eventual expectation that succeeds if the provided object
 // becomes readable by the client and matches the provider expectation before the timeout expires.
 func (a *APIExpecter) ShouldEventuallyMatch(ctx context.Context, obj client.Object, match func(g gomega.Gomega)) {
-	a.t.Helper()
-	key := client.ObjectKeyFromObject(obj)
-	a.g.Eventually(func(g gomega.Gomega) error {
-		if err := a.client.Get(ctx, key, obj); err != nil {
-			return err
-		}
-
-		match(g)
-
-		return nil
-	}, a.timeout).Should(gomega.Succeed(), "object %s should eventually match", obj.GetName())
+	_ = "STUB: not implemented"
+	return
 }
 
 // CloneNameNamespace returns an empty client object of the same type
@@ -291,25 +144,13 @@ func CloneNameNamespace[T any, PT interface {
 	client.Object
 }](obj PT,
 ) PT {
-	copyObj := PT(new(T))
-	copyObj.SetName(obj.GetName())
-	copyObj.SetNamespace(obj.GetNamespace())
-	return copyObj
+	_ = "STUB: not implemented"
+	return *new(PT)
 }
 
 // ShouldEventuallyNotExist defines an eventual expectation that succeeds if the provided object
 // becomes not found by the client before the timeout expires.
 func (a *APIExpecter) ShouldEventuallyNotExist(ctx context.Context, obj client.Object) {
-	key := client.ObjectKeyFromObject(obj)
-	a.g.Eventually(func() error {
-		err := a.client.Get(ctx, key, obj)
-		if apierrors.IsNotFound(err) {
-			return nil
-		}
-		if err != nil {
-			return err
-		}
-
-		return errors.New("object still exists")
-	}, a.timeout).Should(gomega.Succeed(), "object %s should eventually be deleted", obj.GetName())
+	_ = "STUB: not implemented"
+	return
 }

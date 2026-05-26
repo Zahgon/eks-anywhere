@@ -5,8 +5,6 @@
 package mocks
 
 import (
-	reflect "reflect"
-
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -23,26 +21,25 @@ type MockUnPackagerMockRecorder struct {
 
 // NewMockUnPackager creates a new mock instance.
 func NewMockUnPackager(ctrl *gomock.Controller) *MockUnPackager {
-	mock := &MockUnPackager{ctrl: ctrl}
-	mock.recorder = &MockUnPackagerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockUnPackager) EXPECT() *MockUnPackagerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// UnPackage mocks base method.
+	return nil
 }
 
-// UnPackage mocks base method.
 func (m *MockUnPackager) UnPackage(orgFile, dstFolder string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UnPackage", orgFile, dstFolder)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UnPackage indicates an expected call of UnPackage.
 func (mr *MockUnPackagerMockRecorder) UnPackage(orgFile, dstFolder interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnPackage", reflect.TypeOf((*MockUnPackager)(nil).UnPackage), orgFile, dstFolder)
+	_ = "STUB: not implemented"
+	return nil
 }

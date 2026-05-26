@@ -1,15 +1,7 @@
 package cmd
 
 import (
-	"fmt"
-	"path"
-	"path/filepath"
-	"strings"
-
 	"github.com/spf13/cobra"
-	"github.com/spf13/cobra/doc"
-
-	anywhere "github.com/aws/eks-anywhere/cmd/eksctl-anywhere/cmd"
 )
 
 const fmTemplate = `---
@@ -34,25 +26,8 @@ func init() {
 	rootCmd.AddCommand(docgenCmd)
 }
 
-func docgenCmdRun(_ *cobra.Command, _ []string) error {
-	anywhereRootCmd := anywhere.RootCmd()
-	anywhereRootCmd.DisableAutoGenTag = true
-	if err := doc.GenMarkdownTreeCustom(anywhereRootCmd, cmdDocPath, filePrepender, linkHandler); err != nil {
-		return fmt.Errorf("error generating markdown doc from eksctl-anywhere root cmd: %v", err)
-	}
-	return nil
-}
+func docgenCmdRun(_ *cobra.Command, _ []string) error { _ = "STUB: not implemented"; return nil }
 
-func filePrepender(filename string) string {
-	name := filepath.Base(filename)
-	base := strings.TrimSuffix(name, path.Ext(name))
-	title := strings.Replace(base, "_", " ", -1)
-	return fmt.Sprintf(fmTemplate, title, title)
-}
+func filePrepender(filename string) string { _ = "STUB: not implemented"; return "" }
 
-func linkHandler(name string) string {
-	base := strings.TrimSuffix(name, path.Ext(name))
-	base = strings.Replace(base, "(", "", -1)
-	base = strings.Replace(base, ")", "", -1)
-	return "../" + strings.ToLower(base) + "/"
-}
+func linkHandler(name string) string { _ = "STUB: not implemented"; return "" }

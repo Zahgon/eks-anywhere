@@ -2,10 +2,8 @@ package docker
 
 import (
 	"context"
-	"time"
 
 	"github.com/go-logr/logr"
-	"github.com/pkg/errors"
 	dockerv1beta2 "sigs.k8s.io/cluster-api/test/infrastructure/docker/api/v1beta2"
 
 	"github.com/aws/eks-anywhere/pkg/clients/kubernetes"
@@ -22,56 +20,11 @@ type controlPlaneBuilder = yamlcapi.ControlPlaneBuilder[*dockerv1beta2.DockerClu
 
 // ControlPlaneSpec builds a docker ControlPlane definition based on an eks-a cluster spec.
 func ControlPlaneSpec(ctx context.Context, logger logr.Logger, client kubernetes.Client, spec *cluster.Spec) (*ControlPlane, error) {
-	templateBuilder := NewDockerTemplateBuilder(time.Now)
-
-	controlPlaneYaml, err := templateBuilder.GenerateCAPISpecControlPlane(
-		spec,
-		func(values map[string]interface{}) {
-			values["controlPlaneTemplateName"] = clusterapi.ControlPlaneMachineTemplateName(spec.Cluster)
-			values["etcdTemplateName"] = clusterapi.EtcdMachineTemplateName(spec.Cluster)
-		},
-	)
-	if err != nil {
-		return nil, errors.Wrap(err, "generating docker control plane yaml spec")
-	}
-
-	parser, builder, err := newControlPlaneParser(logger)
-	if err != nil {
-		return nil, err
-	}
-
-	err = parser.Parse(controlPlaneYaml, builder)
-	if err != nil {
-		return nil, errors.Wrap(err, "parsing docker control plane yaml")
-	}
-
-	cp := builder.ControlPlane
-	if err = cp.UpdateImmutableObjectNames(ctx, client, GetMachineTemplate, MachineTemplateEqual); err != nil {
-		return nil, errors.Wrap(err, "updating docker immutable object names")
-	}
-
-	return cp, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func newControlPlaneParser(logger logr.Logger) (*yamlutil.Parser, *controlPlaneBuilder, error) {
-	parser, builder, err := yamlcapi.NewControlPlaneParserAndBuilder(
-		logger,
-		yamlutil.NewMapping(
-			"DockerCluster",
-			func() *dockerv1beta2.DockerCluster {
-				return &dockerv1beta2.DockerCluster{}
-			},
-		),
-		yamlutil.NewMapping(
-			"DockerMachineTemplate",
-			func() *dockerv1beta2.DockerMachineTemplate {
-				return &dockerv1beta2.DockerMachineTemplate{}
-			},
-		),
-	)
-	if err != nil {
-		return nil, nil, errors.Wrap(err, "building docker control plane parser")
-	}
-
-	return parser, builder, nil
+	_ = "STUB: not implemented"
+	return nil, nil, nil
 }

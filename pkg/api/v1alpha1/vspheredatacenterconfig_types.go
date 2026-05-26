@@ -1,12 +1,7 @@
 package v1alpha1
 
 import (
-	"errors"
-	"fmt"
-
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-
-	"github.com/aws/eks-anywhere/pkg/logger"
 )
 
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
@@ -53,14 +48,7 @@ type FailureDomain struct {
 // ResourcePaths returns a map of vSphere resource paths defined in the FailureDomain.
 // It collects the ComputeCluster, ResourcePool, Datastore, and Folder paths
 // into a structured map for easier access and validation during cluster operations.
-func (fd *FailureDomain) ResourcePaths() map[string]string {
-	return map[string]string{
-		"computeCluster": fd.ComputeCluster,
-		"resourcePool":   fd.ResourcePool,
-		"datastore":      fd.Datastore,
-		"folder":         fd.Folder,
-	}
-}
+func (fd *FailureDomain) ResourcePaths() map[string]string { _ = "STUB: not implemented"; return nil }
 
 // VSphereDatacenterConfigStatus defines the observed state of VSphereDatacenterConfig.
 type VSphereDatacenterConfigStatus struct { // Important: Run "make generate" to regenerate code after modifying this file
@@ -87,115 +75,28 @@ type VSphereDatacenterConfig struct {
 	Status VSphereDatacenterConfigStatus `json:"status,omitempty"`
 }
 
-func (v *VSphereDatacenterConfig) Kind() string {
-	return v.TypeMeta.Kind
-}
+func (v *VSphereDatacenterConfig) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (v *VSphereDatacenterConfig) ExpectedKind() string {
-	return VSphereDatacenterKind
-}
+func (v *VSphereDatacenterConfig) ExpectedKind() string { _ = "STUB: not implemented"; return "" }
 
-func (v *VSphereDatacenterConfig) PauseReconcile() {
-	if v.Annotations == nil {
-		v.Annotations = map[string]string{}
-	}
-	v.Annotations[pausedAnnotation] = "true"
-}
+func (v *VSphereDatacenterConfig) PauseReconcile() { _ = "STUB: not implemented"; return }
 
-func (v *VSphereDatacenterConfig) IsReconcilePaused() bool {
-	if s, ok := v.Annotations[pausedAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (v *VSphereDatacenterConfig) IsReconcilePaused() bool { _ = "STUB: not implemented"; return false }
 
-func (v *VSphereDatacenterConfig) ClearPauseAnnotation() {
-	if v.Annotations != nil {
-		delete(v.Annotations, pausedAnnotation)
-	}
-}
+func (v *VSphereDatacenterConfig) ClearPauseAnnotation() { _ = "STUB: not implemented"; return }
 
-func (v *VSphereDatacenterConfig) SetDefaults() {
-	v.Spec.Network = generateFullVCenterPath(networkFolderType, v.Spec.Network, v.Spec.Datacenter)
+func (v *VSphereDatacenterConfig) SetDefaults() { _ = "STUB: not implemented"; return }
 
-	if v.Spec.Insecure {
-		logger.Info("Warning: VSphereDatacenterConfig configured in insecure mode")
-		v.Spec.Thumbprint = ""
-	}
-}
+func (v *VSphereDatacenterConfig) Validate() error { _ = "STUB: not implemented"; return nil }
 
-func (v *VSphereDatacenterConfig) Validate() error {
-	if len(v.Spec.Server) <= 0 {
-		return errors.New("VSphereDatacenterConfig server is not set or is empty")
-	}
-
-	if len(v.Spec.Datacenter) <= 0 {
-		return errors.New("VSphereDatacenterConfig datacenter is not set or is empty")
-	}
-
-	if len(v.Spec.Network) <= 0 {
-		return errors.New("VSphereDatacenterConfig VM network is not set or is empty")
-	}
-
-	if err := validatePath(networkFolderType, v.Spec.Network, v.Spec.Datacenter); err != nil {
-		return err
-	}
-
-	if len(v.Spec.FailureDomains) > 0 {
-		failureDomains := v.Spec.FailureDomains
-		for _, fd := range failureDomains {
-			if len(fd.Name) <= 0 {
-				return fmt.Errorf("name is not set or is empty in FailureDomain %v", fd)
-			}
-			if len(fd.ComputeCluster) <= 0 {
-				return fmt.Errorf("computeCluster is not set or is empty in the FailureDomain: %v", fd)
-			}
-
-			if len(fd.ResourcePool) <= 0 {
-				return fmt.Errorf("resourcePool is not set or is empty in the FailureDomain: %v", fd)
-			}
-
-			if len(fd.Datastore) <= 0 {
-				return fmt.Errorf("datastore is not set or is empty in the FailureDomain: %v", fd)
-			}
-
-			if len(fd.Folder) <= 0 {
-				return fmt.Errorf("folder is not set or is empty in the FailureDomain: %v", fd)
-			}
-
-			if len(fd.Network) <= 0 {
-				return fmt.Errorf("network is not set or is empty in the FailureDomain: %v", fd)
-			}
-
-			if err := validatePath(networkFolderType, fd.Network, v.Spec.Datacenter); err != nil {
-				return err
-			}
-		}
-	}
-
+func (v *VSphereDatacenterConfig) ConvertConfigToConfigGenerateStruct() *VSphereDatacenterConfigGenerate {
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (v *VSphereDatacenterConfig) ConvertConfigToConfigGenerateStruct() *VSphereDatacenterConfigGenerate {
-	namespace := defaultEksaNamespace
-	if v.Namespace != "" {
-		namespace = v.Namespace
-	}
-	config := &VSphereDatacenterConfigGenerate{
-		TypeMeta: v.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        v.Name,
-			Annotations: v.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: v.Spec,
-	}
-
-	return config
-}
-
 func (v *VSphereDatacenterConfig) Marshallable() Marshallable {
-	return v.ConvertConfigToConfigGenerateStruct()
+	_ = "STUB: not implemented"
+	return *new(Marshallable)
 }
 
 // +kubebuilder:object:generate=false

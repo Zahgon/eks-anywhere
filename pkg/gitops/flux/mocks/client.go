@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	v1alpha1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	cluster "github.com/aws/eks-anywhere/pkg/cluster"
@@ -31,70 +30,63 @@ type MockFluxClientMockRecorder struct {
 
 // NewMockFluxClient creates a new mock instance.
 func NewMockFluxClient(ctrl *gomock.Controller) *MockFluxClient {
-	mock := &MockFluxClient{ctrl: ctrl}
-	mock.recorder = &MockFluxClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockFluxClient) EXPECT() *MockFluxClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// BootstrapGit mocks base method.
+	return nil
 }
 
-// BootstrapGit mocks base method.
 func (m *MockFluxClient) BootstrapGit(arg0 context.Context, arg1 *types.Cluster, arg2 *v1alpha1.FluxConfig, arg3 *config.CliConfig) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BootstrapGit", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BootstrapGit indicates an expected call of BootstrapGit.
 func (mr *MockFluxClientMockRecorder) BootstrapGit(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BootstrapGit", reflect.TypeOf((*MockFluxClient)(nil).BootstrapGit), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BootstrapGithub mocks base method.
 func (m *MockFluxClient) BootstrapGithub(arg0 context.Context, arg1 *types.Cluster, arg2 *v1alpha1.FluxConfig) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BootstrapGithub", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BootstrapGithub indicates an expected call of BootstrapGithub.
 func (mr *MockFluxClientMockRecorder) BootstrapGithub(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BootstrapGithub", reflect.TypeOf((*MockFluxClient)(nil).BootstrapGithub), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Reconcile mocks base method.
 func (m *MockFluxClient) Reconcile(arg0 context.Context, arg1 *types.Cluster, arg2 *v1alpha1.FluxConfig) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Reconcile", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Reconcile indicates an expected call of Reconcile.
 func (mr *MockFluxClientMockRecorder) Reconcile(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Reconcile", reflect.TypeOf((*MockFluxClient)(nil).Reconcile), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Uninstall mocks base method.
 func (m *MockFluxClient) Uninstall(arg0 context.Context, arg1 *types.Cluster, arg2 *v1alpha1.FluxConfig) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Uninstall", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Uninstall indicates an expected call of Uninstall.
 func (mr *MockFluxClientMockRecorder) Uninstall(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Uninstall", reflect.TypeOf((*MockFluxClient)(nil).Uninstall), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockKubeClient is a mock of KubeClient interface.
@@ -110,81 +102,63 @@ type MockKubeClientMockRecorder struct {
 
 // NewMockKubeClient creates a new mock instance.
 func NewMockKubeClient(ctrl *gomock.Controller) *MockKubeClient {
-	mock := &MockKubeClient{ctrl: ctrl}
-	mock.recorder = &MockKubeClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockKubeClient) EXPECT() *MockKubeClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// DeleteSecret mocks base method.
+	return nil
 }
 
-// DeleteSecret mocks base method.
 func (m *MockKubeClient) DeleteSecret(arg0 context.Context, arg1 *types.Cluster, arg2, arg3 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteSecret", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteSecret indicates an expected call of DeleteSecret.
 func (mr *MockKubeClientMockRecorder) DeleteSecret(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSecret", reflect.TypeOf((*MockKubeClient)(nil).DeleteSecret), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetEksaCluster mocks base method.
 func (m *MockKubeClient) GetEksaCluster(arg0 context.Context, arg1 *types.Cluster, arg2 string) (*v1alpha1.Cluster, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetEksaCluster", arg0, arg1, arg2)
-	ret0, _ := ret[0].(*v1alpha1.Cluster)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetEksaCluster indicates an expected call of GetEksaCluster.
 func (mr *MockKubeClientMockRecorder) GetEksaCluster(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEksaCluster", reflect.TypeOf((*MockKubeClient)(nil).GetEksaCluster), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RemoveAnnotation mocks base method.
 func (m *MockKubeClient) RemoveAnnotation(arg0 context.Context, arg1, arg2, arg3 string, arg4 ...executables.KubectlOpt) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, arg2, arg3}
-	for _, a := range arg4 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "RemoveAnnotation", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // RemoveAnnotation indicates an expected call of RemoveAnnotation.
 func (mr *MockKubeClientMockRecorder) RemoveAnnotation(arg0, arg1, arg2, arg3 interface{}, arg4 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, arg2, arg3}, arg4...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveAnnotation", reflect.TypeOf((*MockKubeClient)(nil).RemoveAnnotation), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpdateAnnotation mocks base method.
 func (m *MockKubeClient) UpdateAnnotation(arg0 context.Context, arg1, arg2 string, arg3 map[string]string, arg4 ...executables.KubectlOpt) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, arg2, arg3}
-	for _, a := range arg4 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "UpdateAnnotation", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // UpdateAnnotation indicates an expected call of UpdateAnnotation.
 func (mr *MockKubeClientMockRecorder) UpdateAnnotation(arg0, arg1, arg2, arg3 interface{}, arg4 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, arg2, arg3}, arg4...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateAnnotation", reflect.TypeOf((*MockKubeClient)(nil).UpdateAnnotation), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockGitOpsFluxClient is a mock of GitOpsFluxClient interface.
@@ -200,141 +174,123 @@ type MockGitOpsFluxClientMockRecorder struct {
 
 // NewMockGitOpsFluxClient creates a new mock instance.
 func NewMockGitOpsFluxClient(ctrl *gomock.Controller) *MockGitOpsFluxClient {
-	mock := &MockGitOpsFluxClient{ctrl: ctrl}
-	mock.recorder = &MockGitOpsFluxClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockGitOpsFluxClient) EXPECT() *MockGitOpsFluxClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// BootstrapGit mocks base method.
+	return nil
 }
 
-// BootstrapGit mocks base method.
 func (m *MockGitOpsFluxClient) BootstrapGit(arg0 context.Context, arg1 *types.Cluster, arg2 *v1alpha1.FluxConfig, arg3 *config.CliConfig) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BootstrapGit", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BootstrapGit indicates an expected call of BootstrapGit.
 func (mr *MockGitOpsFluxClientMockRecorder) BootstrapGit(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BootstrapGit", reflect.TypeOf((*MockGitOpsFluxClient)(nil).BootstrapGit), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BootstrapGithub mocks base method.
 func (m *MockGitOpsFluxClient) BootstrapGithub(arg0 context.Context, arg1 *types.Cluster, arg2 *v1alpha1.FluxConfig) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BootstrapGithub", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // BootstrapGithub indicates an expected call of BootstrapGithub.
 func (mr *MockGitOpsFluxClientMockRecorder) BootstrapGithub(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BootstrapGithub", reflect.TypeOf((*MockGitOpsFluxClient)(nil).BootstrapGithub), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteSystemSecret mocks base method.
 func (m *MockGitOpsFluxClient) DeleteSystemSecret(arg0 context.Context, arg1 *types.Cluster, arg2 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteSystemSecret", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteSystemSecret indicates an expected call of DeleteSystemSecret.
 func (mr *MockGitOpsFluxClientMockRecorder) DeleteSystemSecret(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSystemSecret", reflect.TypeOf((*MockGitOpsFluxClient)(nil).DeleteSystemSecret), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DisableResourceReconcile mocks base method.
 func (m *MockGitOpsFluxClient) DisableResourceReconcile(arg0 context.Context, arg1 *types.Cluster, arg2, arg3, arg4 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DisableResourceReconcile", arg0, arg1, arg2, arg3, arg4)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DisableResourceReconcile indicates an expected call of DisableResourceReconcile.
 func (mr *MockGitOpsFluxClientMockRecorder) DisableResourceReconcile(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DisableResourceReconcile", reflect.TypeOf((*MockGitOpsFluxClient)(nil).DisableResourceReconcile), arg0, arg1, arg2, arg3, arg4)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EnableResourceReconcile mocks base method.
 func (m *MockGitOpsFluxClient) EnableResourceReconcile(arg0 context.Context, arg1 *types.Cluster, arg2, arg3, arg4 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "EnableResourceReconcile", arg0, arg1, arg2, arg3, arg4)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EnableResourceReconcile indicates an expected call of EnableResourceReconcile.
 func (mr *MockGitOpsFluxClientMockRecorder) EnableResourceReconcile(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "EnableResourceReconcile", reflect.TypeOf((*MockGitOpsFluxClient)(nil).EnableResourceReconcile), arg0, arg1, arg2, arg3, arg4)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ForceReconcile mocks base method.
 func (m *MockGitOpsFluxClient) ForceReconcile(arg0 context.Context, arg1 *types.Cluster, arg2 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ForceReconcile", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ForceReconcile indicates an expected call of ForceReconcile.
 func (mr *MockGitOpsFluxClientMockRecorder) ForceReconcile(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ForceReconcile", reflect.TypeOf((*MockGitOpsFluxClient)(nil).ForceReconcile), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetCluster mocks base method.
 func (m *MockGitOpsFluxClient) GetCluster(arg0 context.Context, arg1 *types.Cluster, arg2 *cluster.Spec) (*v1alpha1.Cluster, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCluster", arg0, arg1, arg2)
-	ret0, _ := ret[0].(*v1alpha1.Cluster)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetCluster indicates an expected call of GetCluster.
 func (mr *MockGitOpsFluxClientMockRecorder) GetCluster(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCluster", reflect.TypeOf((*MockGitOpsFluxClient)(nil).GetCluster), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Reconcile mocks base method.
 func (m *MockGitOpsFluxClient) Reconcile(arg0 context.Context, arg1 *types.Cluster, arg2 *v1alpha1.FluxConfig) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Reconcile", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Reconcile indicates an expected call of Reconcile.
 func (mr *MockGitOpsFluxClientMockRecorder) Reconcile(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Reconcile", reflect.TypeOf((*MockGitOpsFluxClient)(nil).Reconcile), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Uninstall mocks base method.
 func (m *MockGitOpsFluxClient) Uninstall(arg0 context.Context, arg1 *types.Cluster, arg2 *v1alpha1.FluxConfig) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Uninstall", arg0, arg1, arg2)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Uninstall indicates an expected call of Uninstall.
 func (mr *MockGitOpsFluxClientMockRecorder) Uninstall(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Uninstall", reflect.TypeOf((*MockGitOpsFluxClient)(nil).Uninstall), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockGitClient is a mock of GitClient interface.
@@ -350,170 +306,123 @@ type MockGitClientMockRecorder struct {
 
 // NewMockGitClient creates a new mock instance.
 func NewMockGitClient(ctrl *gomock.Controller) *MockGitClient {
-	mock := &MockGitClient{ctrl: ctrl}
-	mock.recorder = &MockGitClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockGitClient) EXPECT() *MockGitClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Add mocks base method.
+	return nil
 }
 
-// Add mocks base method.
-func (m *MockGitClient) Add(arg0 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Add", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockGitClient) Add(arg0 string) error { _ = "STUB: not implemented"; return nil }
 
 // Add indicates an expected call of Add.
 func (mr *MockGitClientMockRecorder) Add(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Add", reflect.TypeOf((*MockGitClient)(nil).Add), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Branch mocks base method.
-func (m *MockGitClient) Branch(arg0 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Branch", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockGitClient) Branch(arg0 string) error { _ = "STUB: not implemented"; return nil }
 
 // Branch indicates an expected call of Branch.
 func (mr *MockGitClientMockRecorder) Branch(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Branch", reflect.TypeOf((*MockGitClient)(nil).Branch), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Clone mocks base method.
-func (m *MockGitClient) Clone(arg0 context.Context) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Clone", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockGitClient) Clone(arg0 context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // Clone indicates an expected call of Clone.
 func (mr *MockGitClientMockRecorder) Clone(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Clone", reflect.TypeOf((*MockGitClient)(nil).Clone), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Commit mocks base method.
-func (m *MockGitClient) Commit(arg0 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Commit", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockGitClient) Commit(arg0 string) error { _ = "STUB: not implemented"; return nil }
 
 // Commit indicates an expected call of Commit.
 func (mr *MockGitClientMockRecorder) Commit(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Commit", reflect.TypeOf((*MockGitClient)(nil).Commit), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateRepo mocks base method.
 func (m *MockGitClient) CreateRepo(arg0 context.Context, arg1 git.CreateRepoOpts) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateRepo", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateRepo indicates an expected call of CreateRepo.
 func (mr *MockGitClientMockRecorder) CreateRepo(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateRepo", reflect.TypeOf((*MockGitClient)(nil).CreateRepo), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetRepo mocks base method.
 func (m *MockGitClient) GetRepo(arg0 context.Context) (*git.Repository, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetRepo", arg0)
-	ret0, _ := ret[0].(*git.Repository)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetRepo indicates an expected call of GetRepo.
 func (mr *MockGitClientMockRecorder) GetRepo(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRepo", reflect.TypeOf((*MockGitClient)(nil).GetRepo), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Init mocks base method.
-func (m *MockGitClient) Init() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Init")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockGitClient) Init() error { _ = "STUB: not implemented"; return nil }
 
 // Init indicates an expected call of Init.
-func (mr *MockGitClientMockRecorder) Init() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockGitClient)(nil).Init))
-}
+func (mr *MockGitClientMockRecorder) Init() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // PathExists mocks base method.
 func (m *MockGitClient) PathExists(arg0 context.Context, arg1, arg2, arg3, arg4 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PathExists", arg0, arg1, arg2, arg3, arg4)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // PathExists indicates an expected call of PathExists.
 func (mr *MockGitClientMockRecorder) PathExists(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PathExists", reflect.TypeOf((*MockGitClient)(nil).PathExists), arg0, arg1, arg2, arg3, arg4)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Pull mocks base method.
 func (m *MockGitClient) Pull(arg0 context.Context, arg1 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Pull", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Pull indicates an expected call of Pull.
 func (mr *MockGitClientMockRecorder) Pull(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Pull", reflect.TypeOf((*MockGitClient)(nil).Pull), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Push mocks base method.
-func (m *MockGitClient) Push(arg0 context.Context) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Push", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockGitClient) Push(arg0 context.Context) error { _ = "STUB: not implemented"; return nil }
 
 // Push indicates an expected call of Push.
 func (mr *MockGitClientMockRecorder) Push(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Push", reflect.TypeOf((*MockGitClient)(nil).Push), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Remove mocks base method.
-func (m *MockGitClient) Remove(arg0 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Remove", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockGitClient) Remove(arg0 string) error { _ = "STUB: not implemented"; return nil }
 
 // Remove indicates an expected call of Remove.
 func (mr *MockGitClientMockRecorder) Remove(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Remove", reflect.TypeOf((*MockGitClient)(nil).Remove), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockTemplater is a mock of Templater interface.
@@ -529,32 +438,25 @@ type MockTemplaterMockRecorder struct {
 
 // NewMockTemplater creates a new mock instance.
 func NewMockTemplater(ctrl *gomock.Controller) *MockTemplater {
-	mock := &MockTemplater{ctrl: ctrl}
-	mock.recorder = &MockTemplaterMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockTemplater) EXPECT() *MockTemplaterMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// WriteToFile mocks base method.
+	return nil
 }
 
-// WriteToFile mocks base method.
 func (m *MockTemplater) WriteToFile(arg0 string, arg1 interface{}, arg2 string, arg3 ...filewriter.FileOptionsFunc) (string, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1, arg2}
-	for _, a := range arg3 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "WriteToFile", varargs...)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // WriteToFile indicates an expected call of WriteToFile.
 func (mr *MockTemplaterMockRecorder) WriteToFile(arg0, arg1, arg2 interface{}, arg3 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1, arg2}, arg3...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WriteToFile", reflect.TypeOf((*MockTemplater)(nil).WriteToFile), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }

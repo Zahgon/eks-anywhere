@@ -3,18 +3,11 @@ package vsphere
 import (
 	"context"
 	_ "embed"
-	"encoding/json"
-	"errors"
-	"fmt"
-	"net"
-	"path/filepath"
 
 	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	"github.com/aws/eks-anywhere/pkg/collection"
 	"github.com/aws/eks-anywhere/pkg/config"
 	"github.com/aws/eks-anywhere/pkg/govmomi"
-	"github.com/aws/eks-anywhere/pkg/logger"
-	"github.com/aws/eks-anywhere/pkg/types"
 )
 
 const (
@@ -50,697 +43,183 @@ type Validator struct {
 
 // NewValidator initializes the client for VSphere provider validations.
 func NewValidator(govc ProviderGovcClient, vscb VSphereClientBuilder) *Validator {
-	return &Validator{
-		govc:                 govc,
-		vSphereClientBuilder: vscb,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (v *Validator) validateVCenterAccess(ctx context.Context, server string) error {
-	if err := v.govc.ValidateVCenterConnection(ctx, server); err != nil {
-		return fmt.Errorf("failed validating connection to vCenter: %v", err)
-	}
-	logger.MarkPass("Connected to server")
-
-	if err := v.govc.ValidateVCenterAuthentication(ctx); err != nil {
-		return fmt.Errorf("failed validating credentials for vCenter: %v", err)
-	}
-	logger.MarkPass("Authenticated to vSphere")
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (v *Validator) ValidateVCenterConfig(ctx context.Context, datacenterConfig *anywherev1.VSphereDatacenterConfig) error {
-	if err := v.validateVCenterAccess(ctx, datacenterConfig.Spec.Server); err != nil {
-		return err
-	}
-
-	if err := v.validateThumbprint(ctx, datacenterConfig); err != nil {
-		return err
-	}
-
-	if err := v.validateDatacenter(ctx, datacenterConfig.Spec.Datacenter); err != nil {
-		return err
-	}
-
-	if err := v.validateNetwork(ctx, datacenterConfig.Spec.Network); err != nil {
-		return err
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // ValidateFailureDomains validates the provided list of failure domains.
 func (v *Validator) ValidateFailureDomains(ctx context.Context, vsphereClusterSpec *Spec) error {
-	failureDomains := vsphereClusterSpec.VSphereDatacenter.Spec.FailureDomains
-
-	if len(failureDomains) == 0 {
-		return nil
-	}
-
-	providedFailureDomains := collection.MapSet(failureDomains, func(fd anywherev1.FailureDomain) string {
-		return fd.Name
-	})
-
-	failureDomainsAssigned, err := v.validateWorkerNodeGroupDomains(vsphereClusterSpec, providedFailureDomains)
-	if err != nil {
-		return err
-	}
-
-	if !failureDomainsAssigned {
-		// TODO: Error message here if Failure Domain not being used by workernodegroups?
-		// Skipping further validation currently
-		// return fmt.Errorf("failure domain defined, but no worker node group references")
-		return nil
-	}
-
-	if err := v.validateFailureDomainResources(ctx, vsphereClusterSpec, failureDomains); err != nil {
-		return err
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
+// TODO: Error message here if Failure Domain not being used by workernodegroups?
+// Skipping further validation currently
+// return fmt.Errorf("failure domain defined, but no worker node group references")
+
 func (v *Validator) validateWorkerNodeGroupDomains(vsphereClusterSpec *Spec, providedFailureDomains collection.Set[string]) (bool, error) {
-	failureDomainsAssigned := false
-	for _, wng := range vsphereClusterSpec.Cluster.Spec.WorkerNodeGroupConfigurations {
-		if len(wng.FailureDomains) == 0 {
-			continue
-		}
-
-		if len(wng.FailureDomains) > 1 {
-			return failureDomainsAssigned, fmt.Errorf("multiple failure domains provided in the worker node group: %s. Please provide only one failure domain", wng.Name)
-		}
-
-		assignedFailureDomain := wng.FailureDomains[0]
-		if !providedFailureDomains.Contains(assignedFailureDomain) {
-			return failureDomainsAssigned, fmt.Errorf("provided invalid failure domain %s in the worker node group %s", assignedFailureDomain, wng.Name)
-		}
-		failureDomainsAssigned = true
-	}
-	return failureDomainsAssigned, nil
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 func (v *Validator) validateFailureDomainResources(ctx context.Context, vsphereClusterSpec *Spec, failureDomains []anywherev1.FailureDomain) error {
-	for index, fd := range failureDomains {
-		message := fmt.Sprintf("Start failure domain validation for '%s' ", failureDomains[index].Name)
-		logger.Info(message)
-		if err := v.validateNetwork(ctx, fd.Network); err != nil {
-			return err
-		}
-
-		if err := v.govc.ValidateFailureDomainConfig(ctx, vsphereClusterSpec.VSphereDatacenter, &fd); err != nil {
-			return err
-		}
-	}
-	logger.Info("Finished failure domain validations")
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (v *Validator) validateMachineConfigTagsExist(ctx context.Context, machineConfigs []*anywherev1.VSphereMachineConfig) error {
-	tags, err := v.govc.ListTags(ctx)
-	if err != nil {
-		return fmt.Errorf("failed to check if tags exists in vSphere: %v", err)
-	}
-
-	tagIDs := make([]string, 0, len(tags))
-	for _, t := range tags {
-		tagIDs = append(tagIDs, t.Id)
-	}
-
-	idLookup := types.SliceToLookup(tagIDs)
-	for _, machineConfig := range machineConfigs {
-		for _, tagID := range machineConfig.Spec.TagIDs {
-			if !idLookup.IsPresent(tagID) {
-				return fmt.Errorf("tag (%s) does not exist in vSphere. please provide a valid tag id in the urn format (example: urn:vmomi:InventoryServiceTag:8e0ce079-0677-48d6-8865-19ada4e6dabd:GLOBAL)", tagID)
-			}
-		}
-	}
-	logger.MarkPass("Machine config tags validated")
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 // ValidateClusterMachineConfigs validates all the attributes of etcd, control plane, and worker node VSphereMachineConfigs.
 func (v *Validator) ValidateClusterMachineConfigs(ctx context.Context, vsphereClusterSpec *Spec) error {
-	var etcdMachineConfig *anywherev1.VSphereMachineConfig
-
-	controlPlaneMachineConfig := vsphereClusterSpec.controlPlaneMachineConfig()
-	if controlPlaneMachineConfig == nil {
-		return fmt.Errorf("cannot find VSphereMachineConfig %v for control plane", vsphereClusterSpec.Cluster.Spec.ControlPlaneConfiguration.MachineGroupRef.Name)
-	}
-
-	for _, workerNodeGroupConfiguration := range vsphereClusterSpec.Cluster.Spec.WorkerNodeGroupConfigurations {
-		workerNodeGroupMachineConfig := vsphereClusterSpec.workerMachineConfig(workerNodeGroupConfiguration)
-		if workerNodeGroupMachineConfig == nil {
-			return fmt.Errorf("cannot find VSphereMachineConfig %v for worker nodes", workerNodeGroupConfiguration.MachineGroupRef.Name)
-		}
-	}
-	if vsphereClusterSpec.Cluster.Spec.ExternalEtcdConfiguration != nil {
-		etcdMachineConfig = vsphereClusterSpec.etcdMachineConfig()
-		if etcdMachineConfig == nil {
-			return fmt.Errorf("cannot find VSphereMachineConfig %v for etcd machines", vsphereClusterSpec.Cluster.Spec.ExternalEtcdConfiguration.MachineGroupRef.Name)
-		}
-		if !v.sameOSFamily(vsphereClusterSpec.VSphereMachineConfigs) {
-			return errors.New("all VSphereMachineConfigs must have the same osFamily specified")
-		}
-		if etcdMachineConfig.Spec.HostOSConfiguration != nil && etcdMachineConfig.Spec.HostOSConfiguration.BottlerocketConfiguration != nil && etcdMachineConfig.Spec.HostOSConfiguration.BottlerocketConfiguration.Kubernetes != nil {
-			logger.Info("Bottlerocket Kubernetes settings are not supported for etcd machines. Ignoring Kubernetes settings for etcd machines.", "etcdMachineConfig", etcdMachineConfig.Name)
-		}
-	}
-
-	// TODO: move this to api Cluster validations
-	if err := v.validateControlPlaneIp(vsphereClusterSpec.Cluster.Spec.ControlPlaneConfiguration.Endpoint.Host); err != nil {
-		return err
-	}
-
-	for _, config := range vsphereClusterSpec.VSphereMachineConfigs {
-		var b bool                                                                                             // Temporary until we remove the need to pass a bool pointer
-		err := v.govc.ValidateVCenterSetupMachineConfig(ctx, vsphereClusterSpec.VSphereDatacenter, config, &b) // TODO: remove side effects from this implementation or directly move it to set defaults (pointer to bool is not needed)
-		if err != nil {
-			return fmt.Errorf("validating vCenter setup for VSphereMachineConfig %v: %v", config.Name, err)
-		}
-	}
-
-	if err := v.validateTemplates(ctx, vsphereClusterSpec); err != nil {
-		return err
-	}
-
-	if err := v.validateMachineConfigTagsExist(ctx, vsphereClusterSpec.machineConfigs()); err != nil {
-		return err
-	}
-
-	logger.MarkPass("Control plane and Workload templates validated")
-
-	for _, mc := range vsphereClusterSpec.VSphereMachineConfigs {
-		if mc.OSFamily() == anywherev1.Bottlerocket {
-			if err := v.validateBRHardDiskSize(ctx, vsphereClusterSpec, mc); err != nil {
-				return fmt.Errorf("failed validating BR Hard Disk size: %v", err)
-			}
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
+// TODO: move this to api Cluster validations
+
+// Temporary until we remove the need to pass a bool pointer
+// TODO: remove side effects from this implementation or directly move it to set defaults (pointer to bool is not needed)
+
 func (v *Validator) validateControlPlaneIp(ip string) error {
+	_ = "STUB: not implemented"
 	// check if controlPlaneEndpointIp is valid
-	parsedIp := net.ParseIP(ip)
-	if parsedIp == nil {
-		return fmt.Errorf("cluster controlPlaneConfiguration.Endpoint.Host is invalid: %s", ip)
-	}
 	return nil
 }
 
 func (v *Validator) validateTemplates(ctx context.Context, spec *Spec) error {
-	tagsForTemplates := make(map[string][]string)
-	rootVersionsBundle := spec.RootVersionsBundle()
-	for _, m := range sliceIfNotNil(spec.controlPlaneMachineConfig(), spec.etcdMachineConfig()) {
-		currentTags := tagsForTemplates[m.Spec.Template]
-		tagsForTemplates[m.Spec.Template] = append(
-			currentTags,
-			requiredTemplateTags(m, rootVersionsBundle)...,
-		)
-	}
-
-	for _, w := range spec.Cluster.Spec.WorkerNodeGroupConfigurations {
-		machineConfig := spec.VSphereMachineConfigs[w.MachineGroupRef.Name]
-		versionsBundle := spec.WorkerNodeGroupVersionsBundle(w)
-
-		currentTags := tagsForTemplates[machineConfig.Spec.Template]
-		tagsForTemplates[machineConfig.Spec.Template] = append(
-			currentTags,
-			requiredTemplateTags(machineConfig, versionsBundle)...,
-		)
-	}
-
-	for template, requiredTags := range tagsForTemplates {
-		datacenter := spec.VSphereDatacenter.Spec.Datacenter
-
-		templatePath, err := v.getTemplatePath(ctx, datacenter, template)
-		if err != nil {
-			return err
-		}
-
-		if err := v.validateTemplateTags(ctx, templatePath, requiredTags); err != nil {
-			return err
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (v *Validator) getTemplatePath(ctx context.Context, datacenter, templatePath string) (string, error) {
-	templateFullPath, err := v.govc.SearchTemplate(ctx, datacenter, templatePath)
-	if err != nil {
-		return "", fmt.Errorf("validating template: %v", err)
-	}
-
-	if len(templateFullPath) <= 0 {
-		return "", fmt.Errorf("template <%s> not found. Has the template been imported?", templatePath)
-	}
-
-	return templateFullPath, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func (v *Validator) validateTemplateTags(ctx context.Context, templatePath string, requiredTags []string) error {
-	tags, err := v.govc.GetTags(ctx, templatePath)
-	if err != nil {
-		return fmt.Errorf("validating template tags: %v", err)
-	}
-
-	tagsLookup := types.SliceToLookup(tags)
-	for _, t := range requiredTags {
-		if !tagsLookup.IsPresent(t) {
-			// TODO: maybe add help text about to how to tag a template?
-			return fmt.Errorf("template %s is missing tag %s", templatePath, t)
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// TODO: maybe add help text about to how to tag a template?
 
 func (v *Validator) validateBRHardDiskSize(ctx context.Context, spec *Spec, machineConfigSpec *anywherev1.VSphereMachineConfig) error {
-	dataCenter := spec.Config.VSphereDatacenter.Spec.Datacenter
-	template := machineConfigSpec.Spec.Template
-	hardDiskMap, err := v.govc.GetHardDiskSize(ctx, template, dataCenter)
-	if err != nil {
-		return fmt.Errorf("validating hard disk size: %v", err)
-	}
-	if len(hardDiskMap) == 0 {
-		return fmt.Errorf("no hard disks found for template: %v", template)
-	} else if len(hardDiskMap) > 1 {
-		if hardDiskMap[disk1] != 2097152 { // 2GB in KB to avoid roundoff errors
-			return fmt.Errorf("Incorrect disk size for disk1 - expected: 2097152 kB got: %v", hardDiskMap[disk1])
-		} else if hardDiskMap[disk2] != 20971520 { // 20GB in KB to avoid roundoff errors
-			return fmt.Errorf("Incorrect disk size for disk2 - expected: 20971520 kB got: %v", hardDiskMap[disk2])
-		}
-	} else if hardDiskMap[disk1] != 23068672 { // 22GB in KB to avoid roundoff errors
-		return fmt.Errorf("Incorrect disk size for disk1 - expected: 23068672 kB got: %v", hardDiskMap[disk1])
-	}
-	logger.V(5).Info("Bottlerocket Disk size validated: ", "diskMap", hardDiskMap)
+	_ = "STUB: not implemented"
 	return nil
 }
+
+// 2GB in KB to avoid roundoff errors
+
+// 20GB in KB to avoid roundoff errors
+
+// 22GB in KB to avoid roundoff errors
 
 func (v *Validator) validateThumbprint(ctx context.Context, datacenterConfig *anywherev1.VSphereDatacenterConfig) error {
+	_ = "STUB: not implemented"
 	// No need to validate thumbprint in insecure mode
-	if datacenterConfig.Spec.Insecure {
-		return nil
-	}
-
-	// If cert is not self signed, thumbprint is ignored
-	if !v.govc.IsCertSelfSigned(ctx) {
-		return nil
-	}
-
-	if datacenterConfig.Spec.Thumbprint == "" {
-		return fmt.Errorf("thumbprint is required for secure mode with self-signed certificates")
-	}
-
-	thumbprint, err := v.govc.GetCertThumbprint(ctx)
-	if err != nil {
-		return err
-	}
-
-	if thumbprint != datacenterConfig.Spec.Thumbprint {
-		return fmt.Errorf("thumbprint mismatch detected, expected: %s, actual: %s", datacenterConfig.Spec.Thumbprint, thumbprint)
-	}
-
 	return nil
 }
 
+// If cert is not self signed, thumbprint is ignored
+
 func (v *Validator) validateDatacenter(ctx context.Context, datacenter string) error {
-	exists, err := v.govc.DatacenterExists(ctx, datacenter)
-	if err != nil {
-		return err
-	}
-
-	if !exists {
-		return fmt.Errorf("datacenter %s not found", datacenter)
-	}
-	logger.MarkPass("Datacenter validated")
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (v *Validator) validateNetwork(ctx context.Context, network string) error {
-	exists, err := v.govc.NetworkExists(ctx, network)
-	if err != nil {
-		return err
-	}
-
-	if !exists {
-		return fmt.Errorf("network %s not found", network)
-	}
-	logger.MarkPass("Network validated")
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (v *Validator) validateNetworksFieldUsage(ctx context.Context, vsphereClusterSpec *Spec) error {
+	_ = "STUB: not implemented"
 	// Check control plane - should NOT have networks field
-	controlPlaneMachineConfig := vsphereClusterSpec.controlPlaneMachineConfig()
-	if controlPlaneMachineConfig != nil && len(controlPlaneMachineConfig.Spec.Networks) > 0 {
-		return fmt.Errorf("networks field is not supported for control plane machine config '%s'. Control plane uses the datacenter network configuration", controlPlaneMachineConfig.Name)
-	}
-
-	// Check etcd - should NOT have networks field
-	if vsphereClusterSpec.Cluster.Spec.ExternalEtcdConfiguration != nil {
-		etcdMachineConfig := vsphereClusterSpec.etcdMachineConfig()
-		if etcdMachineConfig != nil && len(etcdMachineConfig.Spec.Networks) > 0 {
-			return fmt.Errorf("networks field is not supported for etcd machine config '%s'. Etcd uses the datacenter network configuration", etcdMachineConfig.Name)
-		}
-	}
-
-	// Validate worker node networks
-	for _, workerNodeGroupConfiguration := range vsphereClusterSpec.Cluster.Spec.WorkerNodeGroupConfigurations {
-		workerMachineConfig := vsphereClusterSpec.workerMachineConfig(workerNodeGroupConfiguration)
-		if workerMachineConfig != nil {
-			if err := v.validateWorkerMachineConfigNetworks(ctx, workerMachineConfig, workerNodeGroupConfiguration.Name); err != nil {
-				return err
-			}
-		}
-	}
-
-	logger.MarkPass("Machine config networks validated")
 	return nil
 }
 
+// Check etcd - should NOT have networks field
+
+// Validate worker node networks
+
 func (v *Validator) validateWorkerMachineConfigNetworks(ctx context.Context, machineConfig *anywherev1.VSphereMachineConfig, workerGroupName string) error {
-	for _, network := range machineConfig.Spec.Networks {
-		if err := v.validateNetwork(ctx, network); err != nil {
-			return fmt.Errorf("network '%s' not found for worker group '%s' machine config '%s'", network, workerGroupName, machineConfig.Name)
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func (v *Validator) collectResourcePathConfig(_ context.Context, spec *Spec) ([]ResourcePaths, error) {
-	resourcePaths := []ResourcePaths{}
-	controlPlaneMachineConfig := spec.controlPlaneMachineConfig()
-	resourcePaths = append(resourcePaths, controlPlaneMachineConfig)
-
-	for _, workerNodeGroupConfiguration := range spec.Cluster.Spec.WorkerNodeGroupConfigurations {
-		workerNodeGroupMachineConfig := spec.workerMachineConfig(workerNodeGroupConfiguration)
-		resourcePaths = append(resourcePaths, workerNodeGroupMachineConfig)
-	}
-
-	if spec.Cluster.Spec.ExternalEtcdConfiguration != nil {
-		etcdMachineConfig := spec.etcdMachineConfig()
-		resourcePaths = append(resourcePaths, etcdMachineConfig)
-	}
-
-	if spec.VSphereDatacenter.Spec.FailureDomains != nil {
-		for _, failureDomain := range spec.VSphereDatacenter.Spec.FailureDomains {
-			resourcePaths = append(resourcePaths, &failureDomain)
-		}
-	}
-
-	return resourcePaths, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (v *Validator) validateVsphereUserPrivs(ctx context.Context, vSphereClusterSpec *Spec) error {
-	var passed bool
-	var err error
-	vuc := config.NewVsphereUserConfig()
-
-	if passed, err = v.validateUserPrivs(ctx, vSphereClusterSpec, vuc); err != nil {
-		return err
-	}
-	markPrivsValidationPass(passed, vuc.EksaVsphereUsername)
-
-	if len(vuc.EksaVsphereCPUsername) > 0 && vuc.EksaVsphereCPUsername != vuc.EksaVsphereUsername {
-		if passed, err = v.validateCPUserPrivs(ctx, vSphereClusterSpec, vuc); err != nil {
-			return err
-		}
-		markPrivsValidationPass(passed, vuc.EksaVsphereCPUsername)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func markPrivsValidationPass(passed bool, username string) {
-	if passed {
-		s := fmt.Sprintf("%s user vSphere privileges validated", username)
-		logger.MarkPass(s)
-	}
-}
+func markPrivsValidationPass(passed bool, username string) { _ = "STUB: not implemented"; return }
 
 func (v *Validator) validateUserPrivs(ctx context.Context, spec *Spec, vuc *config.VSphereUserConfig) (bool, error) {
-	resourcePaths, err := v.collectResourcePathConfig(ctx, spec)
-	if err != nil {
-		return false, err
-	}
-
-	requiredPrivAssociations := []PrivAssociation{
-		// validate global root priv settings are correct
-		{
-			objectType:   govmomi.VSphereTypeFolder,
-			privsContent: config.VSphereGlobalPrivsFile,
-			path:         vsphereRootPath,
-		},
-		{
-			objectType:   govmomi.VSphereTypeNetwork,
-			privsContent: config.VSphereUserPrivsFile,
-			path:         spec.VSphereDatacenter.Spec.Network,
-		},
-	}
-
-	seen := map[string]interface{}{}
-	for _, mc := range resourcePaths {
-		datastore := mc.ResourcePaths()["datastore"]
-		if _, ok := seen[datastore]; !ok {
-			requiredPrivAssociations = append(requiredPrivAssociations, PrivAssociation{
-				objectType:   govmomi.VSphereTypeDatastore,
-				privsContent: config.VSphereUserPrivsFile,
-				path:         datastore,
-			},
-			)
-			seen[datastore] = 1
-		}
-		resourcePool := mc.ResourcePaths()["resourcePool"]
-		if _, ok := seen[resourcePool]; !ok {
-			requiredPrivAssociations = append(requiredPrivAssociations, PrivAssociation{
-				objectType:   govmomi.VSphereTypeResourcePool,
-				privsContent: config.VSphereUserPrivsFile,
-				path:         resourcePool,
-			})
-			seen[resourcePool] = 1
-		}
-		folder := mc.ResourcePaths()["folder"]
-		if _, ok := seen[folder]; !ok {
-			requiredPrivAssociations = append(requiredPrivAssociations, PrivAssociation{
-				objectType:   govmomi.VSphereTypeFolder,
-				privsContent: config.VSphereAdminPrivsFile,
-				path:         folder,
-			})
-			seen[folder] = 1
-		}
-
-		switch v := mc.(type) {
-		case *anywherev1.FailureDomain:
-			computecluster := v.ResourcePaths()["computeCluster"]
-			if _, ok := seen[computecluster]; !ok {
-				requiredPrivAssociations = append(requiredPrivAssociations, PrivAssociation{
-					objectType:   govmomi.VSphereTypeComputeCluster,
-					privsContent: config.VSphereAdminPrivsFile,
-					path:         computecluster,
-				})
-				seen[computecluster] = 1
-			}
-
-		case *anywherev1.VSphereMachineConfig:
-			template := v.ResourcePaths()["template"]
-			if _, ok := seen[template]; !ok {
-				// ToDo: add more sophisticated validation around a scenario where someone has uploaded templates
-				// on their own and does not want to allow EKSA user write access to templates
-				// Verify privs on the template
-				requiredPrivAssociations = append(requiredPrivAssociations, PrivAssociation{
-					objectType:   govmomi.VSphereTypeVirtualMachine,
-					privsContent: config.VSphereAdminPrivsFile,
-					path:         template,
-				})
-				seen[template] = 1
-			}
-
-			if _, ok := seen[filepath.Dir(template)]; !ok {
-				requiredPrivAssociations = append(requiredPrivAssociations, PrivAssociation{
-					objectType:   govmomi.VSphereTypeFolder,
-					privsContent: config.VSphereAdminPrivsFile,
-					path:         filepath.Dir(template),
-				})
-
-				seen[filepath.Dir(template)] = 1
-			}
-
-		default:
-			return false, errors.New("unexpected type in missing validateUserPrivs")
-		}
-
-	}
-
-	host := spec.VSphereDatacenter.Spec.Server
-	datacenter := spec.VSphereDatacenter.Spec.Datacenter
-
-	vsc, err := v.vSphereClientBuilder.Build(
-		ctx,
-		host,
-		vuc.EksaVsphereUsername,
-		vuc.EksaVspherePassword,
-		spec.VSphereDatacenter.Spec.Insecure,
-		datacenter,
-	)
-	if err != nil {
-		return false, err
-	}
-
-	return v.validatePrivs(ctx, requiredPrivAssociations, vsc)
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
+// validate global root priv settings are correct
+
+// ToDo: add more sophisticated validation around a scenario where someone has uploaded templates
+// on their own and does not want to allow EKSA user write access to templates
+// Verify privs on the template
+
 func (v *Validator) validateCPUserPrivs(ctx context.Context, spec *Spec, vuc *config.VSphereUserConfig) (bool, error) {
+	_ = "STUB: not implemented"
 	// CP role just needs read only
-	privObjs := []PrivAssociation{
-		{
-			objectType:   govmomi.VSphereTypeFolder,
-			privsContent: config.VSphereReadOnlyPrivs,
-			path:         vsphereRootPath,
-		},
-	}
-
-	host := spec.VSphereDatacenter.Spec.Server
-	datacenter := spec.VSphereDatacenter.Spec.Datacenter
-
-	vsc, err := v.vSphereClientBuilder.Build(
-		ctx,
-		host,
-		vuc.EksaVsphereCPUsername,
-		vuc.EksaVsphereCPPassword,
-		spec.VSphereDatacenter.Spec.Insecure,
-		datacenter,
-	)
-	if err != nil {
-		return false, err
-	}
-
-	return v.validatePrivs(ctx, privObjs, vsc)
+	return false, nil
 }
 
 func (v *Validator) validatePrivs(ctx context.Context, privObjs []PrivAssociation, vsc govmomi.VSphereClient) (bool, error) {
-	var privs []string
-	var err error
-	missingPrivs := []missingPriv{}
-	passed := false
-	username := vsc.Username()
-
-	for _, obj := range privObjs {
-		path := obj.path
-		privsContent := obj.privsContent
-		t := obj.objectType
-		privs, err = v.getMissingPrivs(ctx, vsc, path, t, privsContent, username)
-		if err != nil {
-			return passed, fmt.Errorf("failed to get missing privileges: %v", err)
-		} else if len(privs) > 0 {
-			mp := missingPriv{
-				Username:    username,
-				ObjectType:  t,
-				Path:        path,
-				Permissions: privs,
-			}
-			missingPrivs = append(missingPrivs, mp)
-		}
-	}
-
-	if len(missingPrivs) != 0 {
-
-		_, err := json.Marshal(missingPrivs)
-		if err != nil {
-			return passed, fmt.Errorf("failed to marshal missing permissions: %v", err)
-		}
-
-		errMsg := fmt.Sprintf("user %s missing vSphere permissions", username)
-		logger.V(3).Info(errMsg, "Missing Permissions (JSON)", missingPrivs)
-
-		return passed, fmt.Errorf("user %s missing vSphere permissions", username)
-	}
-
-	passed = true
-
-	return passed, nil
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 func checkRequiredPrivs(requiredPrivs []string, hasPrivs []string) []string {
-	hp := map[string]interface{}{}
-	for _, val := range hasPrivs {
-		hp[val] = 1
-	}
-
-	missingPrivs := []string{}
-	for _, p := range requiredPrivs {
-		if _, ok := hp[p]; !ok {
-			missingPrivs = append(missingPrivs, p)
-		}
-	}
-
-	return missingPrivs
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (v *Validator) getMissingPrivs(ctx context.Context, vsc govmomi.VSphereClient, path string, objType string, requiredPrivsContent string, username string) ([]string, error) {
-	var requiredPrivs []string
-	err := json.Unmarshal([]byte(requiredPrivsContent), &requiredPrivs)
-	if err != nil {
-		return nil, err
-	}
-
-	hasPrivs, err := vsc.GetPrivsOnEntity(ctx, path, objType, username)
-	if err != nil {
-		return nil, err
-	}
-
-	missingPrivs := checkRequiredPrivs(requiredPrivs, hasPrivs)
-
-	return missingPrivs, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (v *Validator) sameOSFamily(configs map[string]*anywherev1.VSphereMachineConfig) bool {
-	c := getRandomMachineConfig(configs)
-	osFamily := c.Spec.OSFamily
-
-	for _, machineConfig := range configs {
-		if machineConfig.Spec.OSFamily != osFamily {
-			return false
-		}
-	}
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 func (v *Validator) sameTemplate(configs map[string]*anywherev1.VSphereMachineConfig) bool {
-	c := getRandomMachineConfig(configs)
-	template := c.Spec.Template
-
-	for _, machineConfig := range configs {
-		if machineConfig.Spec.Template != template {
-			return false
-		}
-	}
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 func getRandomMachineConfig(configs map[string]*anywherev1.VSphereMachineConfig) *anywherev1.VSphereMachineConfig {
-	var machineConfig *anywherev1.VSphereMachineConfig
-	for _, c := range configs {
-		machineConfig = c
-		break
-	}
-	return machineConfig
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func sliceIfNotNil(machines ...*anywherev1.VSphereMachineConfig) []*anywherev1.VSphereMachineConfig {
-	var notNil []*anywherev1.VSphereMachineConfig
-	for _, m := range machines {
-		if m != nil {
-			notNil = append(notNil, m)
-		}
-	}
-
-	return notNil
+	_ = "STUB: not implemented"
+	return nil
 }

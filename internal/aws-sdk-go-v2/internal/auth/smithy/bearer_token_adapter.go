@@ -2,7 +2,6 @@ package smithy
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/aws/smithy-go"
@@ -19,11 +18,14 @@ var _ auth.Identity = (*BearerTokenAdapter)(nil)
 
 // Expiration returns the time of expiration for the token.
 func (v *BearerTokenAdapter) Expiration() time.Time {
-	return v.Token.Expires
+	_ = "STUB: not implemented"
+	return *
+
+	// BearerTokenProviderAdapter adapts smithy bearer.TokenProvider to smithy
+	// auth.IdentityResolver.
+	new(time.Time)
 }
 
-// BearerTokenProviderAdapter adapts smithy bearer.TokenProvider to smithy
-// auth.IdentityResolver.
 type BearerTokenProviderAdapter struct {
 	Provider bearer.TokenProvider
 }
@@ -34,10 +36,6 @@ var _ (auth.IdentityResolver) = (*BearerTokenProviderAdapter)(nil)
 func (v *BearerTokenProviderAdapter) GetIdentity(ctx context.Context, _ smithy.Properties) (
 	auth.Identity, error,
 ) {
-	token, err := v.Provider.RetrieveBearerToken(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("get token: %w", err)
-	}
-
-	return &BearerTokenAdapter{Token: token}, nil
+	_ = "STUB: not implemented"
+	return *new(auth.Identity), nil
 }

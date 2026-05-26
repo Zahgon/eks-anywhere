@@ -17,23 +17,11 @@ type KubeVersion struct {
 	minor string
 }
 
-func NewDiscovery(kubeVersion *KubeVersion) *Discovery {
-	return &Discovery{
-		kubeVersion: kubeVersion,
-	}
-}
+func NewDiscovery(kubeVersion *KubeVersion) *Discovery { _ = "STUB: not implemented"; return nil }
 
-func NewKubeVersion(major string, minor string) *KubeVersion {
-	return &KubeVersion{
-		major: major,
-		minor: minor,
-	}
-}
+func NewKubeVersion(major string, minor string) *KubeVersion { _ = "STUB: not implemented"; return nil }
 
 func (d *Discovery) ServerVersion() (*version.Info, error) {
-	v := &version.Info{
-		Major: d.kubeVersion.major,
-		Minor: d.kubeVersion.minor,
-	}
-	return v, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

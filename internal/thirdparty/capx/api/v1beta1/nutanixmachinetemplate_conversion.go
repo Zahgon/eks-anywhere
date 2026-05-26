@@ -17,7 +17,11 @@ limitations under the License.
 package v1beta1
 
 // Hub marks NutanixMachineTemplate as a conversion hub.
-func (*NutanixMachineTemplate) Hub() {}
+func (*NutanixMachineTemplate) Hub() {
+	_ = "STUB: not implemented"
 
-// Hub marks NutanixMachineTemplateList as a conversion hub.
-func (*NutanixMachineTemplateList) Hub() {}
+	// Hub marks NutanixMachineTemplateList as a conversion hub.
+	return
+}
+
+func (*NutanixMachineTemplateList) Hub() { _ = "STUB: not implemented"; return }

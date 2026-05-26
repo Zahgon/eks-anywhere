@@ -8,6 +8,4 @@ var requiredCommonEnvVars = []string{
 }
 
 // RequiredCommonEnvVars returns the list of env variables required for all tests.
-func RequiredCommonEnvVars() []string {
-	return requiredCommonEnvVars
-}
+func RequiredCommonEnvVars() []string { _ = "STUB: not implemented"; return nil }

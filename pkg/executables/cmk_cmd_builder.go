@@ -1,48 +1,42 @@
 package executables
 
-import (
-	"fmt"
-	"strings"
-)
-
 type cmkCommandArgs func(*[]string)
 
-func newCmkCommand(command string) []string {
-	return strings.Fields(command)
-}
+func newCmkCommand(command string) []string { _ = "STUB: not implemented"; return nil }
 
-func applyCmkArgs(params *[]string, args ...cmkCommandArgs) {
-	for _, arg := range args {
-		arg(params)
-	}
-}
+func applyCmkArgs(params *[]string, args ...cmkCommandArgs) { _ = "STUB: not implemented"; return }
 
 func appendArgs(new ...string) cmkCommandArgs {
-	return func(args *[]string) {
-		*args = append(*args, new...)
-	}
+	_ = "STUB: not implemented"
+	return *new(cmkCommandArgs)
 }
 
 func withCloudStackDomainId(domainId string) cmkCommandArgs {
-	return appendArgs(fmt.Sprintf("domainid=\"%s\"", domainId))
+	_ = "STUB: not implemented"
+	return *new(cmkCommandArgs)
 }
 
 func withCloudStackAccount(account string) cmkCommandArgs {
-	return appendArgs(fmt.Sprintf("account=\"%s\"", account))
+	_ = "STUB: not implemented"
+	return *new(cmkCommandArgs)
 }
 
 func withCloudStackZoneId(zoneId string) cmkCommandArgs {
-	return appendArgs(fmt.Sprintf("zoneid=\"%s\"", zoneId))
+	_ = "STUB: not implemented"
+	return *new(cmkCommandArgs)
 }
 
 func withCloudStackId(id string) cmkCommandArgs {
-	return appendArgs(fmt.Sprintf("id=\"%s\"", id))
+	_ = "STUB: not implemented"
+	return *new(cmkCommandArgs)
 }
 
 func withCloudStackName(name string) cmkCommandArgs {
-	return appendArgs(fmt.Sprintf("name=\"%s\"", name))
+	_ = "STUB: not implemented"
+	return *new(cmkCommandArgs)
 }
 
 func withCloudStackKeyword(keyword string) cmkCommandArgs {
-	return appendArgs(fmt.Sprintf("keyword=\"%s\"", keyword))
+	_ = "STUB: not implemented"
+	return *new(cmkCommandArgs)
 }

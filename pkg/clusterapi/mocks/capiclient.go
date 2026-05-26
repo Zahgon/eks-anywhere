@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	cluster "github.com/aws/eks-anywhere/pkg/cluster"
 	clusterapi "github.com/aws/eks-anywhere/pkg/clusterapi"
@@ -28,42 +27,39 @@ type MockCAPIClientMockRecorder struct {
 
 // NewMockCAPIClient creates a new mock instance.
 func NewMockCAPIClient(ctrl *gomock.Controller) *MockCAPIClient {
-	mock := &MockCAPIClient{ctrl: ctrl}
-	mock.recorder = &MockCAPIClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockCAPIClient) EXPECT() *MockCAPIClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// InstallEtcdadmProviders mocks base method.
+	return nil
 }
 
-// InstallEtcdadmProviders mocks base method.
 func (m *MockCAPIClient) InstallEtcdadmProviders(ctx context.Context, managementComponents *cluster.ManagementComponents, clusterSpec *cluster.Spec, cluster *types.Cluster, provider providers.Provider, installProviders []string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "InstallEtcdadmProviders", ctx, managementComponents, clusterSpec, cluster, provider, installProviders)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // InstallEtcdadmProviders indicates an expected call of InstallEtcdadmProviders.
 func (mr *MockCAPIClientMockRecorder) InstallEtcdadmProviders(ctx, managementComponents, clusterSpec, cluster, provider, installProviders interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InstallEtcdadmProviders", reflect.TypeOf((*MockCAPIClient)(nil).InstallEtcdadmProviders), ctx, managementComponents, clusterSpec, cluster, provider, installProviders)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Upgrade mocks base method.
 func (m *MockCAPIClient) Upgrade(ctx context.Context, managementCluster *types.Cluster, provider providers.Provider, managementComponents *cluster.ManagementComponents, newSpec *cluster.Spec, changeDiff *clusterapi.CAPIChangeDiff) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Upgrade", ctx, managementCluster, provider, managementComponents, newSpec, changeDiff)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Upgrade indicates an expected call of Upgrade.
 func (mr *MockCAPIClientMockRecorder) Upgrade(ctx, managementCluster, provider, managementComponents, newSpec, changeDiff interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Upgrade", reflect.TypeOf((*MockCAPIClient)(nil).Upgrade), ctx, managementCluster, provider, managementComponents, newSpec, changeDiff)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockKubectlClient is a mock of KubectlClient interface.
@@ -79,27 +75,25 @@ type MockKubectlClientMockRecorder struct {
 
 // NewMockKubectlClient creates a new mock instance.
 func NewMockKubectlClient(ctrl *gomock.Controller) *MockKubectlClient {
-	mock := &MockKubectlClient{ctrl: ctrl}
-	mock.recorder = &MockKubectlClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockKubectlClient) EXPECT() *MockKubectlClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// CheckProviderExists mocks base method.
+	return nil
 }
 
-// CheckProviderExists mocks base method.
 func (m *MockKubectlClient) CheckProviderExists(ctx context.Context, kubeconfigFile, name, namespace string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CheckProviderExists", ctx, kubeconfigFile, name, namespace)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // CheckProviderExists indicates an expected call of CheckProviderExists.
 func (mr *MockKubectlClientMockRecorder) CheckProviderExists(ctx, kubeconfigFile, name, namespace interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CheckProviderExists", reflect.TypeOf((*MockKubectlClient)(nil).CheckProviderExists), ctx, kubeconfigFile, name, namespace)
+	_ = "STUB: not implemented"
+	return nil
 }

@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	v1alpha1 "github.com/aws/eks-anywhere/release/api/v1alpha1"
 	gomock "github.com/golang/mock/gomock"
@@ -24,59 +23,49 @@ type MockReaderMockRecorder struct {
 }
 
 // NewMockReader creates a new mock instance.
-func NewMockReader(ctrl *gomock.Controller) *MockReader {
-	mock := &MockReader{ctrl: ctrl}
-	mock.recorder = &MockReaderMockRecorder{mock}
-	return mock
-}
+func NewMockReader(ctrl *gomock.Controller) *MockReader { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockReader) EXPECT() *MockReaderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ReadBundlesForVersion mocks base method.
+	return nil
 }
 
-// ReadBundlesForVersion mocks base method.
 func (m *MockReader) ReadBundlesForVersion(eksaVersion string) (*v1alpha1.Bundles, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReadBundlesForVersion", eksaVersion)
-	ret0, _ := ret[0].(*v1alpha1.Bundles)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ReadBundlesForVersion indicates an expected call of ReadBundlesForVersion.
 func (mr *MockReaderMockRecorder) ReadBundlesForVersion(eksaVersion interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadBundlesForVersion", reflect.TypeOf((*MockReader)(nil).ReadBundlesForVersion), eksaVersion)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReadChartsFromBundles mocks base method.
 func (m *MockReader) ReadChartsFromBundles(ctx context.Context, bundles *v1alpha1.Bundles) []v1alpha1.Image {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReadChartsFromBundles", ctx, bundles)
-	ret0, _ := ret[0].([]v1alpha1.Image)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReadChartsFromBundles indicates an expected call of ReadChartsFromBundles.
 func (mr *MockReaderMockRecorder) ReadChartsFromBundles(ctx, bundles interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadChartsFromBundles", reflect.TypeOf((*MockReader)(nil).ReadChartsFromBundles), ctx, bundles)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ReadImagesFromBundles mocks base method.
 func (m *MockReader) ReadImagesFromBundles(ctx context.Context, bundles *v1alpha1.Bundles) ([]v1alpha1.Image, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReadImagesFromBundles", ctx, bundles)
-	ret0, _ := ret[0].([]v1alpha1.Image)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ReadImagesFromBundles indicates an expected call of ReadImagesFromBundles.
 func (mr *MockReaderMockRecorder) ReadImagesFromBundles(ctx, bundles interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadImagesFromBundles", reflect.TypeOf((*MockReader)(nil).ReadImagesFromBundles), ctx, bundles)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockImageMover is a mock of ImageMover interface.
@@ -92,33 +81,27 @@ type MockImageMoverMockRecorder struct {
 
 // NewMockImageMover creates a new mock instance.
 func NewMockImageMover(ctrl *gomock.Controller) *MockImageMover {
-	mock := &MockImageMover{ctrl: ctrl}
-	mock.recorder = &MockImageMoverMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockImageMover) EXPECT() *MockImageMoverMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Move mocks base method.
+	return nil
 }
 
-// Move mocks base method.
 func (m *MockImageMover) Move(ctx context.Context, artifacts ...string) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx}
-	for _, a := range artifacts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Move", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Move indicates an expected call of Move.
 func (mr *MockImageMoverMockRecorder) Move(ctx interface{}, artifacts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx}, artifacts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Move", reflect.TypeOf((*MockImageMover)(nil).Move), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockChartDownloader is a mock of ChartDownloader interface.
@@ -134,33 +117,27 @@ type MockChartDownloaderMockRecorder struct {
 
 // NewMockChartDownloader creates a new mock instance.
 func NewMockChartDownloader(ctrl *gomock.Controller) *MockChartDownloader {
-	mock := &MockChartDownloader{ctrl: ctrl}
-	mock.recorder = &MockChartDownloaderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockChartDownloader) EXPECT() *MockChartDownloaderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Download mocks base method.
+	return nil
 }
 
-// Download mocks base method.
 func (m *MockChartDownloader) Download(ctx context.Context, artifacts ...string) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx}
-	for _, a := range artifacts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Download", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Download indicates an expected call of Download.
 func (mr *MockChartDownloaderMockRecorder) Download(ctx interface{}, artifacts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx}, artifacts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Download", reflect.TypeOf((*MockChartDownloader)(nil).Download), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockManifestDownloader is a mock of ManifestDownloader interface.
@@ -176,26 +153,27 @@ type MockManifestDownloaderMockRecorder struct {
 
 // NewMockManifestDownloader creates a new mock instance.
 func NewMockManifestDownloader(ctrl *gomock.Controller) *MockManifestDownloader {
-	mock := &MockManifestDownloader{ctrl: ctrl}
-	mock.recorder = &MockManifestDownloaderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockManifestDownloader) EXPECT() *MockManifestDownloaderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Download mocks base method.
+	return nil
 }
 
-// Download mocks base method.
 func (m *MockManifestDownloader) Download(ctx context.Context, bundles *v1alpha1.Bundles) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Download", ctx, bundles)
+	_ = "STUB: not implemented"
+	return
 }
 
 // Download indicates an expected call of Download.
 func (mr *MockManifestDownloaderMockRecorder) Download(ctx, bundles interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Download", reflect.TypeOf((*MockManifestDownloader)(nil).Download), ctx, bundles)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockPackager is a mock of Packager interface.
@@ -210,27 +188,20 @@ type MockPackagerMockRecorder struct {
 }
 
 // NewMockPackager creates a new mock instance.
-func NewMockPackager(ctrl *gomock.Controller) *MockPackager {
-	mock := &MockPackager{ctrl: ctrl}
-	mock.recorder = &MockPackagerMockRecorder{mock}
-	return mock
-}
+func NewMockPackager(ctrl *gomock.Controller) *MockPackager { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockPackager) EXPECT() *MockPackagerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Package mocks base method.
+	return nil
 }
 
-// Package mocks base method.
-func (m *MockPackager) Package(folder, dstFile string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Package", folder, dstFile)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockPackager) Package(folder, dstFile string) error { _ = "STUB: not implemented"; return nil }
 
 // Package indicates an expected call of Package.
 func (mr *MockPackagerMockRecorder) Package(folder, dstFile interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Package", reflect.TypeOf((*MockPackager)(nil).Package), folder, dstFile)
+	_ = "STUB: not implemented"
+	return nil
 }

@@ -9,10 +9,9 @@ import (
 
 type vMOMISessionBuilder struct{}
 
-func NewvMOMISessionBuilder() *vMOMIClientBuilder {
-	return &vMOMIClientBuilder{}
-}
+func NewvMOMISessionBuilder() *vMOMIClientBuilder { _ = "STUB: not implemented"; return nil }
 
 func (*vMOMISessionBuilder) Build(ctx context.Context, u *url.URL, insecure bool) (*govmomi.Client, error) {
-	return govmomi.NewClient(ctx, u, insecure)
+	_ = "STUB: not implemented"
+	return nil, nil
 }

@@ -7,7 +7,6 @@ type ClusterConfigFiller func(*cluster.Config)
 
 // UpdateClusterConfig updates the given cluster.Config by applying the fillers.
 func UpdateClusterConfig(config *cluster.Config, fillers ...ClusterConfigFiller) {
-	for _, f := range fillers {
-		f(config)
-	}
+	_ = "STUB: not implemented"
+	return
 }

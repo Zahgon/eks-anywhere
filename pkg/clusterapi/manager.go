@@ -19,10 +19,8 @@ type clients struct {
 }
 
 func NewManager(capiClient CAPIClient, kubectlClient KubectlClient) *Manager {
-	return &Manager{
-		Installer: NewInstaller(capiClient, kubectlClient),
-		Upgrader:  NewUpgrader(capiClient, kubectlClient),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 type CAPIClient interface {

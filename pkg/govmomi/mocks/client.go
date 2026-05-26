@@ -7,7 +7,6 @@ package mocks
 import (
 	context "context"
 	url "net/url"
-	reflect "reflect"
 
 	govmomi "github.com/aws/eks-anywhere/pkg/govmomi"
 	gomock "github.com/golang/mock/gomock"
@@ -31,43 +30,36 @@ type MockVSphereClientMockRecorder struct {
 
 // NewMockVSphereClient creates a new mock instance.
 func NewMockVSphereClient(ctrl *gomock.Controller) *MockVSphereClient {
-	mock := &MockVSphereClient{ctrl: ctrl}
-	mock.recorder = &MockVSphereClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockVSphereClient) EXPECT() *MockVSphereClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// GetPrivsOnEntity mocks base method.
+	return nil
 }
 
-// GetPrivsOnEntity mocks base method.
 func (m *MockVSphereClient) GetPrivsOnEntity(arg0 context.Context, arg1, arg2, arg3 string) ([]string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetPrivsOnEntity", arg0, arg1, arg2, arg3)
-	ret0, _ := ret[0].([]string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetPrivsOnEntity indicates an expected call of GetPrivsOnEntity.
 func (mr *MockVSphereClientMockRecorder) GetPrivsOnEntity(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPrivsOnEntity", reflect.TypeOf((*MockVSphereClient)(nil).GetPrivsOnEntity), arg0, arg1, arg2, arg3)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Username mocks base method.
-func (m *MockVSphereClient) Username() string {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Username")
-	ret0, _ := ret[0].(string)
-	return ret0
-}
+func (m *MockVSphereClient) Username() string { _ = "STUB: not implemented"; return "" }
 
 // Username indicates an expected call of Username.
 func (mr *MockVSphereClientMockRecorder) Username() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Username", reflect.TypeOf((*MockVSphereClient)(nil).Username))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockVMOMIAuthorizationManager is a mock of VMOMIAuthorizationManager interface.
@@ -83,29 +75,27 @@ type MockVMOMIAuthorizationManagerMockRecorder struct {
 
 // NewMockVMOMIAuthorizationManager creates a new mock instance.
 func NewMockVMOMIAuthorizationManager(ctrl *gomock.Controller) *MockVMOMIAuthorizationManager {
-	mock := &MockVMOMIAuthorizationManager{ctrl: ctrl}
-	mock.recorder = &MockVMOMIAuthorizationManagerMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockVMOMIAuthorizationManager) EXPECT() *MockVMOMIAuthorizationManagerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// FetchUserPrivilegeOnEntities mocks base method.
+	return nil
 }
 
-// FetchUserPrivilegeOnEntities mocks base method.
 func (m *MockVMOMIAuthorizationManager) FetchUserPrivilegeOnEntities(arg0 context.Context, arg1 []types.ManagedObjectReference, arg2 string) ([]types.UserPrivilegeResult, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FetchUserPrivilegeOnEntities", arg0, arg1, arg2)
-	ret0, _ := ret[0].([]types.UserPrivilegeResult)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // FetchUserPrivilegeOnEntities indicates an expected call of FetchUserPrivilegeOnEntities.
 func (mr *MockVMOMIAuthorizationManagerMockRecorder) FetchUserPrivilegeOnEntities(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchUserPrivilegeOnEntities", reflect.TypeOf((*MockVMOMIAuthorizationManager)(nil).FetchUserPrivilegeOnEntities), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockVMOMIFinder is a mock of VMOMIFinder interface.
@@ -121,133 +111,111 @@ type MockVMOMIFinderMockRecorder struct {
 
 // NewMockVMOMIFinder creates a new mock instance.
 func NewMockVMOMIFinder(ctrl *gomock.Controller) *MockVMOMIFinder {
-	mock := &MockVMOMIFinder{ctrl: ctrl}
-	mock.recorder = &MockVMOMIFinderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockVMOMIFinder) EXPECT() *MockVMOMIFinderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ClusterComputeResource mocks base method.
+	return nil
 }
 
-// ClusterComputeResource mocks base method.
 func (m *MockVMOMIFinder) ClusterComputeResource(arg0 context.Context, arg1 string) (*object.ClusterComputeResource, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ClusterComputeResource", arg0, arg1)
-	ret0, _ := ret[0].(*object.ClusterComputeResource)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ClusterComputeResource indicates an expected call of ClusterComputeResource.
 func (mr *MockVMOMIFinderMockRecorder) ClusterComputeResource(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ClusterComputeResource", reflect.TypeOf((*MockVMOMIFinder)(nil).ClusterComputeResource), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Datacenter mocks base method.
 func (m *MockVMOMIFinder) Datacenter(arg0 context.Context, arg1 string) (*object.Datacenter, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Datacenter", arg0, arg1)
-	ret0, _ := ret[0].(*object.Datacenter)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Datacenter indicates an expected call of Datacenter.
 func (mr *MockVMOMIFinderMockRecorder) Datacenter(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Datacenter", reflect.TypeOf((*MockVMOMIFinder)(nil).Datacenter), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Datastore mocks base method.
 func (m *MockVMOMIFinder) Datastore(arg0 context.Context, arg1 string) (*object.Datastore, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Datastore", arg0, arg1)
-	ret0, _ := ret[0].(*object.Datastore)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Datastore indicates an expected call of Datastore.
 func (mr *MockVMOMIFinderMockRecorder) Datastore(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Datastore", reflect.TypeOf((*MockVMOMIFinder)(nil).Datastore), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Folder mocks base method.
 func (m *MockVMOMIFinder) Folder(arg0 context.Context, arg1 string) (*object.Folder, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Folder", arg0, arg1)
-	ret0, _ := ret[0].(*object.Folder)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Folder indicates an expected call of Folder.
 func (mr *MockVMOMIFinderMockRecorder) Folder(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Folder", reflect.TypeOf((*MockVMOMIFinder)(nil).Folder), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Network mocks base method.
 func (m *MockVMOMIFinder) Network(arg0 context.Context, arg1 string) (object.NetworkReference, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Network", arg0, arg1)
-	ret0, _ := ret[0].(object.NetworkReference)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(object.NetworkReference), nil
 }
 
 // Network indicates an expected call of Network.
 func (mr *MockVMOMIFinderMockRecorder) Network(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Network", reflect.TypeOf((*MockVMOMIFinder)(nil).Network), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ResourcePool mocks base method.
 func (m *MockVMOMIFinder) ResourcePool(arg0 context.Context, arg1 string) (*object.ResourcePool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ResourcePool", arg0, arg1)
-	ret0, _ := ret[0].(*object.ResourcePool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ResourcePool indicates an expected call of ResourcePool.
 func (mr *MockVMOMIFinderMockRecorder) ResourcePool(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ResourcePool", reflect.TypeOf((*MockVMOMIFinder)(nil).ResourcePool), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetDatacenter mocks base method.
 func (m *MockVMOMIFinder) SetDatacenter(arg0 *object.Datacenter) *find.Finder {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SetDatacenter", arg0)
-	ret0, _ := ret[0].(*find.Finder)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetDatacenter indicates an expected call of SetDatacenter.
 func (mr *MockVMOMIFinderMockRecorder) SetDatacenter(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetDatacenter", reflect.TypeOf((*MockVMOMIFinder)(nil).SetDatacenter), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // VirtualMachine mocks base method.
 func (m *MockVMOMIFinder) VirtualMachine(arg0 context.Context, arg1 string) (*object.VirtualMachine, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "VirtualMachine", arg0, arg1)
-	ret0, _ := ret[0].(*object.VirtualMachine)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // VirtualMachine indicates an expected call of VirtualMachine.
 func (mr *MockVMOMIFinderMockRecorder) VirtualMachine(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VirtualMachine", reflect.TypeOf((*MockVMOMIFinder)(nil).VirtualMachine), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockVMOMISessionBuilder is a mock of VMOMISessionBuilder interface.
@@ -263,29 +231,27 @@ type MockVMOMISessionBuilderMockRecorder struct {
 
 // NewMockVMOMISessionBuilder creates a new mock instance.
 func NewMockVMOMISessionBuilder(ctrl *gomock.Controller) *MockVMOMISessionBuilder {
-	mock := &MockVMOMISessionBuilder{ctrl: ctrl}
-	mock.recorder = &MockVMOMISessionBuilderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockVMOMISessionBuilder) EXPECT() *MockVMOMISessionBuilderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Build mocks base method.
+	return nil
 }
 
-// Build mocks base method.
 func (m *MockVMOMISessionBuilder) Build(arg0 context.Context, arg1 *url.URL, arg2 bool) (*govmomi0.Client, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Build", arg0, arg1, arg2)
-	ret0, _ := ret[0].(*govmomi0.Client)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Build indicates an expected call of Build.
 func (mr *MockVMOMISessionBuilderMockRecorder) Build(arg0, arg1, arg2 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Build", reflect.TypeOf((*MockVMOMISessionBuilder)(nil).Build), arg0, arg1, arg2)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockVMOMIFinderBuilder is a mock of VMOMIFinderBuilder interface.
@@ -301,33 +267,27 @@ type MockVMOMIFinderBuilderMockRecorder struct {
 
 // NewMockVMOMIFinderBuilder creates a new mock instance.
 func NewMockVMOMIFinderBuilder(ctrl *gomock.Controller) *MockVMOMIFinderBuilder {
-	mock := &MockVMOMIFinderBuilder{ctrl: ctrl}
-	mock.recorder = &MockVMOMIFinderBuilderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockVMOMIFinderBuilder) EXPECT() *MockVMOMIFinderBuilderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Build mocks base method.
+	return nil
 }
 
-// Build mocks base method.
 func (m *MockVMOMIFinderBuilder) Build(arg0 *vim25.Client, arg1 ...bool) govmomi.VMOMIFinder {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0}
-	for _, a := range arg1 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Build", varargs...)
-	ret0, _ := ret[0].(govmomi.VMOMIFinder)
-	return ret0
+	_ = "STUB: not implemented"
+	return *new(govmomi.VMOMIFinder)
 }
 
 // Build indicates an expected call of Build.
 func (mr *MockVMOMIFinderBuilderMockRecorder) Build(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0}, arg1...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Build", reflect.TypeOf((*MockVMOMIFinderBuilder)(nil).Build), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockVMOMIAuthorizationManagerBuilder is a mock of VMOMIAuthorizationManagerBuilder interface.
@@ -343,26 +303,25 @@ type MockVMOMIAuthorizationManagerBuilderMockRecorder struct {
 
 // NewMockVMOMIAuthorizationManagerBuilder creates a new mock instance.
 func NewMockVMOMIAuthorizationManagerBuilder(ctrl *gomock.Controller) *MockVMOMIAuthorizationManagerBuilder {
-	mock := &MockVMOMIAuthorizationManagerBuilder{ctrl: ctrl}
-	mock.recorder = &MockVMOMIAuthorizationManagerBuilderMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockVMOMIAuthorizationManagerBuilder) EXPECT() *MockVMOMIAuthorizationManagerBuilderMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Build mocks base method.
+	return nil
 }
 
-// Build mocks base method.
 func (m *MockVMOMIAuthorizationManagerBuilder) Build(arg0 *vim25.Client) *object.AuthorizationManager {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Build", arg0)
-	ret0, _ := ret[0].(*object.AuthorizationManager)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Build indicates an expected call of Build.
 func (mr *MockVMOMIAuthorizationManagerBuilderMockRecorder) Build(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Build", reflect.TypeOf((*MockVMOMIAuthorizationManagerBuilder)(nil).Build), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }

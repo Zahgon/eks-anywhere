@@ -13,18 +13,10 @@ var (
 	outputFilePathMtx sync.Mutex
 )
 
-func setOutputFilePath(path string) {
-	outputFilePathMtx.Lock()
-	defer outputFilePathMtx.Unlock()
-	outputFilePath = path
-}
+func setOutputFilePath(path string) { _ = "STUB: not implemented"; return }
 
 // GetOutputFilePath returns the path to the file where high verbosity logs are written to.
 // If the logger hasn't been configured to output to a file, it returns an empty string.
 //
 // Deprecated: The function will be removed to avoid using package state.
-func GetOutputFilePath() string {
-	outputFilePathMtx.Lock()
-	defer outputFilePathMtx.Unlock()
-	return outputFilePath
-}
+func GetOutputFilePath() string { _ = "STUB: not implemented"; return "" }

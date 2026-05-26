@@ -9,23 +9,15 @@ type RunOutput struct {
 }
 
 func buildRunOutput(commandOut *ssm.GetCommandInvocationOutput) *RunOutput {
-	return &RunOutput{
-		commandOut: commandOut,
-		CommandId:  *commandOut.CommandId,
-		StdOut:     []byte(*commandOut.StandardOutputContent),
-		StdErr:     []byte(*commandOut.StandardErrorContent),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (r *RunOutput) Successful() bool {
-	return *r.commandOut.Status == ssm.CommandInvocationStatusSuccess
-}
+func (r *RunOutput) Successful() bool { _ = "STUB: not implemented"; return false }
 
 // StatusDetails returns the status details of the ssm command.
 func (r *RunOutput) StatusDetails() string {
+	_ = "STUB: not implemented"
 	// handle nil pointer
-	if r == nil || r.commandOut == nil {
-		return "NoCommandOutput"
-	}
-	return *r.commandOut.StatusDetails
+	return ""
 }

@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	v1alpha1 "github.com/aws/eks-anywhere-packages/api/v1alpha1"
 	gomock "github.com/golang/mock/gomock"
@@ -24,28 +23,23 @@ type MockManagerMockRecorder struct {
 }
 
 // NewMockManager creates a new mock instance.
-func NewMockManager(ctrl *gomock.Controller) *MockManager {
-	mock := &MockManager{ctrl: ctrl}
-	mock.recorder = &MockManagerMockRecorder{mock}
-	return mock
-}
+func NewMockManager(ctrl *gomock.Controller) *MockManager { _ = "STUB: not implemented"; return nil }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockManager) EXPECT() *MockManagerMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// LatestBundle mocks base method.
+	return nil
 }
 
-// LatestBundle mocks base method.
 func (m *MockManager) LatestBundle(ctx context.Context, baseRef, kubeMajor, kubeMinor, clusterName string) (*v1alpha1.PackageBundle, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LatestBundle", ctx, baseRef, kubeMajor, kubeMinor, clusterName)
-	ret0, _ := ret[0].(*v1alpha1.PackageBundle)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // LatestBundle indicates an expected call of LatestBundle.
 func (mr *MockManagerMockRecorder) LatestBundle(ctx, baseRef, kubeMajor, kubeMinor, clusterName interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LatestBundle", reflect.TypeOf((*MockManager)(nil).LatestBundle), ctx, baseRef, kubeMajor, kubeMinor, clusterName)
+	_ = "STUB: not implemented"
+	return nil
 }

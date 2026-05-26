@@ -1,9 +1,7 @@
 package curatedpackages
 
 import (
-	"fmt"
 	"io"
-	"strings"
 	"text/tabwriter"
 )
 
@@ -17,37 +15,20 @@ type cpTabwriter struct {
 // If customParams is nil, cpTabwriterDefaultParams will be used. The caller
 // should call Flush just as they would with an unmodified tabwriter.Writer.
 func newCPTabwriter(w io.Writer, customParams *cpTabwriterParams) *cpTabwriter {
-	if customParams == nil {
-		customParams = cpTabwriterDefaultParams()
-	}
-	tw := tabwriter.NewWriter(w, customParams.minWidth, customParams.tabWidth,
-		customParams.padding, customParams.padChar, customParams.flags)
-	return &cpTabwriter{Writer: tw}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // writeTable from a 2-D slice of strings, joining every string with tabs.
 //
 // Tab characters and newlines will be added to the end of each rank.
-func (w *cpTabwriter) writeTable(lines [][]string) error {
-	var err error
+func (w *cpTabwriter) writeTable(lines [][]string) error { _ = "STUB: not implemented"; return nil }
 
-	for _, line := range lines {
-		joined := strings.Join(line, "\t")
-		// A final "\t" is added, as tabwriter is tab-terminated, not the more
-		// common tab-separated. See https://pkg.go.dev/text/tabwriter#Writer
-		// for details. There are cases where one might not want this trailing
-		// tab, but it hasn't come up yet, and is easily worked around when
-		// the time comes.
-		if !strings.HasSuffix(joined, "\t") {
-			joined += "\t"
-		}
-		_, err = fmt.Fprintln(w, joined)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
+// A final "\t" is added, as tabwriter is tab-terminated, not the more
+// common tab-separated. See https://pkg.go.dev/text/tabwriter#Writer
+// for details. There are cases where one might not want this trailing
+// tab, but it hasn't come up yet, and is easily worked around when
+// the time comes.
 
 // cpTabwriterParams makes it easier to reuse common tabwriter parameters.
 //
@@ -69,8 +50,4 @@ type cpTabwriterParams struct {
 //
 // Its implemented as a function to make it harder to override the defaults
 // accidentally.
-func cpTabwriterDefaultParams() *cpTabwriterParams {
-	return &cpTabwriterParams{
-		minWidth: 16, tabWidth: 8, padding: 0, padChar: '\t', flags: 0,
-	}
-}
+func cpTabwriterDefaultParams() *cpTabwriterParams { _ = "STUB: not implemented"; return nil }

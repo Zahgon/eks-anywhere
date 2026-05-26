@@ -1,10 +1,7 @@
 package v1alpha1
 
 import (
-	"fmt"
-
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"sigs.k8s.io/yaml"
 
 	"github.com/aws/eks-anywhere/pkg/api/v1alpha1/thirdparty/tinkerbell"
 )
@@ -33,38 +30,18 @@ type TinkerbellTemplateConfig struct {
 	Status TinkerbellTemplateConfigStatus `json:"status,omitempty"`
 }
 
-func (t *TinkerbellTemplateConfig) Kind() string {
-	return t.TypeMeta.Kind
-}
+func (t *TinkerbellTemplateConfig) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (t *TinkerbellTemplateConfig) ExpectedKind() string {
-	return TinkerbellTemplateConfigKind
-}
+func (t *TinkerbellTemplateConfig) ExpectedKind() string { _ = "STUB: not implemented"; return "" }
 
 func (t *TinkerbellTemplateConfig) ToTemplateString() (string, error) {
-	b, err := yaml.Marshal(&t.Spec.Template)
-	if err != nil {
-		return "", fmt.Errorf("failed to convert TinkerbellTemplateConfig.Spec.Template to string: %v", err)
-	}
-	return string(b), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func (c *TinkerbellTemplateConfig) ConvertConfigToConfigGenerateStruct() *TinkerbellTemplateConfigGenerate {
-	namespace := defaultEksaNamespace
-	if c.Namespace != "" {
-		namespace = c.Namespace
-	}
-	config := &TinkerbellTemplateConfigGenerate{
-		TypeMeta: c.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        c.Name,
-			Annotations: c.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: c.Spec,
-	}
-
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // +kubebuilder:object:generate=false

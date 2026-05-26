@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	v1alpha1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	gomock "github.com/golang/mock/gomock"
@@ -25,40 +24,37 @@ type MockValidatorMockRecorder struct {
 
 // NewMockValidator creates a new mock instance.
 func NewMockValidator(ctrl *gomock.Controller) *MockValidator {
-	mock := &MockValidator{ctrl: ctrl}
-	mock.recorder = &MockValidatorMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockValidator) EXPECT() *MockValidatorMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// ValidateEC2ImageExistsOnDevice mocks base method.
+	return nil
 }
 
-// ValidateEC2ImageExistsOnDevice mocks base method.
 func (m_2 *MockValidator) ValidateEC2ImageExistsOnDevice(ctx context.Context, m *v1alpha1.SnowMachineConfig) error {
-	m_2.ctrl.T.Helper()
-	ret := m_2.ctrl.Call(m_2, "ValidateEC2ImageExistsOnDevice", ctx, m)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateEC2ImageExistsOnDevice indicates an expected call of ValidateEC2ImageExistsOnDevice.
 func (mr *MockValidatorMockRecorder) ValidateEC2ImageExistsOnDevice(ctx, m interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateEC2ImageExistsOnDevice", reflect.TypeOf((*MockValidator)(nil).ValidateEC2ImageExistsOnDevice), ctx, m)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateEC2SshKeyNameExists mocks base method.
 func (m_2 *MockValidator) ValidateEC2SshKeyNameExists(ctx context.Context, m *v1alpha1.SnowMachineConfig) error {
-	m_2.ctrl.T.Helper()
-	ret := m_2.ctrl.Call(m_2, "ValidateEC2SshKeyNameExists", ctx, m)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ValidateEC2SshKeyNameExists indicates an expected call of ValidateEC2SshKeyNameExists.
 func (mr *MockValidatorMockRecorder) ValidateEC2SshKeyNameExists(ctx, m interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ValidateEC2SshKeyNameExists", reflect.TypeOf((*MockValidator)(nil).ValidateEC2SshKeyNameExists), ctx, m)
+	_ = "STUB: not implemented"
+	return nil
 }

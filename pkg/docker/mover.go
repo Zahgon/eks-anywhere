@@ -2,10 +2,6 @@ package docker
 
 import (
 	"context"
-	"fmt"
-	"sort"
-
-	"github.com/aws/eks-anywhere/pkg/types"
 )
 
 type ImageDiskLoader interface {
@@ -50,29 +46,14 @@ type ImageMover struct {
 }
 
 func NewImageMover(source ImageSource, destination ImageDestination) *ImageMover {
-	return &ImageMover{
-		source:      source,
-		destination: destination,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Move loads images from source and writes them to the destination.
 func (m *ImageMover) Move(ctx context.Context, images ...string) error {
-	uniqueImages := removesDuplicates(images)
-
-	if err := m.source.Load(ctx, uniqueImages...); err != nil {
-		return fmt.Errorf("loading docker image mover source: %v", err)
-	}
-
-	if err := m.destination.Write(ctx, uniqueImages...); err != nil {
-		return fmt.Errorf("writing images to destination with image mover: %v", err)
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func removesDuplicates(images []string) []string {
-	i := types.SliceToLookup(images).ToSlice()
-	sort.Strings(i)
-	return i
-}
+func removesDuplicates(images []string) []string { _ = "STUB: not implemented"; return nil }

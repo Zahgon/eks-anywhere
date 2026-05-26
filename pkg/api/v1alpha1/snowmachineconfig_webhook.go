@@ -16,7 +16,6 @@ package v1alpha1
 
 import (
 	"context"
-	"fmt"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -29,11 +28,8 @@ import (
 var snowmachineconfiglog = logf.Log.WithName("snowmachineconfig-resource")
 
 func (r *SnowMachineConfig) SetupWebhookWithManager(mgr ctrl.Manager) error {
-	return ctrl.NewWebhookManagedBy(mgr).
-		For(r).
-		WithDefaulter(r).
-		WithValidator(r).
-		Complete()
+	_ = "STUB: not implemented"
+	return nil
 }
 
 //+kubebuilder:webhook:path=/mutate-anywhere-eks-amazonaws-com-v1alpha1-snowmachineconfig,mutating=true,failurePolicy=fail,sideEffects=None,groups=anywhere.eks.amazonaws.com,resources=snowmachineconfigs,verbs=create;update,versions=v1alpha1,name=mutation.snowmachineconfig.anywhere.amazonaws.com,admissionReviewVersions={v1,v1beta1}
@@ -42,14 +38,7 @@ var _ webhook.CustomDefaulter = &SnowMachineConfig{}
 
 // Default implements webhook.CustomDefaulter so a webhook will be registered for the type.
 func (r *SnowMachineConfig) Default(_ context.Context, obj runtime.Object) error {
-	snowConfig, ok := obj.(*SnowMachineConfig)
-	if !ok {
-		return fmt.Errorf("expected a SnowMachineConfig but got %T", obj)
-	}
-
-	snowmachineconfiglog.Info("Setting up Snow Machine Config defaults for", "name", snowConfig.Name)
-	snowConfig.SetDefaults()
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
@@ -60,45 +49,20 @@ var _ webhook.CustomValidator = &SnowMachineConfig{}
 
 // ValidateCreate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *SnowMachineConfig) ValidateCreate(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	snowConfig, ok := obj.(*SnowMachineConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a SnowMachineConfig but got %T", obj)
-	}
-
-	snowmachineconfiglog.Info("validate create", "name", snowConfig.Name)
-
-	if err := snowConfig.ValidateHasSSHKeyName(); err != nil {
-		return nil, err
-	}
-
-	return nil, snowConfig.Validate()
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 // ValidateUpdate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *SnowMachineConfig) ValidateUpdate(_ context.Context, _, obj runtime.Object) (admission.Warnings, error) {
-	snowConfig, ok := obj.(*SnowMachineConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a SnowMachineConfig but got %T", obj)
-	}
-
-	snowmachineconfiglog.Info("validate update", "name", snowConfig.Name)
-
-	if err := snowConfig.ValidateHasSSHKeyName(); err != nil {
-		return nil, err
-	}
-
-	return nil, snowConfig.Validate()
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 // ValidateDelete implements webhook.CustomValidator so a webhook will be registered for the type.
 func (r *SnowMachineConfig) ValidateDelete(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	snowConfig, ok := obj.(*SnowMachineConfig)
-	if !ok {
-		return nil, fmt.Errorf("expected a SnowMachineConfig but got %T", obj)
-	}
-
-	snowmachineconfiglog.Info("validate delete", "name", snowConfig.Name)
-
-	// TODO(user): fill in your validation logic upon object deletion.
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
+
+// TODO(user): fill in your validation logic upon object deletion.

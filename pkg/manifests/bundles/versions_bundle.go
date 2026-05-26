@@ -5,10 +5,6 @@ import (
 )
 
 func VersionsBundleForKubernetesVersion(bundles *releasev1.Bundles, kubeVersion string) *releasev1.VersionsBundle {
-	for _, versionsBundle := range bundles.Spec.VersionsBundles {
-		if versionsBundle.KubeVersion == kubeVersion {
-			return &versionsBundle
-		}
-	}
+	_ = "STUB: not implemented"
 	return nil
 }

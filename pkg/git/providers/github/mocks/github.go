@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	git "github.com/aws/eks-anywhere/pkg/git"
 	gomock "github.com/golang/mock/gomock"
@@ -26,144 +25,121 @@ type MockGithubClientMockRecorder struct {
 
 // NewMockGithubClient creates a new mock instance.
 func NewMockGithubClient(ctrl *gomock.Controller) *MockGithubClient {
-	mock := &MockGithubClient{ctrl: ctrl}
-	mock.recorder = &MockGithubClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockGithubClient) EXPECT() *MockGithubClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// AddDeployKeyToRepo mocks base method.
+	return nil
 }
 
-// AddDeployKeyToRepo mocks base method.
 func (m *MockGithubClient) AddDeployKeyToRepo(arg0 context.Context, arg1 git.AddDeployKeyOpts) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AddDeployKeyToRepo", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AddDeployKeyToRepo indicates an expected call of AddDeployKeyToRepo.
 func (mr *MockGithubClientMockRecorder) AddDeployKeyToRepo(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddDeployKeyToRepo", reflect.TypeOf((*MockGithubClient)(nil).AddDeployKeyToRepo), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // AuthenticatedUser mocks base method.
 func (m *MockGithubClient) AuthenticatedUser(arg0 context.Context) (*github.User, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AuthenticatedUser", arg0)
-	ret0, _ := ret[0].(*github.User)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // AuthenticatedUser indicates an expected call of AuthenticatedUser.
 func (mr *MockGithubClientMockRecorder) AuthenticatedUser(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AuthenticatedUser", reflect.TypeOf((*MockGithubClient)(nil).AuthenticatedUser), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CheckAccessTokenPermissions mocks base method.
 func (m *MockGithubClient) CheckAccessTokenPermissions(arg0, arg1 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CheckAccessTokenPermissions", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CheckAccessTokenPermissions indicates an expected call of CheckAccessTokenPermissions.
 func (mr *MockGithubClientMockRecorder) CheckAccessTokenPermissions(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CheckAccessTokenPermissions", reflect.TypeOf((*MockGithubClient)(nil).CheckAccessTokenPermissions), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CreateRepo mocks base method.
 func (m *MockGithubClient) CreateRepo(arg0 context.Context, arg1 git.CreateRepoOpts) (*git.Repository, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateRepo", arg0, arg1)
-	ret0, _ := ret[0].(*git.Repository)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // CreateRepo indicates an expected call of CreateRepo.
 func (mr *MockGithubClientMockRecorder) CreateRepo(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateRepo", reflect.TypeOf((*MockGithubClient)(nil).CreateRepo), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteRepo mocks base method.
 func (m *MockGithubClient) DeleteRepo(arg0 context.Context, arg1 git.DeleteRepoOpts) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteRepo", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DeleteRepo indicates an expected call of DeleteRepo.
 func (mr *MockGithubClientMockRecorder) DeleteRepo(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteRepo", reflect.TypeOf((*MockGithubClient)(nil).DeleteRepo), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetAccessTokenPermissions mocks base method.
 func (m *MockGithubClient) GetAccessTokenPermissions(arg0 string) (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetAccessTokenPermissions", arg0)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // GetAccessTokenPermissions indicates an expected call of GetAccessTokenPermissions.
 func (mr *MockGithubClientMockRecorder) GetAccessTokenPermissions(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAccessTokenPermissions", reflect.TypeOf((*MockGithubClient)(nil).GetAccessTokenPermissions), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetRepo mocks base method.
 func (m *MockGithubClient) GetRepo(arg0 context.Context, arg1 git.GetRepoOpts) (*git.Repository, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetRepo", arg0, arg1)
-	ret0, _ := ret[0].(*git.Repository)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetRepo indicates an expected call of GetRepo.
 func (mr *MockGithubClientMockRecorder) GetRepo(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRepo", reflect.TypeOf((*MockGithubClient)(nil).GetRepo), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Organization mocks base method.
 func (m *MockGithubClient) Organization(arg0 context.Context, arg1 string) (*github.Organization, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Organization", arg0, arg1)
-	ret0, _ := ret[0].(*github.Organization)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Organization indicates an expected call of Organization.
 func (mr *MockGithubClientMockRecorder) Organization(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Organization", reflect.TypeOf((*MockGithubClient)(nil).Organization), arg0, arg1)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // PathExists mocks base method.
 func (m *MockGithubClient) PathExists(arg0 context.Context, arg1, arg2, arg3, arg4 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "PathExists", arg0, arg1, arg2, arg3, arg4)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 // PathExists indicates an expected call of PathExists.
 func (mr *MockGithubClientMockRecorder) PathExists(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PathExists", reflect.TypeOf((*MockGithubClient)(nil).PathExists), arg0, arg1, arg2, arg3, arg4)
+	_ = "STUB: not implemented"
+	return nil
 }

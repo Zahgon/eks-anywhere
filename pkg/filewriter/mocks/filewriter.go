@@ -6,7 +6,6 @@ package mocks
 
 import (
 	io "io"
-	reflect "reflect"
 
 	filewriter "github.com/aws/eks-anywhere/pkg/filewriter"
 	gomock "github.com/golang/mock/gomock"
@@ -25,134 +24,85 @@ type MockFileWriterMockRecorder struct {
 
 // NewMockFileWriter creates a new mock instance.
 func NewMockFileWriter(ctrl *gomock.Controller) *MockFileWriter {
-	mock := &MockFileWriter{ctrl: ctrl}
-	mock.recorder = &MockFileWriterMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockFileWriter) EXPECT() *MockFileWriterMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// CleanUp mocks base method.
+	return nil
 }
 
-// CleanUp mocks base method.
-func (m *MockFileWriter) CleanUp() {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "CleanUp")
-}
+func (m *MockFileWriter) CleanUp() { _ = "STUB: not implemented"; return }
 
 // CleanUp indicates an expected call of CleanUp.
-func (mr *MockFileWriterMockRecorder) CleanUp() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CleanUp", reflect.TypeOf((*MockFileWriter)(nil).CleanUp))
-}
+func (mr *MockFileWriterMockRecorder) CleanUp() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // CleanUpTemp mocks base method.
-func (m *MockFileWriter) CleanUpTemp() {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "CleanUpTemp")
-}
+func (m *MockFileWriter) CleanUpTemp() { _ = "STUB: not implemented"; return }
 
 // CleanUpTemp indicates an expected call of CleanUpTemp.
 func (mr *MockFileWriterMockRecorder) CleanUpTemp() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CleanUpTemp", reflect.TypeOf((*MockFileWriter)(nil).CleanUpTemp))
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Create mocks base method.
 func (m *MockFileWriter) Create(arg0 string, arg1 ...filewriter.FileOptionsFunc) (io.WriteCloser, string, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0}
-	for _, a := range arg1 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Create", varargs...)
-	ret0, _ := ret[0].(io.WriteCloser)
-	ret1, _ := ret[1].(string)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
+	_ = "STUB: not implemented"
+	return *new(io.WriteCloser), "", nil
 }
 
 // Create indicates an expected call of Create.
 func (mr *MockFileWriterMockRecorder) Create(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0}, arg1...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockFileWriter)(nil).Create), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Delete mocks base method.
-func (m *MockFileWriter) Delete(arg0 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Delete", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockFileWriter) Delete(arg0 string) error { _ = "STUB: not implemented"; return nil }
 
 // Delete indicates an expected call of Delete.
 func (mr *MockFileWriterMockRecorder) Delete(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockFileWriter)(nil).Delete), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Dir mocks base method.
-func (m *MockFileWriter) Dir() string {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Dir")
-	ret0, _ := ret[0].(string)
-	return ret0
-}
+func (m *MockFileWriter) Dir() string { _ = "STUB: not implemented"; return "" }
 
 // Dir indicates an expected call of Dir.
-func (mr *MockFileWriterMockRecorder) Dir() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Dir", reflect.TypeOf((*MockFileWriter)(nil).Dir))
-}
+func (mr *MockFileWriterMockRecorder) Dir() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // TempDir mocks base method.
-func (m *MockFileWriter) TempDir() string {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "TempDir")
-	ret0, _ := ret[0].(string)
-	return ret0
-}
+func (m *MockFileWriter) TempDir() string { _ = "STUB: not implemented"; return "" }
 
 // TempDir indicates an expected call of TempDir.
-func (mr *MockFileWriterMockRecorder) TempDir() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TempDir", reflect.TypeOf((*MockFileWriter)(nil).TempDir))
-}
+func (mr *MockFileWriterMockRecorder) TempDir() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // WithDir mocks base method.
 func (m *MockFileWriter) WithDir(arg0 string) (filewriter.FileWriter, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WithDir", arg0)
-	ret0, _ := ret[0].(filewriter.FileWriter)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(filewriter.FileWriter), nil
 }
 
 // WithDir indicates an expected call of WithDir.
 func (mr *MockFileWriterMockRecorder) WithDir(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WithDir", reflect.TypeOf((*MockFileWriter)(nil).WithDir), arg0)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Write mocks base method.
 func (m *MockFileWriter) Write(arg0 string, arg1 []byte, arg2 ...filewriter.FileOptionsFunc) (string, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{arg0, arg1}
-	for _, a := range arg2 {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Write", varargs...)
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 // Write indicates an expected call of Write.
 func (mr *MockFileWriterMockRecorder) Write(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{arg0, arg1}, arg2...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Write", reflect.TypeOf((*MockFileWriter)(nil).Write), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }

@@ -1,11 +1,6 @@
 package v1alpha1
 
 import (
-	"fmt"
-	"net"
-	"reflect"
-	"strings"
-
 	corev1 "k8s.io/api/core/v1"
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -13,9 +8,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/intstr"
 	clusterv1 "sigs.k8s.io/cluster-api/api/core/v1beta1"
 
-	"github.com/aws/eks-anywhere/pkg/logger"
 	"github.com/aws/eks-anywhere/pkg/semver"
-	"github.com/aws/eks-anywhere/pkg/utils/ptr"
 )
 
 const (
@@ -108,106 +101,24 @@ const (
 )
 
 // Equal checks if two EksaVersions are equal.
-func (n *EksaVersion) Equal(o *EksaVersion) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	return *n == *o
-}
+func (n *EksaVersion) Equal(o *EksaVersion) bool { _ = "STUB: not implemented"; return false }
 
 // HasAWSIamConfig checks if AWSIamConfig is configured for the cluster.
-func (c *Cluster) HasAWSIamConfig() bool {
-	for _, identityProvider := range c.Spec.IdentityProviderRefs {
-		if identityProvider.Kind == AWSIamConfigKind {
-			return true
-		}
-	}
-
-	return false
-}
+func (c *Cluster) HasAWSIamConfig() bool { _ = "STUB: not implemented"; return false }
 
 // IsPackagesEnabled checks if the user has opted out of curated packages
 // installation.
-func (c *Cluster) IsPackagesEnabled() bool {
-	return c.Spec.Packages == nil || !c.Spec.Packages.Disable
-}
+func (c *Cluster) IsPackagesEnabled() bool { _ = "STUB: not implemented"; return false }
 
-func (n *Cluster) Equal(o *Cluster) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	if n.Spec.KubernetesVersion != o.Spec.KubernetesVersion {
-		return false
-	}
+func (n *Cluster) Equal(o *Cluster) bool { _ = "STUB: not implemented"; return false }
 
-	if !n.Spec.DatacenterRef.Equal(&o.Spec.DatacenterRef) {
-		return false
-	}
-	if !n.Spec.ControlPlaneConfiguration.Endpoint.Equal(o.Spec.ControlPlaneConfiguration.Endpoint, n.Spec.DatacenterRef.Kind) {
-		return false
-	}
-	if !n.Spec.ControlPlaneConfiguration.Equal(&o.Spec.ControlPlaneConfiguration) {
-		return false
-	}
-	if !WorkerNodeGroupConfigurationsSliceEqual(n.Spec.WorkerNodeGroupConfigurations, o.Spec.WorkerNodeGroupConfigurations) {
-		return false
-	}
-	if !RefSliceEqual(n.Spec.IdentityProviderRefs, o.Spec.IdentityProviderRefs) {
-		return false
-	}
-	if !n.Spec.GitOpsRef.Equal(o.Spec.GitOpsRef) {
-		return false
-	}
-	if !n.Spec.ClusterNetwork.Equal(&o.Spec.ClusterNetwork) {
-		return false
-	}
-	if !n.Spec.ExternalEtcdConfiguration.Equal(o.Spec.ExternalEtcdConfiguration) {
-		return false
-	}
-	if !n.Spec.ProxyConfiguration.Equal(o.Spec.ProxyConfiguration) {
-		return false
-	}
-	if !n.Spec.RegistryMirrorConfiguration.Equal(o.Spec.RegistryMirrorConfiguration) {
-		return false
-	}
-	if !n.Spec.Packages.Equal(o.Spec.Packages) {
-		return false
-	}
-	if !n.ManagementClusterEqual(o) {
-		return false
-	}
-	if !n.Spec.BundlesRef.Equal(o.Spec.BundlesRef) {
-		return false
-	}
-	if !n.Spec.EksaVersion.Equal(o.Spec.EksaVersion) {
-		return false
-	}
-	if !reflect.DeepEqual(n.Spec.EtcdEncryption, o.Spec.EtcdEncryption) {
-		return false
-	}
-	if n.Spec.LicenseToken != o.Spec.LicenseToken {
-		return false
-	}
-
-	return true
-}
-
-func (n *Cluster) Validate() error {
-	return ValidateClusterConfigContent(n)
-}
+func (n *Cluster) Validate() error { _ = "STUB: not implemented"; return nil }
 
 func (n *Cluster) SetDefaults() {
+	_ = "STUB: not implemented"
 	// TODO: move any defaults that can return error out of this package
 	// All the defaults here should be context unaware
-	if err := setClusterDefaults(n); err != nil {
-		logger.Error(err, "Failed to validate Cluster")
-	}
+	return
 }
 
 type ProxyConfiguration struct {
@@ -217,13 +128,8 @@ type ProxyConfiguration struct {
 }
 
 func (n *ProxyConfiguration) Equal(o *ProxyConfiguration) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	return n.HttpProxy == o.HttpProxy && n.HttpsProxy == o.HttpsProxy && SliceEqual(n.NoProxy, o.NoProxy)
+	_ = "STUB: not implemented"
+	return false
 }
 
 // RegistryMirrorConfiguration defines the settings for image registry mirror.
@@ -258,42 +164,14 @@ type OCINamespace struct {
 }
 
 func (n *RegistryMirrorConfiguration) Equal(o *RegistryMirrorConfiguration) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	return n.Endpoint == o.Endpoint && n.Port == o.Port && n.CACertContent == o.CACertContent &&
-		n.InsecureSkipVerify == o.InsecureSkipVerify && n.Authenticate == o.Authenticate &&
-		OCINamespacesSliceEqual(n.OCINamespaces, o.OCINamespaces)
+	_ = "STUB: not implemented"
+	return false
 }
 
 // OCINamespacesSliceEqual is used to check equality of the OCINamespaces fields of two RegistryMirrorConfiguration.
-func OCINamespacesSliceEqual(a, b []OCINamespace) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	m := make(map[string]int, len(a))
-	for _, v := range a {
-		m[generateOCINamespaceKey(v)]++
-	}
-	for _, v := range b {
-		k := generateOCINamespaceKey(v)
-		if _, ok := m[k]; !ok {
-			return false
-		}
-		m[k]--
-		if m[k] == 0 {
-			delete(m, k)
-		}
-	}
-	return len(m) == 0
-}
+func OCINamespacesSliceEqual(a, b []OCINamespace) bool { _ = "STUB: not implemented"; return false }
 
-func generateOCINamespaceKey(n OCINamespace) (key string) {
-	return n.Registry + n.Namespace
-}
+func generateOCINamespaceKey(n OCINamespace) (key string) { _ = "STUB: not implemented"; return "" }
 
 type ControlPlaneConfiguration struct {
 	// Count defines the number of desired control plane nodes. Defaults to 1.
@@ -345,55 +223,14 @@ type MachineHealthCheck struct {
 	MaxUnhealthy *intstr.IntOrString `json:"maxUnhealthy,omitempty"`
 }
 
-func TaintsSliceEqual(s1, s2 []corev1.Taint) bool {
-	if len(s1) != len(s2) {
-		return false
-	}
-	taints := make(map[corev1.Taint]struct{})
-	for _, taint := range s1 {
-		taints[taint] = struct{}{}
-	}
-	for _, taint := range s2 {
-		_, ok := taints[taint]
-		if !ok {
-			return false
-		}
-	}
-	return true
-}
+func TaintsSliceEqual(s1, s2 []corev1.Taint) bool { _ = "STUB: not implemented"; return false }
 
 // MapEqual compares two maps to check whether or not they are equal.
-func MapEqual(s1, s2 map[string]string) bool {
-	if len(s1) != len(s2) {
-		return false
-	}
-	for key, val := range s2 {
-		v, ok := s1[key]
-		if !ok {
-			return false
-		}
-		if val != v {
-			return false
-		}
-	}
-	return true
-}
+func MapEqual(s1, s2 map[string]string) bool { _ = "STUB: not implemented"; return false }
 
 func (n *ControlPlaneConfiguration) Equal(o *ControlPlaneConfiguration) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	skipAdmissionEqual := (n.SkipAdmissionForSystemResources == o.SkipAdmissionForSystemResources) ||
-		(n.SkipAdmissionForSystemResources != nil && o.SkipAdmissionForSystemResources != nil &&
-			*n.SkipAdmissionForSystemResources == *o.SkipAdmissionForSystemResources)
-
-	return n.Count == o.Count && n.MachineGroupRef.Equal(o.MachineGroupRef) &&
-		TaintsSliceEqual(n.Taints, o.Taints) && MapEqual(n.Labels, o.Labels) &&
-		SliceEqual(n.CertSANs, o.CertSANs) && MapEqual(n.APIServerExtraArgs, o.APIServerExtraArgs) &&
-		n.AuditPolicyContent == o.AuditPolicyContent && skipAdmissionEqual
+	_ = "STUB: not implemented"
+	return false
 }
 
 type Endpoint struct {
@@ -402,67 +239,18 @@ type Endpoint struct {
 }
 
 // Equal compares if expected endpoint and existing endpoint are equal for non CloudStack clusters.
-func (n *Endpoint) Equal(o *Endpoint, kind string) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	if kind == CloudStackDatacenterKind {
-		return n.CloudStackEqual(o)
-	}
-	return n.Host == o.Host
-}
+func (n *Endpoint) Equal(o *Endpoint, kind string) bool { _ = "STUB: not implemented"; return false }
 
 // CloudStackEqual makes CloudStack cluster upgrade to new release backward compatible by striping CloudStack cluster existing endpoint default port
 // and comparing if expected endpoint and existing endpoint are equal.
 // Cloudstack CLI used to add default port to cluster object.
 // Now cluster object stays the same with customer input and port is defaulted only in CAPI template.
-func (n *Endpoint) CloudStackEqual(o *Endpoint) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	if n.Host == o.Host {
-		return true
-	}
-	nhost, nport, err := GetControlPlaneHostPort(n.Host, "")
-	if err != nil {
-		return false
-	}
-	ohost, oport, _ := GetControlPlaneHostPort(o.Host, "")
-	if oport == ControlEndpointDefaultPort {
-		switch nport {
-		case ControlEndpointDefaultPort, "":
-			return nhost == ohost
-		default:
-			return false
-		}
-	}
-
-	if nport == ControlEndpointDefaultPort && oport == "" {
-		return nhost == ohost
-	}
-
-	return n.Host == o.Host
-}
+func (n *Endpoint) CloudStackEqual(o *Endpoint) bool { _ = "STUB: not implemented"; return false }
 
 // GetControlPlaneHostPort retrieves the ControlPlaneConfiguration host and port split defined in the cluster.Spec.
 func GetControlPlaneHostPort(pHost string, defaultPort string) (string, string, error) {
-	host, port, err := net.SplitHostPort(pHost)
-	if err != nil {
-		if strings.Contains(err.Error(), "missing port") {
-			host = pHost
-			port = defaultPort
-			err = nil
-		} else {
-			return "", "", fmt.Errorf("host %s is invalid: %v", pHost, err.Error())
-		}
-	}
-	return host, port, err
+	_ = "STUB: not implemented"
+	return "", "", nil
 }
 
 type WorkerNodeGroupConfiguration struct {
@@ -494,76 +282,27 @@ type WorkerNodeGroupConfiguration struct {
 
 // Equal compares two WorkerNodeGroupConfigurations.
 func (w WorkerNodeGroupConfiguration) Equal(other WorkerNodeGroupConfiguration) bool {
-	return w.Name == other.Name &&
-		intPtrEqual(w.Count, other.Count) &&
-		w.AutoScalingConfiguration.Equal(other.AutoScalingConfiguration) &&
-		w.MachineGroupRef.Equal(other.MachineGroupRef) &&
-		w.KubernetesVersion.Equal(other.KubernetesVersion) &&
-		TaintsSliceEqual(w.Taints, other.Taints) &&
-		MapEqual(w.Labels, other.Labels) &&
-		w.UpgradeRolloutStrategy.Equal(other.UpgradeRolloutStrategy)
+	_ = "STUB: not implemented"
+	return false
 }
 
 // Equal compares two KubernetesVersions.
 func (k *KubernetesVersion) Equal(other *KubernetesVersion) bool {
-	if k == other {
-		return true
-	}
-
-	if k == nil || other == nil {
-		return false
-	}
-
-	return *k == *other
+	_ = "STUB: not implemented"
+	return false
 }
 
-func intPtrEqual(a, b *int) bool {
-	if a == b {
-		return true
-	}
-
-	if a == nil || b == nil {
-		return false
-	}
-
-	return *a == *b
-}
+func intPtrEqual(a, b *int) bool { _ = "STUB: not implemented"; return false }
 
 func WorkerNodeGroupConfigurationsSliceEqual(a, b []WorkerNodeGroupConfiguration) bool {
-	if len(a) != len(b) {
-		return false
-	}
-
-	m := make(map[string]WorkerNodeGroupConfiguration, len(a))
-	for _, w := range a {
-		m[w.Name] = w
-	}
-	for _, wb := range b {
-		wa, ok := m[wb.Name]
-		if !ok {
-			return false
-		}
-		if !wb.Equal(wa) {
-			return false
-		}
-	}
-
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
 
 // WorkerNodeGroupConfigurationKubeVersionUnchanged checks if a worker node group's k8s version has not changed. The ClusterVersions are the top level kubernetes version of a cluster.
 func WorkerNodeGroupConfigurationKubeVersionUnchanged(o, n *WorkerNodeGroupConfiguration, oldCluster, newCluster *Cluster) bool {
-	oldVersion := o.KubernetesVersion
-	newVersion := n.KubernetesVersion
-
-	if oldVersion == nil {
-		oldVersion = &oldCluster.Spec.KubernetesVersion
-	}
-	if newVersion == nil {
-		newVersion = &newCluster.Spec.KubernetesVersion
-	}
-
-	return newVersion.Equal(oldVersion)
+	_ = "STUB: not implemented"
+	return false
 }
 
 type ClusterNetwork struct {
@@ -579,242 +318,49 @@ type ClusterNetwork struct {
 	Nodes     *Nodes     `json:"nodes,omitempty"`
 }
 
-func (n *ClusterNetwork) Equal(o *ClusterNetwork) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-
-	if !CNIPluginSame(*n, *o) {
-		return false
-	}
-
-	oldCNIConfig := getCNIConfig(o)
-	newCNIConfig := getCNIConfig(n)
-	if !newCNIConfig.Equal(oldCNIConfig) {
-		return false
-	}
-
-	return n.Pods.Equal(&o.Pods) &&
-		n.Services.Equal(&o.Services) &&
-		n.DNS.Equal(&o.DNS) &&
-		n.Nodes.Equal(o.Nodes)
-}
+func (n *ClusterNetwork) Equal(o *ClusterNetwork) bool { _ = "STUB: not implemented"; return false }
 
 func getCNIConfig(cn *ClusterNetwork) *CNIConfig {
+	_ = "STUB: not implemented"
 	/* Only needed since we're introducing CNIConfig to replace the deprecated CNI field. This way we can compare the individual fields
-	for the CNI plugin configuration*/
-	var tempCNIConfig *CNIConfig
-	if cn.CNIConfig == nil {
-		// This is for upgrading from release-0.7, to ensure that all oCNIConfig fields, such as policyEnforcementMode have the default values
-		switch cn.CNI {
-		case Cilium, CiliumEnterprise:
-			tempCNIConfig = &CNIConfig{Cilium: &CiliumConfig{}}
-		case Kindnetd:
-			tempCNIConfig = &CNIConfig{Kindnetd: &KindnetdConfig{}}
-		}
-	} else {
-		tempCNIConfig = cn.CNIConfig
-	}
-	return tempCNIConfig
+	   for the CNI plugin configuration*/return nil
 }
 
-func (n *Pods) Equal(o *Pods) bool {
-	return SliceEqual(n.CidrBlocks, o.CidrBlocks)
-}
+// This is for upgrading from release-0.7, to ensure that all oCNIConfig fields, such as policyEnforcementMode have the default values
 
-func (n *Services) Equal(o *Services) bool {
-	return SliceEqual(n.CidrBlocks, o.CidrBlocks)
-}
+func (n *Pods) Equal(o *Pods) bool { _ = "STUB: not implemented"; return false }
 
-func (n *DNS) Equal(o *DNS) bool {
-	return n.ResolvConf.Equal(o.ResolvConf)
-}
+func (n *Services) Equal(o *Services) bool { _ = "STUB: not implemented"; return false }
 
-func (n *CNIConfig) Equal(o *CNIConfig) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	if !n.Cilium.Equal(o.Cilium) {
-		return false
-	}
-	if !n.Kindnetd.Equal(o.Kindnetd) {
-		return false
-	}
-	return true
-}
+func (n *DNS) Equal(o *DNS) bool { _ = "STUB: not implemented"; return false }
 
-func (n *CiliumConfig) Equal(o *CiliumConfig) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
+func (n *CNIConfig) Equal(o *CNIConfig) bool { _ = "STUB: not implemented"; return false }
 
-	if n.PolicyEnforcementMode != o.PolicyEnforcementMode {
-		return false
-	}
+func (n *CiliumConfig) Equal(o *CiliumConfig) bool { _ = "STUB: not implemented"; return false }
 
-	if n.EgressMasqueradeInterfaces != o.EgressMasqueradeInterfaces {
-		return false
-	}
+// Compare CNIExclusive field
 
-	if n.RoutingMode != o.RoutingMode {
-		return false
-	}
+// We consider nil to be false in equality checks. Here we're checking if o is false then
+// n must be false and vice-versa. If neither of these are true, then both o and n must be
+// true so we don't need an explicit check.
 
-	if n.IPv4NativeRoutingCIDR != o.IPv4NativeRoutingCIDR {
-		return false
-	}
+// Compare HelmValues field
 
-	if n.IPv6NativeRoutingCIDR != o.IPv6NativeRoutingCIDR {
-		return false
-	}
+func (n *KindnetdConfig) Equal(o *KindnetdConfig) bool { _ = "STUB: not implemented"; return false }
 
-	// Compare CNIExclusive field
-	if (n.CNIExclusive == nil) != (o.CNIExclusive == nil) {
-		return false
-	}
-	if n.CNIExclusive != nil && o.CNIExclusive != nil && *n.CNIExclusive != *o.CNIExclusive {
-		return false
-	}
-
-	oSkipUpgradeIsFalse := o.SkipUpgrade == nil || !*o.SkipUpgrade
-	nSkipUpgradeIsFalse := n.SkipUpgrade == nil || !*n.SkipUpgrade
-
-	// We consider nil to be false in equality checks. Here we're checking if o is false then
-	// n must be false and vice-versa. If neither of these are true, then both o and n must be
-	// true so we don't need an explicit check.
-	if oSkipUpgradeIsFalse && !nSkipUpgradeIsFalse || !oSkipUpgradeIsFalse && nSkipUpgradeIsFalse {
-		return false
-	}
-
-	// Compare HelmValues field
-	if (n.HelmValues == nil) != (o.HelmValues == nil) {
-		return false
-	}
-	if n.HelmValues != nil && o.HelmValues != nil {
-		if !reflect.DeepEqual(n.HelmValues.Raw, o.HelmValues.Raw) {
-			return false
-		}
-	}
-
-	return true
-}
-
-func (n *KindnetdConfig) Equal(o *KindnetdConfig) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	return true
-}
-
-func UsersSliceEqual(a, b []UserConfiguration) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	m := make(map[string][]string, len(a))
-	for _, v := range a {
-		m[v.Name] = v.SshAuthorizedKeys
-	}
-	for _, v := range b {
-		if _, ok := m[v.Name]; !ok {
-			return false
-		}
-		if !SliceEqual(v.SshAuthorizedKeys, m[v.Name]) {
-			return false
-		}
-	}
-	return true
-}
+func UsersSliceEqual(a, b []UserConfiguration) bool { _ = "STUB: not implemented"; return false }
 
 func CNIPluginSame(n ClusterNetwork, o ClusterNetwork) bool {
-	if n.CNI != "" {
-		/*This shouldn't be required since we set CNIConfig and unset CNI as part of cluster_defaults. However, while upgrading an existing cluster, the eks-a controller
-		does not set any defaults (no mutating webhook), so it gets stuck in an error loop. Adding these checks to avoid that. We can remove it when removing the CNI field
-		in a later release*/
-		return o.CNI == n.CNI
-	}
+	_ = "STUB: not implemented"
 
-	if n.CNIConfig != nil {
-		if o.CNI != "" {
-			switch o.CNI {
-			case Cilium, CiliumEnterprise:
-				if n.CNIConfig.Cilium == nil {
-					return false
-				}
-			case Kindnetd:
-				if n.CNIConfig.Kindnetd == nil {
-					return false
-				}
-			default:
-				return false
-			}
-			return true
-		}
-		if o.CNIConfig != nil {
-			if (n.CNIConfig.Cilium != nil && o.CNIConfig.Cilium == nil) || (n.CNIConfig.Cilium == nil && o.CNIConfig.Cilium != nil) {
-				return false
-			}
-			if (n.CNIConfig.Kindnetd != nil && o.CNIConfig.Kindnetd == nil) || (n.CNIConfig.Kindnetd == nil && o.CNIConfig.Kindnetd != nil) {
-				return false
-			}
-		}
-	}
-
-	return true
+	/*This shouldn't be required since we set CNIConfig and unset CNI as part of cluster_defaults. However, while upgrading an existing cluster, the eks-a controller
+	does not set any defaults (no mutating webhook), so it gets stuck in an error loop. Adding these checks to avoid that. We can remove it when removing the CNI field
+	in a later release*/return false
 }
 
-func SliceEqual(a, b []string) bool {
-	if len(a) != len(b) {
-		return false
-	}
+func SliceEqual(a, b []string) bool { _ = "STUB: not implemented"; return false }
 
-	m := make(map[string]int, len(a))
-	for _, v := range a {
-		m[v]++
-	}
-	for _, v := range b {
-		if _, ok := m[v]; !ok {
-			return false
-		}
-		m[v] -= 1
-		if m[v] == 0 {
-			delete(m, v)
-		}
-	}
-	return len(m) == 0
-}
-
-func RefSliceEqual(a, b []Ref) bool {
-	if len(a) != len(b) {
-		return false
-	}
-
-	m := make(map[string]int, len(a))
-	for _, v := range a {
-		m[v.Name+v.Kind]++
-	}
-	for _, v := range b {
-		if _, ok := m[v.Name+v.Kind]; !ok {
-			return false
-		}
-		m[v.Name+v.Kind] -= 1
-		if m[v.Name+v.Kind] == 0 {
-			delete(m, v.Name+v.Kind)
-		}
-	}
-	return len(m) == 0
-}
+func RefSliceEqual(a, b []Ref) bool { _ = "STUB: not implemented"; return false }
 
 type Pods struct {
 	CidrBlocks []string `json:"cidrBlocks,omitempty"`
@@ -840,33 +386,9 @@ type Nodes struct {
 }
 
 // Equal compares two Nodes definitions and return true if the are equivalent.
-func (n *Nodes) Equal(o *Nodes) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
+func (n *Nodes) Equal(o *Nodes) bool { _ = "STUB: not implemented"; return false }
 
-	if n.CIDRMaskSize == o.CIDRMaskSize {
-		return true
-	}
-	if n.CIDRMaskSize == nil || o.CIDRMaskSize == nil {
-		return false
-	}
-
-	return *n.CIDRMaskSize == *o.CIDRMaskSize
-}
-
-func (n *ResolvConf) Equal(o *ResolvConf) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	return n.Path == o.Path
-}
+func (n *ResolvConf) Equal(o *ResolvConf) bool { _ = "STUB: not implemented"; return false }
 
 type KubernetesVersion string
 
@@ -893,8 +415,9 @@ const (
 
 // KubeVersionToSemver converts kube version to semver for comparisons.
 func KubeVersionToSemver(kubeVersion KubernetesVersion) (*semver.Version, error) {
+	_ = "STUB: not implemented"
 	// appending the ".0" as the patch version to have a valid semver string and use those semvers for comparison
-	return semver.New(string(kubeVersion) + ".0")
+	return nil, nil
 }
 
 type CNI string
@@ -909,9 +432,7 @@ type CNIConfig struct {
 }
 
 // IsManaged indicates if EKS-A is responsible for the CNI installation.
-func (n *CNIConfig) IsManaged() bool {
-	return n != nil && (n.Kindnetd != nil || n.Cilium != nil && n.Cilium.IsManaged())
-}
+func (n *CNIConfig) IsManaged() bool { _ = "STUB: not implemented"; return false }
 
 // CiliumConfig contains configuration specific to the Cilium CNI.
 type CiliumConfig struct {
@@ -973,9 +494,7 @@ type CiliumConfig struct {
 
 // IsManaged returns true if SkipUpgrade is nil or false indicating EKS-A is responsible for
 // the Cilium installation.
-func (n *CiliumConfig) IsManaged() bool {
-	return n.SkipUpgrade == nil || !*n.SkipUpgrade
-}
+func (n *CiliumConfig) IsManaged() bool { _ = "STUB: not implemented"; return false }
 
 // KindnetdConfig contains configuration specific to the Kindnetd CNI.
 type KindnetdConfig struct{}
@@ -1129,36 +648,17 @@ type BundlesRef struct {
 	Namespace string `json:"namespace"`
 }
 
-func (b *BundlesRef) Equal(o *BundlesRef) bool {
-	if b == nil || o == nil {
-		return b == o
-	}
-
-	return b.APIVersion == o.APIVersion && b.Name == o.Name && b.Namespace == o.Namespace
-}
+func (b *BundlesRef) Equal(o *BundlesRef) bool { _ = "STUB: not implemented"; return false }
 
 type Ref struct {
 	Kind string `json:"kind,omitempty"`
 	Name string `json:"name,omitempty"`
 }
 
-func (n *Ref) Equal(o *Ref) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	return n.Kind == o.Kind && n.Name == o.Name
-}
+func (n *Ref) Equal(o *Ref) bool { _ = "STUB: not implemented"; return false }
 
 // IsEmpty checks if the given ref object is empty.
-func (n Ref) IsEmpty() bool {
-	if n.Kind == "" && n.Name == "" {
-		return true
-	}
-	return false
-}
+func (n Ref) IsEmpty() bool { _ = "STUB: not implemented"; return false }
 
 // +kubebuilder:object:generate=false
 // Interface for getting DatacenterRef fields for Cluster type.
@@ -1188,13 +688,8 @@ type PackageConfiguration struct {
 
 // Equal for PackageConfiguration.
 func (n *PackageConfiguration) Equal(o *PackageConfiguration) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	return n.Disable == o.Disable && n.Controller.Equal(o.Controller) && n.CronJob.Equal(o.CronJob)
+	_ = "STUB: not implemented"
+	return false
 }
 
 // PackageControllerConfiguration configure aspects of package controller.
@@ -1220,14 +715,8 @@ type PackageControllerConfiguration struct {
 
 // Equal for PackageControllerConfiguration.
 func (n *PackageControllerConfiguration) Equal(o *PackageControllerConfiguration) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	return n.Repository == o.Repository && n.Tag == o.Tag && n.Digest == o.Digest &&
-		n.DisableWebhooks == o.DisableWebhooks && SliceEqual(n.Env, o.Env) && n.Resources.Equal(&o.Resources)
+	_ = "STUB: not implemented"
+	return false
 }
 
 // PackageControllerResources resource aspects of package controller.
@@ -1239,13 +728,8 @@ type PackageControllerResources struct {
 
 // Equal for PackageControllerResources.
 func (n *PackageControllerResources) Equal(o *PackageControllerResources) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	return n.Requests.Equal(&o.Requests) && n.Limits.Equal(&o.Limits)
+	_ = "STUB: not implemented"
+	return false
 }
 
 // ImageResource resources for container image.
@@ -1258,15 +742,7 @@ type ImageResource struct {
 }
 
 // Equal for ImageResource.
-func (n *ImageResource) Equal(o *ImageResource) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	return n.CPU == o.CPU && n.Memory == o.Memory
-}
+func (n *ImageResource) Equal(o *ImageResource) bool { _ = "STUB: not implemented"; return false }
 
 // PackageControllerCronJob configure aspects of package controller.
 type PackageControllerCronJob struct {
@@ -1285,13 +761,8 @@ type PackageControllerCronJob struct {
 
 // Equal for PackageControllerCronJob.
 func (n *PackageControllerCronJob) Equal(o *PackageControllerCronJob) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	return n.Repository == o.Repository && n.Tag == o.Tag && n.Digest == o.Digest && n.Disable == o.Disable
+	_ = "STUB: not implemented"
+	return false
 }
 
 // ExternalEtcdConfiguration defines the configuration options for using unstacked etcd topology.
@@ -1302,13 +773,8 @@ type ExternalEtcdConfiguration struct {
 }
 
 func (n *ExternalEtcdConfiguration) Equal(o *ExternalEtcdConfiguration) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	return n.Count == o.Count && n.MachineGroupRef.Equal(o.MachineGroupRef)
+	_ = "STUB: not implemented"
+	return false
 }
 
 type ManagementCluster struct {
@@ -1316,22 +782,15 @@ type ManagementCluster struct {
 }
 
 func (n *ManagementCluster) Equal(o ManagementCluster) bool {
-	return n.Name == o.Name
+	_ = "STUB: not implemented"
+	return false
 }
 
 type PodIAMConfig struct {
 	ServiceAccountIssuer string `json:"serviceAccountIssuer"`
 }
 
-func (n *PodIAMConfig) Equal(o *PodIAMConfig) bool {
-	if n == o {
-		return true
-	}
-	if n == nil || o == nil {
-		return false
-	}
-	return n.ServiceAccountIssuer == o.ServiceAccountIssuer
-}
+func (n *PodIAMConfig) Equal(o *PodIAMConfig) bool { _ = "STUB: not implemented"; return false }
 
 // AutoScalingConfiguration defines the configuration for the node autoscaling feature.
 type AutoScalingConfiguration struct {
@@ -1346,15 +805,8 @@ type AutoScalingConfiguration struct {
 
 // Equal compares two AutoScalingConfigurations.
 func (a *AutoScalingConfiguration) Equal(other *AutoScalingConfiguration) bool {
-	if a == other {
-		return true
-	}
-
-	if a == nil || other == nil {
-		return false
-	}
-
-	return a.MaxCount == other.MaxCount && a.MinCount == other.MinCount
+	_ = "STUB: not implemented"
+	return false
 }
 
 // UpgradeRolloutStrategyType defines the types of upgrade rollout strategies.
@@ -1387,27 +839,8 @@ type WorkerNodesUpgradeRolloutStrategy struct {
 
 // Equal compares two WorkerNodesUpgradeRolloutStrategies.
 func (w *WorkerNodesUpgradeRolloutStrategy) Equal(other *WorkerNodesUpgradeRolloutStrategy) bool {
-	if w == other {
-		return true
-	}
-
-	if w == nil || other == nil {
-		return false
-	}
-
-	if w.Type != other.Type {
-		return false
-	}
-
-	if w.RollingUpdate == other.RollingUpdate {
-		return true
-	}
-
-	if w.RollingUpdate == nil || other.RollingUpdate == nil {
-		return false
-	}
-
-	return w.RollingUpdate.MaxSurge == other.RollingUpdate.MaxSurge && w.RollingUpdate.MaxUnavailable == other.RollingUpdate.MaxUnavailable
+	_ = "STUB: not implemented"
+	return false
 }
 
 // WorkerNodesRollingUpdateParams is API for rolling update strategy knobs.
@@ -1428,12 +861,11 @@ type Cluster struct {
 }
 
 func (c *Cluster) GetConditions() clusterv1.Conditions {
-	return c.Status.Conditions
+	_ = "STUB: not implemented"
+	return *new(clusterv1.Conditions)
 }
 
-func (c *Cluster) SetConditions(conditions clusterv1.Conditions) {
-	c.Status.Conditions = conditions
-}
+func (c *Cluster) SetConditions(conditions clusterv1.Conditions) { _ = "STUB: not implemented"; return }
 
 // +kubebuilder:object:generate=false
 // Same as Cluster except stripped down for generation of yaml file during generate clusterconfig.
@@ -1444,256 +876,91 @@ type ClusterGenerate struct {
 	Spec ClusterSpec `json:"spec,omitempty"`
 }
 
-func (c *Cluster) Kind() string {
-	return c.TypeMeta.Kind
-}
+func (c *Cluster) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (c *Cluster) ExpectedKind() string {
-	return ClusterKind
-}
+func (c *Cluster) ExpectedKind() string { _ = "STUB: not implemented"; return "" }
 
-func (c *Cluster) PausedAnnotation() string {
-	return pausedAnnotation
-}
+func (c *Cluster) PausedAnnotation() string { _ = "STUB: not implemented"; return "" }
 
-func (c *Cluster) ControlPlaneAnnotation() string {
-	return controlPlaneAnnotation
-}
+func (c *Cluster) ControlPlaneAnnotation() string { _ = "STUB: not implemented"; return "" }
 
 // ManagementComponentsVersion returns `management-components version`annotation value on the Cluster object.
-func (c *Cluster) ManagementComponentsVersion() string {
-	if c.Annotations == nil {
-		return ""
-	}
-	return c.Annotations[managementComponentsVersionAnnotation]
-}
+func (c *Cluster) ManagementComponentsVersion() string { _ = "STUB: not implemented"; return "" }
 
 // SetManagementComponentsVersion sets the `management-components version` annotation on the Cluster object.
-func (c *Cluster) SetManagementComponentsVersion(version string) {
-	if c.IsManaged() {
-		return
-	}
-	if c.Annotations == nil {
-		c.Annotations = make(map[string]string, 1)
-	}
-	c.Annotations[managementComponentsVersionAnnotation] = version
-}
+func (c *Cluster) SetManagementComponentsVersion(version string) { _ = "STUB: not implemented"; return }
 
 // DisableControlPlaneIPCheck sets the `skip-ip-check` annotation on the Cluster object.
-func (c *Cluster) DisableControlPlaneIPCheck() {
-	if c.Annotations == nil {
-		c.Annotations = make(map[string]string, 1)
-	}
-	c.Annotations[skipIPCheckAnnotation] = "true"
-}
+func (c *Cluster) DisableControlPlaneIPCheck() { _ = "STUB: not implemented"; return }
 
 // ControlPlaneIPCheckDisabled checks it the `skip-ip-check` annotation is set on the Cluster object.
-func (c *Cluster) ControlPlaneIPCheckDisabled() bool {
-	if s, ok := c.Annotations[skipIPCheckAnnotation]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (c *Cluster) ControlPlaneIPCheckDisabled() bool { _ = "STUB: not implemented"; return false }
 
 // DisableEksaVersionSkewCheck sets the `skip-eksa-version-skew-check` annotation on the Cluster object.
-func (c *Cluster) DisableEksaVersionSkewCheck() {
-	if c.Annotations == nil {
-		c.Annotations = make(map[string]string, 1)
-	}
-	c.Annotations[skipEksaVersionSkewCheck] = "true"
-}
+func (c *Cluster) DisableEksaVersionSkewCheck() { _ = "STUB: not implemented"; return }
 
 // EksaVersionSkewCheckDisabled checks if the `skip-eksa-version-skew-check` annotation is set on the Cluster object.
-func (c *Cluster) EksaVersionSkewCheckDisabled() bool {
-	if s, ok := c.Annotations[skipEksaVersionSkewCheck]; ok {
-		return s == "true"
-	}
-	return false
-}
+func (c *Cluster) EksaVersionSkewCheckDisabled() bool { _ = "STUB: not implemented"; return false }
 
-func (c *Cluster) ResourceType() string {
-	return clusterResourceType
-}
+func (c *Cluster) ResourceType() string { _ = "STUB: not implemented"; return "" }
 
-func (c *Cluster) EtcdAnnotation() string {
-	return etcdAnnotation
-}
+func (c *Cluster) EtcdAnnotation() string { _ = "STUB: not implemented"; return "" }
 
-func (c *Cluster) IsSelfManaged() bool {
-	return c.Spec.ManagementCluster.Name == "" || c.Spec.ManagementCluster.Name == c.Name
-}
+func (c *Cluster) IsSelfManaged() bool { _ = "STUB: not implemented"; return false }
 
-func (c *Cluster) SetManagedBy(managementClusterName string) {
-	if c.Annotations == nil {
-		c.Annotations = map[string]string{}
-	}
+func (c *Cluster) SetManagedBy(managementClusterName string) { _ = "STUB: not implemented"; return }
 
-	c.Annotations[managementAnnotation] = managementClusterName
-	c.Spec.ManagementCluster.Name = managementClusterName
-}
+func (c *Cluster) SetSelfManaged() { _ = "STUB: not implemented"; return }
 
-func (c *Cluster) SetSelfManaged() {
-	c.Spec.ManagementCluster.Name = c.Name
-}
+func (c *ClusterGenerate) SetSelfManaged() { _ = "STUB: not implemented"; return }
 
-func (c *ClusterGenerate) SetSelfManaged() {
-	c.Spec.ManagementCluster.Name = c.Name
-}
-
-func (c *Cluster) ManagementClusterEqual(s2 *Cluster) bool {
-	return c.IsSelfManaged() && s2.IsSelfManaged() || c.Spec.ManagementCluster.Equal(s2.Spec.ManagementCluster)
-}
+func (c *Cluster) ManagementClusterEqual(s2 *Cluster) bool { _ = "STUB: not implemented"; return false }
 
 // IsSingleNode checks if the cluster has only a single node specified between the controlplane and worker nodes.
-func (c *Cluster) IsSingleNode() bool {
-	return c.Spec.ControlPlaneConfiguration.Count == 1 &&
-		len(c.Spec.WorkerNodeGroupConfigurations) <= 0
-}
+func (c *Cluster) IsSingleNode() bool { _ = "STUB: not implemented"; return false }
 
-func (c *Cluster) MachineConfigRefs() []Ref {
-	machineConfigRefMap := make(refSet, 1)
-
-	machineConfigRefMap.addIfNotNil(c.Spec.ControlPlaneConfiguration.MachineGroupRef)
-
-	for _, m := range c.Spec.WorkerNodeGroupConfigurations {
-		machineConfigRefMap.addIfNotNil(m.MachineGroupRef)
-	}
-
-	if c.Spec.ExternalEtcdConfiguration != nil {
-		machineConfigRefMap.addIfNotNil(c.Spec.ExternalEtcdConfiguration.MachineGroupRef)
-	}
-
-	return machineConfigRefMap.toSlice()
-}
+func (c *Cluster) MachineConfigRefs() []Ref { _ = "STUB: not implemented"; return nil }
 
 // SetFailure sets the failureMessage and failureReason of the Cluster status.
 func (c *Cluster) SetFailure(failureReason FailureReasonType, failureMessage string) {
-	c.Status.FailureMessage = ptr.String(failureMessage)
-	c.Status.FailureReason = &failureReason
+	_ = "STUB: not implemented"
+	return
 }
 
 // ClearFailure clears the failureMessage and failureReason of the Cluster status by setting them to nil.
-func (c *Cluster) ClearFailure() {
-	c.Status.FailureMessage = nil
-	c.Status.FailureReason = nil
-}
+func (c *Cluster) ClearFailure() { _ = "STUB: not implemented"; return }
 
 // HasFailure checks whether there is a failureMessage and/or failureReason set on the Cluster status.
-func (c *Cluster) HasFailure() bool {
-	return c.Status.FailureMessage != nil || c.Status.FailureReason != nil
-}
+func (c *Cluster) HasFailure() bool { _ = "STUB: not implemented"; return false }
 
 // KubernetesVersions returns a set of all unique k8s versions specified in the cluster
 // for both CP and workers.
-func (c *Cluster) KubernetesVersions() []KubernetesVersion {
-	versionsSet := map[string]struct{}{}
-	versions := make([]KubernetesVersion, 0, 1)
-
-	versionsSet[string(c.Spec.KubernetesVersion)] = struct{}{}
-	versions = append(versions, c.Spec.KubernetesVersion)
-	for _, w := range c.Spec.WorkerNodeGroupConfigurations {
-		if w.KubernetesVersion != nil {
-			if _, ok := versionsSet[string(*w.KubernetesVersion)]; !ok {
-				versions = append(versions, *w.KubernetesVersion)
-			}
-		}
-	}
-
-	return versions
-}
+func (c *Cluster) KubernetesVersions() []KubernetesVersion { _ = "STUB: not implemented"; return nil }
 
 type refSet map[Ref]struct{}
 
-func (r refSet) addIfNotNil(ref *Ref) bool {
-	if ref != nil {
-		return r.add(*ref)
-	}
+func (r refSet) addIfNotNil(ref *Ref) bool { _ = "STUB: not implemented"; return false }
 
-	return false
-}
+func (r refSet) add(ref Ref) bool { _ = "STUB: not implemented"; return false }
 
-func (r refSet) add(ref Ref) bool {
-	if _, present := r[ref]; !present {
-		r[ref] = struct{}{}
-		return true
-	} else {
-		return false
-	}
-}
-
-func (r refSet) toSlice() []Ref {
-	refs := make([]Ref, 0, len(r))
-	for ref := range r {
-		refs = append(refs, ref)
-	}
-
-	return refs
-}
+func (r refSet) toSlice() []Ref { _ = "STUB: not implemented"; return nil }
 
 func (c *Cluster) ConvertConfigToConfigGenerateStruct() *ClusterGenerate {
-	namespace := defaultEksaNamespace
-	if c.Namespace != "" {
-		namespace = c.Namespace
-	}
-	config := &ClusterGenerate{
-		TypeMeta: c.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        c.Name,
-			Annotations: c.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: ClusterSpec{
-			KubernetesVersion:             c.Spec.KubernetesVersion,
-			ControlPlaneConfiguration:     c.Spec.ControlPlaneConfiguration,
-			WorkerNodeGroupConfigurations: c.Spec.WorkerNodeGroupConfigurations,
-			DatacenterRef:                 c.Spec.DatacenterRef,
-			IdentityProviderRefs:          c.Spec.IdentityProviderRefs,
-			GitOpsRef:                     c.Spec.GitOpsRef,
-			ClusterNetwork:                c.Spec.ClusterNetwork,
-			ExternalEtcdConfiguration:     c.Spec.ExternalEtcdConfiguration,
-			ProxyConfiguration:            c.Spec.ProxyConfiguration,
-			RegistryMirrorConfiguration:   c.Spec.RegistryMirrorConfiguration,
-			ManagementCluster:             c.Spec.ManagementCluster,
-			PodIAMConfig:                  c.Spec.PodIAMConfig,
-			Packages:                      c.Spec.Packages,
-			BundlesRef:                    c.Spec.BundlesRef,
-			EksaVersion:                   c.Spec.EksaVersion,
-			MachineHealthCheck:            c.Spec.MachineHealthCheck,
-			EtcdEncryption:                c.Spec.EtcdEncryption,
-			LicenseToken:                  c.Spec.LicenseToken,
-		},
-	}
-
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // IsManaged returns true if the Cluster is not self managed.
-func (c *Cluster) IsManaged() bool {
-	return !c.IsSelfManaged()
-}
+func (c *Cluster) IsManaged() bool { _ = "STUB: not implemented"; return false }
 
 // ManagedBy returns the Cluster's management cluster's name.
-func (c *Cluster) ManagedBy() string {
-	return c.Spec.ManagementCluster.Name
-}
+func (c *Cluster) ManagedBy() string { _ = "STUB: not implemented"; return "" }
 
 // IsManagedByCLI returns true if the cluster has the managed-by-cli annotation.
-func (c *Cluster) IsManagedByCLI() bool {
-	if len(c.Annotations) == 0 {
-		return false
-	}
-	val, ok := c.Annotations[ManagedByCLIAnnotation]
-	return ok && val == "true"
-}
+func (c *Cluster) IsManagedByCLI() bool { _ = "STUB: not implemented"; return false }
 
 // CanDeleteWhenPaused returns true if the cluster has the allow-delete-when-paused annotation.
-func (c *Cluster) CanDeleteWhenPaused() bool {
-	if len(c.Annotations) == 0 {
-		return false
-	}
-	val, ok := c.Annotations[AllowDeleteWhenPausedAnnotation]
-	return ok && val == "true"
-}
+func (c *Cluster) CanDeleteWhenPaused() bool { _ = "STUB: not implemented"; return false }
 
 // +kubebuilder:object:root=true
 // ClusterList contains a list of Cluster.

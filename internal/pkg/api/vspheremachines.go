@@ -1,84 +1,70 @@
 package api
 
 import (
-	"os"
-
 	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 )
 
 type VSphereMachineConfigFiller func(m *anywherev1.VSphereMachineConfig)
 
 func FillVSphereMachineConfig(m *anywherev1.VSphereMachineConfig, fillers ...VSphereMachineConfigFiller) {
-	for _, f := range fillers {
-		f(m)
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 func WithVSphereMachineDefaultValues() VSphereMachineConfigFiller {
-	return func(m *anywherev1.VSphereMachineConfig) {
-		m.Spec.DiskGiB = anywherev1.DefaultVSphereDiskGiB
-		m.Spec.NumCPUs = anywherev1.DefaultVSphereNumCPUs
-		m.Spec.MemoryMiB = anywherev1.DefaultVSphereMemoryMiB
-		m.Spec.OSFamily = anywherev1.DefaultVSphereOSFamily
-	}
+	_ = "STUB: not implemented"
+	return *new(VSphereMachineConfigFiller)
 }
 
 func WithDatastore(value string) VSphereMachineConfigFiller {
-	return func(m *anywherev1.VSphereMachineConfig) {
-		m.Spec.Datastore = value
-	}
+	_ = "STUB: not implemented"
+	return *new(VSphereMachineConfigFiller)
 }
 
 func WithFolder(value string) VSphereMachineConfigFiller {
-	return func(m *anywherev1.VSphereMachineConfig) {
-		m.Spec.Folder = value
-	}
+	_ = "STUB: not implemented"
+	return *new(VSphereMachineConfigFiller)
 }
 
 // WithTags add provided tags to all machines.
 func WithTags(value []string) VSphereMachineConfigFiller {
-	return func(m *anywherev1.VSphereMachineConfig) {
-		m.Spec.TagIDs = value
-	}
+	_ = "STUB: not implemented"
+	return *new(VSphereMachineConfigFiller)
 }
 
 func WithResourcePool(value string) VSphereMachineConfigFiller {
-	return func(m *anywherev1.VSphereMachineConfig) {
-		m.Spec.ResourcePool = value
-	}
+	_ = "STUB: not implemented"
+	return *new(VSphereMachineConfigFiller)
 }
 
 func WithStoragePolicyName(value string) VSphereMachineConfigFiller {
-	return func(m *anywherev1.VSphereMachineConfig) {
-		m.Spec.StoragePolicyName = value
-	}
+	_ = "STUB: not implemented"
+	return *new(VSphereMachineConfigFiller)
 }
 
 func WithTemplate(value string) VSphereMachineConfigFiller {
-	return func(m *anywherev1.VSphereMachineConfig) {
-		m.Spec.Template = value
-	}
+	_ = "STUB: not implemented"
+	return *new(VSphereMachineConfigFiller)
 }
 
 func WithSSHKey(value string) VSphereMachineConfigFiller {
-	return func(m *anywherev1.VSphereMachineConfig) {
-		setSSHKeyForFirstUser(m, value)
-	}
+	_ = "STUB: not implemented"
+	return *new(VSphereMachineConfigFiller)
 }
 
 // WithStringFromEnvVar returns a VSphereMachineConfigFiller function with the value from an envVar passed to it.
 func WithStringFromEnvVar(envVar string, opt func(string) VSphereMachineConfigFiller) VSphereMachineConfigFiller {
-	return opt(os.Getenv(envVar))
+	_ = "STUB: not implemented"
+	return *new(VSphereMachineConfigFiller)
 }
 
 // WithNetworks sets the Networks field for a VSphereMachineConfig.
 func WithNetworks(networks []string) VSphereMachineConfigFiller {
-	return func(m *anywherev1.VSphereMachineConfig) {
-		m.Spec.Networks = networks
-	}
+	_ = "STUB: not implemented"
+	return *new(VSphereMachineConfigFiller)
 }
 
 func setSSHKeyForFirstUser(m *anywherev1.VSphereMachineConfig, key string) {
-	m.SetUserDefaults()
-	m.Spec.Users[0].SshAuthorizedKeys = []string{key}
+	_ = "STUB: not implemented"
+	return
 }

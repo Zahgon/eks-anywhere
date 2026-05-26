@@ -1,7 +1,5 @@
 package awsrulesfn
 
-import "regexp"
-
 // Partition provides the metadata describing an AWS partition.
 type Partition struct {
 	ID            string                     `json:"id"`
@@ -30,46 +28,11 @@ type RegionOverrides struct {
 const defaultPartition = "aws"
 
 func getPartition(partitions []Partition, region string) *PartitionConfig {
-	for _, partition := range partitions {
-		if v, ok := partition.Regions[region]; ok {
-			p := mergeOverrides(partition.DefaultConfig, v)
-			return &p
-		}
-	}
-
-	for _, partition := range partitions {
-		regionRegex := regexp.MustCompile(partition.RegionRegex)
-		if regionRegex.MatchString(region) {
-			v := partition.DefaultConfig
-			return &v
-		}
-	}
-
-	for _, partition := range partitions {
-		if partition.ID == defaultPartition {
-			v := partition.DefaultConfig
-			return &v
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func mergeOverrides(into PartitionConfig, from RegionOverrides) PartitionConfig {
-	if from.Name != nil {
-		into.Name = *from.Name
-	}
-	if from.DnsSuffix != nil {
-		into.DnsSuffix = *from.DnsSuffix
-	}
-	if from.DualStackDnsSuffix != nil {
-		into.DualStackDnsSuffix = *from.DualStackDnsSuffix
-	}
-	if from.SupportsFIPS != nil {
-		into.SupportsFIPS = *from.SupportsFIPS
-	}
-	if from.SupportsDualStack != nil {
-		into.SupportsDualStack = *from.SupportsDualStack
-	}
-	return into
+	_ = "STUB: not implemented"
+	return *new(PartitionConfig)
 }

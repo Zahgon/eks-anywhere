@@ -13,14 +13,7 @@ type Machine struct {
 	Status   MachineStatus   `json:"status"`
 }
 
-func (m *Machine) HasAnyLabel(labels []string) bool {
-	for _, label := range labels {
-		if _, ok := m.Metadata.Labels[label]; ok {
-			return true
-		}
-	}
-	return false
-}
+func (m *Machine) HasAnyLabel(labels []string) bool { _ = "STUB: not implemented"; return false }
 
 type MachineStatus struct {
 	NodeRef    *ResourceRef `json:"nodeRef,omitempty"`
@@ -75,19 +68,6 @@ type NowFunc func() time.Time
 
 type NodeReadyChecker func(status MachineStatus) bool
 
-func WithNodeRef() NodeReadyChecker {
-	return func(status MachineStatus) bool {
-		return status.NodeRef != nil
-	}
-}
+func WithNodeRef() NodeReadyChecker { _ = "STUB: not implemented"; return *new(NodeReadyChecker) }
 
-func WithNodeHealthy() NodeReadyChecker {
-	return func(status MachineStatus) bool {
-		for _, c := range status.Conditions {
-			if c.Type == "NodeHealthy" {
-				return c.Status == "True"
-			}
-		}
-		return false
-	}
-}
+func WithNodeHealthy() NodeReadyChecker { _ = "STUB: not implemented"; return *new(NodeReadyChecker) }

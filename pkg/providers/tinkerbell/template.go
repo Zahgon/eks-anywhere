@@ -1,33 +1,12 @@
 package tinkerbell
 
 import (
-	"bufio"
-	"bytes"
 	_ "embed"
-	"fmt"
-	"io"
-	"net/url"
-	"strings"
-	"time"
-
-	"github.com/pkg/errors"
-	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	yamlutil "k8s.io/apimachinery/pkg/util/yaml"
-	"sigs.k8s.io/yaml"
 
 	"github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	"github.com/aws/eks-anywhere/pkg/cluster"
-	"github.com/aws/eks-anywhere/pkg/clusterapi"
-	"github.com/aws/eks-anywhere/pkg/config"
-	"github.com/aws/eks-anywhere/pkg/constants"
-	"github.com/aws/eks-anywhere/pkg/crypto"
 	"github.com/aws/eks-anywhere/pkg/providers"
-	"github.com/aws/eks-anywhere/pkg/providers/common"
-	"github.com/aws/eks-anywhere/pkg/registrymirror"
-	"github.com/aws/eks-anywhere/pkg/registrymirror/containerd"
-	"github.com/aws/eks-anywhere/pkg/templater"
 	"github.com/aws/eks-anywhere/pkg/types"
-	unstructuredutil "github.com/aws/eks-anywhere/pkg/utils/unstructured"
 )
 
 //go:embed config/template-cp.yaml
@@ -56,133 +35,23 @@ type TemplateBuilder struct {
 
 // NewTemplateBuilder creates a new TemplateBuilder instance.
 func NewTemplateBuilder(datacenterSpec *v1alpha1.TinkerbellDatacenterConfigSpec, controlPlaneMachineSpec, etcdMachineSpec *v1alpha1.TinkerbellMachineConfigSpec, workerNodeGroupMachineSpecs map[string]v1alpha1.TinkerbellMachineConfigSpec, tinkerbellIP string, now types.NowFunc) providers.TemplateBuilder {
-	return &TemplateBuilder{
-		controlPlaneMachineSpec:     controlPlaneMachineSpec,
-		datacenterSpec:              datacenterSpec,
-		WorkerNodeGroupMachineSpecs: workerNodeGroupMachineSpecs,
-		etcdMachineSpec:             etcdMachineSpec,
-		tinkerbellIP:                tinkerbellIP,
-		now:                         now,
-	}
+	_ = "STUB: not implemented"
+	return *new(providers.TemplateBuilder)
 }
 
 func (tb *TemplateBuilder) GenerateCAPISpecControlPlane(clusterSpec *cluster.Spec, buildOptions ...providers.BuildMapOption) (content []byte, err error) {
-	cpTemplateConfig := clusterSpec.TinkerbellTemplateConfigs[tb.controlPlaneMachineSpec.TemplateRef.Name]
-	var OSImageURL string
-
-	if tinkerbellIP := clusterSpec.Cluster.HasTinkerbellIPAnnotation(); tinkerbellIP != "" {
-		tb.tinkerbellIP = tinkerbellIP
-	}
-
-	if cpTemplateConfig == nil {
-		OSImageURL = clusterSpec.TinkerbellDatacenter.Spec.OSImageURL
-		if tb.controlPlaneMachineSpec.OSImageURL != "" {
-			OSImageURL = tb.controlPlaneMachineSpec.OSImageURL
-		}
-		cpTemplateConfig = v1alpha1.NewDefaultTinkerbellTemplateConfigCreate(clusterSpec.Cluster, OSImageURL, tb.tinkerbellIP, tb.datacenterSpec.TinkerbellIP, tb.controlPlaneMachineSpec.OSFamily)
-	}
-
-	cpTemplateString, err := cpTemplateConfig.ToTemplateString()
-	if err != nil {
-		return nil, fmt.Errorf("failed to get Control Plane TinkerbellTemplateConfig: %v", err)
-	}
-
-	var etcdMachineSpec v1alpha1.TinkerbellMachineConfigSpec
-	var etcdTemplateString string
-	if clusterSpec.Cluster.Spec.ExternalEtcdConfiguration != nil {
-		etcdMachineSpec = *tb.etcdMachineSpec
-		OSImageURL = clusterSpec.TinkerbellDatacenter.Spec.OSImageURL
-		if etcdMachineSpec.OSImageURL != "" {
-			OSImageURL = etcdMachineSpec.OSImageURL
-		}
-		etcdTemplateConfig := clusterSpec.TinkerbellTemplateConfigs[tb.etcdMachineSpec.TemplateRef.Name]
-		if etcdTemplateConfig == nil {
-			etcdTemplateConfig = v1alpha1.NewDefaultTinkerbellTemplateConfigCreate(clusterSpec.Cluster, OSImageURL, tb.tinkerbellIP, tb.datacenterSpec.TinkerbellIP, tb.etcdMachineSpec.OSFamily)
-		}
-		etcdTemplateString, err = etcdTemplateConfig.ToTemplateString()
-		if err != nil {
-			return nil, fmt.Errorf("failed to get ETCD TinkerbellTemplateConfig: %v", err)
-		}
-	}
-	values, err := buildTemplateMapCP(clusterSpec, *tb.controlPlaneMachineSpec, etcdMachineSpec, cpTemplateString, etcdTemplateString, *tb.datacenterSpec)
-	if err != nil {
-		return nil, err
-	}
-
-	for _, buildOption := range buildOptions {
-		buildOption(values)
-	}
-	bytes, err := templater.Execute(defaultCAPIConfigCP, values)
-	if err != nil {
-		return nil, err
-	}
-	return bytes, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (tb *TemplateBuilder) GenerateCAPISpecWorkers(clusterSpec *cluster.Spec, workloadTemplateNames, kubeadmconfigTemplateNames map[string]string) (content []byte, err error) {
-	workerSpecs := make([][]byte, 0, len(clusterSpec.Cluster.Spec.WorkerNodeGroupConfigurations))
-	OSImageURL := clusterSpec.TinkerbellDatacenter.Spec.OSImageURL
-
-	if tinkerbellIP := clusterSpec.Cluster.HasTinkerbellIPAnnotation(); tinkerbellIP != "" {
-		tb.tinkerbellIP = tinkerbellIP
-	}
-
-	for _, workerNodeGroupConfiguration := range clusterSpec.Cluster.Spec.WorkerNodeGroupConfigurations {
-		workerNodeMachineSpec := tb.WorkerNodeGroupMachineSpecs[workerNodeGroupConfiguration.MachineGroupRef.Name]
-		wTemplateConfig := clusterSpec.TinkerbellTemplateConfigs[workerNodeMachineSpec.TemplateRef.Name]
-		if wTemplateConfig == nil {
-			if workerNodeMachineSpec.OSImageURL != "" {
-				OSImageURL = workerNodeMachineSpec.OSImageURL
-			}
-			wTemplateConfig = v1alpha1.NewDefaultTinkerbellTemplateConfigCreate(clusterSpec.Cluster, OSImageURL, tb.tinkerbellIP, tb.datacenterSpec.TinkerbellIP, workerNodeMachineSpec.OSFamily)
-		}
-
-		wTemplateString, err := wTemplateConfig.ToTemplateString()
-		if err != nil {
-			return nil, fmt.Errorf("failed to get worker TinkerbellTemplateConfig: %v", err)
-		}
-
-		values, err := buildTemplateMapMD(clusterSpec, tb.WorkerNodeGroupMachineSpecs[workerNodeGroupConfiguration.MachineGroupRef.Name], workerNodeGroupConfiguration, wTemplateString, *tb.datacenterSpec)
-		if err != nil {
-			return nil, err
-		}
-
-		_, ok := workloadTemplateNames[workerNodeGroupConfiguration.Name]
-		if workloadTemplateNames == nil || !ok {
-			return nil, fmt.Errorf("workloadTemplateNames invalid in GenerateCAPISpecWorkers: %v", err)
-		}
-		_, ok = kubeadmconfigTemplateNames[workerNodeGroupConfiguration.Name]
-		if kubeadmconfigTemplateNames == nil || !ok {
-			return nil, fmt.Errorf("kubeadmconfigTemplateNames invalid in GenerateCAPISpecWorkers: %v", err)
-		}
-		values["workerSshAuthorizedKey"] = tb.WorkerNodeGroupMachineSpecs[workerNodeGroupConfiguration.MachineGroupRef.Name].Users[0].SshAuthorizedKeys[0]
-		values["workerReplicas"] = *workerNodeGroupConfiguration.Count
-		values["workloadTemplateName"] = workloadTemplateNames[workerNodeGroupConfiguration.Name]
-		values["workerNodeGroupName"] = workerNodeGroupConfiguration.Name
-		values["workloadkubeadmconfigTemplateName"] = kubeadmconfigTemplateNames[workerNodeGroupConfiguration.Name]
-		values["autoscalingConfig"] = workerNodeGroupConfiguration.AutoScalingConfiguration
-
-		if workerNodeGroupConfiguration.UpgradeRolloutStrategy != nil {
-			values["upgradeRolloutStrategy"] = true
-			if workerNodeGroupConfiguration.UpgradeRolloutStrategy.Type == v1alpha1.InPlaceStrategyType {
-				values["upgradeRolloutStrategyType"] = workerNodeGroupConfiguration.UpgradeRolloutStrategy.Type
-			} else {
-				values["maxSurge"] = workerNodeGroupConfiguration.UpgradeRolloutStrategy.RollingUpdate.MaxSurge
-				values["maxUnavailable"] = workerNodeGroupConfiguration.UpgradeRolloutStrategy.RollingUpdate.MaxUnavailable
-			}
-		}
-
-		bytes, err := templater.Execute(defaultClusterConfigMD, values)
-		if err != nil {
-			return nil, err
-		}
-		workerSpecs = append(workerSpecs, bytes)
-	}
-	return templater.AppendYamlResources(workerSpecs...), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func machineDeploymentName(clusterName, nodeGroupName string) string {
-	return fmt.Sprintf("%s-%s", clusterName, nodeGroupName)
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // nolint:gocyclo
@@ -194,194 +63,17 @@ func buildTemplateMapCP(
 	etcdTemplateOverride string,
 	datacenterSpec v1alpha1.TinkerbellDatacenterConfigSpec,
 ) (map[string]interface{}, error) {
-	var auditPolicy string
-	if clusterSpec.Cluster.Spec.ControlPlaneConfiguration.AuditPolicyContent != "" {
-		auditPolicy = strings.TrimSpace(clusterSpec.Cluster.Spec.ControlPlaneConfiguration.AuditPolicyContent)
-	} else {
-		var err error
-		auditPolicy, err = common.GetAuditPolicy(clusterSpec.Cluster.Spec.KubernetesVersion)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	versionsBundle := clusterSpec.RootVersionsBundle()
-	format := "cloud-config"
-
-	apiServerExtraArgs := clusterapi.OIDCToExtraArgs(clusterSpec.OIDCConfig).
-		Append(clusterapi.AwsIamAuthExtraArgs(clusterSpec.AWSIamConfig)).
-		Append(clusterapi.APIServerExtraArgs(clusterSpec.Cluster.Spec.ControlPlaneConfiguration.APIServerExtraArgs))
-	clusterapi.SetPodIAMAuthExtraArgs(clusterSpec.Cluster.Spec.PodIAMConfig, apiServerExtraArgs)
-
-	values := map[string]interface{}{
-		"auditPolicy":                   auditPolicy,
-		"clusterName":                   clusterSpec.Cluster.Name,
-		"controlPlaneEndpointIp":        clusterSpec.Cluster.Spec.ControlPlaneConfiguration.Endpoint.Host,
-		"controlPlaneReplicas":          clusterSpec.Cluster.Spec.ControlPlaneConfiguration.Count,
-		"apiServerCertSANs":             clusterSpec.Cluster.Spec.ControlPlaneConfiguration.CertSANs,
-		"controlPlaneSshAuthorizedKey":  controlPlaneMachineSpec.Users[0].SshAuthorizedKeys[0],
-		"controlPlaneSshUsername":       controlPlaneMachineSpec.Users[0].Name,
-		"eksaSystemNamespace":           constants.EksaSystemNamespace,
-		"format":                        format,
-		"kubernetesVersion":             versionsBundle.KubeDistro.Kubernetes.Tag,
-		"kubeVipImage":                  versionsBundle.Tinkerbell.KubeVip.VersionedImage(),
-		"podCidrs":                      clusterSpec.Cluster.Spec.ClusterNetwork.Pods.CidrBlocks,
-		"serviceCidrs":                  clusterSpec.Cluster.Spec.ClusterNetwork.Services.CidrBlocks,
-		"apiserverExtraArgs":            apiServerExtraArgs,
-		"baseRegistry":                  "", // TODO: need to get this values for creating template IMAGE_URL
-		"osDistro":                      "", // TODO: need to get this values for creating template IMAGE_URL
-		"osVersion":                     "", // TODO: need to get this values for creating template IMAGE_URL
-		"kubernetesRepository":          versionsBundle.KubeDistro.Kubernetes.Repository,
-		"corednsRepository":             versionsBundle.KubeDistro.CoreDNS.Repository,
-		"corednsVersion":                versionsBundle.KubeDistro.CoreDNS.Tag,
-		"etcdRepository":                versionsBundle.KubeDistro.Etcd.Repository,
-		"etcdImageTag":                  versionsBundle.KubeDistro.Etcd.Tag,
-		"externalEtcdVersion":           versionsBundle.KubeDistro.EtcdVersion,
-		"etcdCipherSuites":              crypto.SecureCipherSuitesString(),
-		"hardwareSelector":              controlPlaneMachineSpec.HardwareSelector,
-		"hardwareAffinity":              controlPlaneMachineSpec.HardwareAffinity,
-		"controlPlaneTaints":            clusterSpec.Cluster.Spec.ControlPlaneConfiguration.Taints,
-		"workerNodeGroupConfigurations": clusterSpec.Cluster.Spec.WorkerNodeGroupConfigurations,
-		"skipLoadBalancerDeployment":    datacenterSpec.SkipLoadBalancerDeployment,
-		"cpSkipLoadBalancerDeployment":  clusterSpec.Cluster.Spec.ControlPlaneConfiguration.SkipLoadBalancerDeployment,
-	}
-
-	if clusterSpec.Cluster.Spec.ControlPlaneConfiguration.UpgradeRolloutStrategy != nil {
-		values["upgradeRolloutStrategy"] = true
-		if clusterSpec.Cluster.Spec.ControlPlaneConfiguration.UpgradeRolloutStrategy.Type == v1alpha1.InPlaceStrategyType {
-			values["upgradeRolloutStrategyType"] = clusterSpec.Cluster.Spec.ControlPlaneConfiguration.UpgradeRolloutStrategy.Type
-		} else {
-			values["maxSurge"] = clusterSpec.Cluster.Spec.ControlPlaneConfiguration.UpgradeRolloutStrategy.RollingUpdate.MaxSurge
-		}
-	}
-
-	if clusterSpec.Cluster.Spec.RegistryMirrorConfiguration != nil {
-		values, err := populateRegistryMirrorValues(clusterSpec, values)
-		if err != nil {
-			return values, err
-		}
-
-		// Replace public.ecr.aws endpoint with the endpoint given in the cluster config file
-		localRegistry := values["coreEKSAMirror"].(string)
-		if localRegistry != "" {
-			cpTemplateOverride = strings.ReplaceAll(cpTemplateOverride, defaultRegistry, localRegistry)
-			etcdTemplateOverride = strings.ReplaceAll(etcdTemplateOverride, defaultRegistry, localRegistry)
-		}
-	}
-
-	if clusterSpec.Cluster.Spec.ProxyConfiguration != nil {
-		values["proxyConfig"] = true
-		values["httpProxy"] = clusterSpec.Cluster.Spec.ProxyConfiguration.HttpProxy
-		values["httpsProxy"] = clusterSpec.Cluster.Spec.ProxyConfiguration.HttpsProxy
-		values["noProxy"] = generateNoProxyList(clusterSpec.Cluster, datacenterSpec)
-	}
-
-	values["controlPlanetemplateOverride"] = cpTemplateOverride
-
-	if clusterSpec.Cluster.Spec.ExternalEtcdConfiguration != nil {
-		values["externalEtcd"] = true
-		values["externalEtcdReplicas"] = clusterSpec.Cluster.Spec.ExternalEtcdConfiguration.Count
-		values["placeholderExternalEtcdEndpoint"] = constants.PlaceholderExternalEtcdEndpoint
-		values["etcdSshUsername"] = etcdMachineSpec.Users[0].Name
-		values["etcdTemplateOverride"] = etcdTemplateOverride
-		values["etcdHardwareSelector"] = etcdMachineSpec.HardwareSelector
-		values["etcdHardwareAffinity"] = etcdMachineSpec.HardwareAffinity
-		etcdURL, _ := common.GetExternalEtcdReleaseURL(clusterSpec.Cluster.Spec.EksaVersion, versionsBundle)
-		if etcdURL != "" {
-			values["externalEtcdReleaseUrl"] = etcdURL
-		}
-	}
-
-	if controlPlaneMachineSpec.OSFamily == v1alpha1.Bottlerocket {
-		values["format"] = string(v1alpha1.Bottlerocket)
-		values["pauseRepository"] = versionsBundle.KubeDistro.Pause.Image()
-		values["pauseVersion"] = versionsBundle.KubeDistro.Pause.Tag()
-		values["bottlerocketBootstrapRepository"] = versionsBundle.BottleRocketHostContainers.KubeadmBootstrap.Image()
-		values["bottlerocketBootstrapVersion"] = versionsBundle.BottleRocketHostContainers.KubeadmBootstrap.Tag()
-	}
-
-	if clusterSpec.AWSIamConfig != nil {
-		values["awsIamAuth"] = true
-	}
-
-	if controlPlaneMachineSpec.HostOSConfiguration != nil {
-		if controlPlaneMachineSpec.HostOSConfiguration.NTPConfiguration != nil {
-			values["cpNtpServers"] = controlPlaneMachineSpec.HostOSConfiguration.NTPConfiguration.Servers
-		}
-
-		if controlPlaneMachineSpec.HostOSConfiguration.CertBundles != nil {
-			values["certBundles"] = controlPlaneMachineSpec.HostOSConfiguration.CertBundles
-		}
-	}
-
-	if controlPlaneMachineSpec.HostOSConfiguration != nil && controlPlaneMachineSpec.HostOSConfiguration.BottlerocketConfiguration != nil {
-		brSettings, err := common.GetCAPIBottlerocketSettingsConfig(controlPlaneMachineSpec.HostOSConfiguration, controlPlaneMachineSpec.HostOSConfiguration.BottlerocketConfiguration.Kubernetes)
-		if err != nil {
-			return nil, err
-		}
-		if len(brSettings) != 0 {
-			values["bottlerocketSettings"] = brSettings
-		}
-	}
-
-	if clusterSpec.Cluster.Spec.ControlPlaneConfiguration.KubeletConfiguration != nil && controlPlaneMachineSpec.OSFamily != v1alpha1.Bottlerocket {
-		cpKubeletConfig := clusterSpec.Cluster.Spec.ControlPlaneConfiguration.KubeletConfiguration.Object
-
-		if _, ok := cpKubeletConfig["tlsCipherSuites"]; !ok {
-			cpKubeletConfig["tlsCipherSuites"] = crypto.SecureCipherSuiteNames()
-		}
-
-		if _, ok := cpKubeletConfig["resolvConf"]; !ok {
-			if clusterSpec.Cluster.Spec.ClusterNetwork.DNS.ResolvConf != nil {
-				cpKubeletConfig["resolvConf"] = clusterSpec.Cluster.Spec.ClusterNetwork.DNS.ResolvConf.Path
-			}
-		}
-		kcString, err := yaml.Marshal(cpKubeletConfig)
-		if err != nil {
-			return nil, fmt.Errorf("marshaling control plane node Kubelet Configuration while building CAPI template %v", err)
-		}
-
-		values["kubeletConfiguration"] = string(kcString)
-	} else {
-		kubeletExtraArgs := clusterapi.SecureTlsCipherSuitesExtraArgs().
-			Append(clusterapi.ResolvConfExtraArgs(clusterSpec.Cluster.Spec.ClusterNetwork.DNS.ResolvConf))
-
-		values["kubeletExtraArgs"] = kubeletExtraArgs
-	}
-
-	cpNodeLabelArgs := clusterapi.ControlPlaneNodeLabelsExtraArgs(clusterSpec.Cluster.Spec.ControlPlaneConfiguration)
-	if len(cpNodeLabelArgs) != 0 {
-		values["cpNodeLabelArgs"] = cpNodeLabelArgs
-	}
-
-	if !datacenterSpec.IsoBoot {
-		values["bootMode"] = netbootMode
-	} else {
-		values["bootMode"] = isobootMode
-		tinkerbellIP := datacenterSpec.TinkerbellIP
-		if t := clusterSpec.Cluster.HasTinkerbellIPAnnotation(); t != "" {
-			tinkerbellIP = t
-		}
-		isoURL := url.URL{
-			Scheme: "http",
-			Host:   fmt.Sprintf("%s:%s", tinkerbellIP, SmeeHTTPPort),
-			// isoURL path is only served in the top level /iso path.
-			Path: "/iso/hook.iso",
-		}
-		values["isoUrl"] = isoURL.String()
-	}
-
-	if clusterSpec.Cluster.Spec.ControlPlaneConfiguration.SkipAdmissionForSystemResources != nil &&
-		*clusterSpec.Cluster.Spec.ControlPlaneConfiguration.SkipAdmissionForSystemResources {
-		admissionExclusionPolicy, err := common.GetAdmissionPluginExclusionPolicy()
-		if err != nil {
-			return nil, err
-		}
-		values["admissionExclusionPolicy"] = admissionExclusionPolicy
-	}
-
-	return values, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// TODO: need to get this values for creating template IMAGE_URL
+// TODO: need to get this values for creating template IMAGE_URL
+// TODO: need to get this values for creating template IMAGE_URL
+
+// Replace public.ecr.aws endpoint with the endpoint given in the cluster config file
+
+// isoURL path is only served in the top level /iso path.
 
 func buildTemplateMapMD(
 	clusterSpec *cluster.Spec,
@@ -390,251 +82,50 @@ func buildTemplateMapMD(
 	workerTemplateOverride string,
 	datacenterSpec v1alpha1.TinkerbellDatacenterConfigSpec,
 ) (map[string]interface{}, error) {
-	versionsBundle := clusterSpec.WorkerNodeGroupVersionsBundle(workerNodeGroupConfiguration)
-	format := "cloud-config"
-
-	values := map[string]interface{}{
-		"clusterName":            clusterSpec.Cluster.Name,
-		"eksaSystemNamespace":    constants.EksaSystemNamespace,
-		"format":                 format,
-		"kubernetesVersion":      versionsBundle.KubeDistro.Kubernetes.Tag,
-		"workerNodeGroupName":    workerNodeGroupConfiguration.Name,
-		"workerSshAuthorizedKey": workerNodeGroupMachineSpec.Users[0].SshAuthorizedKeys[0],
-		"workerSshUsername":      workerNodeGroupMachineSpec.Users[0].Name,
-		"hardwareSelector":       workerNodeGroupMachineSpec.HardwareSelector,
-		"hardwareAffinity":       workerNodeGroupMachineSpec.HardwareAffinity,
-		"workerNodeGroupTaints":  workerNodeGroupConfiguration.Taints,
-	}
-
-	if workerNodeGroupMachineSpec.OSFamily == v1alpha1.Bottlerocket {
-		values["format"] = string(v1alpha1.Bottlerocket)
-		values["pauseRepository"] = versionsBundle.KubeDistro.Pause.Image()
-		values["pauseVersion"] = versionsBundle.KubeDistro.Pause.Tag()
-		values["bottlerocketBootstrapRepository"] = versionsBundle.BottleRocketHostContainers.KubeadmBootstrap.Image()
-		values["bottlerocketBootstrapVersion"] = versionsBundle.BottleRocketHostContainers.KubeadmBootstrap.Tag()
-	}
-
-	if clusterSpec.Cluster.Spec.RegistryMirrorConfiguration != nil {
-		values, err := populateRegistryMirrorValues(clusterSpec, values)
-		if err != nil {
-			return values, err
-		}
-
-		// Replace public.ecr.aws endpoint with the endpoint given in the cluster config file
-		localRegistry := values["coreEKSAMirror"].(string)
-		if localRegistry != "" {
-			workerTemplateOverride = strings.ReplaceAll(workerTemplateOverride, defaultRegistry, localRegistry)
-		}
-	}
-
-	if clusterSpec.Cluster.Spec.ProxyConfiguration != nil {
-		values["proxyConfig"] = true
-		values["httpProxy"] = clusterSpec.Cluster.Spec.ProxyConfiguration.HttpProxy
-		values["httpsProxy"] = clusterSpec.Cluster.Spec.ProxyConfiguration.HttpsProxy
-		values["noProxy"] = generateNoProxyList(clusterSpec.Cluster, datacenterSpec)
-	}
-
-	values["workertemplateOverride"] = workerTemplateOverride
-	if workerNodeGroupMachineSpec.HostOSConfiguration != nil {
-		if workerNodeGroupMachineSpec.HostOSConfiguration.NTPConfiguration != nil {
-			values["ntpServers"] = workerNodeGroupMachineSpec.HostOSConfiguration.NTPConfiguration.Servers
-		}
-
-		if workerNodeGroupMachineSpec.HostOSConfiguration.CertBundles != nil {
-			values["certBundles"] = workerNodeGroupMachineSpec.HostOSConfiguration.CertBundles
-		}
-	}
-
-	if workerNodeGroupMachineSpec.HostOSConfiguration != nil && workerNodeGroupMachineSpec.HostOSConfiguration.BottlerocketConfiguration != nil {
-		brSettings, err := common.GetCAPIBottlerocketSettingsConfig(workerNodeGroupMachineSpec.HostOSConfiguration, workerNodeGroupMachineSpec.HostOSConfiguration.BottlerocketConfiguration.Kubernetes)
-		if err != nil {
-			return nil, err
-		}
-		values["bottlerocketSettings"] = brSettings
-	}
-
-	if workerNodeGroupConfiguration.KubeletConfiguration != nil && workerNodeGroupMachineSpec.OSFamily != v1alpha1.Bottlerocket {
-		wnKubeletConfig := workerNodeGroupConfiguration.KubeletConfiguration.Object
-		if _, ok := wnKubeletConfig["tlsCipherSuites"]; !ok {
-			wnKubeletConfig["tlsCipherSuites"] = crypto.SecureCipherSuiteNames()
-		}
-
-		if _, ok := wnKubeletConfig["resolvConf"]; !ok {
-			if clusterSpec.Cluster.Spec.ClusterNetwork.DNS.ResolvConf != nil {
-				wnKubeletConfig["resolvConf"] = clusterSpec.Cluster.Spec.ClusterNetwork.DNS.ResolvConf.Path
-			}
-		}
-
-		kcString, err := yaml.Marshal(wnKubeletConfig)
-		if err != nil {
-			return nil, fmt.Errorf("marshaling Kubelet Configuration for worker node %s: %v", workerNodeGroupConfiguration.Name, err)
-		}
-		values["kubeletConfiguration"] = string(kcString)
-	} else {
-		kubeletExtraArgs := clusterapi.SecureTlsCipherSuitesExtraArgs().
-			Append(clusterapi.ResolvConfExtraArgs(clusterSpec.Cluster.Spec.ClusterNetwork.DNS.ResolvConf))
-		values["kubeletExtraArgs"] = kubeletExtraArgs
-	}
-
-	wnNodeLabelArgs := clusterapi.WorkerNodeLabelsExtraArgs(workerNodeGroupConfiguration)
-	if len(wnNodeLabelArgs) != 0 {
-		values["wnNodeLabelArgs"] = wnNodeLabelArgs
-	}
-
-	if !datacenterSpec.IsoBoot {
-		values["bootMode"] = netbootMode
-	} else {
-		values["bootMode"] = isobootMode
-		tinkerbellIP := datacenterSpec.TinkerbellIP
-		if t := clusterSpec.Cluster.HasTinkerbellIPAnnotation(); t != "" {
-			tinkerbellIP = t
-		}
-		isoURL := url.URL{
-			Scheme: "http",
-			Host:   fmt.Sprintf("%s:%s", tinkerbellIP, SmeeHTTPPort),
-			// isoURL path is only served in the top level /iso path.
-			Path: "/iso/hook.iso",
-		}
-		values["isoUrl"] = isoURL.String()
-	}
-
-	return values, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// Replace public.ecr.aws endpoint with the endpoint given in the cluster config file
+
+// isoURL path is only served in the top level /iso path.
 
 // omitTinkerbellMachineTemplate removes TinkerbellMachineTemplate API objects from yml. yml is
 // typically an EKSA cluster configuration.
 func omitTinkerbellMachineTemplate(yml []byte) ([]byte, error) {
-	var filtered []unstructured.Unstructured
-
-	r := yamlutil.NewYAMLReader(bufio.NewReader(bytes.NewReader(yml)))
-	for {
-		d, err := r.Read()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			return nil, err
-		}
-
-		var m map[string]interface{}
-		if err := yamlutil.Unmarshal(d, &m); err != nil {
-			return nil, err
-		}
-		var u unstructured.Unstructured
-		u.SetUnstructuredContent(m)
-
-		// Omit TinkerbellMachineTemplate kind.
-		if u.GetKind() == TinkerbellMachineTemplateKind {
-			continue
-		}
-
-		filtered = append(filtered, u)
-	}
-
-	return unstructuredutil.UnstructuredToYaml(filtered)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
+// Omit TinkerbellMachineTemplate kind.
+
 func populateRegistryMirrorValues(clusterSpec *cluster.Spec, values map[string]interface{}) (map[string]interface{}, error) {
-	registryMirror := registrymirror.FromCluster(clusterSpec.Cluster)
-	values["registryMirrorMap"] = containerd.ToAPIEndpoints(registryMirror.NamespacedRegistryMap)
-	values["mirrorBase"] = registryMirror.BaseRegistry
-	values["mirrorBaseAPIEndpoint"] = containerd.ToAPIEndpoint(registryMirror.BaseRegistry)
-	values["insecureSkip"] = registryMirror.InsecureSkipVerify
-	values["publicMirror"] = containerd.ToAPIEndpoint(registryMirror.CoreEKSAMirror())
-	values["coreEKSAMirror"] = registryMirror.CoreEKSAMirror()
-
-	if len(registryMirror.CACertContent) > 0 {
-		values["registryCACert"] = registryMirror.CACertContent
-	}
-
-	if registryMirror.Auth {
-		values["registryAuth"] = registryMirror.Auth
-		username, password, err := config.ReadCredentials()
-		if err != nil {
-			return values, err
-		}
-		values["registryUsername"] = username
-		values["registryPassword"] = password
-	}
-	return values, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func getControlPlaneMachineSpec(clusterSpec *cluster.Spec) (*v1alpha1.TinkerbellMachineConfigSpec, error) {
-	var controlPlaneMachineSpec *v1alpha1.TinkerbellMachineConfigSpec
-	if clusterSpec.Cluster.Spec.ControlPlaneConfiguration.MachineGroupRef != nil && clusterSpec.TinkerbellMachineConfigs[clusterSpec.Cluster.Spec.ControlPlaneConfiguration.MachineGroupRef.Name] != nil {
-		controlPlaneMachineSpec = &clusterSpec.TinkerbellMachineConfigs[clusterSpec.Cluster.Spec.ControlPlaneConfiguration.MachineGroupRef.Name].Spec
-	}
-
-	return controlPlaneMachineSpec, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func getWorkerNodeGroupMachineSpec(clusterSpec *cluster.Spec) (map[string]v1alpha1.TinkerbellMachineConfigSpec, error) {
-	var workerNodeGroupMachineSpec *v1alpha1.TinkerbellMachineConfigSpec
-	workerNodeGroupMachineSpecs := make(map[string]v1alpha1.TinkerbellMachineConfigSpec, len(clusterSpec.TinkerbellMachineConfigs))
-	for _, wnConfig := range clusterSpec.Cluster.Spec.WorkerNodeGroupConfigurations {
-		if wnConfig.MachineGroupRef != nil && clusterSpec.TinkerbellMachineConfigs[wnConfig.MachineGroupRef.Name] != nil {
-			workerNodeGroupMachineSpec = &clusterSpec.TinkerbellMachineConfigs[wnConfig.MachineGroupRef.Name].Spec
-			workerNodeGroupMachineSpecs[wnConfig.MachineGroupRef.Name] = *workerNodeGroupMachineSpec
-		}
-	}
-
-	return workerNodeGroupMachineSpecs, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func getEtcdMachineSpec(clusterSpec *cluster.Spec) (*v1alpha1.TinkerbellMachineConfigSpec, error) {
-	var etcdMachineSpec *v1alpha1.TinkerbellMachineConfigSpec
-	if clusterSpec.Cluster.Spec.ExternalEtcdConfiguration != nil {
-		if clusterSpec.Cluster.Spec.ExternalEtcdConfiguration.MachineGroupRef != nil && clusterSpec.TinkerbellMachineConfigs[clusterSpec.Cluster.Spec.ExternalEtcdConfiguration.MachineGroupRef.Name] != nil {
-			etcdMachineSpec = &clusterSpec.TinkerbellMachineConfigs[clusterSpec.Cluster.Spec.ExternalEtcdConfiguration.MachineGroupRef.Name].Spec
-		}
-	}
-
-	return etcdMachineSpec, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func generateTemplateBuilder(clusterSpec *cluster.Spec) (providers.TemplateBuilder, error) {
-	controlPlaneMachineSpec, err := getControlPlaneMachineSpec(clusterSpec)
-	if err != nil {
-		return nil, errors.Wrap(err, "generating control plane machine spec")
-	}
-
-	workerNodeGroupMachineSpecs, err := getWorkerNodeGroupMachineSpec(clusterSpec)
-	if err != nil {
-		return nil, errors.Wrap(err, "generating worker node group machine specs")
-	}
-
-	etcdMachineSpec, err := getEtcdMachineSpec(clusterSpec)
-	if err != nil {
-		return nil, errors.Wrap(err, "generating etcd machine spec")
-	}
-
-	templateBuilder := NewTemplateBuilder(&clusterSpec.TinkerbellDatacenter.Spec,
-		controlPlaneMachineSpec,
-		etcdMachineSpec,
-		workerNodeGroupMachineSpecs,
-		clusterSpec.TinkerbellDatacenter.Spec.TinkerbellIP,
-		time.Now,
-	)
-	return templateBuilder, nil
+	_ = "STUB: not implemented"
+	return *new(providers.TemplateBuilder), nil
 }
 
 // GenerateNoProxyList generates NOPROXY list for tinkerbell provider based on HTTP_PROXY, HTTPS_PROXY, NOPROXY and tinkerbellIP.
 func generateNoProxyList(clusterSpec *v1alpha1.Cluster, datacenterSpec v1alpha1.TinkerbellDatacenterConfigSpec) []string {
-	capacity := len(clusterSpec.Spec.ClusterNetwork.Pods.CidrBlocks) +
-		len(clusterSpec.Spec.ClusterNetwork.Services.CidrBlocks) +
-		len(clusterSpec.Spec.ProxyConfiguration.NoProxy) + 4
-
-	noProxyList := make([]string, 0, capacity)
-	noProxyList = append(noProxyList, clusterSpec.Spec.ClusterNetwork.Pods.CidrBlocks...)
-	noProxyList = append(noProxyList, clusterSpec.Spec.ClusterNetwork.Services.CidrBlocks...)
-	noProxyList = append(noProxyList, clusterSpec.Spec.ProxyConfiguration.NoProxy...)
-
-	noProxyList = append(noProxyList, clusterapi.NoProxyDefaults()...)
-
-	noProxyList = append(noProxyList,
-		clusterSpec.Spec.ControlPlaneConfiguration.Endpoint.Host,
-		datacenterSpec.TinkerbellIP,
-	)
-
-	return noProxyList
+	_ = "STUB: not implemented"
+	return nil
 }

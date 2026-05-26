@@ -15,12 +15,7 @@
 package cmd
 
 import (
-	"fmt"
-	"os"
-
-	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var cfgFile string
@@ -33,12 +28,7 @@ var rootCmd = &cobra.Command{
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-}
+func Execute() { _ = "STUB: not implemented"; return }
 
 func init() {
 	cobra.OnInitialize(initConfig)
@@ -51,26 +41,16 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// Find home directory.
-		home, err := homedir.Dir()
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
+	_ = "STUB: not implemented"
 
-		// Search config in home directory with name ".eks-anywhere" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigName(".eks-anywhere")
-	}
-
-	viper.AutomaticEnv() // read in environment variables that match
-
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
-	}
+	// Use config file from the flag.
+	return
 }
+
+// Find home directory.
+
+// Search config in home directory with name ".eks-anywhere" (without extension).
+
+// read in environment variables that match
+
+// If a config file is found, read it in.

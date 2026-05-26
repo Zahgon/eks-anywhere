@@ -15,104 +15,43 @@
 package bundles
 
 import (
-	"fmt"
-
-	"github.com/pkg/errors"
-
 	anywherev1alpha1 "github.com/aws/eks-anywhere/release/api/v1alpha1"
-	"github.com/aws/eks-anywhere/release/cli/pkg/filereader"
 	releasetypes "github.com/aws/eks-anywhere/release/cli/pkg/types"
 )
 
 func GetBottlerocketHostContainersBundle(r *releasetypes.ReleaseConfig, eksDReleaseChannel string, imageDigests releasetypes.ImageDigestsTable) (anywherev1alpha1.BottlerocketHostContainersBundle, error) {
-	adminArtifact, err := bottlerocketDefaultArtifact(r, "BOTTLEROCKET_ADMIN_CONTAINER_METADATA", "bottlerocket-admin")
-	if err != nil {
-		return anywherev1alpha1.BottlerocketHostContainersBundle{}, errors.Cause(err)
-	}
-
-	controlArtifact, err := bottlerocketDefaultArtifact(r, "BOTTLEROCKET_CONTROL_CONTAINER_METADATA", "bottlerocket-control")
-	if err != nil {
-		return anywherev1alpha1.BottlerocketHostContainersBundle{}, errors.Cause(err)
-	}
-
-	kubeadmBootstrapArtifact, err := bottlerocketKubeadmBootstrapArtifact(r, eksDReleaseChannel, imageDigests)
-	if err != nil {
-		return anywherev1alpha1.BottlerocketHostContainersBundle{}, errors.Cause(err)
-	}
-
-	bundle := anywherev1alpha1.BottlerocketHostContainersBundle{
-		Admin:            adminArtifact,
-		Control:          controlArtifact,
-		KubeadmBootstrap: kubeadmBootstrapArtifact,
-	}
-
-	return bundle, nil
+	_ = "STUB: not implemented"
+	return *new(anywherev1alpha1.BottlerocketHostContainersBundle), nil
 }
 
 func bottlerocketDefaultArtifact(r *releasetypes.ReleaseConfig, metadataFile, imageName string) (anywherev1alpha1.Image, error) {
-	bottlerocketContainerRegistry := "public.ecr.aws/bottlerocket"
-	tag, imageDigest, err := filereader.GetBottlerocketContainerMetadata(r, metadataFile)
-	if err != nil {
-		return anywherev1alpha1.Image{}, errors.Cause(err)
-	}
-
-	return anywherev1alpha1.Image{
-		Name:        imageName,
-		Description: fmt.Sprintf("Container image for %s image", imageName),
-		OS:          "linux",
-		Arch:        []string{"amd64"},
-		URI:         fmt.Sprintf("%s/%s:%s", bottlerocketContainerRegistry, imageName, tag),
-		ImageDigest: imageDigest,
-	}, nil
+	_ = "STUB: not implemented"
+	return *new(anywherev1alpha1.Image), nil
 }
 
 // getBottlerocketBootstrapArtifact is a shared helper function that retrieves a specific
 // bottlerocket bootstrap artifact by asset name from the bundle artifacts table.
 func getBottlerocketBootstrapArtifact(r *releasetypes.ReleaseConfig, eksDReleaseChannel string, imageDigests releasetypes.ImageDigestsTable, assetName string) (anywherev1alpha1.Image, error) {
-	bottlerocketBootstrapArtifacts, err := r.BundleArtifactsTable.Load(fmt.Sprintf("bottlerocket-bootstrap-%s", eksDReleaseChannel))
-	if err != nil {
-		return anywherev1alpha1.Image{}, fmt.Errorf("artifacts for project bottlerocket-bootstrap-%s not found in bundle artifacts table", eksDReleaseChannel)
-	}
-
-	for _, artifact := range bottlerocketBootstrapArtifacts {
-		imageArtifact := artifact.Image
-		if imageArtifact.AssetName == assetName {
-			imageDigest, err := imageDigests.Load(imageArtifact.ReleaseImageURI)
-			if err != nil {
-				return anywherev1alpha1.Image{}, fmt.Errorf("loading digest from image digests table: %v", err)
-			}
-
-			return anywherev1alpha1.Image{
-				Name:        imageArtifact.AssetName,
-				Description: fmt.Sprintf("Container image for %s image", imageArtifact.AssetName),
-				OS:          imageArtifact.OS,
-				Arch:        imageArtifact.Arch,
-				URI:         imageArtifact.ReleaseImageURI,
-				ImageDigest: imageDigest,
-			}, nil
-		}
-	}
-
-	return anywherev1alpha1.Image{}, fmt.Errorf("%s artifact not found", assetName)
+	_ = "STUB: not implemented"
+	return *new(anywherev1alpha1.Image), nil
 }
 
 func bottlerocketKubeadmBootstrapArtifact(r *releasetypes.ReleaseConfig, eksDReleaseChannel string, imageDigests releasetypes.ImageDigestsTable) (anywherev1alpha1.Image, error) {
-	return getBottlerocketBootstrapArtifact(r, eksDReleaseChannel, imageDigests, "bottlerocket-bootstrap")
+	_ = "STUB: not implemented"
+	return *new(anywherev1alpha1.Image), nil
 }
 
 func GetBottlerocketBootstrapContainersBundle(r *releasetypes.ReleaseConfig, eksDReleaseChannel string, imageDigests releasetypes.ImageDigestsTable) (anywherev1alpha1.BottlerocketBootstrapContainersBundle, error) {
-	bundle := anywherev1alpha1.BottlerocketBootstrapContainersBundle{}
-
-	// VSphere multi-network bootstrap container (optional)
-	if multiNetworkArtifact, err := bottlerocketMultiNetworkArtifact(r, eksDReleaseChannel, imageDigests); err == nil {
-		bundle.MultiNetworkBootstrap = multiNetworkArtifact
-	}
-	// Note: We don't return an error if the artifact is not found since bootstrap containers are optional
-	// and may not be available for all release channels or configurations.
-
-	return bundle, nil
+	_ = "STUB: not implemented"
+	return *new(anywherev1alpha1.BottlerocketBootstrapContainersBundle), nil
 }
 
+// VSphere multi-network bootstrap container (optional)
+
+// Note: We don't return an error if the artifact is not found since bootstrap containers are optional
+// and may not be available for all release channels or configurations.
+
 func bottlerocketMultiNetworkArtifact(r *releasetypes.ReleaseConfig, eksDReleaseChannel string, imageDigests releasetypes.ImageDigestsTable) (anywherev1alpha1.Image, error) {
-	return getBottlerocketBootstrapArtifact(r, eksDReleaseChannel, imageDigests, "bottlerocket-bootstrap-multi-network")
+	_ = "STUB: not implemented"
+	return *new(anywherev1alpha1.Image), nil
 }

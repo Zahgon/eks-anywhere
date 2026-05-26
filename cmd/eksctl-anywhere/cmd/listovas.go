@@ -2,20 +2,11 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 	"log"
-	"strings"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
-	"github.com/spf13/viper"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
-	"sigs.k8s.io/yaml"
 
-	eksav1alpha1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	"github.com/aws/eks-anywhere/pkg/cluster"
-	"github.com/aws/eks-anywhere/pkg/version"
 )
 
 type listOvasOptions struct {
@@ -56,60 +47,15 @@ var listOvasCmd = &cobra.Command{
 }
 
 func listOvas(context context.Context, clusterSpecPath, bundlesOverride string) error {
-	var specOpts []cluster.FileSpecBuilderOpt
-	if bundlesOverride != "" {
-		specOpts = append(specOpts, cluster.WithOverrideBundlesManifest(bundlesOverride))
-	}
-	clusterSpec, err := readAndValidateClusterSpec(clusterSpecPath, version.Get(), specOpts...)
-	if err != nil {
-		return err
-	}
-
-	for _, version := range clusterSpec.Cluster.KubernetesVersions() {
-		bundle := clusterSpec.VersionsBundle(version)
-		err := printOvas(bundle)
-		if err != nil {
-			return err
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func printOvas(bundle *cluster.VersionsBundle) error {
-	titler := cases.Title(language.English)
-	for _, ova := range bundle.Ovas() {
-		if strings.Contains(ova.URI, string(eksav1alpha1.Bottlerocket)) {
-			fmt.Printf("%s:\n", titler.String(string(eksav1alpha1.Bottlerocket)))
-		} else {
-			fmt.Printf("%s:\n", titler.String(string(eksav1alpha1.Ubuntu)))
-		}
-		output := listOvasOutput{
-			URI:    ova.URI,
-			SHA256: ova.SHA256,
-			SHA512: ova.SHA512,
-		}
-		yamlOutput, err := yaml.Marshal(output)
-		if err != nil {
-			return err
-		}
-		fmt.Println(yamlIndent(2, string(yamlOutput)))
-	}
-	return nil
-}
+func printOvas(bundle *cluster.VersionsBundle) error { _ = "STUB: not implemented"; return nil }
 
 func preRunListOvasCmd(cmd *cobra.Command, args []string) error {
-	cmd.Flags().VisitAll(func(flag *pflag.Flag) {
-		err := viper.BindPFlag(flag.Name, flag)
-		if err != nil {
-			log.Fatalf("Error initializing flags: %v", err)
-		}
-	})
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func yamlIndent(level int, yamlString string) string {
-	indentation := strings.Repeat(" ", level)
-	indentedString := fmt.Sprintf("%s%s", indentation, strings.Replace(yamlString, "\n", "\n"+indentation, -1))
-	return indentedString
-}
+func yamlIndent(level int, yamlString string) string { _ = "STUB: not implemented"; return "" }

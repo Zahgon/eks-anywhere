@@ -18,28 +18,16 @@ package controllers
 
 import (
 	"context"
-	"encoding/base64"
-	"encoding/json"
-	"fmt"
-	"reflect"
-	"strings"
-	"time"
 
 	"github.com/go-logr/logr"
 	corev1 "k8s.io/api/core/v1"
-	apierrors "k8s.io/apimachinery/pkg/api/errors"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	kerrors "k8s.io/apimachinery/pkg/util/errors"
 	controlplanev1beta2 "sigs.k8s.io/cluster-api/api/controlplane/kubeadm/v1beta2"
 	clusterv1beta2 "sigs.k8s.io/cluster-api/api/core/v1beta2"
-	"sigs.k8s.io/cluster-api/util/annotations"
 	"sigs.k8s.io/cluster-api/util/patch"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
-	"github.com/aws/eks-anywhere/pkg/constants"
 )
 
 const (
@@ -59,11 +47,8 @@ type KubeadmControlPlaneReconciler struct {
 
 // NewKubeadmControlPlaneReconciler returns a new instance of KubeadmControlPlaneReconciler.
 func NewKubeadmControlPlaneReconciler(client client.Client, uncachedClient client.Reader) *KubeadmControlPlaneReconciler {
-	return &KubeadmControlPlaneReconciler{
-		client:         client,
-		uncachedClient: uncachedClient,
-		log:            ctrl.Log.WithName("KubeadmControlPlaneController"),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 //+kubebuilder:rbac:groups=controlplane.cluster.x-k8s.io,resources=kubeadmcontrolplane,verbs=get;list;watch;update;patch
@@ -71,192 +56,59 @@ func NewKubeadmControlPlaneReconciler(client client.Client, uncachedClient clien
 
 // Reconcile reconciles a KubeadmControlPlane object for in place upgrades.
 func (r *KubeadmControlPlaneReconciler) Reconcile(ctx context.Context, req ctrl.Request) (result ctrl.Result, reterr error) {
-	log := r.log.WithValues("KubeadmControlPlane", req.NamespacedName)
-
-	kcp := &controlplanev1beta2.KubeadmControlPlane{}
-	if err := r.uncachedClient.Get(ctx, req.NamespacedName, kcp); err != nil {
-		if apierrors.IsNotFound(err) {
-			return reconcile.Result{}, err
-		}
-		return ctrl.Result{}, err
-	}
-
-	if !r.inPlaceUpgradeNeeded(kcp) {
-		return ctrl.Result{}, nil
-	}
-
-	patchHelper, err := patch.NewHelper(kcp, r.client)
-	if err != nil {
-		return ctrl.Result{}, err
-	}
-
-	defer func() {
-		// Always attempt to patch after each reconciliation in case annotation is removed.
-		if err := patchHelper.Patch(ctx, kcp); err != nil {
-			reterr = kerrors.NewAggregate([]error{reterr, err})
-		}
-
-		// Only requeue if we are not already re-queueing and the "in-place-upgrade-needed" annotation is not set.
-		// We do this to be able to update the status continuously until it becomes ready,
-		// since there might be changes in state of the world that don't trigger reconciliation requests
-		if reterr == nil && !result.Requeue && result.RequeueAfter <= 0 && r.inPlaceUpgradeNeeded(kcp) {
-			result = ctrl.Result{RequeueAfter: 10 * time.Second}
-		}
-	}()
-
-	return r.reconcile(ctx, log, kcp)
+	_ = "STUB: not implemented"
+	return *new(ctrl.Result), nil
 }
+
+// Always attempt to patch after each reconciliation in case annotation is removed.
+
+// Only requeue if we are not already re-queueing and the "in-place-upgrade-needed" annotation is not set.
+// We do this to be able to update the status continuously until it becomes ready,
+// since there might be changes in state of the world that don't trigger reconciliation requests
 
 // SetupWithManager sets up the controller with the Manager.
 func (r *KubeadmControlPlaneReconciler) SetupWithManager(mgr ctrl.Manager) error {
-	return ctrl.NewControllerManagedBy(mgr).
-		For(&controlplanev1beta2.KubeadmControlPlane{}).
-		Complete(r)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (r *KubeadmControlPlaneReconciler) reconcile(ctx context.Context, log logr.Logger, kcp *controlplanev1beta2.KubeadmControlPlane) (ctrl.Result, error) {
-	log.Info("Reconciling in place upgrade for control plane")
-	if err := r.validateStackedEtcd(kcp); err != nil {
-		log.Info("Stacked etcd validation failed, unable to reconcile for in place upgrade")
-		return ctrl.Result{}, err
-	}
-
-	mhc := &clusterv1beta2.MachineHealthCheck{}
-	if err := r.client.Get(ctx, GetNamespacedNameType(cpMachineHealthCheckName(kcp.ObjectMeta.Name), constants.EksaSystemNamespace), mhc); err != nil {
-		if apierrors.IsNotFound(err) {
-			return reconcile.Result{}, err
-		}
-		return ctrl.Result{}, fmt.Errorf("getting MachineHealthCheck %s: %v", cpMachineHealthCheckName(kcp.ObjectMeta.Name), err)
-	}
-	mhcPatchHelper, err := patch.NewHelper(mhc, r.client)
-	if err != nil {
-		return ctrl.Result{}, err
-	}
-
-	cpUpgrade := &anywherev1.ControlPlaneUpgrade{}
-	cpuGetErr := r.client.Get(ctx, GetNamespacedNameType(cpUpgradeName(kcp.ObjectMeta.Name), constants.EksaSystemNamespace), cpUpgrade)
-	if cpuGetErr == nil {
-		if cpUpgrade.Status.Ready && kcp.Status.Version != "" && kcp.Status.Version == cpUpgrade.Spec.KubernetesVersion {
-			log.Info("Control plane upgrade complete, deleting object", "ControlPlaneUpgrade", cpUpgrade.Name)
-			if err := r.client.Delete(ctx, cpUpgrade); err != nil {
-				return ctrl.Result{}, fmt.Errorf("deleting ControlPlaneUpgrade object: %v", err)
-			}
-			log.Info("Resuming control plane machine health check", "MachineHealthCheck", cpMachineHealthCheckName(kcp.ObjectMeta.Name))
-			if err := resumeMachineHealthCheck(ctx, mhc, mhcPatchHelper); err != nil {
-				return ctrl.Result{}, fmt.Errorf("updating annotations for machine health check: %v", err)
-			}
-
-			log.Info("KubeadmControlPlane is ready, removing the \"in-place-upgrade-needed\" annotation")
-			// Remove the in-place-upgrade-needed annotation only after the ControlPlaneUpgrade object is deleted
-			delete(kcp.Annotations, kcpInPlaceUpgradeNeededAnnotation)
-		}
-		return ctrl.Result{}, nil
-	}
-
-	if apierrors.IsNotFound(cpuGetErr) {
-		log.Info("Creating ControlPlaneUpgrade object")
-		machines, err := r.machinesToUpgrade(ctx, kcp)
-		if err != nil {
-			return ctrl.Result{}, fmt.Errorf("retrieving list of control plane machines: %v", err)
-		}
-		cpUpgrade, err := controlPlaneUpgrade(kcp, machines)
-		if err != nil {
-			return ctrl.Result{}, fmt.Errorf("generating ControlPlaneUpgrade: %v", err)
-		}
-
-		log.Info("Pausing control plane machine health check", "MachineHealthCheck", cpMachineHealthCheckName(kcp.ObjectMeta.Name))
-		if err := pauseMachineHealthCheck(ctx, mhc, mhcPatchHelper); err != nil {
-			return ctrl.Result{}, fmt.Errorf("updating annotations for machine health check: %v", err)
-		}
-
-		if err := r.client.Create(ctx, cpUpgrade); client.IgnoreAlreadyExists(err) != nil {
-			return ctrl.Result{}, fmt.Errorf("failed to create ControlPlaneUpgrade for KubeadmControlPlane %s:  %v", kcp.ObjectMeta.Name, err)
-		}
-		return ctrl.Result{}, nil
-	}
-
-	return ctrl.Result{}, fmt.Errorf("getting ControlPlaneUpgrade for KubeadmControlPlane %s: %v", kcp.ObjectMeta.Name, err)
+	_ = "STUB: not implemented"
+	return *new(ctrl.Result), nil
 }
 
+// Remove the in-place-upgrade-needed annotation only after the ControlPlaneUpgrade object is deleted
+
 func (r *KubeadmControlPlaneReconciler) inPlaceUpgradeNeeded(kcp *controlplanev1beta2.KubeadmControlPlane) bool {
-	return strings.ToLower(kcp.Annotations[kcpInPlaceUpgradeNeededAnnotation]) == "true"
+	_ = "STUB: not implemented"
+	return false
 }
 
 func (r *KubeadmControlPlaneReconciler) machinesToUpgrade(ctx context.Context, kcp *controlplanev1beta2.KubeadmControlPlane) ([]corev1.ObjectReference, error) {
-	selector, err := metav1.LabelSelectorAsSelector(&metav1.LabelSelector{MatchLabels: map[string]string{controlPlaneMachineLabel: kcp.ObjectMeta.Name}})
-	if err != nil {
-		return nil, err
-	}
-	machineList := &clusterv1beta2.MachineList{}
-	if err := r.client.List(ctx, machineList, &client.ListOptions{LabelSelector: selector, Namespace: kcp.ObjectMeta.Namespace}); err != nil {
-		return nil, err
-	}
-	machines := sortMachinesByCreationTimestamp(machineList)
-	machineObjects := make([]corev1.ObjectReference, 0, len(machines))
-	for _, machine := range machines {
-		machineObjects = append(machineObjects,
-			corev1.ObjectReference{
-				Kind:      machine.Kind,
-				Namespace: machine.Namespace,
-				Name:      machine.Name,
-			},
-		)
-	}
-	return machineObjects, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (r *KubeadmControlPlaneReconciler) validateStackedEtcd(kcp *controlplanev1beta2.KubeadmControlPlane) error {
-	if reflect.ValueOf(kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.Etcd.Local).IsZero() {
-		return fmt.Errorf("local etcd configuration is missing for KubeadmControlPlane %q", kcp.ObjectMeta.Name)
-	}
+	_ = "STUB: not implemented"
 	return nil
 }
 
 func pauseMachineHealthCheck(ctx context.Context, mhc *clusterv1beta2.MachineHealthCheck, mhcPatchHelper *patch.Helper) error {
-	annotations.AddAnnotations(mhc, map[string]string{clusterv1beta2.PausedAnnotation: "true"})
-	return mhcPatchHelper.Patch(ctx, mhc)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func resumeMachineHealthCheck(ctx context.Context, mhc *clusterv1beta2.MachineHealthCheck, mhcPatchHelper *patch.Helper) error {
-	delete(mhc.Annotations, clusterv1beta2.PausedAnnotation)
-	return mhcPatchHelper.Patch(ctx, mhc)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func controlPlaneUpgrade(kcp *controlplanev1beta2.KubeadmControlPlane, machines []corev1.ObjectReference) (*anywherev1.ControlPlaneUpgrade, error) {
-	kcpSpec, err := json.Marshal(kcp.Spec)
-	if err != nil {
-		return nil, fmt.Errorf("marshaling KCP spec: %v", err)
-	}
-
-	return &anywherev1.ControlPlaneUpgrade{
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      cpUpgradeName(kcp.ObjectMeta.Name),
-			Namespace: constants.EksaSystemNamespace,
-			OwnerReferences: []metav1.OwnerReference{{
-				APIVersion: controlplanev1beta2.GroupVersion.String(),
-				Kind:       kubeadmControlPlaneKind,
-				Name:       kcp.ObjectMeta.Name,
-				UID:        kcp.ObjectMeta.UID,
-			}},
-		},
-		Spec: anywherev1.ControlPlaneUpgradeSpec{
-			ControlPlane: corev1.ObjectReference{
-				Kind:      kubeadmControlPlaneKind,
-				Namespace: kcp.ObjectMeta.Namespace,
-				Name:      kcp.ObjectMeta.Name,
-			},
-			KubernetesVersion:      kcp.Spec.Version,
-			EtcdVersion:            kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.Etcd.Local.ImageTag,
-			MachinesRequireUpgrade: machines,
-			ControlPlaneSpecData:   base64.StdEncoding.EncodeToString(kcpSpec),
-		},
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func cpUpgradeName(kcpName string) string {
-	return kcpName + "-cp-upgrade"
-}
+func cpUpgradeName(kcpName string) string { _ = "STUB: not implemented"; return "" }
 
-func cpMachineHealthCheckName(kcpName string) string {
-	return fmt.Sprintf("%s-kcp-unhealthy", kcpName)
-}
+func cpMachineHealthCheckName(kcpName string) string { _ = "STUB: not implemented"; return "" }

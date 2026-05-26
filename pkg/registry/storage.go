@@ -19,12 +19,8 @@ type StorageContext struct {
 
 // NewStorageContext create registry context.
 func NewStorageContext(host string, credentialStore *CredentialStore, certificates *x509.CertPool, insecure bool) StorageContext {
-	return StorageContext{
-		host:            host,
-		credentialStore: credentialStore,
-		certificates:    certificates,
-		insecure:        insecure,
-	}
+	_ = "STUB: not implemented"
+	return *new(StorageContext)
 }
 
 // StorageClient interface for general image storage client.

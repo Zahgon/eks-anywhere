@@ -2,17 +2,10 @@ package cmd
 
 import (
 	"context"
-	"fmt"
-	"os"
 
 	"github.com/spf13/cobra"
-	"k8s.io/apimachinery/pkg/types"
 
-	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
-	"github.com/aws/eks-anywhere/pkg/clients/kubernetes"
-	"github.com/aws/eks-anywhere/pkg/constants"
 	"github.com/aws/eks-anywhere/pkg/curatedpackages"
-	"github.com/aws/eks-anywhere/pkg/kubeconfig"
 )
 
 type listPackagesOption struct {
@@ -59,47 +52,4 @@ var listPackagesCommand = &cobra.Command{
 	},
 }
 
-func listPackages(ctx context.Context) error {
-	kubeConfig, err := kubeconfig.ResolveAndValidateFilename(lpo.kubeConfig, "")
-	if err != nil {
-		return err
-	}
-
-	depOpts := []PackageOpt{
-		WithRegistryName(lpo.registry),
-		WithKubeVersion(lpo.kubeVersion),
-		WithMountPaths(kubeConfig),
-		WithBundlesOverride(lpo.bundlesOverride),
-	}
-	cluster := &anywherev1.Cluster{}
-	if len(lpo.clusterName) > 0 {
-		k8sClient, err := kubernetes.NewRuntimeClientFromFileName(kubeConfig)
-		if err != nil {
-			return fmt.Errorf("unable to initalize k8s client: %v", err)
-		}
-
-		if err := k8sClient.Get(ctx, types.NamespacedName{Name: lpo.clusterName, Namespace: constants.DefaultNamespace}, cluster); err != nil {
-			return fmt.Errorf("unable to get cluster %s: %v", lpo.clusterName, err)
-		}
-		depOpts = append(depOpts, WithCluster(cluster))
-	}
-
-	deps, err := NewDependenciesForPackages(ctx, depOpts...)
-	if err != nil {
-		return fmt.Errorf("unable to initialize executables: %v", err)
-	}
-
-	bm := curatedpackages.CreateBundleManager(deps.Logger)
-
-	b := curatedpackages.NewBundleReader(kubeConfig, lpo.clusterName, deps.Kubectl, bm, deps.BundleRegistry)
-
-	bundle, err := b.GetLatestBundle(ctx, lpo.kubeVersion)
-	if err != nil {
-		return err
-	}
-	packages := curatedpackages.NewPackageClient(
-		deps.Kubectl,
-		curatedpackages.WithBundle(bundle),
-	)
-	return packages.DisplayPackages(os.Stdout)
-}
+func listPackages(ctx context.Context) error { _ = "STUB: not implemented"; return nil }

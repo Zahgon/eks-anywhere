@@ -8,6 +8,12 @@ import (
 
 type Noop struct{}
 
-func (*Noop) Download(ctx context.Context, bundles *releasev1.Bundles) {}
+func (*Noop) Download(ctx context.Context, bundles *releasev1.Bundles) {
+	_ = "STUB: not implemented"
+	return
+}
 
-func (*Noop) Push(ctx context.Context, bundles *releasev1.Bundles) {}
+func (*Noop) Push(ctx context.Context, bundles *releasev1.Bundles) {
+	_ = "STUB: not implemented"
+	return
+}

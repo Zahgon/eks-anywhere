@@ -53,59 +53,30 @@ type TinkerbellDatacenterConfig struct {
 	Status TinkerbellDatacenterConfigStatus `json:"status,omitempty"`
 }
 
-func (t *TinkerbellDatacenterConfig) Kind() string {
-	return t.TypeMeta.Kind
-}
+func (t *TinkerbellDatacenterConfig) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (v *TinkerbellDatacenterConfig) ExpectedKind() string {
-	return TinkerbellDatacenterKind
-}
+func (v *TinkerbellDatacenterConfig) ExpectedKind() string { _ = "STUB: not implemented"; return "" }
 
-func (t *TinkerbellDatacenterConfig) PauseReconcile() {
-	if t.Annotations == nil {
-		t.Annotations = map[string]string{}
-	}
-	t.Annotations[pausedAnnotation] = "true"
-}
+func (t *TinkerbellDatacenterConfig) PauseReconcile() { _ = "STUB: not implemented"; return }
 
 func (t *TinkerbellDatacenterConfig) IsReconcilePaused() bool {
-	if s, ok := t.Annotations[pausedAnnotation]; ok {
-		return s == "true"
-	}
+	_ = "STUB: not implemented"
 	return false
 }
 
-func (t *TinkerbellDatacenterConfig) ClearPauseAnnotation() {
-	if t.Annotations != nil {
-		delete(t.Annotations, pausedAnnotation)
-	}
-}
+func (t *TinkerbellDatacenterConfig) ClearPauseAnnotation() { _ = "STUB: not implemented"; return }
 
 // Validate validates the Tinkerbell datacenter config.
-func (t *TinkerbellDatacenterConfig) Validate() error {
-	return validateDatacenterConfig(t)
-}
+func (t *TinkerbellDatacenterConfig) Validate() error { _ = "STUB: not implemented"; return nil }
 
 func (t *TinkerbellDatacenterConfig) ConvertConfigToConfigGenerateStruct() *TinkerbellDatacenterConfigGenerate {
-	namespace := defaultEksaNamespace
-	if t.Namespace != "" {
-		namespace = t.Namespace
-	}
-	config := &TinkerbellDatacenterConfigGenerate{
-		TypeMeta: t.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        t.Name,
-			Annotations: t.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: t.Spec,
-	}
-
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (t *TinkerbellDatacenterConfig) Marshallable() Marshallable {
-	return t.ConvertConfigToConfigGenerateStruct()
+	_ = "STUB: not implemented"
+	return *new(Marshallable)
 }
 
 // +kubebuilder:object:generate=false

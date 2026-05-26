@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	snowballdevice "github.com/aws/eks-anywhere/internal/aws-sdk-go-v2/service/snowballdevice"
 	gomock "github.com/golang/mock/gomock"
@@ -25,52 +24,37 @@ type MockSnowballDeviceClientMockRecorder struct {
 
 // NewMockSnowballDeviceClient creates a new mock instance.
 func NewMockSnowballDeviceClient(ctrl *gomock.Controller) *MockSnowballDeviceClient {
-	mock := &MockSnowballDeviceClient{ctrl: ctrl}
-	mock.recorder = &MockSnowballDeviceClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockSnowballDeviceClient) EXPECT() *MockSnowballDeviceClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// DescribeDevice mocks base method.
+	return nil
 }
 
-// DescribeDevice mocks base method.
 func (m *MockSnowballDeviceClient) DescribeDevice(ctx context.Context, params *snowballdevice.DescribeDeviceInput, optFns ...func(*snowballdevice.Options)) (*snowballdevice.DescribeDeviceOutput, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, params}
-	for _, a := range optFns {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "DescribeDevice", varargs...)
-	ret0, _ := ret[0].(*snowballdevice.DescribeDeviceOutput)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // DescribeDevice indicates an expected call of DescribeDevice.
 func (mr *MockSnowballDeviceClientMockRecorder) DescribeDevice(ctx, params interface{}, optFns ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, params}, optFns...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeDevice", reflect.TypeOf((*MockSnowballDeviceClient)(nil).DescribeDevice), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // DescribeDeviceSoftware mocks base method.
 func (m *MockSnowballDeviceClient) DescribeDeviceSoftware(ctx context.Context, params *snowballdevice.DescribeDeviceSoftwareInput, optFns ...func(*snowballdevice.Options)) (*snowballdevice.DescribeDeviceSoftwareOutput, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, params}
-	for _, a := range optFns {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "DescribeDeviceSoftware", varargs...)
-	ret0, _ := ret[0].(*snowballdevice.DescribeDeviceSoftwareOutput)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // DescribeDeviceSoftware indicates an expected call of DescribeDeviceSoftware.
 func (mr *MockSnowballDeviceClientMockRecorder) DescribeDeviceSoftware(ctx, params interface{}, optFns ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, params}, optFns...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeDeviceSoftware", reflect.TypeOf((*MockSnowballDeviceClient)(nil).DescribeDeviceSoftware), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }

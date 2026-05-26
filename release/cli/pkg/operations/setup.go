@@ -15,82 +15,15 @@
 package operations
 
 import (
-	"fmt"
-	"os"
-	"path/filepath"
-
-	"github.com/pkg/errors"
-
-	"github.com/aws/eks-anywhere/release/cli/pkg/constants"
-	"github.com/aws/eks-anywhere/release/cli/pkg/git"
 	releasetypes "github.com/aws/eks-anywhere/release/cli/pkg/types"
 )
 
-func SetRepoHeads(r *releasetypes.ReleaseConfig) error {
-	fmt.Println("\n==========================================================")
-	fmt.Println("                    Local Repository Setup")
-	fmt.Println("==========================================================")
+func SetRepoHeads(r *releasetypes.ReleaseConfig) error { _ = "STUB: not implemented"; return nil }
 
-	// Get the repos from env var
-	if r.CliRepoUrl == "" || r.BuildRepoUrl == "" {
-		return fmt.Errorf("One or both clone URLs are empty")
-	}
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		return errors.Cause(err)
-	}
-	parentSourceDir := filepath.Join(homeDir, "eks-a-source")
+// Get the repos from env var
 
-	// Clone the CLI repository
-	fmt.Println("Cloning CLI repository")
-	r.CliRepoSource = filepath.Join(parentSourceDir, "eks-a-cli")
-	out, err := git.CloneRepo(r.CliRepoUrl, r.CliRepoSource)
-	fmt.Println(out)
-	if err != nil {
-		return errors.Cause(err)
-	}
+// Clone the CLI repository
 
-	// Clone the build-tooling repository
-	fmt.Println("Cloning build-tooling repository")
-	r.BuildRepoSource = filepath.Join(parentSourceDir, "eks-a-build")
-	out, err = git.CloneRepo(r.BuildRepoUrl, r.BuildRepoSource)
-	fmt.Println(out)
-	if err != nil {
-		return errors.Cause(err)
-	}
+// Clone the build-tooling repository
 
-	if r.BuildRepoBranchName != "main" {
-		fmt.Printf("Checking out build-tooling repo at branch %s\n", r.BuildRepoBranchName)
-		out, err = git.CheckoutRepo(r.BuildRepoSource, r.BuildRepoBranchName)
-		fmt.Println(out)
-		if err != nil {
-			return errors.Cause(err)
-		}
-	}
-
-	if r.CliRepoBranchName != "main" {
-		fmt.Printf("Checking out CLI repo at branch %s\n", r.CliRepoBranchName)
-		out, err = git.CheckoutRepo(r.CliRepoSource, r.CliRepoBranchName)
-		fmt.Println(out)
-		if err != nil {
-			return errors.Cause(err)
-		}
-	}
-
-	// Set HEADs of the repos
-	r.CliRepoHead, err = git.GetHead(r.CliRepoSource)
-	if err != nil {
-		return errors.Cause(err)
-	}
-	fmt.Printf("Head of cli repo: %s\n", r.CliRepoHead)
-
-	r.BuildRepoHead, err = git.GetHead(r.BuildRepoSource)
-	if err != nil {
-		return errors.Cause(err)
-	}
-	fmt.Printf("Head of build repo: %s\n", r.BuildRepoHead)
-
-	fmt.Printf("%s Successfully completed local repository setup\n", constants.SuccessIcon)
-
-	return nil
-}
+// Set HEADs of the repos

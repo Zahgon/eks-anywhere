@@ -1,11 +1,6 @@
 package api
 
 import (
-	"os"
-	"strings"
-
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-
 	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
 	"github.com/aws/eks-anywhere/pkg/cluster"
 )
@@ -20,131 +15,62 @@ type SnowFiller func(config SnowConfig)
 
 // SnowToConfigFiller transforms a set of SnowFiller's in a single ClusterConfigFiller.
 func SnowToConfigFiller(fillers ...SnowFiller) ClusterConfigFiller {
-	return func(c *cluster.Config) {
-		updateSnow(c, fillers...)
-	}
+	_ = "STUB: not implemented"
+	return *new(ClusterConfigFiller)
 }
 
-func updateSnow(config *cluster.Config, fillers ...SnowFiller) {
-	if config.SnowIPPools == nil {
-		config.SnowIPPools = map[string]*anywherev1.SnowIPPool{}
-	}
-
-	sc := SnowConfig{
-		datacenterConfig: config.SnowDatacenter,
-		machineConfigs:   config.SnowMachineConfigs,
-		ipPools:          config.SnowIPPools,
-	}
-
-	for _, f := range fillers {
-		f(sc)
-	}
-}
+func updateSnow(config *cluster.Config, fillers ...SnowFiller) { _ = "STUB: not implemented"; return }
 
 func WithSnowStringFromEnvVar(envVar string, opt func(string) SnowFiller) SnowFiller {
-	return opt(os.Getenv(envVar))
+	_ = "STUB: not implemented"
+	return *new(SnowFiller)
 }
 
 func WithSnowAMIIDForAllMachines(id string) SnowFiller {
-	return func(config SnowConfig) {
-		for _, m := range config.machineConfigs {
-			m.Spec.AMIID = id
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(SnowFiller)
 }
 
 // WithSnowInstanceTypeForAllMachines specifies an instance type for all the snow machine configs.
 func WithSnowInstanceTypeForAllMachines(instanceType string) SnowFiller {
-	return func(config SnowConfig) {
-		for _, m := range config.machineConfigs {
-			m.Spec.InstanceType = instanceType
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(SnowFiller)
 }
 
 func WithSnowPhysicalNetworkConnectorForAllMachines(connectorType anywherev1.PhysicalNetworkConnectorType) SnowFiller {
-	return func(config SnowConfig) {
-		for _, m := range config.machineConfigs {
-			m.Spec.PhysicalNetworkConnector = connectorType
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(SnowFiller)
 }
 
 func WithSnowSshKeyNameForAllMachines(keyName string) SnowFiller {
-	return func(config SnowConfig) {
-		for _, m := range config.machineConfigs {
-			m.Spec.SshKeyName = keyName
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(SnowFiller)
 }
 
 func WithSnowDevicesForAllMachines(devices string) SnowFiller {
-	return func(config SnowConfig) {
-		for _, m := range config.machineConfigs {
-			m.Spec.Devices = strings.Split(devices, ",")
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(SnowFiller)
 }
 
 func WithSnowMachineConfig(name string, fillers ...SnowMachineConfigFiller) SnowFiller {
-	return func(config SnowConfig) {
-		m, ok := config.machineConfigs[name]
-		if !ok {
-			m = &anywherev1.SnowMachineConfig{
-				TypeMeta: metav1.TypeMeta{
-					Kind:       anywherev1.SnowMachineConfigKind,
-					APIVersion: anywherev1.SchemeBuilder.GroupVersion.String(),
-				},
-				ObjectMeta: metav1.ObjectMeta{
-					Name: name,
-				},
-			}
-			config.machineConfigs[name] = m
-		}
-
-		FillSnowMachineConfig(m, fillers...)
-	}
+	_ = "STUB: not implemented"
+	return *new(SnowFiller)
 }
 
 // WithOsFamilyForAllSnowMachines sets the OSFamily in the SnowMachineConfig.
 func WithOsFamilyForAllSnowMachines(value anywherev1.OSFamily) SnowFiller {
-	return func(config SnowConfig) {
-		for _, m := range config.machineConfigs {
-			m.Spec.OSFamily = value
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(SnowFiller)
 }
 
 // WithChangeForAllSnowMachines applies the same change to all SnowMachineConfigs.
 func WithChangeForAllSnowMachines(change SnowMachineConfigFiller) SnowFiller {
-	return func(config SnowConfig) {
-		for _, m := range config.machineConfigs {
-			change(m)
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(SnowFiller)
 }
 
 // WithSnowIPPool sets a SnowIPPool.
 func WithSnowIPPool(name, ipStart, ipEnd, gateway, subnet string) SnowFiller {
-	return func(config SnowConfig) {
-		config.ipPools[name] = &anywherev1.SnowIPPool{
-			TypeMeta: metav1.TypeMeta{
-				Kind:       anywherev1.SnowIPPoolKind,
-				APIVersion: anywherev1.SchemeBuilder.GroupVersion.String(),
-			},
-			ObjectMeta: metav1.ObjectMeta{
-				Name: name,
-			},
-			Spec: anywherev1.SnowIPPoolSpec{
-				Pools: []anywherev1.IPPool{
-					{
-						IPStart: ipStart,
-						IPEnd:   ipEnd,
-						Subnet:  subnet,
-						Gateway: gateway,
-					},
-				},
-			},
-		}
-	}
+	_ = "STUB: not implemented"
+	return *new(SnowFiller)
 }

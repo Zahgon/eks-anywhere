@@ -18,7 +18,6 @@ package v1beta1
 
 import (
 	"context"
-	"fmt"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/validation/field"
@@ -31,73 +30,33 @@ var _ webhook.CustomValidator = &TinkerbellMachine{}
 
 // SetupWebhookWithManager sets up and registers the webhook with the manager.
 func (m *TinkerbellMachine) SetupWebhookWithManager(mgr ctrl.Manager) error {
-	return ctrl.NewWebhookManagedBy(mgr).For(m).
-		WithValidator(m).Complete() //nolint:wrapcheck
+	_ = "STUB: not implemented"
+	return nil
 }
+
+//nolint:wrapcheck
 
 // ValidateCreate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (m *TinkerbellMachine) ValidateCreate(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	machine, ok := obj.(*TinkerbellMachine)
-	if !ok {
-		return nil, fmt.Errorf("expected a TinkerbellMachine but got %T", obj)
-	}
-
-	allErrs := machine.validateSpec()
-
-	return nil, aggregateObjErrors(machine.GroupVersionKind().GroupKind(), machine.Name, allErrs)
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 // ValidateUpdate implements webhook.CustomValidator so a webhook will be registered for the type.
 func (m *TinkerbellMachine) ValidateUpdate(_ context.Context, oldRaw, obj runtime.Object) (admission.Warnings, error) {
-	machine, ok := obj.(*TinkerbellMachine)
-	if !ok {
-		return nil, fmt.Errorf("expected a TinkerbellMachine but got %T", obj)
-	}
-
-	allErrs := machine.validateSpec()
-
-	old, ok := oldRaw.(*TinkerbellMachine)
-	if !ok {
-		return nil, fmt.Errorf("expected a TinkerbellMachine but got %T", oldRaw)
-	}
-
-	if old.Spec.HardwareName != "" && machine.Spec.HardwareName != old.Spec.HardwareName {
-		allErrs = append(allErrs, field.Forbidden(field.NewPath("spec", "hardwareName"), "is immutable once set"))
-	}
-
-	if old.Spec.ProviderID != "" && machine.Spec.ProviderID != old.Spec.ProviderID {
-		allErrs = append(allErrs, field.Forbidden(field.NewPath("spec", "providerID"), "is immutable once set"))
-	}
-
-	return nil, aggregateObjErrors(machine.GroupVersionKind().GroupKind(), machine.Name, allErrs)
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 // ValidateDelete implements webhook.CustomValidator so a webhook will be registered for the type.
 func (m *TinkerbellMachine) ValidateDelete(_ context.Context, obj runtime.Object) (admission.Warnings, error) {
-	_, ok := obj.(*TinkerbellMachine)
-	if !ok {
-		return nil, fmt.Errorf("expected a TinkerbellMachine but got %T", obj)
-	}
-
-	return nil, nil
+	_ = "STUB: not implemented"
+	return *new(admission.Warnings), nil
 }
 
 func (m *TinkerbellMachine) validateSpec() field.ErrorList {
-	var allErrs field.ErrorList
-
-	fieldBasePath := field.NewPath("spec")
-
-	// TODO: there are probably more fields that have requirements
-
-	if spec := m.Spec; spec.HardwareAffinity != nil {
-		for i, term := range spec.HardwareAffinity.Preferred {
-			if term.Weight < 1 || term.Weight > 100 {
-				allErrs = append(allErrs,
-					field.Invalid(fieldBasePath.Child("HardwareAffinity", "Preferred").Index(i),
-						term.Weight, "must be in the range [1,100]"))
-			}
-		}
-	}
-
-	return allErrs
+	_ = "STUB: not implemented"
+	return *new(field.ErrorList)
 }
+
+// TODO: there are probably more fields that have requirements

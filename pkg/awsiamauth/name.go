@@ -1,7 +1,5 @@
 package awsiamauth
 
-import "fmt"
-
 const (
 	awsIamAuthCaSecretSuffix   = "aws-iam-authenticator-ca"
 	awsIamAuthKubeconfigSuffix = "aws-iam-kubeconfig"
@@ -14,11 +12,7 @@ const (
 )
 
 // CASecretName returns the name of AWS IAM Authenticator secret containing the CA for the cluster.
-func CASecretName(clusterName string) string {
-	return fmt.Sprintf("%s-%s", clusterName, awsIamAuthCaSecretSuffix)
-}
+func CASecretName(clusterName string) string { _ = "STUB: not implemented"; return "" }
 
 // KubeconfigSecretName returns the name of the AWS IAM Authenticator kubeconfig secret for the cluster.
-func KubeconfigSecretName(clusterName string) string {
-	return fmt.Sprintf("%s-%s", clusterName, awsIamAuthKubeconfigSuffix)
-}
+func KubeconfigSecretName(clusterName string) string { _ = "STUB: not implemented"; return "" }

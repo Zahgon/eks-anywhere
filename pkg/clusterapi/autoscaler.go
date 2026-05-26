@@ -1,8 +1,6 @@
 package clusterapi
 
 import (
-	"strconv"
-
 	clusterv1beta2 "sigs.k8s.io/cluster-api/api/core/v1beta2"
 
 	anywherev1 "github.com/aws/eks-anywhere/pkg/api/v1alpha1"
@@ -15,14 +13,6 @@ const (
 )
 
 func ConfigureAutoscalingInMachineDeployment(md *clusterv1beta2.MachineDeployment, autoscalingConfig *anywherev1.AutoScalingConfiguration) {
-	if autoscalingConfig == nil {
-		return
-	}
-
-	if md.ObjectMeta.Annotations == nil {
-		md.ObjectMeta.Annotations = map[string]string{}
-	}
-
-	md.ObjectMeta.Annotations[NodeGroupMinSizeAnnotation] = strconv.Itoa(autoscalingConfig.MinCount)
-	md.ObjectMeta.Annotations[NodeGroupMaxSizeAnnotation] = strconv.Itoa(autoscalingConfig.MaxCount)
+	_ = "STUB: not implemented"
+	return
 }

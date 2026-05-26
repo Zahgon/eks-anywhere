@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	v1alpha1 "github.com/aws/eks-anywhere/release/api/v1alpha1"
 	gomock "github.com/golang/mock/gomock"
@@ -25,33 +24,27 @@ type MockChartImporterMockRecorder struct {
 
 // NewMockChartImporter creates a new mock instance.
 func NewMockChartImporter(ctrl *gomock.Controller) *MockChartImporter {
-	mock := &MockChartImporter{ctrl: ctrl}
-	mock.recorder = &MockChartImporterMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockChartImporter) EXPECT() *MockChartImporterMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Import mocks base method.
+	return nil
 }
 
-// Import mocks base method.
 func (m *MockChartImporter) Import(ctx context.Context, charts ...string) error {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx}
-	for _, a := range charts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "Import", varargs...)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Import indicates an expected call of Import.
 func (mr *MockChartImporterMockRecorder) Import(ctx interface{}, charts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx}, charts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Import", reflect.TypeOf((*MockChartImporter)(nil).Import), varargs...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // MockFileImporter is a mock of FileImporter interface.
@@ -67,24 +60,25 @@ type MockFileImporterMockRecorder struct {
 
 // NewMockFileImporter creates a new mock instance.
 func NewMockFileImporter(ctrl *gomock.Controller) *MockFileImporter {
-	mock := &MockFileImporter{ctrl: ctrl}
-	mock.recorder = &MockFileImporterMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockFileImporter) EXPECT() *MockFileImporterMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// Push mocks base method.
+	return nil
 }
 
-// Push mocks base method.
 func (m *MockFileImporter) Push(ctx context.Context, bundles *v1alpha1.Bundles) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Push", ctx, bundles)
+	_ = "STUB: not implemented"
+	return
 }
 
 // Push indicates an expected call of Push.
 func (mr *MockFileImporterMockRecorder) Push(ctx, bundles interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Push", reflect.TypeOf((*MockFileImporter)(nil).Push), ctx, bundles)
+	_ = "STUB: not implemented"
+	return nil
 }

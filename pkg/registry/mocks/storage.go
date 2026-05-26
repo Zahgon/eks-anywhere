@@ -6,7 +6,6 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
 
 	registry "github.com/aws/eks-anywhere/pkg/registry"
 	gomock "github.com/golang/mock/gomock"
@@ -27,142 +26,112 @@ type MockStorageClientMockRecorder struct {
 
 // NewMockStorageClient creates a new mock instance.
 func NewMockStorageClient(ctrl *gomock.Controller) *MockStorageClient {
-	mock := &MockStorageClient{ctrl: ctrl}
-	mock.recorder = &MockStorageClientMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockStorageClient) EXPECT() *MockStorageClientMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// CopyGraph mocks base method.
+	return nil
 }
 
-// CopyGraph mocks base method.
 func (m *MockStorageClient) CopyGraph(ctx context.Context, srcStorage registry0.Repository, srcRef string, dstStorage registry0.Repository, dstRef string) (v1.Descriptor, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CopyGraph", ctx, srcStorage, srcRef, dstStorage, dstRef)
-	ret0, _ := ret[0].(v1.Descriptor)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(v1.Descriptor), nil
 }
 
 // CopyGraph indicates an expected call of CopyGraph.
 func (mr *MockStorageClientMockRecorder) CopyGraph(ctx, srcStorage, srcRef, dstStorage, dstRef interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CopyGraph", reflect.TypeOf((*MockStorageClient)(nil).CopyGraph), ctx, srcStorage, srcRef, dstStorage, dstRef)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Destination mocks base method.
 func (m *MockStorageClient) Destination(image registry.Artifact) string {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Destination", image)
-	ret0, _ := ret[0].(string)
-	return ret0
+	_ = "STUB: not implemented"
+	return ""
 }
 
 // Destination indicates an expected call of Destination.
 func (mr *MockStorageClientMockRecorder) Destination(image interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destination", reflect.TypeOf((*MockStorageClient)(nil).Destination), image)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // FetchBlob mocks base method.
 func (m *MockStorageClient) FetchBlob(ctx context.Context, srcStorage registry0.Repository, descriptor v1.Descriptor) ([]byte, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FetchBlob", ctx, srcStorage, descriptor)
-	ret0, _ := ret[0].([]byte)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // FetchBlob indicates an expected call of FetchBlob.
 func (mr *MockStorageClientMockRecorder) FetchBlob(ctx, srcStorage, descriptor interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchBlob", reflect.TypeOf((*MockStorageClient)(nil).FetchBlob), ctx, srcStorage, descriptor)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // FetchBytes mocks base method.
 func (m *MockStorageClient) FetchBytes(ctx context.Context, srcStorage registry0.Repository, artifact registry.Artifact) (v1.Descriptor, []byte, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FetchBytes", ctx, srcStorage, artifact)
-	ret0, _ := ret[0].(v1.Descriptor)
-	ret1, _ := ret[1].([]byte)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
+	_ = "STUB: not implemented"
+	return *new(v1.Descriptor), nil, nil
 }
 
 // FetchBytes indicates an expected call of FetchBytes.
 func (mr *MockStorageClientMockRecorder) FetchBytes(ctx, srcStorage, artifact interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FetchBytes", reflect.TypeOf((*MockStorageClient)(nil).FetchBytes), ctx, srcStorage, artifact)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GetStorage mocks base method.
 func (m *MockStorageClient) GetStorage(ctx context.Context, image registry.Artifact) (registry0.Repository, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetStorage", ctx, image)
-	ret0, _ := ret[0].(registry0.Repository)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(registry0.Repository), nil
 }
 
 // GetStorage indicates an expected call of GetStorage.
 func (mr *MockStorageClientMockRecorder) GetStorage(ctx, image interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetStorage", reflect.TypeOf((*MockStorageClient)(nil).GetStorage), ctx, image)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Init mocks base method.
-func (m *MockStorageClient) Init() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Init")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
+func (m *MockStorageClient) Init() error { _ = "STUB: not implemented"; return nil }
 
 // Init indicates an expected call of Init.
-func (mr *MockStorageClientMockRecorder) Init() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockStorageClient)(nil).Init))
-}
+func (mr *MockStorageClientMockRecorder) Init() *gomock.Call { _ = "STUB: not implemented"; return nil }
 
 // Resolve mocks base method.
 func (m *MockStorageClient) Resolve(ctx context.Context, srcStorage registry0.Repository, versionedImage string) (v1.Descriptor, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Resolve", ctx, srcStorage, versionedImage)
-	ret0, _ := ret[0].(v1.Descriptor)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	_ = "STUB: not implemented"
+	return *new(v1.Descriptor), nil
 }
 
 // Resolve indicates an expected call of Resolve.
 func (mr *MockStorageClientMockRecorder) Resolve(ctx, srcStorage, versionedImage interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Resolve", reflect.TypeOf((*MockStorageClient)(nil).Resolve), ctx, srcStorage, versionedImage)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetProject mocks base method.
-func (m *MockStorageClient) SetProject(project string) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "SetProject", project)
-}
+func (m *MockStorageClient) SetProject(project string) { _ = "STUB: not implemented"; return }
 
 // SetProject indicates an expected call of SetProject.
 func (mr *MockStorageClientMockRecorder) SetProject(project interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetProject", reflect.TypeOf((*MockStorageClient)(nil).SetProject), project)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Tag mocks base method.
 func (m *MockStorageClient) Tag(ctx context.Context, dstStorage registry0.Repository, desc v1.Descriptor, tag string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Tag", ctx, dstStorage, desc, tag)
-	ret0, _ := ret[0].(error)
-	return ret0
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Tag indicates an expected call of Tag.
 func (mr *MockStorageClientMockRecorder) Tag(ctx, dstStorage, desc, tag interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Tag", reflect.TypeOf((*MockStorageClient)(nil).Tag), ctx, dstStorage, desc, tag)
+	_ = "STUB: not implemented"
+	return nil
 }

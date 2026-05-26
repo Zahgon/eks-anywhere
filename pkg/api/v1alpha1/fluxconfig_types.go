@@ -81,43 +81,16 @@ type FluxConfigGenerate struct {
 	Spec FluxConfigSpec `json:"spec,omitempty"`
 }
 
-func (e *FluxConfigSpec) Equal(n *FluxConfigSpec) bool {
-	if e == n {
-		return true
-	}
-	if e == nil || n == nil {
-		return false
-	}
-	if e.SystemNamespace != n.SystemNamespace {
-		return false
-	}
-	if e.Branch != n.Branch {
-		return false
-	}
-	if e.ClusterConfigPath != n.ClusterConfigPath {
-		return false
-	}
-	return e.Git.Equal(n.Git) && e.Github.Equal(n.Github)
-}
+func (e *FluxConfigSpec) Equal(n *FluxConfigSpec) bool { _ = "STUB: not implemented"; return false }
 
 func (e *GithubProviderConfig) Equal(n *GithubProviderConfig) bool {
-	if e == n {
-		return true
-	}
-	if e == nil || n == nil {
-		return false
-	}
-	return *e == *n
+	_ = "STUB: not implemented"
+	return false
 }
 
 func (e *GitProviderConfig) Equal(n *GitProviderConfig) bool {
-	if e == n {
-		return true
-	}
-	if e == nil || n == nil {
-		return false
-	}
-	return *e == *n
+	_ = "STUB: not implemented"
+	return false
 }
 
 //+kubebuilder:object:root=true
@@ -129,39 +102,18 @@ type FluxConfigList struct {
 	Items           []FluxConfig `json:"items"`
 }
 
-func (c *FluxConfig) Kind() string {
-	return c.TypeMeta.Kind
-}
+func (c *FluxConfig) Kind() string { _ = "STUB: not implemented"; return "" }
 
-func (c *FluxConfig) ExpectedKind() string {
-	return FluxConfigKind
-}
+func (c *FluxConfig) ExpectedKind() string { _ = "STUB: not implemented"; return "" }
 
 func (c *FluxConfig) ConvertConfigToConfigGenerateStruct() *FluxConfigGenerate {
-	namespace := defaultEksaNamespace
-	if c.Namespace != "" {
-		namespace = c.Namespace
-	}
-	config := &FluxConfigGenerate{
-		TypeMeta: c.TypeMeta,
-		ObjectMeta: ObjectMeta{
-			Name:        c.Name,
-			Annotations: c.Annotations,
-			Namespace:   namespace,
-		},
-		Spec: c.Spec,
-	}
-
-	return config
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (c *FluxConfig) Validate() error {
-	return validateFluxConfig(c)
-}
+func (c *FluxConfig) Validate() error { _ = "STUB: not implemented"; return nil }
 
-func (c *FluxConfig) SetDefaults() {
-	setFluxConfigDefaults(c)
-}
+func (c *FluxConfig) SetDefaults() { _ = "STUB: not implemented"; return }
 
 func init() {
 	SchemeBuilder.Register(&FluxConfig{}, &FluxConfigList{})

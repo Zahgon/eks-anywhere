@@ -11,10 +11,7 @@ var SkippableValidations = []string{
 	validations.EksaVersionSkew,
 }
 
-func New(opts *validations.Opts) *UpgradeValidations {
-	opts.SetDefaults()
-	return &UpgradeValidations{Opts: opts}
-}
+func New(opts *validations.Opts) *UpgradeValidations { _ = "STUB: not implemented"; return nil }
 
 type UpgradeValidations struct {
 	Opts *validations.Opts

@@ -2,136 +2,69 @@ package clusterapi
 
 import (
 	_ "embed"
-	"fmt"
 
-	etcdbootstrapv1 "github.com/aws/etcdadm-bootstrap-provider/api/v1beta1"
 	etcdv1 "github.com/aws/etcdadm-controller/api/v1beta1"
 	bootstrapv1beta2 "sigs.k8s.io/cluster-api/api/bootstrap/kubeadm/v1beta2"
 	controlplanev1beta2 "sigs.k8s.io/cluster-api/api/controlplane/kubeadm/v1beta2"
 
 	"github.com/aws/eks-anywhere/pkg/api/v1alpha1"
-	"github.com/aws/eks-anywhere/pkg/templater"
 )
 
 //go:embed config/http-proxy.conf
 var proxyConfig string
 
 func proxy(cluster *v1alpha1.Cluster) bootstrapv1beta2.ProxyConfiguration {
-	return bootstrapv1beta2.ProxyConfiguration{
-		HTTPSProxy: cluster.Spec.ProxyConfiguration.HttpsProxy,
-		NoProxy:    noProxyList(cluster),
-	}
+	_ = "STUB: not implemented"
+	return *new(bootstrapv1beta2.ProxyConfiguration)
 }
 
 // SetProxyConfigInKubeadmControlPlaneForBottlerocket sets up proxy configuration in kubeadmControlPlane for bottlerocket.
 func SetProxyConfigInKubeadmControlPlaneForBottlerocket(kcp *controlplanev1beta2.KubeadmControlPlane, cluster *v1alpha1.Cluster) {
-	if cluster.Spec.ProxyConfiguration == nil {
-		return
-	}
-
-	kcp.Spec.KubeadmConfigSpec.ClusterConfiguration.Proxy = proxy(cluster)
-	kcp.Spec.KubeadmConfigSpec.JoinConfiguration.Proxy = proxy(cluster)
+	_ = "STUB: not implemented"
+	return
 }
 
 // SetProxyConfigInKubeadmControlPlaneForUbuntu sets up proxy configuration in kubeadmControlPlane for ubuntu.
 func SetProxyConfigInKubeadmControlPlaneForUbuntu(kcp *controlplanev1beta2.KubeadmControlPlane, cluster *v1alpha1.Cluster) error {
-	if cluster.Spec.ProxyConfiguration == nil {
-		return nil
-	}
-
-	return addProxyConfigInKubeadmConfigSpecFiles(&kcp.Spec.KubeadmConfigSpec, cluster)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // SetProxyConfigInKubeadmConfigTemplateForBottlerocket sets up proxy configuration in kubeadmConfigTemplate for bottlerocket.
 func SetProxyConfigInKubeadmConfigTemplateForBottlerocket(kct *bootstrapv1beta2.KubeadmConfigTemplate, cluster *v1alpha1.Cluster) {
-	if cluster.Spec.ProxyConfiguration == nil {
-		return
-	}
-
-	kct.Spec.Template.Spec.JoinConfiguration.Proxy = proxy(cluster)
+	_ = "STUB: not implemented"
+	return
 }
 
 // SetProxyConfigInKubeadmConfigTemplateForUbuntu sets up proxy configuration in kubeadmConfigTemplate for ubuntu.
 func SetProxyConfigInKubeadmConfigTemplateForUbuntu(kct *bootstrapv1beta2.KubeadmConfigTemplate, cluster *v1alpha1.Cluster) error {
-	if cluster.Spec.ProxyConfiguration == nil {
-		return nil
-	}
-
-	return addProxyConfigInKubeadmConfigSpecFiles(&kct.Spec.Template.Spec, cluster)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // setProxyConfigInEtcdCluster sets up proxy configuration in etcdadmCluster.
 func setProxyConfigInEtcdCluster(etcd *etcdv1.EtcdadmCluster, cluster *v1alpha1.Cluster) {
-	if cluster.Spec.ProxyConfiguration == nil {
-		return
-	}
-
-	etcd.Spec.EtcdadmConfigSpec.Proxy = &etcdbootstrapv1.ProxyConfiguration{
-		HTTPProxy:  cluster.Spec.ProxyConfiguration.HttpProxy,
-		HTTPSProxy: cluster.Spec.ProxyConfiguration.HttpsProxy,
-		NoProxy:    noProxyList(cluster),
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
-func NoProxyDefaults() []string {
-	return []string{
-		"localhost",
-		"127.0.0.1",
-		".svc",
-	}
-}
+func NoProxyDefaults() []string { _ = "STUB: not implemented"; return nil }
 
-func noProxyList(cluster *v1alpha1.Cluster) []string {
-	capacity := len(cluster.Spec.ClusterNetwork.Pods.CidrBlocks) +
-		len(cluster.Spec.ClusterNetwork.Services.CidrBlocks) +
-		len(cluster.Spec.ProxyConfiguration.NoProxy) + 4
+func noProxyList(cluster *v1alpha1.Cluster) []string { _ = "STUB: not implemented"; return nil }
 
-	noProxyList := make([]string, 0, capacity)
-	noProxyList = append(noProxyList, cluster.Spec.ClusterNetwork.Pods.CidrBlocks...)
-	noProxyList = append(noProxyList, cluster.Spec.ClusterNetwork.Services.CidrBlocks...)
-	noProxyList = append(noProxyList, cluster.Spec.ProxyConfiguration.NoProxy...)
-
-	// Add no-proxy defaults
-	noProxyList = append(noProxyList, NoProxyDefaults()...)
-	noProxyList = append(noProxyList, cluster.Spec.ControlPlaneConfiguration.Endpoint.Host)
-
-	return noProxyList
-}
+// Add no-proxy defaults
 
 func proxyConfigContent(cluster *v1alpha1.Cluster) (string, error) {
-	val := values{
-		"httpProxy":  cluster.Spec.ProxyConfiguration.HttpProxy,
-		"httpsProxy": cluster.Spec.ProxyConfiguration.HttpsProxy,
-		"noProxy":    noProxyList(cluster),
-	}
-
-	config, err := templater.Execute(proxyConfig, val)
-	if err != nil {
-		return "", fmt.Errorf("building http-proxy.conf file: %v", err)
-	}
-	return string(config), nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func proxyConfigFile(cluster *v1alpha1.Cluster) (bootstrapv1beta2.File, error) {
-	proxyConfig, err := proxyConfigContent(cluster)
-	if err != nil {
-		return bootstrapv1beta2.File{}, err
-	}
-
-	return bootstrapv1beta2.File{
-		Path:    "/etc/systemd/system/containerd.service.d/http-proxy.conf",
-		Owner:   "root:root",
-		Content: proxyConfig,
-	}, nil
+	_ = "STUB: not implemented"
+	return *new(bootstrapv1beta2.File), nil
 }
 
 func addProxyConfigInKubeadmConfigSpecFiles(kcs *bootstrapv1beta2.KubeadmConfigSpec, cluster *v1alpha1.Cluster) error {
-	proxyConfigFile, err := proxyConfigFile(cluster)
-	if err != nil {
-		return err
-	}
-
-	kcs.Files = append(kcs.Files, proxyConfigFile)
-
+	_ = "STUB: not implemented"
 	return nil
 }

@@ -99,10 +99,12 @@ func init() {
 
 // GetConditions returns all the Conditions for the NodeUpgrade object.
 func (n *NodeUpgrade) GetConditions() clusterv1.Conditions {
-	return n.Status.Conditions
+	_ = "STUB: not implemented"
+	return *new(clusterv1.Conditions)
 }
 
 // SetConditions sets the Conditons on the NodeUpgrade object.
 func (n *NodeUpgrade) SetConditions(conditions clusterv1.Conditions) {
-	n.Status.Conditions = conditions
+	_ = "STUB: not implemented"
+	return
 }

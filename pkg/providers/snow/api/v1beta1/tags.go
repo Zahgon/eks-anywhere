@@ -17,10 +17,6 @@ limitations under the License.
 package snow
 
 import (
-	"fmt"
-	"reflect"
-
-	"k8s.io/apimachinery/pkg/types"
 	clusterv1 "sigs.k8s.io/cluster-api/api/core/v1beta1"
 )
 
@@ -28,48 +24,26 @@ import (
 type Tags map[string]string
 
 // Equals returns true if the tags are equal.
-func (t Tags) Equals(other Tags) bool {
-	return reflect.DeepEqual(t, other)
-}
+func (t Tags) Equals(other Tags) bool { _ = "STUB: not implemented"; return false }
 
 // HasOwned returns true if the tags contains a tag that marks the resource as owned by the cluster from the perspective of this management tooling.
-func (t Tags) HasOwned(cluster string) bool {
-	value, ok := t[ClusterTagKey(cluster)]
-	return ok && ResourceLifecycle(value) == ResourceLifecycleOwned
-}
+func (t Tags) HasOwned(cluster string) bool { _ = "STUB: not implemented"; return false }
 
 // HasOwned returns true if the tags contains a tag that marks the resource as owned by the cluster from the perspective of the in-tree cloud provider.
 func (t Tags) HasAWSCloudProviderOwned(cluster string) bool {
-	value, ok := t[ClusterAWSCloudProviderTagKey(cluster)]
-	return ok && ResourceLifecycle(value) == ResourceLifecycleOwned
+	_ = "STUB: not implemented"
+	return false
 }
 
 // GetRole returns the Cluster API role for the tagged resource
-func (t Tags) GetRole() string {
-	return t[NameAWSClusterAPIRole]
-}
+func (t Tags) GetRole() string { _ = "STUB: not implemented"; return "" }
 
 // Difference returns the difference between this map of tags and the other map of tags.
 // Items are considered equals if key and value are equals.
-func (t Tags) Difference(other Tags) Tags {
-	res := make(Tags, len(t))
-
-	for key, value := range t {
-		if otherValue, ok := other[key]; ok && value == otherValue {
-			continue
-		}
-		res[key] = value
-	}
-
-	return res
-}
+func (t Tags) Difference(other Tags) Tags { _ = "STUB: not implemented"; return *new(Tags) }
 
 // Merge merges in tags from other. If a tag already exists, it is replaced by the tag in other.
-func (t Tags) Merge(other Tags) {
-	for k, v := range other {
-		t[k] = v
-	}
-}
+func (t Tags) Merge(other Tags) { _ = "STUB: not implemented"; return }
 
 // ResourceLifecycle configures the lifecycle of a resource
 type ResourceLifecycle string
@@ -131,14 +105,10 @@ const (
 )
 
 // ClusterTagKey generates the key for resources associated with a cluster.
-func ClusterTagKey(name string) string {
-	return fmt.Sprintf("%s%s", NameAWSProviderOwned, name)
-}
+func ClusterTagKey(name string) string { _ = "STUB: not implemented"; return "" }
 
 // ClusterAWSCloudProviderTagKey generates the key for resources associated a cluster's AWS cloud provider.
-func ClusterAWSCloudProviderTagKey(name string) string {
-	return fmt.Sprintf("%s%s", NameKubernetesAWSCloudProviderPrefix, name)
-}
+func ClusterAWSCloudProviderTagKey(name string) string { _ = "STUB: not implemented"; return "" }
 
 // BuildParams is used to build tags around an aws resource.
 type BuildParams struct {
@@ -167,32 +137,15 @@ type BuildParams struct {
 // WithMachineName tags the namespaced machine name
 // The machine name will be tagged with key "MachineName"
 func (b BuildParams) WithMachineName(m *clusterv1.Machine) BuildParams {
-	machineNamespacedName := types.NamespacedName{Namespace: m.Namespace, Name: m.Name}
-	b.Additional[MachineNameTagKey] = machineNamespacedName.String()
-	return b
+	_ = "STUB: not implemented"
+	return *new(BuildParams)
 }
 
 // WithCloudProvider tags the cluster ownership for a resource
 func (b BuildParams) WithCloudProvider(name string) BuildParams {
-	b.Additional[ClusterAWSCloudProviderTagKey(name)] = string(ResourceLifecycleOwned)
-	return b
+	_ = "STUB: not implemented"
+	return *new(BuildParams)
 }
 
 // Build builds tags including the cluster tag and returns them in map form.
-func Build(params BuildParams) Tags {
-	tags := make(Tags)
-	for k, v := range params.Additional {
-		tags[k] = v
-	}
-
-	tags[ClusterTagKey(params.ClusterName)] = string(params.Lifecycle)
-	if params.Role != nil {
-		tags[NameAWSClusterAPIRole] = *params.Role
-	}
-
-	if params.Name != nil {
-		tags["Name"] = *params.Name
-	}
-
-	return tags
-}
+func Build(params BuildParams) Tags { _ = "STUB: not implemented"; return *new(Tags) }

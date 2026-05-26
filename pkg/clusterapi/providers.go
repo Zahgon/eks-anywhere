@@ -13,11 +13,6 @@ type KubeLister interface {
 
 // GetProviders lists all installed CAPI providers across all namespaces from the kube-api server.
 func GetProviders(ctx context.Context, client KubeLister) ([]clusterctlv1.Provider, error) {
-	providersList := &clusterctlv1.ProviderList{}
-	err := client.List(ctx, providersList)
-	if err != nil {
-		return nil, err
-	}
-
-	return providersList.Items, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

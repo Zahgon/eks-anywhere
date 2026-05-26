@@ -15,152 +15,43 @@
 package ecrpublic
 
 import (
-	"encoding/base64"
-	"strings"
-
-	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ecrpublic"
 	docker "github.com/fsouza/go-dockerclient"
-	"github.com/pkg/errors"
-
-	artifactutils "github.com/aws/eks-anywhere/release/cli/pkg/util/artifacts"
 )
 
 func GetImageDigest(imageUri, imageContainerRegistry string, ecrPublicClient *ecrpublic.ECRPublic) (string, error) {
-	repository, tag := artifactutils.SplitImageUri(imageUri, imageContainerRegistry)
-	describeImagesOutput, err := ecrPublicClient.DescribeImages(
-		&ecrpublic.DescribeImagesInput{
-			ImageIds: []*ecrpublic.ImageIdentifier{
-				{
-					ImageTag: aws.String(tag),
-				},
-			},
-			RepositoryName: aws.String(repository),
-		},
-	)
-	if err != nil {
-		return "", errors.Cause(err)
-	}
-
-	imageDigest := describeImagesOutput.ImageDetails[0].ImageDigest
-	imageDigestStr := *imageDigest
-	return imageDigestStr, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func GetAuthToken(ecrPublicClient *ecrpublic.ECRPublic) (string, error) {
-	authTokenOutput, err := ecrPublicClient.GetAuthorizationToken(&ecrpublic.GetAuthorizationTokenInput{})
-	if err != nil {
-		return "", errors.Cause(err)
-	}
-	authToken := *authTokenOutput.AuthorizationData.AuthorizationToken
-
-	return authToken, nil
+	_ = "STUB: not implemented"
+	return "", nil
 }
 
 func GetAuthConfig(ecrPublicClient *ecrpublic.ECRPublic) (*docker.AuthConfiguration, error) {
+	_ = "STUB: not implemented"
 	// Get ECR Public authorization token
-	authToken, err := GetAuthToken(ecrPublicClient)
-	if err != nil {
-		return nil, errors.Cause(err)
-	}
-
-	// Decode authorization token to get credential pair
-	creds, err := base64.StdEncoding.DecodeString(authToken)
-	if err != nil {
-		return nil, errors.Cause(err)
-	}
-
-	// Get password from credential pair
-	credsSplit := strings.Split(string(creds), ":")
-	password := credsSplit[1]
-
-	// Construct docker auth configuration
-	authConfig := &docker.AuthConfiguration{
-		Username: "AWS",
-		Password: password,
-	}
-
-	return authConfig, nil
+	return nil, nil
 }
 
+// Decode authorization token to get credential pair
+
+// Get password from credential pair
+
+// Construct docker auth configuration
+
 func GetAllImagesCount(imageRepository string, ecrPublicClient *ecrpublic.ECRPublic) (int, error) {
-	allImages := []*ecrpublic.ImageDetail{}
-
-	describeImagesOutput, err := ecrPublicClient.DescribeImages(
-		&ecrpublic.DescribeImagesInput{
-			RepositoryName: aws.String(imageRepository),
-			MaxResults:     aws.Int64(1000),
-		},
-	)
-	if err != nil {
-		return 0, errors.Cause(err)
-	}
-	allImages = append(allImages, describeImagesOutput.ImageDetails...)
-	nextToken := describeImagesOutput.NextToken
-
-	for nextToken != nil {
-		describeImagesOutput, err = ecrPublicClient.DescribeImages(
-			&ecrpublic.DescribeImagesInput{
-				RepositoryName: aws.String(imageRepository),
-				MaxResults:     aws.Int64(1000),
-				NextToken:      nextToken,
-			},
-		)
-		if err != nil {
-			return 0, errors.Cause(err)
-		}
-		allImages = append(allImages, describeImagesOutput.ImageDetails...)
-		nextToken = describeImagesOutput.NextToken
-	}
-
-	return len(allImages), nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 func GetTagsCountForImage(imageRepository, imageDigest string, ecrPublicClient *ecrpublic.ECRPublic) (int, error) {
-	describeImagesOutput, err := ecrPublicClient.DescribeImages(
-		&ecrpublic.DescribeImagesInput{
-			RepositoryName: aws.String(imageRepository),
-			ImageIds: []*ecrpublic.ImageIdentifier{
-				{
-					ImageDigest: aws.String(imageDigest),
-				},
-			},
-		},
-	)
-	if err != nil {
-		if strings.Contains(err.Error(), ecrpublic.ErrCodeImageNotFoundException) {
-			return 0, nil
-		} else {
-			return 0, errors.Cause(err)
-		}
-	}
-
-	if len(describeImagesOutput.ImageDetails) == 0 {
-		return 0, nil
-	}
-
-	return len(describeImagesOutput.ImageDetails[0].ImageTags), nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
 func CheckImageExistence(imageUri, imageContainerRegistry string, ecrPublicClient *ecrpublic.ECRPublic) (bool, error) {
-	repository, tag := artifactutils.SplitImageUri(imageUri, imageContainerRegistry)
-	_, err := ecrPublicClient.DescribeImages(
-		&ecrpublic.DescribeImagesInput{
-			ImageIds: []*ecrpublic.ImageIdentifier{
-				{
-					ImageTag: aws.String(tag),
-				},
-			},
-			RepositoryName: aws.String(repository),
-		},
-	)
-	if err != nil {
-		if strings.Contains(err.Error(), ecrpublic.ErrCodeImageNotFoundException) {
-			return false, nil
-		} else {
-			return false, errors.Cause(err)
-		}
-	}
-
-	return true, nil
+	_ = "STUB: not implemented"
+	return false, nil
 }

@@ -9,50 +9,24 @@ const (
 	APIServerExtraArgsEnabledEnvVar = "API_SERVER_EXTRA_ARGS_ENABLED"
 )
 
-func FeedGates(featureGates []string) {
-	globalFeatures.feedGates(featureGates)
-}
+func FeedGates(featureGates []string) { _ = "STUB: not implemented"; return }
 
 type Feature struct {
 	Name     string
 	IsActive func() bool
 }
 
-func IsActive(feature Feature) bool {
-	return feature.IsActive()
-}
+func IsActive(feature Feature) bool { _ = "STUB: not implemented"; return false }
 
 // ClearCache is mainly used for unit tests as of now.
-func ClearCache() {
-	globalFeatures.clearCache()
-}
+func ClearCache() { _ = "STUB: not implemented"; return }
 
-func CloudStackKubeVipDisabled() Feature {
-	return Feature{
-		Name:     "Kube-vip support disabled in CloudStack provider",
-		IsActive: globalFeatures.isActiveForEnvVar(CloudStackKubeVipDisabledEnvVar),
-	}
-}
+func CloudStackKubeVipDisabled() Feature { _ = "STUB: not implemented"; return *new(Feature) }
 
-func CheckpointEnabled() Feature {
-	return Feature{
-		Name:     "Checkpoint to rerun commands enabled",
-		IsActive: globalFeatures.isActiveForEnvVar(CheckpointEnabledEnvVar),
-	}
-}
+func CheckpointEnabled() Feature { _ = "STUB: not implemented"; return *new(Feature) }
 
 // VSphereInPlaceUpgradeEnabled is the feature flag for performing in-place upgrades with the vSphere provider.
-func VSphereInPlaceUpgradeEnabled() Feature {
-	return Feature{
-		Name:     "Perform in-place upgrades with the vSphere provider",
-		IsActive: globalFeatures.isActiveForEnvVar(VSphereInPlaceEnvVar),
-	}
-}
+func VSphereInPlaceUpgradeEnabled() Feature { _ = "STUB: not implemented"; return *new(Feature) }
 
 // APIServerExtraArgsEnabled is the feature flag for configuring api server extra args.
-func APIServerExtraArgsEnabled() Feature {
-	return Feature{
-		Name:     "Configure api server extra args",
-		IsActive: globalFeatures.isActiveForEnvVar(APIServerExtraArgsEnabledEnvVar),
-	}
-}
+func APIServerExtraArgsEnabled() Feature { _ = "STUB: not implemented"; return *new(Feature) }

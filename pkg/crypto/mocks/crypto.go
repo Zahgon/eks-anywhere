@@ -5,8 +5,6 @@
 package mocks
 
 import (
-	reflect "reflect"
-
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -23,28 +21,25 @@ type MockCertificateGeneratorMockRecorder struct {
 
 // NewMockCertificateGenerator creates a new mock instance.
 func NewMockCertificateGenerator(ctrl *gomock.Controller) *MockCertificateGenerator {
-	mock := &MockCertificateGenerator{ctrl: ctrl}
-	mock.recorder = &MockCertificateGeneratorMockRecorder{mock}
-	return mock
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockCertificateGenerator) EXPECT() *MockCertificateGeneratorMockRecorder {
-	return m.recorder
+	_ = "STUB: not implemented"
+
+	// GenerateIamAuthSelfSignCertKeyPair mocks base method.
+	return nil
 }
 
-// GenerateIamAuthSelfSignCertKeyPair mocks base method.
 func (m *MockCertificateGenerator) GenerateIamAuthSelfSignCertKeyPair() ([]byte, []byte, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GenerateIamAuthSelfSignCertKeyPair")
-	ret0, _ := ret[0].([]byte)
-	ret1, _ := ret[1].([]byte)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
+	_ = "STUB: not implemented"
+	return nil, nil, nil
 }
 
 // GenerateIamAuthSelfSignCertKeyPair indicates an expected call of GenerateIamAuthSelfSignCertKeyPair.
 func (mr *MockCertificateGeneratorMockRecorder) GenerateIamAuthSelfSignCertKeyPair() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GenerateIamAuthSelfSignCertKeyPair", reflect.TypeOf((*MockCertificateGenerator)(nil).GenerateIamAuthSelfSignCertKeyPair))
+	_ = "STUB: not implemented"
+	return nil
 }
